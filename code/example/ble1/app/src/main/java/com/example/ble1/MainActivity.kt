@@ -1,13 +1,118 @@
 package com.example.ble1
 
+import android.Manifest
+import android.bluetooth.BluetoothAdapter
+import android.bluetooth.BluetoothManager
+import android.bluetooth.le.ScanCallback
+import android.bluetooth.le.ScanFilter
+import android.bluetooth.le.ScanResult
+import android.bluetooth.le.ScanSettings
+import android.content.Intent
+import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import androidx.core.app.ActivityCompat
 
 class MainActivity : AppCompatActivity() {
+
+    companion object{
+        private val TAG = "BLE1"
+        val BLUETOOTH_REQUEST_CODE = 1
+    }
+
+    private val bluetoothAdapter : BluetoothAdapter by lazy {
+        (getSystemService(BLUETOOTH_SERVICE) as BluetoothManager).adapter
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
     }
+
+    override fun onResume() {
+        super.onResume()
+
+        if(bluetoothAdapter.isEnabled){
+            // Comienza a escanear
+            StartBLEScan()
+        }else{
+            Log.v(TAG,"BT is disabled")
+            val btIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
+            if (ActivityCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.BLUETOOTH_CONNECT
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return
+            }
+            startActivityForResult(btIntent, BLUETOOTH_REQUEST_CODE)
+        }
+    }
+
+    fun StartBLEScan(){
+        Log.v(TAG,"StartBLEScan")
+
+        val scanFilter = ScanFilter.Builder.build()
+        val scanFilters:MutableList<ScanFilter> = mutableListOf()
+        scanFilters.add(scanFilter)
+
+        val scanSettings = ScanSettings.Builder.setScanMode(ScanSettings.SCAN_MODE_LOW_LATENCY).build()
+
+        Log.v(TAG,"Start Scan")
+
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.BLUETOOTH_SCAN
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return
+        }
+        bluetoothAdapter.bluetoothLeScanner.startScan(scanFilters, scanSettings,bleScanCallback)
+    }
+
+    private val bleScanCallback : ScanCallback by lazy {
+        object : ScanCallback(){
+            override fun onScanResult(callbackType: Int, result: ScanResult?) {
+                //super.onScanResult(callbackType, result)
+                Log.v(TAG,"onScanResult")
+
+                val bluetoothDevice = result?.device
+                if(bluetoothDevice != null){
+                    if (ActivityCompat.checkSelfPermission(
+                            this,
+                            Manifest.permission.BLUETOOTH_CONNECT
+                        ) != PackageManager.PERMISSION_GRANTED
+                    ) {
+                        // TODO: Consider calling
+                        //    ActivityCompat#requestPermissions
+                        // here to request the missing permissions, and then overriding
+                        //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                        //                                          int[] grantResults)
+                        // to handle the case where the user grants the permission. See the documentation
+                        // for ActivityCompat#requestPermissions for more details.
+                        return
+                    }
+                    Log.v(TAG,"Device Name ${bluetoothDevice.name} Device Address ${bluetoothDevice.uuids}")
+                }
+            }
+        }
+    }
+
 }
 
 /*
@@ -27,4 +132,7 @@ class MainActivity : AppCompatActivity() {
 
     IMPORTANTE: Leer más documentación antes de intentar probar nada. Buscar posibles videotutoriales para
     comprenderlo mejor to. Hace años que no toco Android Studio y no he tocado nunca Kotlin.
+    
+    CÓDIGO ACTUAL SACADO DE:
+    https://www.youtube.com/watch?v=SSHx4MSvfAg
  */
