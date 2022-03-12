@@ -1,6 +1,7 @@
 package com.example.ble1
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothManager
 import android.bluetooth.le.ScanCallback
@@ -12,13 +13,16 @@ import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
 
 class MainActivity : AppCompatActivity() {
 
+    var msgMostrar = ""
+
     companion object{
-        private val TAG = "BLE1"
-        val BLUETOOTH_REQUEST_CODE = 1
+        private const val TAG = "BLE1"
+        const val BLUETOOTH_REQUEST_CODE = 1
     }
 
     private val bluetoothAdapter : BluetoothAdapter by lazy {
@@ -60,11 +64,11 @@ class MainActivity : AppCompatActivity() {
     fun StartBLEScan(){
         Log.v(TAG,"StartBLEScan")
 
-        val scanFilter = ScanFilter.Builder.build()
+        val scanFilter = ScanFilter.Builder().build()
         val scanFilters:MutableList<ScanFilter> = mutableListOf()
         scanFilters.add(scanFilter)
 
-        val scanSettings = ScanSettings.Builder.setScanMode(ScanSettings.SCAN_MODE_LOW_LATENCY).build()
+        val scanSettings = ScanSettings.Builder().setScanMode(ScanSettings.SCAN_MODE_LOW_LATENCY).build()
 
         Log.v(TAG,"Start Scan")
 
@@ -87,13 +91,14 @@ class MainActivity : AppCompatActivity() {
 
     private val bleScanCallback : ScanCallback by lazy {
         object : ScanCallback(){
+            @SuppressLint("MissingPermission")
             override fun onScanResult(callbackType: Int, result: ScanResult?) {
                 //super.onScanResult(callbackType, result)
                 Log.v(TAG,"onScanResult")
 
                 val bluetoothDevice = result?.device
                 if(bluetoothDevice != null){
-                    if (ActivityCompat.checkSelfPermission(
+                    /*if (ActivityCompat.checkSelfPermission(
                             this,
                             Manifest.permission.BLUETOOTH_CONNECT
                         ) != PackageManager.PERMISSION_GRANTED
@@ -106,8 +111,12 @@ class MainActivity : AppCompatActivity() {
                         // to handle the case where the user grants the permission. See the documentation
                         // for ActivityCompat#requestPermissions for more details.
                         return
-                    }
-                    Log.v(TAG,"Device Name ${bluetoothDevice.name} Device Address ${bluetoothDevice.uuids}")
+                    }*/
+                    msgMostrar = "Device Name ${bluetoothDevice.name} Device Address ${bluetoothDevice.uuids}"
+                    Log.v(TAG, msgMostrar)
+                    Toast.makeText(applicationContext, msgMostrar,
+                            Toast.LENGTH_LONG).show()
+
                 }
             }
         }
