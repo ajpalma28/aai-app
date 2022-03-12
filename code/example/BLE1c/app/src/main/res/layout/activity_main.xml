@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    tools:context=".MainActivity">
+
+    <!-- TEXT -->
+    <TextView
+        android:id="@+id/bluetoothStatusTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:padding="5dp"
+        android:textAlignment="center"
+        android:textColor="#000"
+        android:textSize="20sp" />
+    <!-- Logo OFF -->
+    <ImageView
+        android:id="@+id/bluetoothIv"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/ic_bluetooth_off"/>
+    <!-- BOTÓN ON -->
+    <Button
+        android:id="@+id/turnOnBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:text="Encender"
+        android:minWidth="200dp"/>
+    <!-- BOTON OFF -->
+    <Button
+        android:id="@+id/turnOffBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:text="Apagar"
+        android:minWidth="200dp" />
+    <!-- HACER DESCUBRIBLE -->
+    <Button
+        android:id="@+id/discoverableBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:text="Descubrible"
+        android:minWidth="200dp" />
+    <!-- Lista de dispositivos emparejados -->
+    <Button
+        android:id="@+id/pairedBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:text="Obtener emparejados"
+        android:minWidth="200dp" />
+    <!-- Mostrar lista -->
+    <TextView
+        android:id="@+id/pairedTv"
+        android:padding="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#000" />
+
+
+</LinearLayout>
