@@ -7,9 +7,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.example.ble1_c.databinding.ActivityMainBinding
-import androidx.annotation.NonNull as NonNull1
+import android.bluetooth.le.*
+import android.content.Context
 
 // Tomando como referencia: https://www.youtube.com/watch?v=PtN6UTIu7yw
 
@@ -93,6 +95,10 @@ class MainActivity : AppCompatActivity() {
         variables.pairedBtn.setOnClickListener {
             if(bAdapter.isEnabled){
                 variables.pairedTv.text = "Dispositivos emparejados"
+                // OBJETIVO!! Sustituir los devices del bondedDevices
+                // Por los que se han obtenido mediante el uso del escaner
+                // bAdapter.bluetoothLeScanner
+                // TODO
                 val devices = bAdapter.bondedDevices
                 for(device in devices){
                     val deviceName = device.name
@@ -109,6 +115,7 @@ class MainActivity : AppCompatActivity() {
     // Revisar por qué no funciona esto bien. Me activa el BT pero
     // me sale el mensaje de que no se puede encender.
     // SERÁ POR LOS DEPRECATES??
+    // TODO
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         when(requestCode) {
             REQUEST_CODE_ENABLE_BT ->
@@ -119,9 +126,8 @@ class MainActivity : AppCompatActivity() {
                     Toast.makeText(this,"No se puede encender", Toast.LENGTH_SHORT).show()
                 }
         }
+
         super.onActivityResult(requestCode, resultCode, data)
     }
-
-
 
 }
