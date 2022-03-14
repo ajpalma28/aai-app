@@ -3,6 +3,8 @@ package com.example.ble1_c
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.bluetooth.BluetoothAdapter
+import android.bluetooth.BluetoothDevice
+import android.bluetooth.BluetoothManager
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
@@ -25,6 +27,10 @@ class MainActivity : AppCompatActivity() {
     
     lateinit var vario: ActivityMainBinding
 
+    val deviceList = ArrayList<String>()
+
+    val pairedDevices = HashSet<BluetoothDevice>()
+
 
     @SuppressLint("MissingPermission")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,7 +43,12 @@ class MainActivity : AppCompatActivity() {
         vario = variables
 
         // init bluetooth adapter
-        bAdapter = BluetoothAdapter.getDefaultAdapter()
+        // getDefaultAdapter() es un metodo obsoleto
+        //bAdapter = BluetoothAdapter.getDefaultAdapter()
+        // Esta seria la forma de hacerlo actualmente
+        val btM = this.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
+        bAdapter = btM.adapter
+
         // comprobar
         if(bAdapter==null){
             variables.bluetoothStatusTv.text = "Bluetooth no disponible"
@@ -51,6 +62,26 @@ class MainActivity : AppCompatActivity() {
         }else{
             // be apagado
             variables.bluetoothIv.setImageResource(R.drawable.ic_bluetooth_off)
+        }
+
+
+        // Sacado de https://es.stackoverflow.com/questions/282294/listar-dispositivos-ble-cercanos-android,
+        // no parece funcionarme ya que no detecta la Mi Band 2
+
+        val mScanCallback = object : ScanCallback() {
+            @SuppressLint("MissingPermission")
+            override fun onScanResult(callbackType: Int, result: ScanResult?) {
+                super.onScanResult(callbackType, result)
+
+                if("Dispositivo: ${result?.device?.address} - ${result?.device?.name}" in deviceList) {
+                    //Dispositivo ya se encuentra en lista
+                }else {
+                    //Agrega dispositivo a lista.
+                    //deviceList.add("Dispositivo: ${result?.device?.address} - ${result?.device?.name}")
+                    deviceList.add(result?.device?.toString().toString())
+                }
+
+            }
         }
 
         variables.turnOnBtn.setOnClickListener {
@@ -99,14 +130,18 @@ class MainActivity : AppCompatActivity() {
                 // Por los que se han obtenido mediante el uso del escaner
                 // bAdapter.bluetoothLeScanner
                 // TODO
-                val devices = bAdapter.bondedDevices
+                mScanCallback
+                //val devices = bAdapter.bondedDevices
+                val devices = deviceList
                 for(device in devices){
-                    val deviceName = device.name
-                    val deviceAddress = device.address
-                    variables.pairedTv.append("\nDispositivo: $deviceName , $deviceAddress")
+                    //val deviceName = device.name
+                    //val deviceAddress = device.address
+                    //variables.pairedTv.append("\nDispositivo: $deviceName , $deviceAddress")
+                    variables.pairedTv.append("\nDispositivo: $device")
                 }
+
             }else{
-                Toast.makeText(this,"Encendiendo Bluetooth primero", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this,"Active Bluetooth primero", Toast.LENGTH_SHORT).show()
             }
         }
 
