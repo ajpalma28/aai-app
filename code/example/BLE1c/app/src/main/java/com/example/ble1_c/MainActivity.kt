@@ -130,21 +130,64 @@ class MainActivity : AppCompatActivity() {
                 // Por los que se han obtenido mediante el uso del escaner
                 // bAdapter.bluetoothLeScanner
                 // TODO
-                mScanCallback
-                //val devices = bAdapter.bondedDevices
-                val devices = deviceList
-                for(device in devices){
-                    //val deviceName = device.name
-                    //val deviceAddress = device.address
-                    //variables.pairedTv.append("\nDispositivo: $deviceName , $deviceAddress")
-                    variables.pairedTv.append("\nDispositivo: $device")
-                }
-
+                //mScanCallback
+                var resultado = escanea()
+                variables.pairedTv.append(resultado)
             }else{
                 Toast.makeText(this,"Active Bluetooth primero", Toast.LENGTH_SHORT).show()
             }
         }
 
+    }
+
+    /*override fun onResume() {
+        super.onResume()
+
+        val variables = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(variables.root)
+        vario = variables
+
+        // init bluetooth adapter
+        // getDefaultAdapter() es un metodo obsoleto
+        //bAdapter = BluetoothAdapter.getDefaultAdapter()
+        // Esta seria la forma de hacerlo actualmente
+        val btM = this.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
+        bAdapter = btM.adapter
+
+        variables.pairedBtn.setOnClickListener {
+            if (bAdapter.isEnabled) {
+                variables.pairedTv.text = "Dispositivos emparejados"
+                var resultado = escanea()
+                variables.pairedTv.append(resultado)
+            }else{
+                Toast.makeText(this,"Active Bluetooth primero", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+
+
+    }*/
+
+    @SuppressLint("MissingPermission")
+    fun escanea(): String {
+        var dispCercanos = ""
+        val scanFilter = ScanFilter.Builder().build()
+
+        val scanFilters:MutableList<ScanFilter> = mutableListOf()
+        scanFilters.add(scanFilter)
+
+        val scanSettings = ScanSettings.Builder().setScanMode(ScanSettings.SCAN_MODE_LOW_LATENCY).build()
+
+        bAdapter.bluetoothLeScanner.startScan(scanFilters, scanSettings, bleScanCallback)
+        //val devices = bAdapter.bondedDevices
+        val devices = deviceList
+        for(device in devices){
+            //val deviceName = device.name
+            //val deviceAddress = device.address
+            //variables.pairedTv.append("\nDispositivo: $deviceName , $deviceAddress")
+            dispCercanos += ("\nDispositivo: $device")
+        }
+        return dispCercanos
     }
 
     // Revisar por qué no funciona esto bien. Me activa el BT pero
@@ -163,6 +206,22 @@ class MainActivity : AppCompatActivity() {
         }
 
         super.onActivityResult(requestCode, resultCode, data)
+    }
+
+    private val bleScanCallback : ScanCallback by lazy {
+        object : ScanCallback() {
+            @SuppressLint("MissingPermission")
+            override fun onScanResult(callbackType: Int, result: ScanResult?) {
+                //super.onScanResult(callbackType, result)
+                val bluetoothDevice = result?.device
+                if(bluetoothDevice != null) {
+                    deviceList.add("Nombre del dispositivo ${bluetoothDevice.name}, Dirección ${bluetoothDevice.uuids}")
+                }else{
+                    deviceList.add("Nada encontrado")
+                }
+
+            }
+        }
     }
 
 }
