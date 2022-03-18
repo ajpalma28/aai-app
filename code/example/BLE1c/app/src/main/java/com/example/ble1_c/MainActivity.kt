@@ -28,6 +28,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var vario: ActivityMainBinding
 
     val deviceList = ArrayList<String>()
+    val dL2 = ArrayList<BluetoothDevice>()
 
     val pairedDevices = HashSet<BluetoothDevice>()
 
@@ -84,23 +85,28 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        // FUNCIONA CORRECTAMENTE!
         variables.turnOnBtn.setOnClickListener {
-
             if (bAdapter.isEnabled){
                 // Preparado
                 Toast.makeText(this,"Ya encendido", Toast.LENGTH_SHORT).show()
             }else{
                 // Enciende
-                bAdapter.enable()
+                //bAdapter.enable()
                 val intent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
-                startActivityForResult(intent, REQUEST_CODE_ENABLE_BT)
-                variables.bluetoothIv.setImageResource(R.drawable.ic_bluetooth_on)
+                //startActivityForResult(intent, REQUEST_CODE_ENABLE_BT)
+                // Corregido el startActivityForResult con
+                // https://www.youtube.com/watch?v=5GMwP9ppjdk
+                if(intent.resolveActivity(packageManager) != null){
+                    variables.bluetoothIv.setImageResource(R.drawable.ic_bluetooth_on)
+                    getAction.launch(intent)
+                }
+                //variables.bluetoothIv.setImageResource(R.drawable.ic_bluetooth_on)
             }
-
         }
 
+        // FUNCIONA CORRECTAMENTE
         variables.turnOffBtn.setOnClickListener {
-
             if (!bAdapter.isEnabled){
                 // Preparado
                 Toast.makeText(this,"Ya apagado", Toast.LENGTH_SHORT).show()
@@ -110,17 +116,19 @@ class MainActivity : AppCompatActivity() {
                 variables.bluetoothIv.setImageResource(R.drawable.ic_bluetooth_off)
                 Toast.makeText(this,"BT apagado", Toast.LENGTH_SHORT).show()
             }
-
         }
 
+        // COMPROBAR CÓMO FUNCIONA
+        // TO DO
         variables.discoverableBtn.setOnClickListener {
-
             if(!bAdapter.isDiscovering){
                 Toast.makeText(this,"Haciendo descubrible tu móvil", Toast.LENGTH_SHORT).show()
                 val intent = Intent(Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE))
-                startActivityForResult(intent, REQUEST_CODE_DISCOVERABLE_BT)
+                //startActivityForResult(intent, REQUEST_CODE_DISCOVERABLE_BT)
+                if(intent.resolveActivity(packageManager) != null){
+                    getAction1.launch(intent)
+                }
             }
-
         }
 
         variables.pairedBtn.setOnClickListener {
@@ -180,12 +188,13 @@ class MainActivity : AppCompatActivity() {
 
         bAdapter.bluetoothLeScanner.startScan(scanFilters, scanSettings, bleScanCallback)
         //val devices = bAdapter.bondedDevices
-        val devices = deviceList
+        //val devices = deviceList
+        val devices = dL2
         for(device in devices){
             //val deviceName = device.name
             //val deviceAddress = device.address
             //variables.pairedTv.append("\nDispositivo: $deviceName , $deviceAddress")
-            dispCercanos += ("\nDispositivo: $device")
+            dispCercanos += ("\nDispositivo: ${device.name} - ${device.address} - ${device.uuids}")
         }
         return dispCercanos
     }
@@ -208,6 +217,18 @@ class MainActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
     }
 
+    @SuppressLint("MissingPermission")
+    val getAction = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+        bAdapter.enable()
+        Toast.makeText(this,"Encendido", Toast.LENGTH_SHORT).show()
+    }
+
+    @SuppressLint("MissingPermission")
+    val getAction1 = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+        bAdapter.startDiscovery()
+        Toast.makeText(this,"Haciendo descubrible", Toast.LENGTH_SHORT).show()
+    }
+
     private val bleScanCallback : ScanCallback by lazy {
         object : ScanCallback() {
             @SuppressLint("MissingPermission")
@@ -215,7 +236,10 @@ class MainActivity : AppCompatActivity() {
                 //super.onScanResult(callbackType, result)
                 val bluetoothDevice = result?.device
                 if(bluetoothDevice != null) {
-                    deviceList.add("Nombre del dispositivo ${bluetoothDevice.name}, Dirección ${bluetoothDevice.uuids}")
+                    //deviceList.add("Nombre del dispositivo ${bluetoothDevice.name}, Dirección ${bluetoothDevice.uuids}")
+                    if(!dL2.contains(bluetoothDevice)){
+                      dL2.add(bluetoothDevice)
+                    }
                 }else{
                     deviceList.add("Nada encontrado")
                 }
