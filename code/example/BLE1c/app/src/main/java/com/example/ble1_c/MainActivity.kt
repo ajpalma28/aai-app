@@ -14,6 +14,9 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.ble1_c.databinding.ActivityMainBinding
 import android.bluetooth.le.*
 import android.content.Context
+import android.os.Handler
+import java.util.concurrent.TimeUnit
+import kotlin.concurrent.thread
 
 // Tomando como referencia: https://www.youtube.com/watch?v=PtN6UTIu7yw
 
@@ -22,16 +25,13 @@ class MainActivity : AppCompatActivity() {
     // Bluetooth Adapter
     lateinit var bAdapter:BluetoothAdapter
 
-    private val REQUEST_CODE_ENABLE_BT:Int = 1
-    private val REQUEST_CODE_DISCOVERABLE_BT:Int = 1
+    //private val REQUEST_CODE_ENABLE_BT:Int = 1
+    //private val REQUEST_CODE_DISCOVERABLE_BT:Int = 1
     
     lateinit var vario: ActivityMainBinding
 
     val deviceList = ArrayList<String>()
     val dL2 = ArrayList<BluetoothDevice>()
-
-    val pairedDevices = HashSet<BluetoothDevice>()
-
 
     @SuppressLint("MissingPermission")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -118,8 +118,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        // COMPROBAR CÓMO FUNCIONA
-        // TO DO
+        // SE SUPONE QUE FUNCIONA CORRECTAMENTE
         variables.discoverableBtn.setOnClickListener {
             if(!bAdapter.isDiscovering){
                 Toast.makeText(this,"Haciendo descubrible tu móvil", Toast.LENGTH_SHORT).show()
@@ -131,6 +130,33 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        /*
+        thread(start=true){
+            var i = 0
+            while(true){
+                variables.pairedTv.text = "Segundo $i"
+                i += 1
+                TimeUnit.SECONDS.sleep(1L)
+            }
+            //variables.pairedTv.text = "${Thread.currentThread()} has run."
+        }*/
+        thread(start=true){
+            while(true){
+                if(bAdapter.isEnabled){
+                    var resultado = escanea()
+                    if (resultado!=""){
+                        variables.pairedTv.text = "Dispositivos encontrados"
+                        variables.pairedTv.append(resultado)
+                    }else{
+                        variables.pairedTv.text = "No hay dispositivos cerca"
+                    }
+                }else{
+                    variables.pairedTv.text = "Imposible encontrar dispositivos. ¡Active Bluetooth!"
+                }
+                TimeUnit.SECONDS.sleep(5L)
+            }
+        }
+        /*
         variables.pairedBtn.setOnClickListener {
             if(bAdapter.isEnabled){
                 variables.pairedTv.text = "Dispositivos emparejados"
@@ -144,37 +170,9 @@ class MainActivity : AppCompatActivity() {
             }else{
                 Toast.makeText(this,"Active Bluetooth primero", Toast.LENGTH_SHORT).show()
             }
-        }
+        }*/
 
     }
-
-    /*override fun onResume() {
-        super.onResume()
-
-        val variables = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(variables.root)
-        vario = variables
-
-        // init bluetooth adapter
-        // getDefaultAdapter() es un metodo obsoleto
-        //bAdapter = BluetoothAdapter.getDefaultAdapter()
-        // Esta seria la forma de hacerlo actualmente
-        val btM = this.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
-        bAdapter = btM.adapter
-
-        variables.pairedBtn.setOnClickListener {
-            if (bAdapter.isEnabled) {
-                variables.pairedTv.text = "Dispositivos emparejados"
-                var resultado = escanea()
-                variables.pairedTv.append(resultado)
-            }else{
-                Toast.makeText(this,"Active Bluetooth primero", Toast.LENGTH_SHORT).show()
-            }
-        }
-
-
-
-    }*/
 
     @SuppressLint("MissingPermission")
     fun escanea(): String {
@@ -188,33 +186,16 @@ class MainActivity : AppCompatActivity() {
 
         bAdapter.bluetoothLeScanner.startScan(scanFilters, scanSettings, bleScanCallback)
         //val devices = bAdapter.bondedDevices
-        //val devices = deviceList
-        val devices = dL2
+        val devices = deviceList
+        //val devices = dL2
         for(device in devices){
             //val deviceName = device.name
             //val deviceAddress = device.address
             //variables.pairedTv.append("\nDispositivo: $deviceName , $deviceAddress")
-            dispCercanos += ("\nDispositivo: ${device.name} - ${device.address} - ${device.uuids}")
+            //dispCercanos += ("\nDispositivo: ${device.name} - ${device.address} - ${device.uuids}")
+            dispCercanos += ("\nDispositivo: ${device}")
         }
         return dispCercanos
-    }
-
-    // Revisar por qué no funciona esto bien. Me activa el BT pero
-    // me sale el mensaje de que no se puede encender.
-    // SERÁ POR LOS DEPRECATES??
-    // TODO
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        when(requestCode) {
-            REQUEST_CODE_ENABLE_BT ->
-                if (requestCode == RESULT_OK){
-                    vario.bluetoothIv.setImageResource(R.drawable.ic_bluetooth_on)
-                    Toast.makeText(this,"Encendido", Toast.LENGTH_SHORT).show()
-                }else{
-                    Toast.makeText(this,"No se puede encender", Toast.LENGTH_SHORT).show()
-                }
-        }
-
-        super.onActivityResult(requestCode, resultCode, data)
     }
 
     @SuppressLint("MissingPermission")
@@ -236,10 +217,10 @@ class MainActivity : AppCompatActivity() {
                 //super.onScanResult(callbackType, result)
                 val bluetoothDevice = result?.device
                 if(bluetoothDevice != null) {
-                    //deviceList.add("Nombre del dispositivo ${bluetoothDevice.name}, Dirección ${bluetoothDevice.uuids}")
-                    if(!dL2.contains(bluetoothDevice)){
+                    deviceList.add("Nombre del dispositivo ${bluetoothDevice.name}, Dirección ${bluetoothDevice.uuids}")
+                    /*if(!dL2.contains(bluetoothDevice)){
                       dL2.add(bluetoothDevice)
-                    }
+                    }*/
                 }else{
                     deviceList.add("Nada encontrado")
                 }
