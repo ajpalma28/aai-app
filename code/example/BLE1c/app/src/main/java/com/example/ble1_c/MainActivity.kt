@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
     
     lateinit var vario: ActivityMainBinding
 
-    val deviceList = ArrayList<String>()
+    var deviceList = ArrayList<String>()
     val dL2 = ArrayList<BluetoothDevice>()
 
     @SuppressLint("MissingPermission")
@@ -140,39 +140,55 @@ class MainActivity : AppCompatActivity() {
             }
             //variables.pairedTv.text = "${Thread.currentThread()} has run."
         }*/
-        thread(start=true){
+        /*thread(start=true){
+            var itera = 0
             while(true){
-                if(bAdapter.isEnabled){
-                    var resultado = escanea()
-                    if (resultado!=""){
-                        variables.pairedTv.text = "Dispositivos encontrados"
-                        variables.pairedTv.append(resultado)
-                    }else{
-                        variables.pairedTv.text = "No hay dispositivos cerca"
-                    }
+                if(itera==0){
+                    variables.pairedTv.text = "Cargando el servicio de búsqueda de dispositivos"
+                    itera+=1
                 }else{
-                    variables.pairedTv.text = "Imposible encontrar dispositivos. ¡Active Bluetooth!"
+                    if(bAdapter.isEnabled){
+                        var resultado = escanea()
+                        if (resultado!=""){
+                            var ponTexto = "Dispositivos encontrados"+resultado
+                            variables.pairedTv.text = ponTexto
+                        }else{
+                            variables.pairedTv.text = "No hay dispositivos cerca"
+                        }
+                    }else{
+                        variables.pairedTv.text = "Imposible encontrar dispositivos. ¡Active Bluetooth!"
+                    }
                 }
                 TimeUnit.SECONDS.sleep(5L)
-            }
-        }
-        /*
-        variables.pairedBtn.setOnClickListener {
-            if(bAdapter.isEnabled){
-                variables.pairedTv.text = "Dispositivos emparejados"
-                // OBJETIVO!! Sustituir los devices del bondedDevices
-                // Por los que se han obtenido mediante el uso del escaner
-                // bAdapter.bluetoothLeScanner
-                // TODO
-                //mScanCallback
-                var resultado = escanea()
-                variables.pairedTv.append(resultado)
-            }else{
-                Toast.makeText(this,"Active Bluetooth primero", Toast.LENGTH_SHORT).show()
+
             }
         }*/
 
+        variables.pairedBtn.setOnClickListener {
+            if(bAdapter.isEnabled){
+                variables.pairedTv.text = "Dispositivos emparejados"
+                    // OBJETIVO!! Sustituir los devices del bondedDevices
+                    // Por los que se han obtenido mediante el uso del escaner
+                    // bAdapter.bluetoothLeScanner
+                    // TODO
+                    //mScanCallback
+                var resultado = escanea()
+                if (resultado!=""){
+                    var ponTexto = "Dispositivos encontrados"+resultado
+                    variables.pairedTv.text = ponTexto
+                }else{
+                    variables.pairedTv.text = "No hay dispositivos cerca"
+                }
+            }else{
+                Toast.makeText(this,"Active Bluetooth primero", Toast.LENGTH_SHORT).show()
+                variables.pairedTv.text = "Imposible encontrar dispositivos. ¡Active Bluetooth!"
+            }
+
+
+        }
+
     }
+
 
     @SuppressLint("MissingPermission")
     fun escanea(): String {
@@ -186,14 +202,16 @@ class MainActivity : AppCompatActivity() {
 
         bAdapter.bluetoothLeScanner.startScan(scanFilters, scanSettings, bleScanCallback)
         //val devices = bAdapter.bondedDevices
-        val devices = deviceList
-        //val devices = dL2
-        for(device in devices){
-            //val deviceName = device.name
-            //val deviceAddress = device.address
-            //variables.pairedTv.append("\nDispositivo: $deviceName , $deviceAddress")
-            //dispCercanos += ("\nDispositivo: ${device.name} - ${device.address} - ${device.uuids}")
-            dispCercanos += ("\nDispositivo: ${device}")
+        //val devices = deviceList
+        val devices = dL2
+        if(devices.size>0){
+            for(device in devices){
+                //val deviceName = device.name
+                //val deviceAddress = device.address
+                //variables.pairedTv.append("\nDispositivo: $deviceName , $deviceAddress")
+                dispCercanos += ("\nDispositivo: ${device.name} - ${device.address} - ${device.uuids}")
+                //dispCercanos += ("\nDispositivo: $device")
+            }
         }
         return dispCercanos
     }
@@ -217,13 +235,13 @@ class MainActivity : AppCompatActivity() {
                 //super.onScanResult(callbackType, result)
                 val bluetoothDevice = result?.device
                 if(bluetoothDevice != null) {
-                    deviceList.add("Nombre del dispositivo ${bluetoothDevice.name}, Dirección ${bluetoothDevice.uuids}")
-                    /*if(!dL2.contains(bluetoothDevice)){
+                    //deviceList.add("Nombre del dispositivo ${bluetoothDevice.name}, Dirección ${bluetoothDevice.uuids}")
+                    if(!dL2.contains(bluetoothDevice)){
                       dL2.add(bluetoothDevice)
-                    }*/
-                }else{
+                    }
+                }/*else{
                     deviceList.add("Nada encontrado")
-                }
+                }*/
 
             }
         }
