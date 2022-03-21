@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
-<!DOCTYPE rem:requirementsProject SYSTEM "E:\Program Files (x86)\REM 1.2.2\xml\REM_1_2_2.dtd">
+<!DOCTYPE rem:requirementsProject SYSTEM "C:\Program Files (x86)\REM 1.2.2\xml\REM_1_2_2.dtd">
 <rem:requirementsProject
 xmlns:rem="http://rem.lsi.us.es">
 <rem:name>requeriments_aai-app</rem:name>
@@ -50,7 +50,7 @@ Organización Sanitaria</rem:name>
 </rem:date>
 </rem:version>
 <rem:comments>
-Ninguno</rem:comments>
+Sería cualquier organización, en general, que tuviera los dispositivos wearables de la BAN y que los utilice con usuarios.</rem:comments>
 <rem:address><rem:tbd/></rem:address>
 <rem:telephone><rem:tbd/></rem:telephone>
 <rem:fax><rem:tbd/></rem:fax>
@@ -113,6 +113,220 @@ Ninguno</rem:comments>
 <rem:worksFor organization = "ORG-0002"/>
 </rem:stakeholder>
 <rem:functionalRequirement
+ oid = "FRQ-0003">
+<rem:name>
+Uso de la tecnología BLE</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>0</rem:minor>
+<rem:date>
+<rem:year>2022</rem:year>
+<rem:month>3</rem:month>
+<rem:day>20</rem:day>
+</rem:date>
+</rem:version>
+<rem:authors stakeholders ="STK-0001 "/>
+<rem:comments>
+Ninguno</rem:comments>
+<rem:importance value = "IMV-0002"/>
+<rem:urgency value = "URV-0002"/>
+<rem:status value = "STV-0003"/>
+<rem:stability>
+<rem:tbd/>
+</rem:stability>
+<rem:description>
+tener permiso para utilizar el sistema de conexión BLE para poder conectarse a los sensores de la BAN.</rem:description>
+</rem:functionalRequirement>
+<rem:functionalRequirement
+ oid = "FRQ-0004">
+<rem:name>
+Conexión con varios dispositivos BLE simultáneamente</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>0</rem:minor>
+<rem:date>
+<rem:year>2022</rem:year>
+<rem:month>3</rem:month>
+<rem:day>21</rem:day>
+</rem:date>
+</rem:version>
+<rem:authors stakeholders ="STK-0001 "/>
+<rem:comments>
+Ninguno</rem:comments>
+<rem:importance value = "IMV-0002"/>
+<rem:urgency value = "URV-0002"/>
+<rem:status value = "STV-0002"/>
+<rem:stability>
+<rem:tbd/>
+</rem:stability>
+<rem:description>
+poder conectarse con dos o más dispositivos con tecnología BLE a la vez.</rem:description>
+</rem:functionalRequirement>
+<rem:functionalRequirement
+ oid = "FRQ-0005">
+<rem:name>
+Mediciones de señales</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>0</rem:minor>
+<rem:date>
+<rem:year>2022</rem:year>
+<rem:month>3</rem:month>
+<rem:day>21</rem:day>
+</rem:date>
+</rem:version>
+<rem:authors stakeholders ="STK-0001 "/>
+<rem:comments>
+Ninguno</rem:comments>
+<rem:importance value = "IMV-0002"/>
+<rem:urgency value = "URV-0002"/>
+<rem:status>
+<rem:tbd/>
+</rem:status>
+<rem:stability>
+<rem:tbd/>
+</rem:stability>
+<rem:description>
+conectarse a los dispositivos wearables de la BAN mediante BLE y acceder a los datos que van midiendo, para que la app pueda funcionar de forma similar a la Raspberry.</rem:description>
+</rem:functionalRequirement>
+<rem:functionalRequirement
+ oid = "FRQ-0006">
+<rem:name>
+Botón de toma de datos</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>0</rem:minor>
+<rem:date>
+<rem:year>2022</rem:year>
+<rem:month>3</rem:month>
+<rem:day>21</rem:day>
+</rem:date>
+</rem:version>
+<rem:authors stakeholders ="STK-0001 "/>
+<rem:comments>
+Ninguno</rem:comments>
+<rem:importance value = "IMV-0003"/>
+<rem:urgency value = "URV-0003"/>
+<rem:status>
+<rem:tbd/>
+</rem:status>
+<rem:stability>
+<rem:tbd/>
+</rem:stability>
+<rem:description>
+tener un botón que sirva tanto para dar comienzo como para detener las mediciones de las distintas señales fisiológicas que son registradas por los dispositivos.</rem:description>
+</rem:functionalRequirement>
+<rem:functionalRequirement
+ oid = "FRQ-0007">
+<rem:name>
+Evaluación de datos en tiempo real</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>0</rem:minor>
+<rem:date>
+<rem:year>2022</rem:year>
+<rem:month>3</rem:month>
+<rem:day>21</rem:day>
+</rem:date>
+</rem:version>
+<rem:authors stakeholders ="STK-0002 "/>
+<rem:sources stakeholders ="STK-0001 "/>
+<rem:comments>
+Ninguno</rem:comments>
+<rem:importance value = "IMV-0003"/>
+<rem:urgency value = "URV-0003"/>
+<rem:status>
+<rem:tbd/>
+</rem:status>
+<rem:stability>
+<rem:tbd/>
+</rem:stability>
+<rem:description>
+mostrar en tiempo real si los datos que se están midiendo son adecuados o no.</rem:description>
+</rem:functionalRequirement>
+<rem:functionalRequirement
+ oid = "FRQ-0008">
+<rem:name>
+Muestra de datos en tiempo real</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>0</rem:minor>
+<rem:date>
+<rem:year>2022</rem:year>
+<rem:month>3</rem:month>
+<rem:day>21</rem:day>
+</rem:date>
+</rem:version>
+<rem:authors stakeholders ="STK-0001 "/>
+<rem:comments>
+Ninguno</rem:comments>
+<rem:importance value = "IMV-0004"/>
+<rem:urgency value = "URV-0004"/>
+<rem:status>
+<rem:tbd/>
+</rem:status>
+<rem:stability>
+<rem:tbd/>
+</rem:stability>
+<rem:description>
+mostrar en tiempo real los valores que están registrando los dispositivos.</rem:description>
+</rem:functionalRequirement>
+<rem:functionalRequirement
+ oid = "FRQ-0009">
+<rem:name>
+Notificación sobre mediciones</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>0</rem:minor>
+<rem:date>
+<rem:year>2022</rem:year>
+<rem:month>3</rem:month>
+<rem:day>21</rem:day>
+</rem:date>
+</rem:version>
+<rem:authors stakeholders ="STK-0001 "/>
+<rem:comments>
+Ninguno</rem:comments>
+<rem:importance value = "IMV-0004"/>
+<rem:urgency value = "URV-0004"/>
+<rem:status>
+<rem:tbd/>
+</rem:status>
+<rem:stability>
+<rem:tbd/>
+</rem:stability>
+<rem:description>
+generar una notificación en caso de que alguna de las mediciones registre un dato fuera del rango considerado adecuado.</rem:description>
+</rem:functionalRequirement>
+<rem:functionalRequirement
+ oid = "FRQ-0010">
+<rem:name>
+Conexión con BBDD</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>0</rem:minor>
+<rem:date>
+<rem:year>2022</rem:year>
+<rem:month>3</rem:month>
+<rem:day>21</rem:day>
+</rem:date>
+</rem:version>
+<rem:authors stakeholders ="STK-0002 "/>
+<rem:sources stakeholders ="STK-0001 "/>
+<rem:comments>
+Ninguno</rem:comments>
+<rem:importance value = "IMV-0004"/>
+<rem:urgency value = "URV-0004"/>
+<rem:status>
+<rem:tbd/>
+</rem:status>
+<rem:stability>
+<rem:tbd/>
+</rem:stability>
+<rem:description>
+conectarse con una base de datos de tipo relacional para almacenamiento de usuarios y/o datos medidos.</rem:description>
+</rem:functionalRequirement>
+<rem:functionalRequirement
  oid = "FRQ-0001">
 <rem:name>
 Registro del sanitario</rem:name>
@@ -128,7 +342,7 @@ Registro del sanitario</rem:name>
 <rem:authors stakeholders ="STK-0002 "/>
 <rem:comments>
 Ninguno</rem:comments>
-<rem:importance value = "IMV-0003"/>
+<rem:importance value = "IMV-0004"/>
 <rem:urgency value = "URV-0004"/>
 <rem:status>
 <rem:tbd/>
@@ -167,16 +381,70 @@ Ninguno</rem:comments>
 permitir al sanitario registrar en una base de datos al paciente que vaya a utilizar la BAN que se conecta con la app para guardar un registro histórico.</rem:description>
 </rem:functionalRequirement>
 <rem:functionalRequirement
- oid = "FRQ-0003">
+ oid = "FRQ-0011">
 <rem:name>
-Uso de la tecnología BLE</rem:name>
+Almacenar las mediciones</rem:name>
 <rem:version>
 <rem:major>1</rem:major>
 <rem:minor>0</rem:minor>
 <rem:date>
 <rem:year>2022</rem:year>
 <rem:month>3</rem:month>
-<rem:day>20</rem:day>
+<rem:day>21</rem:day>
+</rem:date>
+</rem:version>
+<rem:authors stakeholders ="STK-0002 "/>
+<rem:sources stakeholders ="STK-0001 "/>
+<rem:comments>
+Ninguno</rem:comments>
+<rem:importance value = "IMV-0004"/>
+<rem:urgency value = "URV-0004"/>
+<rem:status>
+<rem:tbd/>
+</rem:status>
+<rem:stability>
+<rem:tbd/>
+</rem:stability>
+<rem:description>
+almacenar en una base de datos las mediciones realizadas con los dispositivos a un usuario.</rem:description>
+</rem:functionalRequirement>
+<rem:functionalRequirement
+ oid = "FRQ-0012">
+<rem:name>
+Consulta del histórico de un usuario</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>0</rem:minor>
+<rem:date>
+<rem:year>2022</rem:year>
+<rem:month>3</rem:month>
+<rem:day>21</rem:day>
+</rem:date>
+</rem:version>
+<rem:authors stakeholders ="STK-0002 STK-0003 "/>
+<rem:sources stakeholders ="STK-0001 "/>
+<rem:comments>
+Ninguno</rem:comments>
+<rem:importance value = "IMV-0004"/>
+<rem:urgency value = "URV-0004"/>
+<rem:status value = "STV-0003"/>
+<rem:stability>
+<rem:tbd/>
+</rem:stability>
+<rem:description>
+tener un histórico con todas las mediciones realizadas a un usuario concreto.</rem:description>
+</rem:functionalRequirement>
+<rem:nonFunctionalRequirement
+ oid = "NFR-0001">
+<rem:name>
+Dispositivos</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>0</rem:minor>
+<rem:date>
+<rem:year>2022</rem:year>
+<rem:month>3</rem:month>
+<rem:day>21</rem:day>
 </rem:date>
 </rem:version>
 <rem:authors stakeholders ="STK-0001 "/>
@@ -189,8 +457,35 @@ Ninguno</rem:comments>
 <rem:tbd/>
 </rem:stability>
 <rem:description>
-tener permiso para utilizar el sistema de conexión BLE para poder conectarse a los sensores de la BAN.</rem:description>
-</rem:functionalRequirement>
+estar destinado para dispositivos móviles con sistema operativo Android, para la versión 10 o superior.</rem:description>
+</rem:nonFunctionalRequirement>
+<rem:nonFunctionalRequirement
+ oid = "NFR-0002">
+<rem:name>
+Interfaz responsive</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>0</rem:minor>
+<rem:date>
+<rem:year>2022</rem:year>
+<rem:month>3</rem:month>
+<rem:day>21</rem:day>
+</rem:date>
+</rem:version>
+<rem:authors stakeholders ="STK-0001 "/>
+<rem:comments>
+Ninguno</rem:comments>
+<rem:importance value = "IMV-0002"/>
+<rem:urgency value = "URV-0002"/>
+<rem:status>
+<rem:tbd/>
+</rem:status>
+<rem:stability>
+<rem:tbd/>
+</rem:stability>
+<rem:description>
+tener una interfaz gráfica que se adapte a los distintos tamaños de pantalla.</rem:description>
+</rem:nonFunctionalRequirement>
 </rem:c_requirementsSpecification>
 <rem:d_requirementsSpecification oid = "DRS-0002">
 <rem:name>Documento de Análisis del Sistema</rem:name>
@@ -237,6 +532,36 @@ Ninguno
 Ninguno
 </rem:comments>
 </rem:changeRequestsSpecification>
+<rem:trace source = "FRQ-0005"  target = "FRQ-0008" >
+<rem:isChecked/>
+</rem:trace>
+<rem:trace source = "FRQ-0005"  target = "FRQ-0007" >
+<rem:isChecked/>
+</rem:trace>
+<rem:trace source = "FRQ-0007"  target = "FRQ-0009" >
+<rem:isChecked/>
+</rem:trace>
+<rem:trace source = "FRQ-0005"  target = "FRQ-0009" >
+<rem:isChecked/>
+</rem:trace>
+<rem:trace source = "FRQ-0004"  target = "FRQ-0005" >
+<rem:isChecked/>
+</rem:trace>
+<rem:trace source = "FRQ-0003"  target = "FRQ-0004" >
+<rem:isChecked/>
+</rem:trace>
+<rem:trace source = "FRQ-0001"  target = "FRQ-0012" >
+<rem:isChecked/>
+</rem:trace>
+<rem:trace source = "FRQ-0002"  target = "FRQ-0012" >
+<rem:isChecked/>
+</rem:trace>
+<rem:trace source = "FRQ-0010"  target = "FRQ-0012" >
+<rem:isChecked/>
+</rem:trace>
+<rem:trace source = "FRQ-0011"  target = "FRQ-0012" >
+<rem:isChecked/>
+</rem:trace>
 <rem:predefinedValueTypes>
 <rem:predefinedValueType
  oid = "PVT-0001">
@@ -323,27 +648,6 @@ Alphanumeric strings</rem:description>
 </rem:definition>
 </rem:predefinedValueType>
 <rem:predefinedValueType
- oid = "PVT-0005">
-<rem:name>
-Date</rem:name>
-<rem:version>
-<rem:major>1</rem:major>
-<rem:minor>0</rem:minor>
-<rem:date>
-<rem:year>2000</rem:year>
-<rem:month>10</rem:month>
-<rem:day>30</rem:day>
-</rem:date>
-</rem:version>
-<rem:comments>
-Predefined OCL type (non-standard)</rem:comments>
-<rem:description>
-Dates</rem:description>
-<rem:definition>
-(null)
-</rem:definition>
-</rem:predefinedValueType>
-<rem:predefinedValueType
  oid = "PVT-0006">
 <rem:name>
 Time</rem:name>
@@ -364,10 +668,40 @@ Hour:minutes:seconds</rem:description>
 (null)
 </rem:definition>
 </rem:predefinedValueType>
+<rem:predefinedValueType
+ oid = "PVT-0005">
+<rem:name>
+Date</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>0</rem:minor>
+<rem:date>
+<rem:year>2000</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:comments>
+Predefined OCL type (non-standard)</rem:comments>
+<rem:description>
+Dates</rem:description>
+<rem:definition>
+(null)
+</rem:definition>
+</rem:predefinedValueType>
 </rem:predefinedValueTypes>
 <rem:predefinedValues>
 <rem:changeRequestStatusValue oid = "CRV-0001">
 <rem:name>PD</rem:name>
+</rem:changeRequestStatusValue>
+<rem:changeRequestStatusValue oid = "CRV-0002">
+<rem:name>pendiente de análisis</rem:name>
+</rem:changeRequestStatusValue>
+<rem:changeRequestStatusValue oid = "CRV-0003">
+<rem:name>pendiente de aprobar/rechazar</rem:name>
+</rem:changeRequestStatusValue>
+<rem:changeRequestStatusValue oid = "CRV-0005">
+<rem:name>verificado</rem:name>
 </rem:changeRequestStatusValue>
 <rem:changeRequestStatusValue oid = "CRV-0006">
 <rem:name>rechazado</rem:name>
@@ -375,109 +709,34 @@ Hour:minutes:seconds</rem:description>
 <rem:changeRequestStatusValue oid = "CRV-0004">
 <rem:name>pendiente de realización</rem:name>
 </rem:changeRequestStatusValue>
-<rem:changeRequestStatusValue oid = "CRV-0002">
-<rem:name>pendiente de análisis</rem:name>
-</rem:changeRequestStatusValue>
-<rem:changeRequestStatusValue oid = "CRV-0005">
-<rem:name>verificado</rem:name>
-</rem:changeRequestStatusValue>
-<rem:changeRequestStatusValue oid = "CRV-0003">
-<rem:name>pendiente de aprobar/rechazar</rem:name>
-</rem:changeRequestStatusValue>
+<rem:conflictStatusValue oid = "CSV-0002">
+<rem:name>no resuelto</rem:name>
+</rem:conflictStatusValue>
 <rem:conflictStatusValue oid = "CSV-0001">
 <rem:name>PD</rem:name>
-</rem:conflictStatusValue>
-<rem:conflictStatusValue oid = "CSV-0004">
-<rem:name>resuelto</rem:name>
 </rem:conflictStatusValue>
 <rem:conflictStatusValue oid = "CSV-0003">
 <rem:name>en proceso de negociación</rem:name>
 </rem:conflictStatusValue>
-<rem:conflictStatusValue oid = "CSV-0002">
-<rem:name>no resuelto</rem:name>
+<rem:conflictStatusValue oid = "CSV-0004">
+<rem:name>resuelto</rem:name>
 </rem:conflictStatusValue>
-<rem:defectStatusValue oid = "DSV-0004">
-<rem:name>eliminado</rem:name>
-</rem:defectStatusValue>
 <rem:defectStatusValue oid = "DSV-0002">
 <rem:name>no eliminado</rem:name>
+</rem:defectStatusValue>
+<rem:defectStatusValue oid = "DSV-0003">
+<rem:name>en proceso de negociación</rem:name>
 </rem:defectStatusValue>
 <rem:defectStatusValue oid = "DSV-0001">
 <rem:name>PD</rem:name>
 </rem:defectStatusValue>
-<rem:defectStatusValue oid = "DSV-0003">
-<rem:name>en proceso de negociación</rem:name>
+<rem:defectStatusValue oid = "DSV-0004">
+<rem:name>eliminado</rem:name>
 </rem:defectStatusValue>
 <rem:defectTypeValue oid = "DTV-0001">
 <rem:name>PD</rem:name>
 <rem:description>
 <![CDATA[Por Determinar]]>
-</rem:description>
-</rem:defectTypeValue>
-<rem:defectTypeValue oid = "DTV-0002">
-<rem:name>Ambigüedad</rem:name>
-<rem:description>
-<![CDATA[El requisito o requisitos, aunque comprensibles, tienen más de una interpretación posible]]>
-</rem:description>
-</rem:defectTypeValue>
-<rem:defectTypeValue oid = "DTV-0003">
-<rem:name>No necesidad</rem:name>
-<rem:description>
-<![CDATA[El requisito o requisitos no son necesarios porque no contribuyen a satisfacer ninguna necesidad de clientes o usuarios]]>
-</rem:description>
-</rem:defectTypeValue>
-<rem:defectTypeValue oid = "DTV-0004">
-<rem:name>Incomprensibilidad</rem:name>
-<rem:description>
-<![CDATA[El requisito o requisitos no pueden ser entendidos por algún lector]]>
-</rem:description>
-</rem:defectTypeValue>
-<rem:defectTypeValue oid = "DTV-0005">
-<rem:name>No verificabilidad</rem:name>
-<rem:description>
-<![CDATA[No se puede comprobar que el sistema satisface el requisito o requisitos]]>
-</rem:description>
-</rem:defectTypeValue>
-<rem:defectTypeValue oid = "DTV-0015">
-<rem:name>Nivel incorrecto de detalle</rem:name>
-<rem:description>
-<![CDATA[El requisito o requisitos no están expresados con el nivel adecuado de detalle, es decir, son demasiado abstractos o demasiado detallados]]>
-</rem:description>
-</rem:defectTypeValue>
-<rem:defectTypeValue oid = "DTV-0016">
-<rem:name>No rastreabilidad</rem:name>
-<rem:description>
-<![CDATA[El requisito o requisitos no están trazados hacia sus orígenes, bien requisitos de nivel superior (objetivos), bien clientes y usuarios]]>
-</rem:description>
-</rem:defectTypeValue>
-<rem:defectTypeValue oid = "DTV-0006">
-<rem:name>Inconsistencia</rem:name>
-<rem:description>
-<![CDATA[El requisito o requisitos no son consistentes, es decir, presentan contradicciones internas o entre varios]]>
-</rem:description>
-</rem:defectTypeValue>
-<rem:defectTypeValue oid = "DTV-0023">
-<rem:name>Otro</rem:name>
-<rem:description>
-<![CDATA[El requisito o requisitos presentan otro tipo de defecto]]>
-</rem:description>
-</rem:defectTypeValue>
-<rem:defectTypeValue oid = "DTV-0008">
-<rem:name>Verbosidad excesiva</rem:name>
-<rem:description>
-<![CDATA[El requisito o requisitos pueden expresarse de forma más concisa sin alterar su significado]]>
-</rem:description>
-</rem:defectTypeValue>
-<rem:defectTypeValue oid = "DTV-0014">
-<rem:name>Estabilidad no establecida</rem:name>
-<rem:description>
-<![CDATA[El requisito o requisitos no tienen estimada su estabilidad]]>
-</rem:description>
-</rem:defectTypeValue>
-<rem:defectTypeValue oid = "DTV-0007">
-<rem:name>No implementabilidad</rem:name>
-<rem:description>
-<![CDATA[El requisito o requisitos no pueden ser implementados con la tecnología actual o dentro de un coste razonable]]>
 </rem:description>
 </rem:defectTypeValue>
 <rem:defectTypeValue oid = "DTV-0009">
@@ -486,22 +745,40 @@ Hour:minutes:seconds</rem:description>
 <![CDATA[El requisito o requisitos incluyen elementos dependientes del diseño del sistema]]>
 </rem:description>
 </rem:defectTypeValue>
+<rem:defectTypeValue oid = "DTV-0014">
+<rem:name>Estabilidad no establecida</rem:name>
+<rem:description>
+<![CDATA[El requisito o requisitos no tienen estimada su estabilidad]]>
+</rem:description>
+</rem:defectTypeValue>
+<rem:defectTypeValue oid = "DTV-0003">
+<rem:name>No necesidad</rem:name>
+<rem:description>
+<![CDATA[El requisito o requisitos no son necesarios porque no contribuyen a satisfacer ninguna necesidad de clientes o usuarios]]>
+</rem:description>
+</rem:defectTypeValue>
+<rem:defectTypeValue oid = "DTV-0002">
+<rem:name>Ambigüedad</rem:name>
+<rem:description>
+<![CDATA[El requisito o requisitos, aunque comprensibles, tienen más de una interpretación posible]]>
+</rem:description>
+</rem:defectTypeValue>
 <rem:defectTypeValue oid = "DTV-0017">
 <rem:name>Organización incorrecta</rem:name>
 <rem:description>
 <![CDATA[El requisito o requisitos no están organizados correctamente según la normativa aplicada o el documento no contiene las secciones obligatorias]]>
 </rem:description>
 </rem:defectTypeValue>
-<rem:defectTypeValue oid = "DTV-0011">
-<rem:name>Imprecisión</rem:name>
+<rem:defectTypeValue oid = "DTV-0008">
+<rem:name>Verbosidad excesiva</rem:name>
 <rem:description>
-<![CDATA[El requisito o requisitos no se expresan de forma precisa, es decir, usando cantidades numéricas siempre que sea posible con el nivel adecuado de precisión]]>
+<![CDATA[El requisito o requisitos pueden expresarse de forma más concisa sin alterar su significado]]>
 </rem:description>
 </rem:defectTypeValue>
-<rem:defectTypeValue oid = "DTV-0012">
-<rem:name>Incompleción</rem:name>
+<rem:defectTypeValue oid = "DTV-0023">
+<rem:name>Otro</rem:name>
 <rem:description>
-<![CDATA[El requisito o requisitos no describen todo lo que el sistema se supone que deberá hacer, no describen las respuestas del sistema a todas las posibles situaciones o incluyen elementos por determinar (PD)]]>
+<![CDATA[El requisito o requisitos presentan otro tipo de defecto]]>
 </rem:description>
 </rem:defectTypeValue>
 <rem:defectTypeValue oid = "DTV-0010">
@@ -516,95 +793,143 @@ Hour:minutes:seconds</rem:description>
 <![CDATA[El requisito o requisitos no tienen establecida su prioridad, es decir, su importancia y su urgencia]]>
 </rem:description>
 </rem:defectTypeValue>
-<rem:importanceValue oid = "IMV-0004">
-<rem:name>quedaría bien</rem:name>
-</rem:importanceValue>
-<rem:importanceValue oid = "IMV-0001">
-<rem:name>PD</rem:name>
+<rem:defectTypeValue oid = "DTV-0015">
+<rem:name>Nivel incorrecto de detalle</rem:name>
+<rem:description>
+<![CDATA[El requisito o requisitos no están expresados con el nivel adecuado de detalle, es decir, son demasiado abstractos o demasiado detallados]]>
+</rem:description>
+</rem:defectTypeValue>
+<rem:defectTypeValue oid = "DTV-0016">
+<rem:name>No rastreabilidad</rem:name>
+<rem:description>
+<![CDATA[El requisito o requisitos no están trazados hacia sus orígenes, bien requisitos de nivel superior (objetivos), bien clientes y usuarios]]>
+</rem:description>
+</rem:defectTypeValue>
+<rem:defectTypeValue oid = "DTV-0004">
+<rem:name>Incomprensibilidad</rem:name>
+<rem:description>
+<![CDATA[El requisito o requisitos no pueden ser entendidos por algún lector]]>
+</rem:description>
+</rem:defectTypeValue>
+<rem:defectTypeValue oid = "DTV-0005">
+<rem:name>No verificabilidad</rem:name>
+<rem:description>
+<![CDATA[No se puede comprobar que el sistema satisface el requisito o requisitos]]>
+</rem:description>
+</rem:defectTypeValue>
+<rem:defectTypeValue oid = "DTV-0006">
+<rem:name>Inconsistencia</rem:name>
+<rem:description>
+<![CDATA[El requisito o requisitos no son consistentes, es decir, presentan contradicciones internas o entre varios]]>
+</rem:description>
+</rem:defectTypeValue>
+<rem:defectTypeValue oid = "DTV-0007">
+<rem:name>No implementabilidad</rem:name>
+<rem:description>
+<![CDATA[El requisito o requisitos no pueden ser implementados con la tecnología actual o dentro de un coste razonable]]>
+</rem:description>
+</rem:defectTypeValue>
+<rem:defectTypeValue oid = "DTV-0012">
+<rem:name>Incompleción</rem:name>
+<rem:description>
+<![CDATA[El requisito o requisitos no describen todo lo que el sistema se supone que deberá hacer, no describen las respuestas del sistema a todas las posibles situaciones o incluyen elementos por determinar (PD)]]>
+</rem:description>
+</rem:defectTypeValue>
+<rem:defectTypeValue oid = "DTV-0011">
+<rem:name>Imprecisión</rem:name>
+<rem:description>
+<![CDATA[El requisito o requisitos no se expresan de forma precisa, es decir, usando cantidades numéricas siempre que sea posible con el nivel adecuado de precisión]]>
+</rem:description>
+</rem:defectTypeValue>
+<rem:importanceValue oid = "IMV-0003">
+<rem:name>importante</rem:name>
 </rem:importanceValue>
 <rem:importanceValue oid = "IMV-0002">
 <rem:name>vital</rem:name>
 </rem:importanceValue>
-<rem:importanceValue oid = "IMV-0003">
-<rem:name>importante</rem:name>
+<rem:importanceValue oid = "IMV-0001">
+<rem:name>PD</rem:name>
+</rem:importanceValue>
+<rem:importanceValue oid = "IMV-0004">
+<rem:name>quedaría bien</rem:name>
 </rem:importanceValue>
 <rem:stabilityValue oid = "SBV-0002">
 <rem:name>baja</rem:name>
 </rem:stabilityValue>
-<rem:stabilityValue oid = "SBV-0003">
-<rem:name>media</rem:name>
-</rem:stabilityValue>
 <rem:stabilityValue oid = "SBV-0001">
 <rem:name>PD</rem:name>
+</rem:stabilityValue>
+<rem:stabilityValue oid = "SBV-0003">
+<rem:name>media</rem:name>
 </rem:stabilityValue>
 <rem:stabilityValue oid = "SBV-0004">
 <rem:name>alta</rem:name>
 </rem:stabilityValue>
-<rem:statusValue oid = "STV-0001">
-<rem:name>PD</rem:name>
-</rem:statusValue>
-<rem:statusValue oid = "STV-0004">
-<rem:name>pendiente de validación</rem:name>
-</rem:statusValue>
-<rem:statusValue oid = "STV-0005">
-<rem:name>validado</rem:name>
-</rem:statusValue>
 <rem:statusValue oid = "STV-0002">
 <rem:name>en construcción</rem:name>
 </rem:statusValue>
 <rem:statusValue oid = "STV-0003">
 <rem:name>pendiente de verificación</rem:name>
 </rem:statusValue>
+<rem:statusValue oid = "STV-0005">
+<rem:name>validado</rem:name>
+</rem:statusValue>
+<rem:statusValue oid = "STV-0001">
+<rem:name>PD</rem:name>
+</rem:statusValue>
+<rem:statusValue oid = "STV-0004">
+<rem:name>pendiente de validación</rem:name>
+</rem:statusValue>
 <rem:terminationValue oid = "TEV-0001">
 <rem:name>PD</rem:name>
-</rem:terminationValue>
-<rem:terminationValue oid = "TEV-0002">
-<rem:name>continúa</rem:name>
 </rem:terminationValue>
 <rem:terminationValue oid = "TEV-0003">
 <rem:name>queda sin efecto</rem:name>
 </rem:terminationValue>
-<rem:timeUnitValue oid = "TUV-0001">
-<rem:name>PD</rem:name>
-</rem:timeUnitValue>
-<rem:timeUnitValue oid = "TUV-0008">
-<rem:name>día(s)</rem:name>
-</rem:timeUnitValue>
-<rem:timeUnitValue oid = "TUV-0009">
-<rem:name>hora(s)</rem:name>
+<rem:terminationValue oid = "TEV-0002">
+<rem:name>continúa</rem:name>
+</rem:terminationValue>
+<rem:timeUnitValue oid = "TUV-0012">
+<rem:name>décima(s) de segundo</rem:name>
 </rem:timeUnitValue>
 <rem:timeUnitValue oid = "TUV-0010">
 <rem:name>minuto(s)</rem:name>
 </rem:timeUnitValue>
-<rem:timeUnitValue oid = "TUV-0002">
-<rem:name>año(s)</rem:name>
-</rem:timeUnitValue>
-<rem:timeUnitValue oid = "TUV-0005">
-<rem:name>mes(es)</rem:name>
-</rem:timeUnitValue>
-<rem:timeUnitValue oid = "TUV-0007">
-<rem:name>semana(s)</rem:name>
-</rem:timeUnitValue>
 <rem:timeUnitValue oid = "TUV-0011">
 <rem:name>segundo(s)</rem:name>
-</rem:timeUnitValue>
-<rem:timeUnitValue oid = "TUV-0012">
-<rem:name>décima(s) de segundo</rem:name>
-</rem:timeUnitValue>
-<rem:timeUnitValue oid = "TUV-0014">
-<rem:name>milisegundo(s)</rem:name>
 </rem:timeUnitValue>
 <rem:timeUnitValue oid = "TUV-0013">
 <rem:name>centésima(s) de segundo</rem:name>
 </rem:timeUnitValue>
+<rem:timeUnitValue oid = "TUV-0014">
+<rem:name>milisegundo(s)</rem:name>
+</rem:timeUnitValue>
+<rem:timeUnitValue oid = "TUV-0009">
+<rem:name>hora(s)</rem:name>
+</rem:timeUnitValue>
+<rem:timeUnitValue oid = "TUV-0001">
+<rem:name>PD</rem:name>
+</rem:timeUnitValue>
+<rem:timeUnitValue oid = "TUV-0007">
+<rem:name>semana(s)</rem:name>
+</rem:timeUnitValue>
+<rem:timeUnitValue oid = "TUV-0005">
+<rem:name>mes(es)</rem:name>
+</rem:timeUnitValue>
+<rem:timeUnitValue oid = "TUV-0008">
+<rem:name>día(s)</rem:name>
+</rem:timeUnitValue>
+<rem:timeUnitValue oid = "TUV-0002">
+<rem:name>año(s)</rem:name>
+</rem:timeUnitValue>
 <rem:urgencyValue oid = "URV-0002">
 <rem:name>inmediatamente</rem:name>
 </rem:urgencyValue>
-<rem:urgencyValue oid = "URV-0003">
-<rem:name>hay presión</rem:name>
-</rem:urgencyValue>
 <rem:urgencyValue oid = "URV-0001">
 <rem:name>PD</rem:name>
+</rem:urgencyValue>
+<rem:urgencyValue oid = "URV-0003">
+<rem:name>hay presión</rem:name>
 </rem:urgencyValue>
 <rem:urgencyValue oid = "URV-0004">
 <rem:name>puede esperar</rem:name>
