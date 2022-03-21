@@ -2,9 +2,7 @@ package com.example.ble1_c
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.bluetooth.BluetoothAdapter
-import android.bluetooth.BluetoothDevice
-import android.bluetooth.BluetoothManager
+import android.bluetooth.*
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
@@ -13,12 +11,14 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.example.ble1_c.databinding.ActivityMainBinding
 import android.bluetooth.le.*
+import android.content.BroadcastReceiver
 import android.content.Context
-import android.os.Handler
-import java.util.concurrent.TimeUnit
-import kotlin.concurrent.thread
 
 // Tomando como referencia: https://www.youtube.com/watch?v=PtN6UTIu7yw
+
+// GUIAS A SEGUIR PARA CONECTAR:
+// https://developer.android.com/guide/topics/connectivity/bluetooth?hl=es-419#kotlin
+// https://learntutorials.net/es/android/topic/10020/bluetooth-low-energy
 
 class MainActivity : AppCompatActivity() {
 
@@ -232,7 +232,7 @@ class MainActivity : AppCompatActivity() {
         object : ScanCallback() {
             @SuppressLint("MissingPermission")
             override fun onScanResult(callbackType: Int, result: ScanResult?) {
-                //super.onScanResult(callbackType, result)
+                super.onScanResult(callbackType, result)
                 val bluetoothDevice = result?.device
                 if(bluetoothDevice != null) {
                     //deviceList.add("Nombre del dispositivo ${bluetoothDevice.name}, Dirección ${bluetoothDevice.uuids}")
@@ -246,5 +246,34 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
+    // Create a BroadcastReceiver for ACTION_FOUND.
+    // Esto sirve para recibir información sobre cada dispositivo detectado.
+    private val receiver = object : BroadcastReceiver() {
+
+        @SuppressLint("MissingPermission")
+        override fun onReceive(context: Context, intent: Intent) {
+            val action: String? = intent.action
+            when(action) {
+                BluetoothDevice.ACTION_FOUND -> {
+                    // Discovery has found a device. Get the BluetoothDevice
+                    // object and its info from the Intent.
+                    val device: BluetoothDevice? =
+                        intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE)
+                    val deviceName = device?.name
+                    val deviceHardwareAddress = device?.address // MAC address
+                }
+            }
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        //...
+
+        // Don't forget to unregister the ACTION_FOUND receiver.
+        unregisterReceiver(receiver)
+    }
+
 
 }
