@@ -1,33 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <rem:log xmlns:rem="http://rem.lsi.us.es">
 <rem:change>
-<rem:type>U</rem:type>
-<rem:owner>FRQ-0010</rem:owner><rem:date>
-<rem:year>2022</rem:year>
-<rem:month>3</rem:month>
-<rem:day>21</rem:day>
-</rem:date>
-<rem:description><![CDATA[Añadida traza hacia [FRQ-0012] Consulta del histórico de un usuario]]></rem:description>
-</rem:change>
-<rem:change>
-<rem:type>U</rem:type>
-<rem:owner>FRQ-0011</rem:owner><rem:date>
-<rem:year>2022</rem:year>
-<rem:month>3</rem:month>
-<rem:day>21</rem:day>
-</rem:date>
-<rem:description><![CDATA[Añadida traza hacia [FRQ-0012] Consulta del histórico de un usuario]]></rem:description>
-</rem:change>
-<rem:change>
-<rem:type>C</rem:type>
-<rem:owner>DFS-0003</rem:owner><rem:date>
-<rem:year>2022</rem:year>
-<rem:month>3</rem:month>
-<rem:day>20</rem:day>
-</rem:date>
-<rem:description><![CDATA[Documento creado]]></rem:description>
-</rem:change>
-<rem:change>
 <rem:type>C</rem:type>
 <rem:owner>CHS-0004</rem:owner><rem:date>
 <rem:year>2022</rem:year>
@@ -37,17 +10,48 @@
 <rem:description><![CDATA[Documento creado]]></rem:description>
 </rem:change>
 <rem:change>
-<rem:type>S</rem:type>
-<rem:owner>DFS-0003</rem:owner><rem:date>
+<rem:type>C</rem:type>
+<rem:owner>FRQ-0001</rem:owner><rem:date>
 <rem:year>2022</rem:year>
 <rem:month>3</rem:month>
 <rem:day>20</rem:day>
 </rem:date>
-<rem:description><![CDATA[Documento guardado]]></rem:description>
+<rem:description><![CDATA[Creación]]></rem:description>
+</rem:change>
+<rem:change>
+<rem:type>C</rem:type>
+<rem:owner>NFR-0003</rem:owner><rem:date>
+<rem:year>2022</rem:year>
+<rem:month>3</rem:month>
+<rem:day>24</rem:day>
+</rem:date>
+<rem:description><![CDATA[Creación]]></rem:description>
+</rem:change>
+<rem:change>
+<rem:type>U</rem:type>
+<rem:owner>FRQ-0001</rem:owner><rem:date>
+<rem:year>2022</rem:year>
+<rem:month>3</rem:month>
+<rem:day>24</rem:day>
+</rem:date>
+<rem:description><![CDATA[Propiedad [Comments] actualizada [Ninguno] -> [TAREAS:
+- Tareas FRQ-0010
+- Crear una tabla en la base de datos para los sanitarios
+- Crear un botón para acceder a la activity del formulario de registro, con los campos que se estimen necesarios
+- Implementar un método que cree un nuevo registro en la tabla para sanitarios en la base de datos, enviando los parámetros recogidos en los campos del formulario]]]></rem:description>
+</rem:change>
+<rem:change>
+<rem:type>C</rem:type>
+<rem:owner>DRS-0002</rem:owner><rem:date>
+<rem:year>2022</rem:year>
+<rem:month>3</rem:month>
+<rem:day>20</rem:day>
+</rem:date>
+<rem:description><![CDATA[Documento creado]]></rem:description>
 </rem:change>
 <rem:change>
 <rem:type>S</rem:type>
-<rem:owner>CRS-0001</rem:owner><rem:date>
+<rem:owner>DRS-0002</rem:owner><rem:date>
 <rem:year>2022</rem:year>
 <rem:month>3</rem:month>
 <rem:day>20</rem:day>
@@ -64,8 +68,35 @@
 <rem:description><![CDATA[Documento creado]]></rem:description>
 </rem:change>
 <rem:change>
+<rem:type>S</rem:type>
+<rem:owner>CRS-0001</rem:owner><rem:date>
+<rem:year>2022</rem:year>
+<rem:month>3</rem:month>
+<rem:day>20</rem:day>
+</rem:date>
+<rem:description><![CDATA[Documento guardado]]></rem:description>
+</rem:change>
+<rem:change>
+<rem:type>D</rem:type>
+<rem:owner>CRS-0001</rem:owner><rem:date>
+<rem:year>2022</rem:year>
+<rem:month>3</rem:month>
+<rem:day>20</rem:day>
+</rem:date>
+<rem:description><![CDATA[Eliminado el objeto [STK-0001]  con 0 hijos y 1 cambios]]></rem:description>
+</rem:change>
+<rem:change>
+<rem:type>D</rem:type>
+<rem:owner>CRS-0001</rem:owner><rem:date>
+<rem:year>2022</rem:year>
+<rem:month>3</rem:month>
+<rem:day>20</rem:day>
+</rem:date>
+<rem:description><![CDATA[Eliminado el objeto [STK-0001]  con 0 hijos y 1 cambios]]></rem:description>
+</rem:change>
+<rem:change>
 <rem:type>C</rem:type>
-<rem:owner>DRS-0002</rem:owner><rem:date>
+<rem:owner>DFS-0003</rem:owner><rem:date>
 <rem:year>2022</rem:year>
 <rem:month>3</rem:month>
 <rem:day>20</rem:day>
@@ -79,7 +110,25 @@
 <rem:month>3</rem:month>
 <rem:day>20</rem:day>
 </rem:date>
-<rem:description><![CDATA[Eliminado el objeto [STK-0001]  con 0 hijos y 1 cambios]]></rem:description>
+<rem:description><![CDATA[Eliminado el objeto [ORG-0001]  con 0 hijos y 1 cambios]]></rem:description>
+</rem:change>
+<rem:change>
+<rem:type>S</rem:type>
+<rem:owner>CHS-0004</rem:owner><rem:date>
+<rem:year>2022</rem:year>
+<rem:month>3</rem:month>
+<rem:day>20</rem:day>
+</rem:date>
+<rem:description><![CDATA[Documento guardado]]></rem:description>
+</rem:change>
+<rem:change>
+<rem:type>D</rem:type>
+<rem:owner>CRS-0001</rem:owner><rem:date>
+<rem:year>2022</rem:year>
+<rem:month>3</rem:month>
+<rem:day>20</rem:day>
+</rem:date>
+<rem:description><![CDATA[Eliminado el objeto [ORG-0001]  con 0 hijos y 1 cambios]]></rem:description>
 </rem:change>
 <rem:change>
 <rem:type>D</rem:type>
@@ -91,8 +140,26 @@
 <rem:description><![CDATA[Eliminado el objeto [FRQ-0001]  con 0 hijos y 1 cambios]]></rem:description>
 </rem:change>
 <rem:change>
+<rem:type>D</rem:type>
+<rem:owner>CRS-0001</rem:owner><rem:date>
+<rem:year>2022</rem:year>
+<rem:month>3</rem:month>
+<rem:day>20</rem:day>
+</rem:date>
+<rem:description><![CDATA[Eliminado el objeto [STK-0001]  con 0 hijos y 1 cambios]]></rem:description>
+</rem:change>
+<rem:change>
+<rem:type>C</rem:type>
+<rem:owner>NFR-0004</rem:owner><rem:date>
+<rem:year>2022</rem:year>
+<rem:month>3</rem:month>
+<rem:day>24</rem:day>
+</rem:date>
+<rem:description><![CDATA[Creación]]></rem:description>
+</rem:change>
+<rem:change>
 <rem:type>S</rem:type>
-<rem:owner>DRS-0002</rem:owner><rem:date>
+<rem:owner>DFS-0003</rem:owner><rem:date>
 <rem:year>2022</rem:year>
 <rem:month>3</rem:month>
 <rem:day>20</rem:day>
@@ -106,43 +173,7 @@
 <rem:month>3</rem:month>
 <rem:day>20</rem:day>
 </rem:date>
-<rem:description><![CDATA[Eliminado el objeto [STK-0001]  con 0 hijos y 1 cambios]]></rem:description>
-</rem:change>
-<rem:change>
-<rem:type>D</rem:type>
-<rem:owner>CRS-0001</rem:owner><rem:date>
-<rem:year>2022</rem:year>
-<rem:month>3</rem:month>
-<rem:day>20</rem:day>
-</rem:date>
-<rem:description><![CDATA[Eliminado el objeto [ORG-0001]  con 0 hijos y 1 cambios]]></rem:description>
-</rem:change>
-<rem:change>
-<rem:type>D</rem:type>
-<rem:owner>CRS-0001</rem:owner><rem:date>
-<rem:year>2022</rem:year>
-<rem:month>3</rem:month>
-<rem:day>20</rem:day>
-</rem:date>
-<rem:description><![CDATA[Eliminado el objeto [ORG-0001]  con 0 hijos y 1 cambios]]></rem:description>
-</rem:change>
-<rem:change>
-<rem:type>D</rem:type>
-<rem:owner>CRS-0001</rem:owner><rem:date>
-<rem:year>2022</rem:year>
-<rem:month>3</rem:month>
-<rem:day>20</rem:day>
-</rem:date>
 <rem:description><![CDATA[Eliminado el objeto [ACT-0001]  con 0 hijos y 1 cambios]]></rem:description>
-</rem:change>
-<rem:change>
-<rem:type>C</rem:type>
-<rem:owner>ORG-0001</rem:owner><rem:date>
-<rem:year>2022</rem:year>
-<rem:month>3</rem:month>
-<rem:day>20</rem:day>
-</rem:date>
-<rem:description><![CDATA[Creación]]></rem:description>
 </rem:change>
 <rem:change>
 <rem:type>D</rem:type>
@@ -155,21 +186,98 @@
 </rem:change>
 <rem:change>
 <rem:type>S</rem:type>
-<rem:owner>CHS-0004</rem:owner><rem:date>
+<rem:owner>DFS-0003</rem:owner><rem:date>
 <rem:year>2022</rem:year>
 <rem:month>3</rem:month>
-<rem:day>20</rem:day>
+<rem:day>21</rem:day>
 </rem:date>
 <rem:description><![CDATA[Documento guardado]]></rem:description>
 </rem:change>
 <rem:change>
-<rem:type>D</rem:type>
+<rem:type>S</rem:type>
+<rem:owner>DFS-0003</rem:owner><rem:date>
+<rem:year>2022</rem:year>
+<rem:month>3</rem:month>
+<rem:day>21</rem:day>
+</rem:date>
+<rem:description><![CDATA[Documento guardado]]></rem:description>
+</rem:change>
+<rem:change>
+<rem:type>U</rem:type>
+<rem:owner>FRQ-0001</rem:owner><rem:date>
+<rem:year>2022</rem:year>
+<rem:month>3</rem:month>
+<rem:day>21</rem:day>
+</rem:date>
+<rem:description><![CDATA[Propiedad [Importance] actualizada [importante] -> [quedaría bien]]]></rem:description>
+</rem:change>
+<rem:change>
+<rem:type>U</rem:type>
+<rem:owner>FRQ-0006</rem:owner><rem:date>
+<rem:year>2022</rem:year>
+<rem:month>3</rem:month>
+<rem:day>24</rem:day>
+</rem:date>
+<rem:description><![CDATA[Propiedad [Comments] actualizada [Ninguno] -> [TAREAS:
+- Tareas FRQ-0004
+- Añadir un botón al layout de la app
+- Implementar un método que active y pare la recepción de datos que puedan ser analizados por el algoritmo de la FRQ-0005.
+
+ESTE REQUISITO PUEDE SER OPCIONAL. La app puede comenzar las mediciones de forma automática sin necesidad de añadir un botón.]]]></rem:description>
+</rem:change>
+<rem:change>
+<rem:type>S</rem:type>
+<rem:owner>CHS-0004</rem:owner><rem:date>
+<rem:year>2022</rem:year>
+<rem:month>3</rem:month>
+<rem:day>21</rem:day>
+</rem:date>
+<rem:description><![CDATA[Documento guardado]]></rem:description>
+</rem:change>
+<rem:change>
+<rem:type>S</rem:type>
 <rem:owner>CRS-0001</rem:owner><rem:date>
 <rem:year>2022</rem:year>
 <rem:month>3</rem:month>
-<rem:day>20</rem:day>
+<rem:day>21</rem:day>
 </rem:date>
-<rem:description><![CDATA[Eliminado el objeto [STK-0001]  con 0 hijos y 1 cambios]]></rem:description>
+<rem:description><![CDATA[Documento guardado]]></rem:description>
+</rem:change>
+<rem:change>
+<rem:type>S</rem:type>
+<rem:owner>CHS-0004</rem:owner><rem:date>
+<rem:year>2022</rem:year>
+<rem:month>3</rem:month>
+<rem:day>21</rem:day>
+</rem:date>
+<rem:description><![CDATA[Documento guardado]]></rem:description>
+</rem:change>
+<rem:change>
+<rem:type>S</rem:type>
+<rem:owner>CRS-0001</rem:owner><rem:date>
+<rem:year>2022</rem:year>
+<rem:month>3</rem:month>
+<rem:day>21</rem:day>
+</rem:date>
+<rem:description><![CDATA[Documento guardado]]></rem:description>
+</rem:change>
+<rem:change>
+<rem:type>S</rem:type>
+<rem:owner>CHS-0004</rem:owner><rem:date>
+<rem:year>2022</rem:year>
+<rem:month>3</rem:month>
+<rem:day>21</rem:day>
+</rem:date>
+<rem:description><![CDATA[Documento guardado]]></rem:description>
+</rem:change>
+<rem:change>
+<rem:type>S</rem:type>
+<rem:owner>DRS-0002</rem:owner><rem:date>
+<rem:year>2022</rem:year>
+<rem:month>3</rem:month>
+<rem:day>21</rem:day>
+</rem:date>
+<rem:description><![CDATA[Documento guardado]]></rem:description>
 </rem:change>
 <rem:change>
 <rem:type>U</rem:type>
@@ -181,29 +289,38 @@
 <rem:description><![CDATA[Añadida traza hacia [FRQ-0012] Consulta del histórico de un usuario]]></rem:description>
 </rem:change>
 <rem:change>
-<rem:type>C</rem:type>
-<rem:owner>NFR-0002</rem:owner><rem:date>
+<rem:type>S</rem:type>
+<rem:owner>DFS-0003</rem:owner><rem:date>
 <rem:year>2022</rem:year>
 <rem:month>3</rem:month>
 <rem:day>21</rem:day>
 </rem:date>
-<rem:description><![CDATA[Creación]]></rem:description>
+<rem:description><![CDATA[Documento guardado]]></rem:description>
 </rem:change>
 <rem:change>
-<rem:type>C</rem:type>
-<rem:owner>FRQ-0001</rem:owner><rem:date>
+<rem:type>S</rem:type>
+<rem:owner>DRS-0002</rem:owner><rem:date>
 <rem:year>2022</rem:year>
 <rem:month>3</rem:month>
-<rem:day>20</rem:day>
+<rem:day>21</rem:day>
 </rem:date>
-<rem:description><![CDATA[Creación]]></rem:description>
+<rem:description><![CDATA[Documento guardado]]></rem:description>
 </rem:change>
 <rem:change>
 <rem:type>S</rem:type>
 <rem:owner>CRS-0001</rem:owner><rem:date>
 <rem:year>2022</rem:year>
 <rem:month>3</rem:month>
-<rem:day>20</rem:day>
+<rem:day>21</rem:day>
+</rem:date>
+<rem:description><![CDATA[Documento guardado]]></rem:description>
+</rem:change>
+<rem:change>
+<rem:type>S</rem:type>
+<rem:owner>DRS-0002</rem:owner><rem:date>
+<rem:year>2022</rem:year>
+<rem:month>3</rem:month>
+<rem:day>21</rem:day>
 </rem:date>
 <rem:description><![CDATA[Documento guardado]]></rem:description>
 </rem:change>
@@ -218,7 +335,16 @@
 </rem:change>
 <rem:change>
 <rem:type>S</rem:type>
-<rem:owner>DRS-0002</rem:owner><rem:date>
+<rem:owner>CHS-0004</rem:owner><rem:date>
+<rem:year>2022</rem:year>
+<rem:month>3</rem:month>
+<rem:day>20</rem:day>
+</rem:date>
+<rem:description><![CDATA[Documento guardado]]></rem:description>
+</rem:change>
+<rem:change>
+<rem:type>S</rem:type>
+<rem:owner>DFS-0003</rem:owner><rem:date>
 <rem:year>2022</rem:year>
 <rem:month>3</rem:month>
 <rem:day>20</rem:day>
@@ -236,7 +362,52 @@
 </rem:change>
 <rem:change>
 <rem:type>S</rem:type>
-<rem:owner>DRS-0002</rem:owner><rem:date>
+<rem:owner>DFS-0003</rem:owner><rem:date>
+<rem:year>2022</rem:year>
+<rem:month>3</rem:month>
+<rem:day>20</rem:day>
+</rem:date>
+<rem:description><![CDATA[Documento guardado]]></rem:description>
+</rem:change>
+<rem:change>
+<rem:type>D</rem:type>
+<rem:owner>CRS-0001</rem:owner><rem:date>
+<rem:year>2022</rem:year>
+<rem:month>3</rem:month>
+<rem:day>21</rem:day>
+</rem:date>
+<rem:description><![CDATA[Eliminado el objeto [FRQ-0006] Mediciones de señales con 0 hijos y 1 cambios]]></rem:description>
+</rem:change>
+<rem:change>
+<rem:type>D</rem:type>
+<rem:owner>CRS-0001</rem:owner><rem:date>
+<rem:year>2022</rem:year>
+<rem:month>3</rem:month>
+<rem:day>21</rem:day>
+</rem:date>
+<rem:description><![CDATA[Eliminado el objeto [FRQ-0005] Botón de toma de datos con 0 hijos y 3 cambios]]></rem:description>
+</rem:change>
+<rem:change>
+<rem:type>S</rem:type>
+<rem:owner>DFS-0003</rem:owner><rem:date>
+<rem:year>2022</rem:year>
+<rem:month>3</rem:month>
+<rem:day>20</rem:day>
+</rem:date>
+<rem:description><![CDATA[Documento guardado]]></rem:description>
+</rem:change>
+<rem:change>
+<rem:type>C</rem:type>
+<rem:owner>FRQ-0006</rem:owner><rem:date>
+<rem:year>2022</rem:year>
+<rem:month>3</rem:month>
+<rem:day>21</rem:day>
+</rem:date>
+<rem:description><![CDATA[Creación]]></rem:description>
+</rem:change>
+<rem:change>
+<rem:type>S</rem:type>
+<rem:owner>CRS-0001</rem:owner><rem:date>
 <rem:year>2022</rem:year>
 <rem:month>3</rem:month>
 <rem:day>20</rem:day>
@@ -245,7 +416,7 @@
 </rem:change>
 <rem:change>
 <rem:type>S</rem:type>
-<rem:owner>DFS-0003</rem:owner><rem:date>
+<rem:owner>CHS-0004</rem:owner><rem:date>
 <rem:year>2022</rem:year>
 <rem:month>3</rem:month>
 <rem:day>20</rem:day>
@@ -263,21 +434,12 @@
 </rem:change>
 <rem:change>
 <rem:type>S</rem:type>
-<rem:owner>CHS-0004</rem:owner><rem:date>
+<rem:owner>DRS-0002</rem:owner><rem:date>
 <rem:year>2022</rem:year>
 <rem:month>3</rem:month>
 <rem:day>20</rem:day>
 </rem:date>
 <rem:description><![CDATA[Documento guardado]]></rem:description>
-</rem:change>
-<rem:change>
-<rem:type>D</rem:type>
-<rem:owner>CRS-0001</rem:owner><rem:date>
-<rem:year>2022</rem:year>
-<rem:month>3</rem:month>
-<rem:day>21</rem:day>
-</rem:date>
-<rem:description><![CDATA[Eliminado el objeto [FRQ-0006] Mediciones de señales con 0 hijos y 1 cambios]]></rem:description>
 </rem:change>
 <rem:change>
 <rem:type>S</rem:type>
@@ -289,49 +451,13 @@
 <rem:description><![CDATA[Documento guardado]]></rem:description>
 </rem:change>
 <rem:change>
-<rem:type>D</rem:type>
-<rem:owner>CRS-0001</rem:owner><rem:date>
-<rem:year>2022</rem:year>
-<rem:month>3</rem:month>
-<rem:day>21</rem:day>
-</rem:date>
-<rem:description><![CDATA[Eliminado el objeto [FRQ-0005] Botón de toma de datos con 0 hijos y 3 cambios]]></rem:description>
-</rem:change>
-<rem:change>
-<rem:type>C</rem:type>
-<rem:owner>FRQ-0004</rem:owner><rem:date>
-<rem:year>2022</rem:year>
-<rem:month>3</rem:month>
-<rem:day>21</rem:day>
-</rem:date>
-<rem:description><![CDATA[Creación]]></rem:description>
-</rem:change>
-<rem:change>
 <rem:type>S</rem:type>
-<rem:owner>DFS-0003</rem:owner><rem:date>
+<rem:owner>DRS-0002</rem:owner><rem:date>
 <rem:year>2022</rem:year>
 <rem:month>3</rem:month>
 <rem:day>20</rem:day>
 </rem:date>
 <rem:description><![CDATA[Documento guardado]]></rem:description>
-</rem:change>
-<rem:change>
-<rem:type>C</rem:type>
-<rem:owner>FRQ-0005</rem:owner><rem:date>
-<rem:year>2022</rem:year>
-<rem:month>3</rem:month>
-<rem:day>21</rem:day>
-</rem:date>
-<rem:description><![CDATA[Creación]]></rem:description>
-</rem:change>
-<rem:change>
-<rem:type>U</rem:type>
-<rem:owner>FRQ-0004</rem:owner><rem:date>
-<rem:year>2022</rem:year>
-<rem:month>3</rem:month>
-<rem:day>21</rem:day>
-</rem:date>
-<rem:description><![CDATA[Propiedad [Status] actualizada [PD] -> [en construcción]]]></rem:description>
 </rem:change>
 <rem:change>
 <rem:type>S</rem:type>
@@ -352,228 +478,130 @@
 <rem:description><![CDATA[Documento guardado]]></rem:description>
 </rem:change>
 <rem:change>
-<rem:type>S</rem:type>
-<rem:owner>CHS-0004</rem:owner><rem:date>
+<rem:type>U</rem:type>
+<rem:owner>FRQ-0006</rem:owner><rem:date>
 <rem:year>2022</rem:year>
 <rem:month>3</rem:month>
-<rem:day>20</rem:day>
+<rem:day>24</rem:day>
 </rem:date>
-<rem:description><![CDATA[Documento guardado]]></rem:description>
+<rem:description><![CDATA[Propiedad [Comments] actualizada [TAREAS:
+- Tareas FRQ-0004
+- Añadir un botón al layout de la app
+- Implementar un método que active y pare la recepción de datos que puedan ser analizados por el algoritmo de la FRQ-0005.
+
+ESTE REQUISITO PUEDE SER OPCIONAL. La app puede comenzar las mediciones de forma automática sin necesidad de añadir un botón.] -> [TAREAS:
+- Tareas FRQ-0004.
+- Añadir un botón al layout de la app.
+- Implementar un método que active y pare la recepción de datos que puedan ser analizados por el algoritmo de la FRQ-0005.
+
+ESTE REQUISITO PUEDE SER OPCIONAL. La app puede comenzar las mediciones de forma automática sin necesidad de añadir un botón.]]]></rem:description>
 </rem:change>
 <rem:change>
-<rem:type>S</rem:type>
-<rem:owner>DFS-0003</rem:owner><rem:date>
+<rem:type>U</rem:type>
+<rem:owner>NFR-0004</rem:owner><rem:date>
 <rem:year>2022</rem:year>
 <rem:month>3</rem:month>
-<rem:day>20</rem:day>
+<rem:day>24</rem:day>
 </rem:date>
-<rem:description><![CDATA[Documento guardado]]></rem:description>
+<rem:description><![CDATA[Propiedad [Description] actualizada [tener acceso a Internet, utilizando los permisos adecuados, para el tráfico de datos con las bases de datos.] -> [tener conexión a Internet, utilizando los permisos adecuados, para el tráfico de datos con las bases de datos.]]]></rem:description>
 </rem:change>
 <rem:change>
-<rem:type>C</rem:type>
-<rem:owner>FRQ-0010</rem:owner><rem:date>
+<rem:type>U</rem:type>
+<rem:owner>FRQ-0006</rem:owner><rem:date>
 <rem:year>2022</rem:year>
 <rem:month>3</rem:month>
-<rem:day>21</rem:day>
+<rem:day>24</rem:day>
 </rem:date>
-<rem:description><![CDATA[Creación]]></rem:description>
+<rem:description><![CDATA[Añadida traza hacia [FRQ-0011] Almacenar las mediciones]]></rem:description>
+</rem:change>
+<rem:change>
+<rem:type>U</rem:type>
+<rem:owner>CRS-0001</rem:owner><rem:date>
+<rem:year>2022</rem:year>
+<rem:month>3</rem:month>
+<rem:day>24</rem:day>
+</rem:date>
+<rem:description><![CDATA[Añadida organización desarrolladora [ORG-0001] Universidad de Sevillla]]></rem:description>
+</rem:change>
+<rem:change>
+<rem:type>U</rem:type>
+<rem:owner>FRQ-0006</rem:owner><rem:date>
+<rem:year>2022</rem:year>
+<rem:month>3</rem:month>
+<rem:day>24</rem:day>
+</rem:date>
+<rem:description><![CDATA[Propiedad [Comments] actualizada [TAREAS:
+- Tareas FRQ-0004.
+- Añadir un botón al layout de la app.
+- Implementar un método que active y pare la recepción de datos que puedan ser analizados por el algoritmo de la FRQ-0005.
+
+ESTE REQUISITO PUEDE SER OPCIONAL. La app puede comenzar las mediciones de forma automática sin necesidad de añadir un botón.] -> [TAREAS:
+- Tareas FRQ-0004.
+- Añadir un botón al layout de la app.
+- Implementar un método que active y pare la recepción de datos que puedan ser analizados por el algoritmo de la FRQ-0005.
+
+¿REQUISITO OPCIONAL? La app puede comenzar las mediciones de forma automática sin necesidad de añadir un botón. Sin embargo, si se desea guardar los resultados medidos, se deberá añadir un botón al finalizar la recepción de datos. Sin implementar el botón, habría que ver cómo se almacenarían los resultados, sin tener un comienzo y un final.]]]></rem:description>
 </rem:change>
 <rem:change>
 <rem:type>U</rem:type>
 <rem:owner>FRQ-0001</rem:owner><rem:date>
 <rem:year>2022</rem:year>
 <rem:month>3</rem:month>
-<rem:day>21</rem:day>
+<rem:day>24</rem:day>
 </rem:date>
-<rem:description><![CDATA[Propiedad [Importance] actualizada [importante] -> [quedaría bien]]]></rem:description>
+<rem:description><![CDATA[Propiedad [Description] actualizada [tener un sistema de registro para el sanitario que vaya a utilizar la app, almacenándose en la base de datos. Posteriormente, podrá iniciar sesión para poder utilizar la app.] -> [tener un sistema de registro para el Sanitario que vaya a utilizar la app, almacenándose en la base de datos. Posteriormente, podrá iniciar sesión para poder utilizar la app.]]]></rem:description>
 </rem:change>
 <rem:change>
 <rem:type>U</rem:type>
-<rem:owner>FRQ-0007</rem:owner><rem:date>
+<rem:owner>FRQ-0001</rem:owner><rem:date>
 <rem:year>2022</rem:year>
 <rem:month>3</rem:month>
-<rem:day>21</rem:day>
+<rem:day>24</rem:day>
 </rem:date>
-<rem:description><![CDATA[Añadida traza desde [FRQ-0005] Mediciones de señales]]></rem:description>
+<rem:description><![CDATA[Propiedad [Name] actualizada [Registro del sanitario] -> [Registro del Sanitario]]]></rem:description>
 </rem:change>
 <rem:change>
 <rem:type>U</rem:type>
-<rem:owner>FRQ-0007</rem:owner><rem:date>
+<rem:owner>FRQ-0001</rem:owner><rem:date>
 <rem:year>2022</rem:year>
 <rem:month>3</rem:month>
-<rem:day>21</rem:day>
+<rem:day>24</rem:day>
 </rem:date>
-<rem:description><![CDATA[Propiedad [Name] actualizada [Muestra de datos en tiempo real] -> [Evaluación de datos en tiempo real]]]></rem:description>
-</rem:change>
-<rem:change>
-<rem:type>S</rem:type>
-<rem:owner>CHS-0004</rem:owner><rem:date>
-<rem:year>2022</rem:year>
-<rem:month>3</rem:month>
-<rem:day>21</rem:day>
-</rem:date>
-<rem:description><![CDATA[Documento guardado]]></rem:description>
-</rem:change>
-<rem:change>
-<rem:type>U</rem:type>
-<rem:owner>FRQ-0005</rem:owner><rem:date>
-<rem:year>2022</rem:year>
-<rem:month>3</rem:month>
-<rem:day>21</rem:day>
-</rem:date>
-<rem:description><![CDATA[Añadida traza hacia [FRQ-0007] Evaluación de datos en tiempo real]]></rem:description>
-</rem:change>
-<rem:change>
-<rem:type>C</rem:type>
-<rem:owner>FRQ-0009</rem:owner><rem:date>
-<rem:year>2022</rem:year>
-<rem:month>3</rem:month>
-<rem:day>21</rem:day>
-</rem:date>
-<rem:description><![CDATA[Creación]]></rem:description>
+<rem:description><![CDATA[Propiedad [Comments] actualizada [TAREAS:
+- Tareas FRQ-0010
+- Crear una tabla en la base de datos para los sanitarios
+- Crear un botón para acceder a la activity del formulario de registro, con los campos que se estimen necesarios
+- Implementar un método que cree un nuevo registro en la tabla para sanitarios en la base de datos, enviando los parámetros recogidos en los campos del formulario] -> [TAREAS:
+- Tareas FRQ-0010.
+- Crear una tabla en la base de datos para los Sanitarios.
+- Crear un botón para acceder a la activity del formulario de registro, con los campos que se estimen necesarios.
+- Implementar un método que cree un nuevo registro en la tabla para Sanitarios en la base de datos, enviando los parámetros recogidos en los campos del formulario.]]]></rem:description>
 </rem:change>
 <rem:change>
 <rem:type>U</rem:type>
-<rem:owner>FRQ-0004</rem:owner><rem:date>
+<rem:owner>FRQ-0001</rem:owner><rem:date>
 <rem:year>2022</rem:year>
 <rem:month>3</rem:month>
-<rem:day>21</rem:day>
+<rem:day>24</rem:day>
 </rem:date>
-<rem:description><![CDATA[Añadida traza desde [FRQ-0003] Uso de la tecnología BLE]]></rem:description>
+<rem:description><![CDATA[Añadida traza hacia [FRQ-0011] Almacenar las mediciones]]></rem:description>
 </rem:change>
 <rem:change>
 <rem:type>U</rem:type>
-<rem:owner>FRQ-0004</rem:owner><rem:date>
+<rem:owner>FRQ-0001</rem:owner><rem:date>
 <rem:year>2022</rem:year>
 <rem:month>3</rem:month>
-<rem:day>21</rem:day>
+<rem:day>24</rem:day>
 </rem:date>
-<rem:description><![CDATA[Eliminada traza hacia [FRQ-0006] Mediciones de señales]]></rem:description>
-</rem:change>
-<rem:change>
-<rem:type>C</rem:type>
-<rem:owner>FRQ-0007</rem:owner><rem:date>
-<rem:year>2022</rem:year>
-<rem:month>3</rem:month>
-<rem:day>21</rem:day>
-</rem:date>
-<rem:description><![CDATA[Creación]]></rem:description>
-</rem:change>
-<rem:change>
-<rem:type>C</rem:type>
-<rem:owner>FRQ-0011</rem:owner><rem:date>
-<rem:year>2022</rem:year>
-<rem:month>3</rem:month>
-<rem:day>21</rem:day>
-</rem:date>
-<rem:description><![CDATA[Creación]]></rem:description>
-</rem:change>
-<rem:change>
-<rem:type>C</rem:type>
-<rem:owner>FRQ-0006</rem:owner><rem:date>
-<rem:year>2022</rem:year>
-<rem:month>3</rem:month>
-<rem:day>21</rem:day>
-</rem:date>
-<rem:description><![CDATA[Creación]]></rem:description>
+<rem:description><![CDATA[Añadida traza desde [FRQ-0010] Conexión con BBDD]]></rem:description>
 </rem:change>
 <rem:change>
 <rem:type>U</rem:type>
-<rem:owner>FRQ-0004</rem:owner><rem:date>
-<rem:year>2022</rem:year>
-<rem:month>3</rem:month>
-<rem:day>21</rem:day>
-</rem:date>
-<rem:description><![CDATA[Añadida traza hacia [FRQ-0005] Mediciones de señales]]></rem:description>
-</rem:change>
-<rem:change>
-<rem:type>S</rem:type>
-<rem:owner>DFS-0003</rem:owner><rem:date>
-<rem:year>2022</rem:year>
-<rem:month>3</rem:month>
-<rem:day>21</rem:day>
-</rem:date>
-<rem:description><![CDATA[Documento guardado]]></rem:description>
-</rem:change>
-<rem:change>
-<rem:type>U</rem:type>
-<rem:owner>FRQ-0007</rem:owner><rem:date>
-<rem:year>2022</rem:year>
-<rem:month>3</rem:month>
-<rem:day>21</rem:day>
-</rem:date>
-<rem:description><![CDATA[Añadida traza hacia [FRQ-0009] Notificación sobre mediciones]]></rem:description>
-</rem:change>
-<rem:change>
-<rem:type>C</rem:type>
-<rem:owner>FRQ-0008</rem:owner><rem:date>
-<rem:year>2022</rem:year>
-<rem:month>3</rem:month>
-<rem:day>21</rem:day>
-</rem:date>
-<rem:description><![CDATA[Creación]]></rem:description>
-</rem:change>
-<rem:change>
-<rem:type>U</rem:type>
-<rem:owner>FRQ-0005</rem:owner><rem:date>
-<rem:year>2022</rem:year>
-<rem:month>3</rem:month>
-<rem:day>21</rem:day>
-</rem:date>
-<rem:description><![CDATA[Añadida traza hacia [FRQ-0009] Notificación sobre mediciones]]></rem:description>
-</rem:change>
-<rem:change>
-<rem:type>C</rem:type>
-<rem:owner>NFR-0001</rem:owner><rem:date>
-<rem:year>2022</rem:year>
-<rem:month>3</rem:month>
-<rem:day>21</rem:day>
-</rem:date>
-<rem:description><![CDATA[Creación]]></rem:description>
-</rem:change>
-<rem:change>
-<rem:type>S</rem:type>
 <rem:owner>CRS-0001</rem:owner><rem:date>
 <rem:year>2022</rem:year>
 <rem:month>3</rem:month>
-<rem:day>21</rem:day>
+<rem:day>24</rem:day>
 </rem:date>
-<rem:description><![CDATA[Documento guardado]]></rem:description>
-</rem:change>
-<rem:change>
-<rem:type>U</rem:type>
-<rem:owner>FRQ-0005</rem:owner><rem:date>
-<rem:year>2022</rem:year>
-<rem:month>3</rem:month>
-<rem:day>21</rem:day>
-</rem:date>
-<rem:description><![CDATA[Añadida traza hacia [FRQ-0008] Muestra de datos en tiempo real]]></rem:description>
-</rem:change>
-<rem:change>
-<rem:type>S</rem:type>
-<rem:owner>DRS-0002</rem:owner><rem:date>
-<rem:year>2022</rem:year>
-<rem:month>3</rem:month>
-<rem:day>21</rem:day>
-</rem:date>
-<rem:description><![CDATA[Documento guardado]]></rem:description>
-</rem:change>
-<rem:change>
-<rem:type>U</rem:type>
-<rem:owner>FRQ-0004</rem:owner><rem:date>
-<rem:year>2022</rem:year>
-<rem:month>3</rem:month>
-<rem:day>21</rem:day>
-</rem:date>
-<rem:description><![CDATA[Añadida traza hacia [FRQ-0006] Mediciones de señales]]></rem:description>
-</rem:change>
-<rem:change>
-<rem:type>C</rem:type>
-<rem:owner>FRQ-0012</rem:owner><rem:date>
-<rem:year>2022</rem:year>
-<rem:month>3</rem:month>
-<rem:day>21</rem:day>
-</rem:date>
-<rem:description><![CDATA[Creación]]></rem:description>
+<rem:description><![CDATA[Añadida organización cliente [ORG-0002] Organización Sanitaria]]></rem:description>
 </rem:change>
 </rem:log>

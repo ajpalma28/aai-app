@@ -40,10 +40,16 @@
 <h3>Fecha 20/03/2022</h3>
 <p />
 <h3>Preparado para:</h3>
-<p><font color="red">?</font></p>
+<a href="#ORG-0002" title="Organización Sanitaria">
+<p>
+Organización Sanitaria</p>
+</a>
 <p />
 <h3>Preparado por:</h3>
-<p><font color="red">?</font></p>
+<a href="#ORG-0001" title="Universidad de Sevillla">
+<p>
+Universidad de Sevillla</p>
+</a>
 <p />
 </center>
 <hr size="4" />
@@ -81,7 +87,9 @@ Universidad de Sevillla</th>
 <tr>
 <th align="left" valign="top">Comentarios</th>
 <td align="left" valign="top" colspan="1">
-Ninguno</td>
+La Universidad de Sevilla es la institución en la cual estudia el Desarrollador, un alumno del Grado en Ingeniería Informática - Tecnologías Informáticas que se encuentra realizando el TFG.
+<br />
+<br />El centro de estudios del alumno es la Escuela Técnica Superior de Ingeniería Informática, localizada en el campus de la Avenida Reina Mercedes.</td>
 </tr>
 </table>
 <p />
@@ -146,7 +154,7 @@ Universidad de Sevillla</a>
 <tr>
 <th align="left" valign="top">Comentarios</th>
 <td align="left" valign="top" colspan="1">
-Ninguno</td>
+El Desarrollador es la persona que se encarga de toda la parte de la programación del sistema. Al ser este sistema una app para un TFG, el desarrollador es el estudiante.</td>
 </tr>
 </table>
 <p />
@@ -179,7 +187,9 @@ Organización Sanitaria</a>
 <tr>
 <th align="left" valign="top">Comentarios</th>
 <td align="left" valign="top" colspan="1">
-Ninguno</td>
+El Sanitario es la persona que tendrá la app instalada en su dispositivo móvil, conectándo la app a los dispositivos a través de BLE. Esta persona será la que le ponga al Paciente los dispositivos que realizarán la medición de señales.
+<br />
+<br />Tendrá, por tanto, acceso tanto a la app como a los dispositivos wearables (Type 1, Type 2, Type 3 y OpenBCI).</td>
 </tr>
 </table>
 <p />
@@ -212,7 +222,9 @@ Organización Sanitaria</a>
 <tr>
 <th align="left" valign="top">Comentarios</th>
 <td align="left" valign="top" colspan="1">
-Ninguno</td>
+El Paciente es el cliente que acude a un Centro Sanitario, en el que trabaja el usuario Sanitario, para realizarse una prueba en la que se le ponen los dispositivos y se miden sus señales fisiológicas.
+<br />
+<br />Por tanto, las mediciones se harán sobre el Paciente, registrando estos datos.</td>
 </tr>
 </table>
 <p />
@@ -286,7 +298,10 @@ tener permiso para utilizar el sistema de conexión BLE para poder conectarse a l
 <tr>
 <th align="left" valign="top">Comentarios</th>
 <td align="left" valign="top" colspan="1">
-Ninguno</td>
+TAREAS:
+<br />- Crear una app.
+<br />- Habilitar los permisos para el uso de Bluetooth y BLE.
+<br />- Definir las clases y métodos que permitan la conexión con un dispositivo que use BLE.</td>
 </tr>
 </table>
 <p />
@@ -360,7 +375,9 @@ poder conectarse con dos o más dispositivos con tecnología BLE a la vez.</em>
 <tr>
 <th align="left" valign="top">Comentarios</th>
 <td align="left" valign="top" colspan="1">
-Ninguno</td>
+TAREAS:
+<br />- Tareas FRQ-0003.
+<br />- Programar clases y métodos que permitan que la app se conecte con dos o más dispositivos por BLE.</td>
 </tr>
 </table>
 <p />
@@ -404,14 +421,19 @@ Desarrollador</a>
 Muestra de datos en tiempo real</a>
 </li>
 <li>
+<a href="#FRQ-0009" title="Notificación sobre mediciones">
+                                [FRQ-0009] 
+Notificación sobre mediciones</a>
+</li>
+<li>
 <a href="#FRQ-0007" title="Evaluación de datos en tiempo real">
                                 [FRQ-0007] 
 Evaluación de datos en tiempo real</a>
 </li>
 <li>
-<a href="#FRQ-0009" title="Notificación sobre mediciones">
-                                [FRQ-0009] 
-Notificación sobre mediciones</a>
+<a href="#FRQ-0011" title="Almacenar las mediciones">
+                                [FRQ-0011] 
+Almacenar las mediciones</a>
 </li>
 </td>
 </tr>
@@ -446,7 +468,10 @@ conectarse a los dispositivos wearables de la BAN mediante BLE y acceder a los d
 <tr>
 <th align="left" valign="top">Comentarios</th>
 <td align="left" valign="top" colspan="1">
-Ninguno</td>
+TAREAS:
+<br />- Tareas FRQ-0004.
+<br />- Conectar la app con los dispositivos Type 1, Type 2, Type 3 y OpenBCI.
+<br />- Implementar los algoritmos que reciban las señales de los dispositivos por BLE y las interpreten.</td>
 </tr>
 </table>
 <p />
@@ -483,7 +508,13 @@ Desarrollador</a>
 </tr>
 <tr>
 <th align="left" valign="top">Dependencias</th>
-<td align="left" valign="top" colspan="1">Ninguno</td>
+<td align="left" valign="top" colspan="1">
+<li>
+<a href="#FRQ-0011" title="Almacenar las mediciones">
+                                [FRQ-0011] 
+Almacenar las mediciones</a>
+</li>
+</td>
 </tr>
 <tr>
 <th align="left" valign="top">Descripción</th>
@@ -516,7 +547,12 @@ tener un botón que sirva tanto para dar comienzo como para detener las medicione
 <tr>
 <th align="left" valign="top">Comentarios</th>
 <td align="left" valign="top" colspan="1">
-Ninguno</td>
+TAREAS:
+<br />- Tareas FRQ-0004.
+<br />- Añadir un botón al layout de la app.
+<br />- Implementar un método que active y pare la recepción de datos que puedan ser analizados por el algoritmo de la FRQ-0005.
+<br />
+<br />¿REQUISITO OPCIONAL? La app puede comenzar las mediciones de forma automática sin necesidad de añadir un botón. Sin embargo, si se desea guardar los resultados medidos, se deberá añadir un botón al finalizar la recepción de datos. Sin implementar el botón, habría que ver cómo se almacenarían los resultados, sin tener un comienzo y un final.</td>
 </tr>
 </table>
 <p />
@@ -565,6 +601,11 @@ Desarrollador</a>
                                 [FRQ-0009] 
 Notificación sobre mediciones</a>
 </li>
+<li>
+<a href="#FRQ-0011" title="Almacenar las mediciones">
+                                [FRQ-0011] 
+Almacenar las mediciones</a>
+</li>
 </td>
 </tr>
 <tr>
@@ -598,7 +639,10 @@ mostrar en tiempo real si los datos que se están midiendo son adecuados o no.</e
 <tr>
 <th align="left" valign="top">Comentarios</th>
 <td align="left" valign="top" colspan="1">
-Ninguno</td>
+TAREAS:
+<br />- Tareas FRQ-0005.
+<br />- Implementación de un algoritmo que establezca los valores adecuados para cada señal.
+<br />- Desarrollar métodos que reaccionen a los valores de cada señal para poder ser interpretados por el usuario que tenga la app instalada en su dispositivo Android.</td>
 </tr>
 </table>
 <p />
@@ -668,7 +712,12 @@ mostrar en tiempo real los valores que están registrando los dispositivos.</em>
 <tr>
 <th align="left" valign="top">Comentarios</th>
 <td align="left" valign="top" colspan="1">
-Ninguno</td>
+TAREAS:
+<br />- Tareas FRQ-0005.
+<br />- Añadir a la interfaz los distintos elementos visuales que permitan la visualización de datos en directo.
+<br />- Implementar métodos que recojan los datos recibidos por las señales y enviarlos a los elementos visuales, editándolos.
+<br />
+<br />ESTO SE PUEDE HACER A TRAVÉS DE HILOS (Thread) QUE SE ACTUALICEN CADA X TIEMPO.</td>
 </tr>
 </table>
 <p />
@@ -738,7 +787,10 @@ generar una notificación en caso de que alguna de las mediciones registre un dat
 <tr>
 <th align="left" valign="top">Comentarios</th>
 <td align="left" valign="top" colspan="1">
-Ninguno</td>
+TAREAS:
+<br />- Tareas FRQ-0007.
+<br />- Definir los límites de los valores (tanto superior como inferior) en los que se considerían valores anormales, peligrosos o a tener en cuenta.
+<br />- Crear un algoritmo que, llegada a esta situación, envíe notificaciones a la barra de tareas, que sean compatibles con dispositivos smartwatch. Sería muy útil para que el Sanitario pueda tener un mayor control sin necesidad de estar mirando constantemente su smartphone.</td>
 </tr>
 </table>
 <p />
@@ -783,9 +835,19 @@ Desarrollador</a>
 <th align="left" valign="top">Dependencias</th>
 <td align="left" valign="top" colspan="1">
 <li>
-<a href="#FRQ-0012" title="Consulta del histórico de un usuario">
+<a href="#FRQ-0012" title="Consulta del histórico de un Paciente">
                                 [FRQ-0012] 
-Consulta del histórico de un usuario</a>
+Consulta del histórico de un Paciente</a>
+</li>
+<li>
+<a href="#FRQ-0001" title="Registro del Sanitario">
+                                [FRQ-0001] 
+Registro del Sanitario</a>
+</li>
+<li>
+<a href="#FRQ-0002" title="Registro del Paciente">
+                                [FRQ-0002] 
+Registro del Paciente</a>
 </li>
 </td>
 </tr>
@@ -820,7 +882,10 @@ conectarse con una base de datos de tipo relacional para almacenamiento de usuar
 <tr>
 <th align="left" valign="top">Comentarios</th>
 <td align="left" valign="top" colspan="1">
-Ninguno</td>
+TAREAS:
+<br />- Habilitar los permisos para el uso de Internet.
+<br />- Crear una base de datos alojada en un servidor.
+<br />- Desarrollar un método que conecte la app con dicha base de datos usando las credenciales que sean necesarias.</td>
 </tr>
 </table>
 <p />
@@ -829,7 +894,7 @@ Ninguno</td>
 <tr bgcolor="#c8e0e0">
 <th align="left" valign="top">FRQ-0001</th>
 <th align="left" valign="top" width="100%">
-Registro del sanitario</th>
+Registro del Sanitario</th>
 </tr>
 <tr>
 <th align="left" valign="top">Versión</th>
@@ -859,9 +924,14 @@ Sanitario</a>
 <th align="left" valign="top">Dependencias</th>
 <td align="left" valign="top" colspan="1">
 <li>
-<a href="#FRQ-0012" title="Consulta del histórico de un usuario">
+<a href="#FRQ-0012" title="Consulta del histórico de un Paciente">
                                 [FRQ-0012] 
-Consulta del histórico de un usuario</a>
+Consulta del histórico de un Paciente</a>
+</li>
+<li>
+<a href="#FRQ-0011" title="Almacenar las mediciones">
+                                [FRQ-0011] 
+Almacenar las mediciones</a>
 </li>
 </td>
 </tr>
@@ -870,7 +940,7 @@ Consulta del histórico de un usuario</a>
 <td align="left" valign="top">
     El sistema deberá 
 <em>
-tener un sistema de registro para el sanitario que vaya a utilizar la app, almacenándose en la base de datos. Posteriormente, podrá iniciar sesión para poder utilizar la app.</em>
+tener un sistema de registro para el Sanitario que vaya a utilizar la app, almacenándose en la base de datos. Posteriormente, podrá iniciar sesión para poder utilizar la app.</em>
 </td>
 </tr>
 <tr>
@@ -896,7 +966,11 @@ tener un sistema de registro para el sanitario que vaya a utilizar la app, almac
 <tr>
 <th align="left" valign="top">Comentarios</th>
 <td align="left" valign="top" colspan="1">
-Ninguno</td>
+TAREAS:
+<br />- Tareas FRQ-0010.
+<br />- Crear una tabla en la base de datos para los Sanitarios.
+<br />- Crear un botón para acceder a la activity del formulario de registro, con los campos que se estimen necesarios.
+<br />- Implementar un método que cree un nuevo registro en la tabla para Sanitarios en la base de datos, enviando los parámetros recogidos en los campos del formulario.</td>
 </tr>
 </table>
 <p />
@@ -905,7 +979,7 @@ Ninguno</td>
 <tr bgcolor="#c8e0e0">
 <th align="left" valign="top">FRQ-0002</th>
 <th align="left" valign="top" width="100%">
-Registro del paciente</th>
+Registro del Paciente</th>
 </tr>
 <tr>
 <th align="left" valign="top">Versión</th>
@@ -935,9 +1009,14 @@ Sanitario</a>
 <th align="left" valign="top">Dependencias</th>
 <td align="left" valign="top" colspan="1">
 <li>
-<a href="#FRQ-0012" title="Consulta del histórico de un usuario">
+<a href="#FRQ-0012" title="Consulta del histórico de un Paciente">
                                 [FRQ-0012] 
-Consulta del histórico de un usuario</a>
+Consulta del histórico de un Paciente</a>
+</li>
+<li>
+<a href="#FRQ-0011" title="Almacenar las mediciones">
+                                [FRQ-0011] 
+Almacenar las mediciones</a>
 </li>
 </td>
 </tr>
@@ -946,7 +1025,7 @@ Consulta del histórico de un usuario</a>
 <td align="left" valign="top">
     El sistema deberá 
 <em>
-permitir al sanitario registrar en una base de datos al paciente que vaya a utilizar la BAN que se conecta con la app para guardar un registro histórico.</em>
+permitir al Sanitario registrar en una base de datos al Paciente que vaya a utilizar la BAN que se conecta con la app para guardar un registro histórico.</em>
 </td>
 </tr>
 <tr>
@@ -972,7 +1051,11 @@ permitir al sanitario registrar en una base de datos al paciente que vaya a util
 <tr>
 <th align="left" valign="top">Comentarios</th>
 <td align="left" valign="top" colspan="1">
-Ninguno</td>
+TAREAS:
+<br />- Tareas FRQ-0010.
+<br />- Crear una tabla en la base de datos para los Pacientes.
+<br />- Crear un botón para acceder a la activity del formulario de registro, con los campos que se estimen necesarios.
+<br />- Implementar un método que cree un nuevo registro en la tabla para Pacientes en la base de datos, enviando los parámetros recogidos en los campos del formulario.</td>
 </tr>
 </table>
 <p />
@@ -1017,9 +1100,9 @@ Desarrollador</a>
 <th align="left" valign="top">Dependencias</th>
 <td align="left" valign="top" colspan="1">
 <li>
-<a href="#FRQ-0012" title="Consulta del histórico de un usuario">
+<a href="#FRQ-0012" title="Consulta del histórico de un Paciente">
                                 [FRQ-0012] 
-Consulta del histórico de un usuario</a>
+Consulta del histórico de un Paciente</a>
 </li>
 </td>
 </tr>
@@ -1054,7 +1137,12 @@ almacenar en una base de datos las mediciones realizadas con los dispositivos a 
 <tr>
 <th align="left" valign="top">Comentarios</th>
 <td align="left" valign="top" colspan="1">
-Ninguno</td>
+TAREAS:
+<br />- Tareas FRQ-0001.
+<br />- Tareas FRQ-0002.
+<br />- Establecer la forma en que se van a registrar los datos en la base de datos. IMPORTANTE: Filtrar cómo se va a hacer, debido a la gran cantidad de datos que pueden recoger los dispositivos.
+<br />- Crear una tabla en la base de datos para las mediciones, en las que se relacionen las mediciones con el Sanitario y el Paciente mediante sus PK.
+<br />- Desarrollar un método que suba a la base de datos la información recogida durante la medición de las señales y que ha sido filtrada para subir solo la información que se estima necesaria.</td>
 </tr>
 </table>
 <p />
@@ -1063,7 +1151,7 @@ Ninguno</td>
 <tr bgcolor="#c8e0e0">
 <th align="left" valign="top">FRQ-0012</th>
 <th align="left" valign="top" width="100%">
-Consulta del histórico de un usuario</th>
+Consulta del histórico de un Paciente</th>
 </tr>
 <tr>
 <th align="left" valign="top">Versión</th>
@@ -1109,7 +1197,7 @@ Desarrollador</a>
 <td align="left" valign="top">
     El sistema deberá 
 <em>
-tener un histórico con todas las mediciones realizadas a un usuario concreto.</em>
+tener un histórico con todas las mediciones realizadas a un Paciente concreto.</em>
 </td>
 </tr>
 <tr>
@@ -1133,7 +1221,11 @@ tener un histórico con todas las mediciones realizadas a un usuario concreto.</e
 <tr>
 <th align="left" valign="top">Comentarios</th>
 <td align="left" valign="top" colspan="1">
-Ninguno</td>
+TAREAS:
+<br />- Tareas FRQ-0012.
+<br />- Crear los activitys necesarios en la app para mostrar la información recogida.
+<br />- Crear una consulta en la que se recoja el histórico de pruebas de cada Paciente, independientemente del Sanitario que estuviese responsabilizado de las pruebas cada día.
+<br />- Implementar los métodos que muestren en los activitys la información de la forma que se estime.</td>
 </tr>
 </table>
 <p />
@@ -1261,6 +1353,142 @@ tener una interfaz gráfica que se adapte a los distintos tamaños de pantalla.</e
 <td align="left" valign="top" colspan="1">
 <font color="red"><b>PD</b></font>
 </td>
+</tr>
+<tr>
+<th align="left" valign="top">Estabilidad</th>
+<td align="left" valign="top" colspan="1">
+<font color="red"><b>PD</b></font>
+</td>
+</tr>
+<tr>
+<th align="left" valign="top">Comentarios</th>
+<td align="left" valign="top" colspan="1">
+Ninguno</td>
+</tr>
+</table>
+<p />
+<a name="NFR-0003" />
+<table border="1" width="100%">
+<tr bgcolor="#c8e0e0">
+<th align="left" valign="top">NFR-0003</th>
+<th align="left" valign="top" width="100%">
+Bluetooth</th>
+</tr>
+<tr>
+<th align="left" valign="top">Versión</th>
+<td align="left" valign="top">1.0 
+			( 24/03/2022 )
+        </td>
+</tr>
+<tr>
+<th align="left" valign="top">Autores</th>
+<td align="left" valign="top" colspan="1">
+<ul>
+<li>
+<a href="#STK-0001">
+Desarrollador</a>
+<br />
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<th align="left" valign="top">Fuentes</th>
+<td align="left" valign="top" colspan="1">
+<font color="red"><b>?</b></font>
+</td>
+</tr>
+<tr>
+<th align="left" valign="top">Dependencias</th>
+<td align="left" valign="top" colspan="1">Ninguno</td>
+</tr>
+<tr>
+<th align="left" valign="top">Descripción</th>
+<td align="left" valign="top">
+    El sistema deberá 
+<em>
+tener permisos para usar Bluetooth, siendo estrictamente necesario que el smartphone disponga de esta tecnología para la ejecución de la app.</em>
+</td>
+</tr>
+<tr>
+<th align="left" valign="top">Importancia</th>
+<td align="left" valign="top" colspan="1">vital</td>
+</tr>
+<tr>
+<th align="left" valign="top">Urgencia</th>
+<td align="left" valign="top" colspan="1">inmediatamente</td>
+</tr>
+<tr>
+<th align="left" valign="top">Estado</th>
+<td align="left" valign="top" colspan="1">validado</td>
+</tr>
+<tr>
+<th align="left" valign="top">Estabilidad</th>
+<td align="left" valign="top" colspan="1">
+<font color="red"><b>PD</b></font>
+</td>
+</tr>
+<tr>
+<th align="left" valign="top">Comentarios</th>
+<td align="left" valign="top" colspan="1">
+Ninguno</td>
+</tr>
+</table>
+<p />
+<a name="NFR-0004" />
+<table border="1" width="100%">
+<tr bgcolor="#c8e0e0">
+<th align="left" valign="top">NFR-0004</th>
+<th align="left" valign="top" width="100%">
+Internet</th>
+</tr>
+<tr>
+<th align="left" valign="top">Versión</th>
+<td align="left" valign="top">1.0 
+			( 24/03/2022 )
+        </td>
+</tr>
+<tr>
+<th align="left" valign="top">Autores</th>
+<td align="left" valign="top" colspan="1">
+<ul>
+<li>
+<a href="#STK-0001">
+Desarrollador</a>
+<br />
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<th align="left" valign="top">Fuentes</th>
+<td align="left" valign="top" colspan="1">
+<font color="red"><b>?</b></font>
+</td>
+</tr>
+<tr>
+<th align="left" valign="top">Dependencias</th>
+<td align="left" valign="top" colspan="1">Ninguno</td>
+</tr>
+<tr>
+<th align="left" valign="top">Descripción</th>
+<td align="left" valign="top">
+    El sistema deberá 
+<em>
+tener conexión a Internet, utilizando los permisos adecuados, para el tráfico de datos con las bases de datos.</em>
+</td>
+</tr>
+<tr>
+<th align="left" valign="top">Importancia</th>
+<td align="left" valign="top" colspan="1">vital</td>
+</tr>
+<tr>
+<th align="left" valign="top">Urgencia</th>
+<td align="left" valign="top" colspan="1">inmediatamente</td>
+</tr>
+<tr>
+<th align="left" valign="top">Estado</th>
+<td align="left" valign="top" colspan="1">validado</td>
 </tr>
 <tr>
 <th align="left" valign="top">Estabilidad</th>
