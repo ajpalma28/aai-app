@@ -154,7 +154,7 @@ Universidad de Sevillla</a>
 <tr>
 <th align="left" valign="top">Comentarios</th>
 <td align="left" valign="top" colspan="1">
-El Desarrollador es la persona que se encarga de toda la parte de la programación del sistema. Al ser este sistema una app para un TFG, el desarrollador es el estudiante.</td>
+El Desarrollador es la persona que se encarga de toda la parte de la programación del sistema. Al ser este sistema una app para un TFG, el Desarrollador es el estudiante.</td>
 </tr>
 </table>
 <p />
@@ -228,6 +228,39 @@ El Paciente es el cliente que acude a un Centro Sanitario, en el que trabaja el 
 </tr>
 </table>
 <p />
+<a name="STK-0004" />
+<table border="1" width="100%">
+<tr bgcolor="#c8e0e0">
+<th align="left" valign="top">Participante</th>
+<th align="left" valign="top" width="100%">
+Tutor del TFG</th>
+</tr>
+<tr><th align="left" valign="top">Organización</th>
+<td align="left" valign="top">
+<a href="#ORG-0001">
+Universidad de Sevillla</a>
+</td>
+</tr>
+<tr>
+<th align="left" valign="top">Rol</th>
+<td align="left" valign="top" colspan="1">Tutor</td>
+</tr>
+<tr><th align="left" valign="top" nowrap="1">Es desarrollador</th>
+<td align="left" valign="top">No</td>
+</tr>
+<tr><th align="left" valign="top">Es cliente</th>
+<td align="left" valign="top">No</td>
+</tr>
+<tr><th align="left" valign="top">Es usuario</th>
+<td align="left" valign="top">No</td>
+</tr>
+<tr>
+<th align="left" valign="top">Comentarios</th>
+<td align="left" valign="top" colspan="1">
+El Tutor del TFG es la persona encargada de monitorizar el desarrollo del proyecto a lo largo del tiempo. Pertenece al Departamento de Tecnologías Electrónicas de la Universidad de Sevilla.</td>
+</tr>
+</table>
+<p />
 <a name="FRQ-0003" />
 <table border="1" width="100%">
 <tr bgcolor="#c8e0e0">
@@ -256,12 +289,23 @@ Desarrollador</a>
 <tr>
 <th align="left" valign="top">Fuentes</th>
 <td align="left" valign="top" colspan="1">
-<font color="red"><b>?</b></font>
+<ul>
+<li>
+<a href="#STK-0004">
+Tutor del TFG</a>
+<br />
+</li>
+</ul>
 </td>
 </tr>
 <tr>
 <th align="left" valign="top">Dependencias</th>
 <td align="left" valign="top" colspan="1">
+<li>
+<a href="#FRQ-0005" title="Mediciones de señales">
+                                [FRQ-0005] 
+Mediciones de señales</a>
+</li>
 <li>
 <a href="#FRQ-0004" title="Conexión con varios dispositivos BLE simultáneamente">
                                 [FRQ-0004] 
@@ -291,9 +335,7 @@ tener permiso para utilizar el sistema de conexión BLE para poder conectarse a l
 </tr>
 <tr>
 <th align="left" valign="top">Estabilidad</th>
-<td align="left" valign="top" colspan="1">
-<font color="red"><b>PD</b></font>
-</td>
+<td align="left" valign="top" colspan="1">alta</td>
 </tr>
 <tr>
 <th align="left" valign="top">Comentarios</th>
@@ -333,7 +375,13 @@ Desarrollador</a>
 <tr>
 <th align="left" valign="top">Fuentes</th>
 <td align="left" valign="top" colspan="1">
-<font color="red"><b>?</b></font>
+<ul>
+<li>
+<a href="#STK-0004">
+Tutor del TFG</a>
+<br />
+</li>
+</ul>
 </td>
 </tr>
 <tr>
@@ -368,9 +416,7 @@ poder conectarse con dos o más dispositivos con tecnología BLE a la vez.</em>
 </tr>
 <tr>
 <th align="left" valign="top">Estabilidad</th>
-<td align="left" valign="top" colspan="1">
-<font color="red"><b>PD</b></font>
-</td>
+<td align="left" valign="top" colspan="1">alta</td>
 </tr>
 <tr>
 <th align="left" valign="top">Comentarios</th>
@@ -409,12 +455,28 @@ Desarrollador</a>
 <tr>
 <th align="left" valign="top">Fuentes</th>
 <td align="left" valign="top" colspan="1">
-<font color="red"><b>?</b></font>
+<ul>
+<li>
+<a href="#STK-0004">
+Tutor del TFG</a>
+<br />
+</li>
+</ul>
 </td>
 </tr>
 <tr>
 <th align="left" valign="top">Dependencias</th>
 <td align="left" valign="top" colspan="1">
+<li>
+<a href="#FRQ-0006" title="Botón de toma de datos">
+                                [FRQ-0006] 
+Botón de toma de datos</a>
+</li>
+<li>
+<a href="#FRQ-0007" title="Evaluación de datos en tiempo real">
+                                [FRQ-0007] 
+Evaluación de datos en tiempo real</a>
+</li>
 <li>
 <a href="#FRQ-0008" title="Muestra de datos en tiempo real">
                                 [FRQ-0008] 
@@ -424,11 +486,6 @@ Muestra de datos en tiempo real</a>
 <a href="#FRQ-0009" title="Notificación sobre mediciones">
                                 [FRQ-0009] 
 Notificación sobre mediciones</a>
-</li>
-<li>
-<a href="#FRQ-0007" title="Evaluación de datos en tiempo real">
-                                [FRQ-0007] 
-Evaluación de datos en tiempo real</a>
 </li>
 <li>
 <a href="#FRQ-0011" title="Almacenar las mediciones">
@@ -461,9 +518,7 @@ conectarse a los dispositivos wearables de la BAN mediante BLE y acceder a los d
 </tr>
 <tr>
 <th align="left" valign="top">Estabilidad</th>
-<td align="left" valign="top" colspan="1">
-<font color="red"><b>PD</b></font>
-</td>
+<td align="left" valign="top" colspan="1">alta</td>
 </tr>
 <tr>
 <th align="left" valign="top">Comentarios</th>
@@ -503,7 +558,13 @@ Desarrollador</a>
 <tr>
 <th align="left" valign="top">Fuentes</th>
 <td align="left" valign="top" colspan="1">
-<font color="red"><b>?</b></font>
+<ul>
+<li>
+<a href="#STK-0001">
+Desarrollador</a>
+<br />
+</li>
+</ul>
 </td>
 </tr>
 <tr>
@@ -540,9 +601,7 @@ tener un botón que sirva tanto para dar comienzo como para detener las medicione
 </tr>
 <tr>
 <th align="left" valign="top">Estabilidad</th>
-<td align="left" valign="top" colspan="1">
-<font color="red"><b>PD</b></font>
-</td>
+<td align="left" valign="top" colspan="1">media</td>
 </tr>
 <tr>
 <th align="left" valign="top">Comentarios</th>
@@ -574,8 +633,8 @@ Evaluación de datos en tiempo real</th>
 <td align="left" valign="top" colspan="1">
 <ul>
 <li>
-<a href="#STK-0002">
-Sanitario</a>
+<a href="#STK-0001">
+Desarrollador</a>
 <br />
 </li>
 </ul>
@@ -597,14 +656,14 @@ Desarrollador</a>
 <th align="left" valign="top">Dependencias</th>
 <td align="left" valign="top" colspan="1">
 <li>
-<a href="#FRQ-0009" title="Notificación sobre mediciones">
-                                [FRQ-0009] 
-Notificación sobre mediciones</a>
-</li>
-<li>
 <a href="#FRQ-0011" title="Almacenar las mediciones">
                                 [FRQ-0011] 
 Almacenar las mediciones</a>
+</li>
+<li>
+<a href="#FRQ-0009" title="Notificación sobre mediciones">
+                                [FRQ-0009] 
+Notificación sobre mediciones</a>
 </li>
 </td>
 </tr>
@@ -632,9 +691,7 @@ mostrar en tiempo real si los datos que se están midiendo son adecuados o no.</e
 </tr>
 <tr>
 <th align="left" valign="top">Estabilidad</th>
-<td align="left" valign="top" colspan="1">
-<font color="red"><b>PD</b></font>
-</td>
+<td align="left" valign="top" colspan="1">alta</td>
 </tr>
 <tr>
 <th align="left" valign="top">Comentarios</th>
@@ -674,7 +731,13 @@ Desarrollador</a>
 <tr>
 <th align="left" valign="top">Fuentes</th>
 <td align="left" valign="top" colspan="1">
-<font color="red"><b>?</b></font>
+<ul>
+<li>
+<a href="#STK-0004">
+Tutor del TFG</a>
+<br />
+</li>
+</ul>
 </td>
 </tr>
 <tr>
@@ -705,9 +768,7 @@ mostrar en tiempo real los valores que están registrando los dispositivos.</em>
 </tr>
 <tr>
 <th align="left" valign="top">Estabilidad</th>
-<td align="left" valign="top" colspan="1">
-<font color="red"><b>PD</b></font>
-</td>
+<td align="left" valign="top" colspan="1">media</td>
 </tr>
 <tr>
 <th align="left" valign="top">Comentarios</th>
@@ -749,7 +810,13 @@ Desarrollador</a>
 <tr>
 <th align="left" valign="top">Fuentes</th>
 <td align="left" valign="top" colspan="1">
-<font color="red"><b>?</b></font>
+<ul>
+<li>
+<a href="#STK-0001">
+Desarrollador</a>
+<br />
+</li>
+</ul>
 </td>
 </tr>
 <tr>
@@ -780,9 +847,7 @@ generar una notificación en caso de que alguna de las mediciones registre un dat
 </tr>
 <tr>
 <th align="left" valign="top">Estabilidad</th>
-<td align="left" valign="top" colspan="1">
-<font color="red"><b>PD</b></font>
-</td>
+<td align="left" valign="top" colspan="1">baja</td>
 </tr>
 <tr>
 <th align="left" valign="top">Comentarios</th>
@@ -812,8 +877,8 @@ Conexión con BBDD</th>
 <td align="left" valign="top" colspan="1">
 <ul>
 <li>
-<a href="#STK-0002">
-Sanitario</a>
+<a href="#STK-0001">
+Desarrollador</a>
 <br />
 </li>
 </ul>
@@ -849,6 +914,11 @@ Registro del Sanitario</a>
                                 [FRQ-0002] 
 Registro del Paciente</a>
 </li>
+<li>
+<a href="#FRQ-0011" title="Almacenar las mediciones">
+                                [FRQ-0011] 
+Almacenar las mediciones</a>
+</li>
 </td>
 </tr>
 <tr>
@@ -875,9 +945,7 @@ conectarse con una base de datos de tipo relacional para almacenamiento de usuar
 </tr>
 <tr>
 <th align="left" valign="top">Estabilidad</th>
-<td align="left" valign="top" colspan="1">
-<font color="red"><b>PD</b></font>
-</td>
+<td align="left" valign="top" colspan="1">media</td>
 </tr>
 <tr>
 <th align="left" valign="top">Comentarios</th>
@@ -886,6 +954,114 @@ TAREAS:
 <br />- Habilitar los permisos para el uso de Internet.
 <br />- Crear una base de datos alojada en un servidor.
 <br />- Desarrollar un método que conecte la app con dicha base de datos usando las credenciales que sean necesarias.</td>
+</tr>
+</table>
+<p />
+<a name="FRQ-0013" />
+<table border="1" width="100%">
+<tr bgcolor="#c8e0e0">
+<th align="left" valign="top">FRQ-0013</th>
+<th align="left" valign="top" width="100%">
+Inicio de sesión</th>
+</tr>
+<tr>
+<th align="left" valign="top">Versión</th>
+<td align="left" valign="top">1.0 
+			( 25/03/2022 )
+        </td>
+</tr>
+<tr>
+<th align="left" valign="top">Autores</th>
+<td align="left" valign="top" colspan="1">
+<ul>
+<li>
+<a href="#STK-0001">
+Desarrollador</a>
+<br />
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<th align="left" valign="top">Fuentes</th>
+<td align="left" valign="top" colspan="1">
+<ul>
+<li>
+<a href="#STK-0001">
+Desarrollador</a>
+<br />
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<th align="left" valign="top">Dependencias</th>
+<td align="left" valign="top" colspan="1">
+<li>
+<a href="#FRQ-0011" title="Almacenar las mediciones">
+                                [FRQ-0011] 
+Almacenar las mediciones</a>
+</li>
+<li>
+<a href="#FRQ-0002" title="Registro del Paciente">
+                                [FRQ-0002] 
+Registro del Paciente</a>
+</li>
+<li>
+<a href="#FRQ-0009" title="Notificación sobre mediciones">
+                                [FRQ-0009] 
+Notificación sobre mediciones</a>
+</li>
+<li>
+<a href="#FRQ-0005" title="Mediciones de señales">
+                                [FRQ-0005] 
+Mediciones de señales</a>
+</li>
+<li>
+<a href="#FRQ-0012" title="Consulta del histórico de un Paciente">
+                                [FRQ-0012] 
+Consulta del histórico de un Paciente</a>
+</li>
+<li>
+<a href="#FRQ-0006" title="Botón de toma de datos">
+                                [FRQ-0006] 
+Botón de toma de datos</a>
+</li>
+</td>
+</tr>
+<tr>
+<th align="left" valign="top">Descripción</th>
+<td align="left" valign="top">
+    El sistema deberá 
+<em>
+pedir que el Sanitario que vaya a utilizar la app inicie sesión con su identificador y su contraseña.</em>
+</td>
+</tr>
+<tr>
+<th align="left" valign="top">Importancia</th>
+<td align="left" valign="top" colspan="1">quedaría bien</td>
+</tr>
+<tr>
+<th align="left" valign="top">Urgencia</th>
+<td align="left" valign="top" colspan="1">puede esperar</td>
+</tr>
+<tr>
+<th align="left" valign="top">Estado</th>
+<td align="left" valign="top" colspan="1">
+<font color="red"><b>PD</b></font>
+</td>
+</tr>
+<tr>
+<th align="left" valign="top">Estabilidad</th>
+<td align="left" valign="top" colspan="1">media</td>
+</tr>
+<tr>
+<th align="left" valign="top">Comentarios</th>
+<td align="left" valign="top" colspan="1">
+TAREAS:
+<br />- Tareas FRQ-0001.
+<br />- Crear una activity para el inicio de sesión con los campos usuario y contraseña.
+<br />- Implementar un algoritmo que recoja los datos introducidos en los campos usuario y contraseña, comprueben si existen en la base de datos, y en función de lo recogido acceda a la app o devuelva un mensaje de error.</td>
 </tr>
 </table>
 <p />
@@ -907,8 +1083,8 @@ Registro del Sanitario</th>
 <td align="left" valign="top" colspan="1">
 <ul>
 <li>
-<a href="#STK-0002">
-Sanitario</a>
+<a href="#STK-0001">
+Desarrollador</a>
 <br />
 </li>
 </ul>
@@ -917,7 +1093,13 @@ Sanitario</a>
 <tr>
 <th align="left" valign="top">Fuentes</th>
 <td align="left" valign="top" colspan="1">
-<font color="red"><b>?</b></font>
+<ul>
+<li>
+<a href="#STK-0001">
+Desarrollador</a>
+<br />
+</li>
+</ul>
 </td>
 </tr>
 <tr>
@@ -932,6 +1114,16 @@ Consulta del histórico de un Paciente</a>
 <a href="#FRQ-0011" title="Almacenar las mediciones">
                                 [FRQ-0011] 
 Almacenar las mediciones</a>
+</li>
+<li>
+<a href="#FRQ-0002" title="Registro del Paciente">
+                                [FRQ-0002] 
+Registro del Paciente</a>
+</li>
+<li>
+<a href="#FRQ-0013" title="Inicio de sesión">
+                                [FRQ-0013] 
+Inicio de sesión</a>
 </li>
 </td>
 </tr>
@@ -959,9 +1151,7 @@ tener un sistema de registro para el Sanitario que vaya a utilizar la app, almac
 </tr>
 <tr>
 <th align="left" valign="top">Estabilidad</th>
-<td align="left" valign="top" colspan="1">
-<font color="red"><b>PD</b></font>
-</td>
+<td align="left" valign="top" colspan="1">media</td>
 </tr>
 <tr>
 <th align="left" valign="top">Comentarios</th>
@@ -992,8 +1182,8 @@ Registro del Paciente</th>
 <td align="left" valign="top" colspan="1">
 <ul>
 <li>
-<a href="#STK-0002">
-Sanitario</a>
+<a href="#STK-0001">
+Desarrollador</a>
 <br />
 </li>
 </ul>
@@ -1002,7 +1192,13 @@ Sanitario</a>
 <tr>
 <th align="left" valign="top">Fuentes</th>
 <td align="left" valign="top" colspan="1">
-<font color="red"><b>?</b></font>
+<ul>
+<li>
+<a href="#STK-0001">
+Desarrollador</a>
+<br />
+</li>
+</ul>
 </td>
 </tr>
 <tr>
@@ -1044,9 +1240,7 @@ permitir al Sanitario registrar en una base de datos al Paciente que vaya a util
 </tr>
 <tr>
 <th align="left" valign="top">Estabilidad</th>
-<td align="left" valign="top" colspan="1">
-<font color="red"><b>PD</b></font>
-</td>
+<td align="left" valign="top" colspan="1">media</td>
 </tr>
 <tr>
 <th align="left" valign="top">Comentarios</th>
@@ -1077,8 +1271,8 @@ Almacenar las mediciones</th>
 <td align="left" valign="top" colspan="1">
 <ul>
 <li>
-<a href="#STK-0002">
-Sanitario</a>
+<a href="#STK-0001">
+Desarrollador</a>
 <br />
 </li>
 </ul>
@@ -1111,7 +1305,7 @@ Consulta del histórico de un Paciente</a>
 <td align="left" valign="top">
     El sistema deberá 
 <em>
-almacenar en una base de datos las mediciones realizadas con los dispositivos a un usuario.</em>
+almacenar en una base de datos las mediciones realizadas con los dispositivos a un usuario, normalmente un Paciente.</em>
 </td>
 </tr>
 <tr>
@@ -1130,9 +1324,7 @@ almacenar en una base de datos las mediciones realizadas con los dispositivos a 
 </tr>
 <tr>
 <th align="left" valign="top">Estabilidad</th>
-<td align="left" valign="top" colspan="1">
-<font color="red"><b>PD</b></font>
-</td>
+<td align="left" valign="top" colspan="1">media</td>
 </tr>
 <tr>
 <th align="left" valign="top">Comentarios</th>
@@ -1164,13 +1356,8 @@ Consulta del histórico de un Paciente</th>
 <td align="left" valign="top" colspan="1">
 <ul>
 <li>
-<a href="#STK-0003">
-Paciente</a>
-<br />
-</li>
-<li>
-<a href="#STK-0002">
-Sanitario</a>
+<a href="#STK-0001">
+Desarrollador</a>
 <br />
 </li>
 </ul>
@@ -1210,13 +1397,13 @@ tener un histórico con todas las mediciones realizadas a un Paciente concreto.</
 </tr>
 <tr>
 <th align="left" valign="top">Estado</th>
-<td align="left" valign="top" colspan="1">pendiente de verificación</td>
-</tr>
-<tr>
-<th align="left" valign="top">Estabilidad</th>
 <td align="left" valign="top" colspan="1">
 <font color="red"><b>PD</b></font>
 </td>
+</tr>
+<tr>
+<th align="left" valign="top">Estabilidad</th>
+<td align="left" valign="top" colspan="1">media</td>
 </tr>
 <tr>
 <th align="left" valign="top">Comentarios</th>
@@ -1257,12 +1444,99 @@ Desarrollador</a>
 <tr>
 <th align="left" valign="top">Fuentes</th>
 <td align="left" valign="top" colspan="1">
-<font color="red"><b>?</b></font>
+<ul>
+<li>
+<a href="#STK-0004">
+Tutor del TFG</a>
+<br />
+</li>
+</ul>
 </td>
 </tr>
 <tr>
 <th align="left" valign="top">Dependencias</th>
-<td align="left" valign="top" colspan="1">Ninguno</td>
+<td align="left" valign="top" colspan="1">
+<li>
+<a href="#FRQ-0002" title="Registro del Paciente">
+                                [FRQ-0002] 
+Registro del Paciente</a>
+</li>
+<li>
+<a href="#FRQ-0001" title="Registro del Sanitario">
+                                [FRQ-0001] 
+Registro del Sanitario</a>
+</li>
+<li>
+<a href="#FRQ-0003" title="Uso de la tecnología BLE">
+                                [FRQ-0003] 
+Uso de la tecnología BLE</a>
+</li>
+<li>
+<a href="#FRQ-0005" title="Mediciones de señales">
+                                [FRQ-0005] 
+Mediciones de señales</a>
+</li>
+<li>
+<a href="#NFR-0002" title="Interfaz responsive">
+                                [NFR-0002] 
+Interfaz responsive</a>
+</li>
+<li>
+<a href="#FRQ-0004" title="Conexión con varios dispositivos BLE simultáneamente">
+                                [FRQ-0004] 
+Conexión con varios dispositivos BLE simultáneamente</a>
+</li>
+<li>
+<a href="#FRQ-0007" title="Evaluación de datos en tiempo real">
+                                [FRQ-0007] 
+Evaluación de datos en tiempo real</a>
+</li>
+<li>
+<a href="#NFR-0003" title="Bluetooth">
+                                [NFR-0003] 
+Bluetooth</a>
+</li>
+<li>
+<a href="#NFR-0004" title="Internet">
+                                [NFR-0004] 
+Internet</a>
+</li>
+<li>
+<a href="#FRQ-0009" title="Notificación sobre mediciones">
+                                [FRQ-0009] 
+Notificación sobre mediciones</a>
+</li>
+<li>
+<a href="#FRQ-0008" title="Muestra de datos en tiempo real">
+                                [FRQ-0008] 
+Muestra de datos en tiempo real</a>
+</li>
+<li>
+<a href="#FRQ-0010" title="Conexión con BBDD">
+                                [FRQ-0010] 
+Conexión con BBDD</a>
+</li>
+<li>
+<a href="#FRQ-0006" title="Botón de toma de datos">
+                                [FRQ-0006] 
+Botón de toma de datos</a>
+</li>
+<li>
+<a href="#FRQ-0011" title="Almacenar las mediciones">
+                                [FRQ-0011] 
+Almacenar las mediciones</a>
+</li>
+<li>
+<a href="#FRQ-0012" title="Consulta del histórico de un Paciente">
+                                [FRQ-0012] 
+Consulta del histórico de un Paciente</a>
+</li>
+<li>
+<a href="#NFR-0005" title="Diseño de la interfaz">
+                                [NFR-0005] 
+Diseño de la interfaz</a>
+</li>
+</td>
 </tr>
 <tr>
 <th align="left" valign="top">Descripción</th>
@@ -1286,14 +1560,14 @@ estar destinado para dispositivos móviles con sistema operativo Android, para la
 </tr>
 <tr>
 <th align="left" valign="top">Estabilidad</th>
-<td align="left" valign="top" colspan="1">
-<font color="red"><b>PD</b></font>
-</td>
+<td align="left" valign="top" colspan="1">alta</td>
 </tr>
 <tr>
 <th align="left" valign="top">Comentarios</th>
 <td align="left" valign="top" colspan="1">
-Ninguno</td>
+Tras un estudio de la cuota de mercado de los distintos sistemas operativos para smartphones, se determina que la cuota de dispositivos con sistema operativo Android es de más del 80%. Además, económicamente es más factible para el Desarrollador la realización de una app destinada a Android.
+<br />
+<br />Respecto a la versión de Android, se estima en el Estudio Previo que la versión mínima óptima es Android 10.</td>
 </tr>
 </table>
 <p />
@@ -1325,12 +1599,54 @@ Desarrollador</a>
 <tr>
 <th align="left" valign="top">Fuentes</th>
 <td align="left" valign="top" colspan="1">
-<font color="red"><b>?</b></font>
+<ul>
+<li>
+<a href="#STK-0001">
+Desarrollador</a>
+<br />
+</li>
+</ul>
 </td>
 </tr>
 <tr>
 <th align="left" valign="top">Dependencias</th>
-<td align="left" valign="top" colspan="1">Ninguno</td>
+<td align="left" valign="top" colspan="1">
+<li>
+<a href="#FRQ-0001" title="Registro del Sanitario">
+                                [FRQ-0001] 
+Registro del Sanitario</a>
+</li>
+<li>
+<a href="#FRQ-0006" title="Botón de toma de datos">
+                                [FRQ-0006] 
+Botón de toma de datos</a>
+</li>
+<li>
+<a href="#FRQ-0002" title="Registro del Paciente">
+                                [FRQ-0002] 
+Registro del Paciente</a>
+</li>
+<li>
+<a href="#FRQ-0008" title="Muestra de datos en tiempo real">
+                                [FRQ-0008] 
+Muestra de datos en tiempo real</a>
+</li>
+<li>
+<a href="#FRQ-0012" title="Consulta del histórico de un Paciente">
+                                [FRQ-0012] 
+Consulta del histórico de un Paciente</a>
+</li>
+<li>
+<a href="#NFR-0005" title="Diseño de la interfaz">
+                                [NFR-0005] 
+Diseño de la interfaz</a>
+</li>
+<li>
+<a href="#FRQ-0013" title="Inicio de sesión">
+                                [FRQ-0013] 
+Inicio de sesión</a>
+</li>
+</td>
 </tr>
 <tr>
 <th align="left" valign="top">Descripción</th>
@@ -1350,20 +1666,16 @@ tener una interfaz gráfica que se adapte a los distintos tamaños de pantalla.</e
 </tr>
 <tr>
 <th align="left" valign="top">Estado</th>
-<td align="left" valign="top" colspan="1">
-<font color="red"><b>PD</b></font>
-</td>
+<td align="left" valign="top" colspan="1">en construcción</td>
 </tr>
 <tr>
 <th align="left" valign="top">Estabilidad</th>
-<td align="left" valign="top" colspan="1">
-<font color="red"><b>PD</b></font>
-</td>
+<td align="left" valign="top" colspan="1">alta</td>
 </tr>
 <tr>
 <th align="left" valign="top">Comentarios</th>
 <td align="left" valign="top" colspan="1">
-Ninguno</td>
+La app a desarrollar está pensada para instalarse tanto en smartphones como en tablets, con la diferencia en las dimensiones de la pantalla que ello conlleva. Por ello, es importante que la interfaz se adapte a distintos tamaños de pantalla de forma dinámica sin problema.</td>
 </tr>
 </table>
 <p />
@@ -1395,12 +1707,59 @@ Desarrollador</a>
 <tr>
 <th align="left" valign="top">Fuentes</th>
 <td align="left" valign="top" colspan="1">
-<font color="red"><b>?</b></font>
+<ul>
+<li>
+<a href="#STK-0004">
+Tutor del TFG</a>
+<br />
+</li>
+</ul>
 </td>
 </tr>
 <tr>
 <th align="left" valign="top">Dependencias</th>
-<td align="left" valign="top" colspan="1">Ninguno</td>
+<td align="left" valign="top" colspan="1">
+<li>
+<a href="#FRQ-0005" title="Mediciones de señales">
+                                [FRQ-0005] 
+Mediciones de señales</a>
+</li>
+<li>
+<a href="#FRQ-0011" title="Almacenar las mediciones">
+                                [FRQ-0011] 
+Almacenar las mediciones</a>
+</li>
+<li>
+<a href="#FRQ-0008" title="Muestra de datos en tiempo real">
+                                [FRQ-0008] 
+Muestra de datos en tiempo real</a>
+</li>
+<li>
+<a href="#FRQ-0004" title="Conexión con varios dispositivos BLE simultáneamente">
+                                [FRQ-0004] 
+Conexión con varios dispositivos BLE simultáneamente</a>
+</li>
+<li>
+<a href="#FRQ-0006" title="Botón de toma de datos">
+                                [FRQ-0006] 
+Botón de toma de datos</a>
+</li>
+<li>
+<a href="#FRQ-0003" title="Uso de la tecnología BLE">
+                                [FRQ-0003] 
+Uso de la tecnología BLE</a>
+</li>
+<li>
+<a href="#FRQ-0009" title="Notificación sobre mediciones">
+                                [FRQ-0009] 
+Notificación sobre mediciones</a>
+</li>
+<li>
+<a href="#FRQ-0007" title="Evaluación de datos en tiempo real">
+                                [FRQ-0007] 
+Evaluación de datos en tiempo real</a>
+</li>
+</td>
 </tr>
 <tr>
 <th align="left" valign="top">Descripción</th>
@@ -1424,14 +1783,12 @@ tener permisos para usar Bluetooth, siendo estrictamente necesario que el smartp
 </tr>
 <tr>
 <th align="left" valign="top">Estabilidad</th>
-<td align="left" valign="top" colspan="1">
-<font color="red"><b>PD</b></font>
-</td>
+<td align="left" valign="top" colspan="1">alta</td>
 </tr>
 <tr>
 <th align="left" valign="top">Comentarios</th>
 <td align="left" valign="top" colspan="1">
-Ninguno</td>
+Los dispositivos utilizados para la medición de señales fisiológicas se comunicarán con la app a través de Bluetooth Low Energy (BLE). Por tanto, deben añadirse los permisos necesarios para que la app se comunique de forma adecuada con los dispositivos.</td>
 </tr>
 </table>
 <p />
@@ -1463,12 +1820,49 @@ Desarrollador</a>
 <tr>
 <th align="left" valign="top">Fuentes</th>
 <td align="left" valign="top" colspan="1">
-<font color="red"><b>?</b></font>
+<ul>
+<li>
+<a href="#STK-0001">
+Desarrollador</a>
+<br />
+</li>
+</ul>
 </td>
 </tr>
 <tr>
 <th align="left" valign="top">Dependencias</th>
-<td align="left" valign="top" colspan="1">Ninguno</td>
+<td align="left" valign="top" colspan="1">
+<li>
+<a href="#FRQ-0012" title="Consulta del histórico de un Paciente">
+                                [FRQ-0012] 
+Consulta del histórico de un Paciente</a>
+</li>
+<li>
+<a href="#FRQ-0002" title="Registro del Paciente">
+                                [FRQ-0002] 
+Registro del Paciente</a>
+</li>
+<li>
+<a href="#FRQ-0010" title="Conexión con BBDD">
+                                [FRQ-0010] 
+Conexión con BBDD</a>
+</li>
+<li>
+<a href="#FRQ-0011" title="Almacenar las mediciones">
+                                [FRQ-0011] 
+Almacenar las mediciones</a>
+</li>
+<li>
+<a href="#FRQ-0001" title="Registro del Sanitario">
+                                [FRQ-0001] 
+Registro del Sanitario</a>
+</li>
+<li>
+<a href="#FRQ-0013" title="Inicio de sesión">
+                                [FRQ-0013] 
+Inicio de sesión</a>
+</li>
+</td>
 </tr>
 <tr>
 <th align="left" valign="top">Descripción</th>
@@ -1492,14 +1886,466 @@ tener conexión a Internet, utilizando los permisos adecuados, para el tráfico de
 </tr>
 <tr>
 <th align="left" valign="top">Estabilidad</th>
+<td align="left" valign="top" colspan="1">alta</td>
+</tr>
+<tr>
+<th align="left" valign="top">Comentarios</th>
+<td align="left" valign="top" colspan="1">
+Si se desea tener un registro de las distintas mediciones realizadas sobre usuarios, es fundamental el uso de una base de datos, la cual se determina que se alojará en un servidor externo. Para poder tener acceso a este servidor, y, por ende, a la base de datos, se necesita que la app tenga los permisos necesarios para conectarse a Internet.</td>
+</tr>
+</table>
+<p />
+<a name="NFR-0005" />
+<table border="1" width="100%">
+<tr bgcolor="#c8e0e0">
+<th align="left" valign="top">NFR-0005</th>
+<th align="left" valign="top" width="100%">
+Diseño de la interfaz</th>
+</tr>
+<tr>
+<th align="left" valign="top">Versión</th>
+<td align="left" valign="top">1.0 
+			( 25/03/2022 )
+        </td>
+</tr>
+<tr>
+<th align="left" valign="top">Autores</th>
+<td align="left" valign="top" colspan="1">
+<ul>
+<li>
+<a href="#STK-0001">
+Desarrollador</a>
+<br />
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<th align="left" valign="top">Fuentes</th>
+<td align="left" valign="top" colspan="1">
+<ul>
+<li>
+<a href="#STK-0001">
+Desarrollador</a>
+<br />
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<th align="left" valign="top">Dependencias</th>
+<td align="left" valign="top" colspan="1">
+<li>
+<a href="#FRQ-0002" title="Registro del Paciente">
+                                [FRQ-0002] 
+Registro del Paciente</a>
+</li>
+<li>
+<a href="#FRQ-0006" title="Botón de toma de datos">
+                                [FRQ-0006] 
+Botón de toma de datos</a>
+</li>
+<li>
+<a href="#FRQ-0008" title="Muestra de datos en tiempo real">
+                                [FRQ-0008] 
+Muestra de datos en tiempo real</a>
+</li>
+<li>
+<a href="#FRQ-0012" title="Consulta del histórico de un Paciente">
+                                [FRQ-0012] 
+Consulta del histórico de un Paciente</a>
+</li>
+<li>
+<a href="#FRQ-0001" title="Registro del Sanitario">
+                                [FRQ-0001] 
+Registro del Sanitario</a>
+</li>
+<li>
+<a href="#FRQ-0013" title="Inicio de sesión">
+                                [FRQ-0013] 
+Inicio de sesión</a>
+</li>
+</td>
+</tr>
+<tr>
+<th align="left" valign="top">Descripción</th>
+<td align="left" valign="top">
+    El sistema deberá 
+<em>
+tener una interfaz de usuario fácil de entender para una persona que nunca haya usado la app.</em>
+</td>
+</tr>
+<tr>
+<th align="left" valign="top">Importancia</th>
+<td align="left" valign="top" colspan="1">importante</td>
+</tr>
+<tr>
+<th align="left" valign="top">Urgencia</th>
+<td align="left" valign="top" colspan="1">hay presión</td>
+</tr>
+<tr>
+<th align="left" valign="top">Estado</th>
 <td align="left" valign="top" colspan="1">
 <font color="red"><b>PD</b></font>
 </td>
 </tr>
 <tr>
+<th align="left" valign="top">Estabilidad</th>
+<td align="left" valign="top" colspan="1">alta</td>
+</tr>
+<tr>
 <th align="left" valign="top">Comentarios</th>
 <td align="left" valign="top" colspan="1">
-Ninguno</td>
+Debido a que la app está destinada para personas que pueden tener pocos conocimientos informáticos, es necesario que la interfaz gráfica sea lo más sencilla, simple, intuitiva y amigable posible. De esta forma, el Sanitario que la utilice debe entender sin demasiada complicación el funcionamiento de la misma.</td>
+</tr>
+</table>
+<p />
+<a name="NFR-0006" />
+<table border="1" width="100%">
+<tr bgcolor="#c8e0e0">
+<th align="left" valign="top">NFR-0006</th>
+<th align="left" valign="top" width="100%">
+Seguridad</th>
+</tr>
+<tr>
+<th align="left" valign="top">Versión</th>
+<td align="left" valign="top">1.0 
+			( 25/03/2022 )
+        </td>
+</tr>
+<tr>
+<th align="left" valign="top">Autores</th>
+<td align="left" valign="top" colspan="1">
+<ul>
+<li>
+<a href="#STK-0001">
+Desarrollador</a>
+<br />
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<th align="left" valign="top">Fuentes</th>
+<td align="left" valign="top" colspan="1">
+<ul>
+<li>
+<a href="#STK-0001">
+Desarrollador</a>
+<br />
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<th align="left" valign="top">Dependencias</th>
+<td align="left" valign="top" colspan="1">
+<li>
+<a href="#FRQ-0013" title="Inicio de sesión">
+                                [FRQ-0013] 
+Inicio de sesión</a>
+</li>
+</td>
+</tr>
+<tr>
+<th align="left" valign="top">Descripción</th>
+<td align="left" valign="top">
+    El sistema deberá 
+<em>
+impedir que ningún usuario no registrado use la app.</em>
+</td>
+</tr>
+<tr>
+<th align="left" valign="top">Importancia</th>
+<td align="left" valign="top" colspan="1">quedaría bien</td>
+</tr>
+<tr>
+<th align="left" valign="top">Urgencia</th>
+<td align="left" valign="top" colspan="1">puede esperar</td>
+</tr>
+<tr>
+<th align="left" valign="top">Estado</th>
+<td align="left" valign="top" colspan="1">
+<font color="red"><b>PD</b></font>
+</td>
+</tr>
+<tr>
+<th align="left" valign="top">Estabilidad</th>
+<td align="left" valign="top" colspan="1">media</td>
+</tr>
+<tr>
+<th align="left" valign="top">Comentarios</th>
+<td align="left" valign="top" colspan="1">
+Los Sanitarios que vayan a utilizar la app deben tener una cuenta en el sistema. Una vez que se registre, podrá iniciar sesión y usar la app sin mayor problema.</td>
+</tr>
+</table>
+<p />
+<a name="IRQ-0001" />
+<table border="1" width="100%">
+<tr bgcolor="#c8e0e0">
+<th align="left" valign="top">IRQ-0001</th>
+<th align="left" valign="top" width="100%" colspan="2">
+Datos Sanitarios</th>
+</tr>
+<tr>
+<th align="left" valign="top">Versión</th>
+<td align="left" valign="top" colspan="2">1.0 
+			( 25/03/2022 )
+        </td>
+</tr>
+<tr>
+<th align="left" valign="top">Autores</th>
+<td align="left" valign="top" colspan="2">
+<ul>
+<li>
+<a href="#STK-0001">
+Desarrollador</a>
+<br />
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<th align="left" valign="top">Fuentes</th>
+<td align="left" valign="top" colspan="2">
+<ul>
+<li>
+<a href="#STK-0001">
+Desarrollador</a>
+<br />
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<th align="left" valign="top">Dependencias</th>
+<td align="left" valign="top" colspan="2">
+<li>
+<a href="#FRQ-0001" title="Registro del Sanitario">
+                                [FRQ-0001] 
+Registro del Sanitario</a>
+</li>
+</td>
+</tr>
+<tr>
+<th align="left" valign="top">Descripción</th>
+<td colspan="2">
+    El sistema deberá almacenar la información correspondiente a 
+<em>
+Información sobre los Sanitarios que usen la app..
+				</em>
+    En concreto:
+</td>
+</tr>
+<tr>
+<th align="left" valign="top">Datos específicos</th>
+<td colspan="2" align="left" valign="top">
+<ul>
+<li>
+<a name="DAT-0001" />
+DNI/NIF
+								(<em>
+PRIMARY KEY</em>)
+							</li>
+<li>
+<a name="DAT-0002" />
+Apellidos</li>
+<li>
+<a name="DAT-0003" />
+Nombre</li>
+<li>
+<a name="DAT-0004" />
+Fecha de nacimiento</li>
+<li>
+<a name="DAT-0005" />
+Organización</li>
+<li>
+<a name="DAT-0006" />
+Contraseña</li>
+</ul>
+</td>
+</tr>
+<tr>
+<th rowspan="2" align="left" valign="top">Tiempo de vida</th>
+<th align="left" valign="top">Medio</th>
+<th align="left" valign="top">Máximo</th>
+</tr>
+<tr>
+<td>
+<font color="red"><b>PD</b></font>
+</td>
+<td>
+<font color="red"><b>PD</b></font>
+</td>
+</tr>
+<tr>
+<th rowspan="2" align="left" valign="top">Ocurrencias simultáneas</th>
+<th align="left" valign="top">Medio</th>
+<th align="left" valign="top">Máximo</th>
+</tr>
+<tr>
+<td>
+<font color="red"><b>PD</b></font>
+</td>
+<td>
+<font color="red"><b>PD</b></font>
+</td>
+</tr>
+<tr>
+<th align="left" valign="top">Importancia</th>
+<td align="left" valign="top" colspan="2">importante</td>
+</tr>
+<tr>
+<th align="left" valign="top">Urgencia</th>
+<td align="left" valign="top" colspan="2">puede esperar</td>
+</tr>
+<tr>
+<th align="left" valign="top">Estado</th>
+<td align="left" valign="top" colspan="2">
+<font color="red"><b>PD</b></font>
+</td>
+</tr>
+<tr>
+<th align="left" valign="top">Estabilidad</th>
+<td align="left" valign="top" colspan="2">media</td>
+</tr>
+<tr>
+<th align="left" valign="top">Comentarios</th>
+<td align="left" valign="top" colspan="2">
+Estos serán los datos que se pedirán en los formularios de registro de Sanitarios para guardarlos en la base de datos.</td>
+</tr>
+</table>
+<p />
+<a name="IRQ-0002" />
+<table border="1" width="100%">
+<tr bgcolor="#c8e0e0">
+<th align="left" valign="top">IRQ-0002</th>
+<th align="left" valign="top" width="100%" colspan="2">
+Datos Pacientes</th>
+</tr>
+<tr>
+<th align="left" valign="top">Versión</th>
+<td align="left" valign="top" colspan="2">1.0 
+			( 25/03/2022 )
+        </td>
+</tr>
+<tr>
+<th align="left" valign="top">Autores</th>
+<td align="left" valign="top" colspan="2">
+<ul>
+<li>
+<a href="#STK-0001">
+Desarrollador</a>
+<br />
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<th align="left" valign="top">Fuentes</th>
+<td align="left" valign="top" colspan="2">
+<ul>
+<li>
+<a href="#STK-0001">
+Desarrollador</a>
+<br />
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<th align="left" valign="top">Dependencias</th>
+<td align="left" valign="top" colspan="2">
+<li>
+<a href="#FRQ-0002" title="Registro del Paciente">
+                                [FRQ-0002] 
+Registro del Paciente</a>
+</li>
+</td>
+</tr>
+<tr>
+<th align="left" valign="top">Descripción</th>
+<td colspan="2">
+    El sistema deberá almacenar la información correspondiente a 
+<em>
+Información sobre los Pacientes que usen la app..
+				</em>
+    En concreto:
+</td>
+</tr>
+<tr>
+<th align="left" valign="top">Datos específicos</th>
+<td colspan="2" align="left" valign="top">
+<ul>
+<li>
+<a name="DAT-0007" />
+DNI/NIF
+								(<em>
+PRIMARY KEY</em>)
+							</li>
+<li>
+<a name="DAT-0008" />
+Apellidos</li>
+<li>
+<a name="DAT-0009" />
+Nombre</li>
+<li>
+<a name="DAT-0010" />
+Fecha de nacimiento</li>
+<li>
+<a name="DAT-0011" />
+Motivo de pruebas</li>
+</ul>
+</td>
+</tr>
+<tr>
+<th rowspan="2" align="left" valign="top">Tiempo de vida</th>
+<th align="left" valign="top">Medio</th>
+<th align="left" valign="top">Máximo</th>
+</tr>
+<tr>
+<td>
+<font color="red"><b>PD</b></font>
+</td>
+<td>
+<font color="red"><b>PD</b></font>
+</td>
+</tr>
+<tr>
+<th rowspan="2" align="left" valign="top">Ocurrencias simultáneas</th>
+<th align="left" valign="top">Medio</th>
+<th align="left" valign="top">Máximo</th>
+</tr>
+<tr>
+<td>
+<font color="red"><b>PD</b></font>
+</td>
+<td>
+<font color="red"><b>PD</b></font>
+</td>
+</tr>
+<tr>
+<th align="left" valign="top">Importancia</th>
+<td align="left" valign="top" colspan="2">importante</td>
+</tr>
+<tr>
+<th align="left" valign="top">Urgencia</th>
+<td align="left" valign="top" colspan="2">puede esperar</td>
+</tr>
+<tr>
+<th align="left" valign="top">Estado</th>
+<td align="left" valign="top" colspan="2">
+<font color="red"><b>PD</b></font>
+</td>
+</tr>
+<tr>
+<th align="left" valign="top">Estabilidad</th>
+<td align="left" valign="top" colspan="2">media</td>
+</tr>
+<tr>
+<th align="left" valign="top">Comentarios</th>
+<td align="left" valign="top" colspan="2">
+Estos serán los datos que se pedirán en los formularios de registro de Pacientes para guardarlos en la base de datos.</td>
 </tr>
 </table>
 <p />
