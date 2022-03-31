@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">BLE2</string>
+
+    <string name="refresh">Refrescar</string>
+
+    <string name="on">Encender</string>
+    <string name="off">Apagar</string>
+    <string name="disconnect">Desconectar</string>
 </resources>
