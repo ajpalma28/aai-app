@@ -1,0 +1,4 @@
+Primer planteamiento de los requisitos del proyecto AAI-APP.
+
+Este planteamiento de los requisitos se ha realizado con la herramienta REM del departamento LSI,
+perteneciente a la Universidad de Sevilla.
