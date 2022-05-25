@@ -18,7 +18,7 @@ import com.google.android.material.tabs.TabLayout
 
 // Tomando como modelo https://www.youtube.com/watch?v=Oz4CBHrxMMs
 // P2 = https://www.youtube.com/watch?v=eg-t_rhDSoM
-// La P2 la he dejao por el 18:36
+// A PRIORI CÓDIGO TERMINADO, REVISAR LO QUE FALLA & FUNCIONES OBSOLETAS
 
 class MainActivity : AppCompatActivity() {
 
