@@ -16,6 +16,7 @@ import android.os.PersistableBundle
 import android.text.Selection
 import android.util.Log
 import android.view.View
+import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.ActivityChooserView
 import androidx.core.app.ActivityCompat
@@ -61,9 +62,9 @@ class ControlActivity: AppCompatActivity() {
 
         ConnectToDevice(this).execute()
 
-        variables.controlLedOn.setOnClickListener(sendCommand("a"))
-        vario.controlLedOff.setOnClickListener(sendCommand("b"))
-        vario.controlLedDisconnect.setOnClickListener(disconnect())
+        variables.controlLedOn.setOnClickListener { sendCommand("a") }
+        vario.controlLedOff.setOnClickListener{ sendCommand("b") }
+        vario.controlLedDisconnect.setOnClickListener{ disconnect() }
     }
 
     private fun sendCommand(input: String) {
@@ -101,6 +102,7 @@ class ControlActivity: AppCompatActivity() {
         override fun onPreExecute() {
             super.onPreExecute()
             m_progress = ProgressDialog.show(context, "Conectando...", "Por favor, espere")
+
         }
 
         @SuppressLint("MissingPermission")

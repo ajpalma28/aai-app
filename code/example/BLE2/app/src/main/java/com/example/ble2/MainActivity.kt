@@ -13,6 +13,7 @@ import android.view.LayoutInflater
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import com.example.ble2.databinding.ActivityMainBinding
 import com.google.android.material.tabs.TabLayout
 
@@ -53,6 +54,7 @@ class MainActivity : AppCompatActivity() {
         if(!bAdapter!!.isEnabled){
             val enableBluetoothIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
             startActivityForResult(enableBluetoothIntent, REQUEST_ENABLE_BLUETOOTH)
+
         }
 
         vario.selectDeviceRefresh.setOnClickListener{pairedDeviceList()}
