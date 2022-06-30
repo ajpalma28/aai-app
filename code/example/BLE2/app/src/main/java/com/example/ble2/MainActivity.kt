@@ -53,12 +53,22 @@ class MainActivity : AppCompatActivity() {
         }
         if(!bAdapter!!.isEnabled){
             val enableBluetoothIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
-            startActivityForResult(enableBluetoothIntent, REQUEST_ENABLE_BLUETOOTH)
+            // METODO OBSOLETO
+            //startActivityForResult(enableBluetoothIntent, REQUEST_ENABLE_BLUETOOTH)
+            if(enableBluetoothIntent.resolveActivity(packageManager) != null){
+                getAction.launch(enableBluetoothIntent)
+            }
 
         }
 
         vario.selectDeviceRefresh.setOnClickListener{pairedDeviceList()}
 
+    }
+
+    @SuppressLint("MissingPermission")
+    val getAction = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+        bAdapter?.enable()
+        Toast.makeText(this,"Encendido", Toast.LENGTH_SHORT).show()
     }
 
     @SuppressLint("MissingPermission")
