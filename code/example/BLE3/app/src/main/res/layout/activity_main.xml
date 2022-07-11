@@ -21,11 +21,10 @@
             android:layout_width="8dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
             app:layout_constraintEnd_toStartOf="@+id/itemBtConnect"
             app:layout_constraintStart_toEndOf="@+id/imgDevice"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Itag" />
+            tools:text="Itag"
+            tools:ignore="MissingConstraints" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/itemTxtDeviceRssi"
