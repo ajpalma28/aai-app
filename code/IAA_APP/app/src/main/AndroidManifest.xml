@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.iaa_project">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -16,10 +18,6 @@
         <activity
             android:name=".ActivityRegistroInvest"
             android:exported="false" />
-        <activity
-            android:name=".ui.login.FormInicioSesion"
-            android:exported="false"
-            android:label="@string/title_activity_form_inicio_sesion" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
