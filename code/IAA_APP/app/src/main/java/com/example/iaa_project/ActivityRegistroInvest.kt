@@ -18,9 +18,14 @@ class ActivityRegistroInvest : AppCompatActivity() {
         setContentView(variables!!.root)
 
         val botonAceptar = variables!!.btnAceptReg
+        val botonCancelar = variables!!.btnCancReg
 
         botonAceptar.setOnClickListener{
             registerInvest()
+        }
+
+        botonCancelar.setOnClickListener{
+            super.onBackPressed()
         }
 
     }
@@ -57,13 +62,13 @@ class ActivityRegistroInvest : AppCompatActivity() {
 
         try{
             println("Entro en el try")
-            //Class.forName("com.mysql.jdbc.Driver")
+            Class.forName("com.mysql.cj.jdbc.Driver")
             //Configuracion de la conexión
             //Configuracion de la conexión
             println("Hola 1")
             val connection = DriverManager.getConnection(
                 "jdbc:mysql://127.0.0.1:3306/aai-app_local",
-                "Admin",
+                "root",
                 "root"
             )
             println(connection.isValid(0))
