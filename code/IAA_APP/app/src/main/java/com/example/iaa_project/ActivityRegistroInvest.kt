@@ -5,8 +5,14 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.iaa_project.databinding.ActivityRegistroInvestBinding
 import com.example.iaa_project.databinding.ActivityRegistroInvestBinding.inflate
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException
+import com.google.android.gms.common.GooglePlayServicesRepairableException
+import com.google.android.gms.security.ProviderInstaller
+import java.security.KeyManagementException
+import java.security.NoSuchAlgorithmException
 import java.sql.DriverManager
-import java.sql.Connection
+import java.util.concurrent.Executors
+import javax.net.ssl.*
 
 class ActivityRegistroInvest : AppCompatActivity() {
     var variables: ActivityRegistroInvestBinding? = null
@@ -14,14 +20,34 @@ class ActivityRegistroInvest : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_registro_invest)
 
+        try {
+            ProviderInstaller.installIfNeeded(applicationContext)
+            val sslContext: SSLContext = SSLContext.getInstance("TLSv1.3")
+            sslContext.init(null, null, null)
+            sslContext.createSSLEngine()
+        } catch (e: GooglePlayServicesRepairableException) {
+            e.printStackTrace()
+        } catch (e: GooglePlayServicesNotAvailableException) {
+            e.printStackTrace()
+        } catch (e: NoSuchAlgorithmException) {
+            e.printStackTrace()
+        } catch (e: KeyManagementException) {
+            e.printStackTrace()
+        }
+
         variables = inflate(layoutInflater)
         setContentView(variables!!.root)
 
         val botonAceptar = variables!!.btnAceptReg
         val botonCancelar = variables!!.btnCancReg
 
+        val myExecutor = Executors.newSingleThreadExecutor()
+
+
         botonAceptar.setOnClickListener{
-            registerInvest()
+            myExecutor.execute{
+                registerInvest()
+            }
         }
 
         botonCancelar.setOnClickListener{
@@ -60,17 +86,19 @@ class ActivityRegistroInvest : AppCompatActivity() {
             contra = pw1
         }
 
-        try{
+        //try{
             println("Entro en el try")
             Class.forName("com.mysql.cj.jdbc.Driver")
             //Configuracion de la conexión
             //Configuracion de la conexión
             println("Hola 1")
+
             val connection = DriverManager.getConnection(
-                "jdbc:mysql://127.0.0.1:3306/aai-app_local",
-                "root",
-                "root"
+                "jdbc:mysql://tpfrgiw79q39.eu-west-3.psdb.cloud:3306/iaadb?sslMode=VERIFY_IDENTITY",
+                "wq2es46v0vv7",
+                "pscale_pw_u-YgidCTseLQ0tzJ8c6HThAEjIfcdwZNL6wqk_lImpE"
             )
+
             println(connection.isValid(0))
             println("hola 2")
 
@@ -87,9 +115,9 @@ class ActivityRegistroInvest : AppCompatActivity() {
 
             Toast.makeText(this,"¡REGISTRADO CORRECTAMENTE! Su identificador es $id", Toast.LENGTH_LONG).show()
 
-        } catch (e: Exception) {
+        /*} catch (e: Exception) {
             println(e.toString())
-        }
+        }*/
 
     }
 
