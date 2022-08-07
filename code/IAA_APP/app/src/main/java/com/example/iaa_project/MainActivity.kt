@@ -24,5 +24,10 @@ class MainActivity : AppCompatActivity() {
             val intento1 = Intent(this, ActivityRegistroInvest::class.java)
             startActivity(intento1)
         }
+
+        botonInSes.setOnClickListener{
+            //val intento2 = Intent(this, LoginActivity::class.java)
+            //startActivity(intento2)
+        }
     }
 }
