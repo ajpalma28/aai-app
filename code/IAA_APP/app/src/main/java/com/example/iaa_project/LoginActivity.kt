@@ -7,7 +7,7 @@ import java.util.concurrent.Executors
 
 class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
-        var variables: LoginActivityBinding? = null
+        //var variables: LoginActivityBinding? = null
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 

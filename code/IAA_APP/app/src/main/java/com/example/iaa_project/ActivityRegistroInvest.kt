@@ -13,16 +13,17 @@ import java.security.NoSuchAlgorithmException
 import java.sql.DriverManager
 import java.util.concurrent.Executors
 import javax.net.ssl.*
+import javax.security.cert.CertificateException
 
 class ActivityRegistroInvest : AppCompatActivity() {
     var variables: ActivityRegistroInvestBinding? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_registro_invest)
-
+        /*
         try {
             ProviderInstaller.installIfNeeded(applicationContext)
-            val sslContext: SSLContext = SSLContext.getInstance("TLSv1.3")
+            val sslContext: SSLContext = SSLContext.getInstance("SSL")
             sslContext.init(null, null, null)
             sslContext.createSSLEngine()
         } catch (e: GooglePlayServicesRepairableException) {
@@ -33,7 +34,26 @@ class ActivityRegistroInvest : AppCompatActivity() {
             e.printStackTrace()
         } catch (e: KeyManagementException) {
             e.printStackTrace()
-        }
+        }*/
+
+        // Create a trust manager that does not validate certificate chains
+        val trustAllCerts = arrayOf<TrustManager>(object : X509TrustManager {
+            @Throws(CertificateException::class)
+            override fun checkClientTrusted(chain: Array<java.security.cert.X509Certificate>, authType: String) {
+            } // Noncompliant (s4830)
+
+            @Throws(CertificateException::class)
+            override fun checkServerTrusted(chain: Array<java.security.cert.X509Certificate>, authType: String) {
+            } // Noncompliant (s4830)
+
+            override fun getAcceptedIssuers(): Array<java.security.cert.X509Certificate> {
+                return arrayOf()
+            }
+        })
+
+        // Install the all-trusting trust manager
+        val sslContext = SSLContext.getInstance("SSL")
+        sslContext.init(null, trustAllCerts, java.security.SecureRandom())
 
         variables = inflate(layoutInflater)
         setContentView(variables!!.root)
@@ -91,13 +111,19 @@ class ActivityRegistroInvest : AppCompatActivity() {
             Class.forName("com.mysql.cj.jdbc.Driver")
             //Configuracion de la conexión
             //Configuracion de la conexión
-            println("Hola 1")
+            println("Query que vamos a ejecutar: INSERT INTO `db-tfg`.`investigador` (`idinvestigador`, `dni`, `apellidos`, `nombre`, `fnacimiento`, `contrasena`, `notificaciones`, `terminoscondiciones`) VALUES ('$id', '$dni', '$apellidos', '$nombre', '$fechaDef', '$contra', 'true', '$tyc');")
 
-            val connection = DriverManager.getConnection(
+            /*val connection = DriverManager.getConnection(
                 "jdbc:mysql://tpfrgiw79q39.eu-west-3.psdb.cloud:3306/iaadb?sslMode=VERIFY_IDENTITY",
                 "wq2es46v0vv7",
                 "pscale_pw_u-YgidCTseLQ0tzJ8c6HThAEjIfcdwZNL6wqk_lImpE"
-            )
+            )*/
+        //"jdbc:mysql://tpfrgiw79q39.eu-west-3.psdb.cloud:3306/iaadb?sslMode=VERIFY_IDENTITY&ssl-ca=/system/etc/security/cacerts.bks"
+        val connection = DriverManager.getConnection(
+            "jdbc:mysql://tpfrgiw79q39.eu-west-3.psdb.cloud:3306/iaadb?sslMode=VERIFY_IDENTITY",
+            "wq2es46v0vv7",
+            "pscale_pw_u-YgidCTseLQ0tzJ8c6HThAEjIfcdwZNL6wqk_lImpE"
+        )
 
             println(connection.isValid(0))
             println("hola 2")
@@ -121,7 +147,7 @@ class ActivityRegistroInvest : AppCompatActivity() {
 
     }
 
-    private fun generaIdInvestigador(nombre: String, apellidos: String, dni: String, fecha: String){
+    private fun generaIdInvestigador(nombre: String, apellidos: String, dni: String, fecha: String): String {
         var identificador = ""
         for(i in nombre.indices){
             if(i<4){
@@ -149,6 +175,7 @@ class ActivityRegistroInvest : AppCompatActivity() {
                 identificador += ano[j]
             }
         }
+        return identificador
     }
 
     private fun formateaFecha(fecha: String): String {
