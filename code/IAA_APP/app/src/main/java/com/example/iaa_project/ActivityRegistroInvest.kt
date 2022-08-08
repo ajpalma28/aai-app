@@ -12,14 +12,13 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.ContextCompat.getSystemService
 import com.example.iaa_project.databinding.ActivityRegistroInvestBinding
 import com.example.iaa_project.databinding.ActivityRegistroInvestBinding.inflate
-import com.google.android.gms.common.GooglePlayServicesNotAvailableException
-import com.google.android.gms.common.GooglePlayServicesRepairableException
-import com.google.android.gms.security.ProviderInstaller
-import java.security.KeyManagementException
-import java.security.NoSuchAlgorithmException
-import java.sql.Date
+import com.example.iaa_project.exceptions.InvalidPWException
+import com.example.iaa_project.exceptions.InvalidTCException
+import com.example.iaa_project.exceptions.errorPW1
+import com.example.iaa_project.exceptions.errorTYC
 import java.sql.DriverManager
 import java.util.concurrent.Executors
 import javax.net.ssl.*
@@ -28,7 +27,7 @@ import javax.security.cert.CertificateException
 class ActivityRegistroInvest : AppCompatActivity() {
     var variables: ActivityRegistroInvestBinding? = null
 
-    private companion object{
+    private companion object {
         private const val CHANNEL_ID = "channel01"
     }
 
@@ -54,11 +53,17 @@ class ActivityRegistroInvest : AppCompatActivity() {
         // Create a trust manager that does not validate certificate chains
         val trustAllCerts = arrayOf<TrustManager>(object : X509TrustManager {
             @Throws(CertificateException::class)
-            override fun checkClientTrusted(chain: Array<java.security.cert.X509Certificate>, authType: String) {
+            override fun checkClientTrusted(
+                chain: Array<java.security.cert.X509Certificate>,
+                authType: String
+            ) {
             } // Noncompliant (s4830)
 
             @Throws(CertificateException::class)
-            override fun checkServerTrusted(chain: Array<java.security.cert.X509Certificate>, authType: String) {
+            override fun checkServerTrusted(
+                chain: Array<java.security.cert.X509Certificate>,
+                authType: String
+            ) {
             } // Noncompliant (s4830)
 
             override fun getAcceptedIssuers(): Array<java.security.cert.X509Certificate> {
@@ -79,13 +84,13 @@ class ActivityRegistroInvest : AppCompatActivity() {
         val myExecutor = Executors.newSingleThreadExecutor()
 
 
-        botonAceptar.setOnClickListener{
-            myExecutor.execute{
+        botonAceptar.setOnClickListener {
+            myExecutor.execute {
                 registerInvest()
             }
         }
 
-        botonCancelar.setOnClickListener{
+        botonCancelar.setOnClickListener {
             super.onBackPressed()
         }
 
@@ -111,18 +116,17 @@ class ActivityRegistroInvest : AppCompatActivity() {
 
         val id = generaIdInvestigador(nombre, apellidos, dni, fecha)
         var tyc = "false"
-        if(term){
+        if (term) {
             tyc = "true"
         }
 
         val fechaDef = formateaFecha(fecha)
 
-        if(pw1==pw2){
-            contra = pw1
-        }
-
-        try{
+        try {
             println("Entro en el try")
+            compruebaTyC(tyc)
+            var contra = verificaPW(pw1, pw2)
+            compruebaPW(contra)
             Class.forName("com.mysql.jdbc.Driver")
             //Configuracion de la conexión
             //Configuracion de la conexión
@@ -133,7 +137,7 @@ class ActivityRegistroInvest : AppCompatActivity() {
                 "wq2es46v0vv7",
                 "pscale_pw_u-YgidCTseLQ0tzJ8c6HThAEjIfcdwZNL6wqk_lImpE"
             )*/
-        //"jdbc:mysql://tpfrgiw79q39.eu-west-3.psdb.cloud:3306/iaadb?sslMode=VERIFY_IDENTITY&ssl-ca=/system/etc/security/cacerts.bks"
+            //"jdbc:mysql://tpfrgiw79q39.eu-west-3.psdb.cloud:3306/iaadb?sslMode=VERIFY_IDENTITY&ssl-ca=/system/etc/security/cacerts.bks"
 
             //TODO Probar esta configuración con el servicio de PlanetScale
             val connection = DriverManager.getConnection(
@@ -151,62 +155,106 @@ class ActivityRegistroInvest : AppCompatActivity() {
             //Guardo en resultSet el resultado de la consulta
             //Guardo en resultSet el resultado de la consulta
             //val resultSet =
-                            //statement.executeQuery("select * from usuarios where usuario = '$resUsuario' and pass = '$resPassword'")
+            //statement.executeQuery("select * from usuarios where usuario = '$resUsuario' and pass = '$resPassword'")
             //"INSERT INTO `db-tfg`.`investigador` (`idinvestigador`, `dni`, `apellidos`, `nombre`, `fnacimiento`, `contrasena`, `notificaciones`, `terminoscondiciones`) VALUES ('$id', '$dni', '$apellidos', '$nombre', '$fecha', '$contra', 'true', '$tyc');"
-            //var query =   "INSERT INTO `b1l1rb6fzqnrv8549nvi`.`investigador` (`idinvestigador`, `dni`, `apellidos`, `nombre`, `fnacimiento`, `contrasena`, `notificaciones`, `terminoscondiciones`) VALUES (`$id`, `$dni`, `$apellidos`, `$nombre`, `$fechaDef`, `$contra`, `true`, `true`);"
-            val query =   "INSERT INTO `b1l1rb6fzqnrv8549nvi`.`investigador` (`idinvestigador`, `dni`, `apellidos`, `nombre`, `fnacimiento`, `contrasena`, `notificaciones`, `terminoscondiciones`) VALUES ('$id', '$dni', '$apellidos', '$nombre', '$fechaDef', '$contra', 'true', 'true');"
+            val query =
+                "INSERT INTO `b1l1rb6fzqnrv8549nvi`.`investigador` (`idinvestigador`, `dni`, `apellidos`, `nombre`, `fnacimiento`, `contrasena`, `notificaciones`, `terminoscondiciones`) VALUES ('$id', '$dni', '$apellidos', '$nombre', '$fechaDef', '$contra', 'true', 'true');"
             println(query)
             val resultSet = statement.executeUpdate(query)
 
             Handler(Looper.getMainLooper()).post {
                 // write your code here
-                val txtMostrar = Toast . makeText (this,"¡REGISTRADO CORRECTAMENTE! Su identificador es $id", Toast.LENGTH_LONG)
+                val txtMostrar = Toast.makeText(
+                    this,
+                    "¡REGISTRADO CORRECTAMENTE! Su identificador es $id",
+                    Toast.LENGTH_LONG
+                )
                 createNotificationChannel()
                 var builder = NotificationCompat.Builder(this, CHANNEL_ID)
                     .setSmallIcon(R.drawable.ic_launcher_background)
                     .setContentTitle("Nuevo investigador registrado")
                     .setContentText("El ID del investigador es $id, ¡inicie sesión con él!")
-                    .setStyle(NotificationCompat.BigTextStyle().bigText("El ID del investigador es $id, y la contraseña es la que ha indicado. ¡Inicie sesión con él!"))
+                    .setStyle(
+                        NotificationCompat.BigTextStyle()
+                            .bigText("El ID del investigador es $id, y la contraseña es la que ha indicado. ¡Inicie sesión con él!")
+                    )
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 val notifationManagerCompat = NotificationManagerCompat.from(this)
-                notifationManagerCompat.notify(123456,builder.build())
+                notifationManagerCompat.notify(123456, builder.build())
 
-                txtMostrar.setGravity(Gravity.CENTER_VERTICAL,0,0)
+                txtMostrar.setGravity(Gravity.CENTER_VERTICAL, 0, 0)
                 txtMostrar.show()
                 super.onBackPressed()
             }
 
+        } catch (e1: InvalidTCException) {
+            Handler(Looper.getMainLooper()).post {
+                val txtMostrar = Toast.makeText(this, errorTYC, Toast.LENGTH_LONG)
+                txtMostrar.setGravity(Gravity.CENTER_VERTICAL, 0, 0)
+                txtMostrar.show()
+            }
+            println(e1)
+        } catch (e2: InvalidPWException) {
+            Handler(Looper.getMainLooper()).post {
+                val txtMostrar = Toast.makeText(this, errorPW1, Toast.LENGTH_LONG)
+                txtMostrar.setGravity(Gravity.CENTER_VERTICAL, 0, 0)
+                txtMostrar.show()
+            }
+            println(e2)
         } catch (e: Exception) {
             println(e.toString())
+            Handler(Looper.getMainLooper()).post {
+                // write your code here
+                val mensajeError =
+                    "No se ha podido registrar, ha ocurrido un error con la base de datos"
+                val txtMostrar = Toast.makeText(this, mensajeError, Toast.LENGTH_LONG)
+                createNotificationChannel()
+                var builder = NotificationCompat.Builder(this, CHANNEL_ID)
+                    .setSmallIcon(R.drawable.ic_launcher_background)
+                    .setContentTitle("Error en la base de datos")
+                    .setContentText(mensajeError)
+                    .setStyle(NotificationCompat.BigTextStyle().bigText(mensajeError))
+                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                val notifationManagerCompat = NotificationManagerCompat.from(this)
+                notifationManagerCompat.notify(123456, builder.build())
+
+                txtMostrar.setGravity(Gravity.CENTER_VERTICAL, 0, 0)
+                txtMostrar.show()
+            }
         }
 
     }
 
-    private fun generaIdInvestigador(nombre: String, apellidos: String, dni: String, fecha: String): String {
+    private fun generaIdInvestigador(
+        nombre: String,
+        apellidos: String,
+        dni: String,
+        fecha: String
+    ): String {
         var identificador = ""
-        for(i in nombre.indices){
-            if(i<4){
+        for (i in nombre.indices) {
+            if (i < 4) {
                 identificador += nombre[i]
-            }else{
+            } else {
                 break
             }
         }
-        for(j in dni.indices){
-            if(j>5){
+        for (j in dni.indices) {
+            if (j > 5) {
                 identificador += dni[j]
             }
         }
-        for(i in apellidos.indices){
-            if(i<4){
+        for (i in apellidos.indices) {
+            if (i < 4) {
                 identificador += apellidos[i]
-            }else{
+            } else {
                 break
             }
         }
         val partes = fecha.split("/")
         val ano = partes[2]
-        for(j in ano.indices){
-            if(j>1){
+        for (j in ano.indices) {
+            if (j > 1) {
                 identificador += ano[j]
             }
         }
@@ -215,7 +263,7 @@ class ActivityRegistroInvest : AppCompatActivity() {
 
     private fun formateaFecha(fecha: String): String {
         val partes = fecha.split("/")
-        return partes[2]+"-"+partes[1]+"-"+partes[0]
+        return partes[2] + "-" + partes[1] + "-" + partes[0]
     }
 
     private fun createNotificationChannel() {
@@ -235,5 +283,24 @@ class ActivityRegistroInvest : AppCompatActivity() {
         }
     }
 
+    private fun compruebaTyC(tyc: String) {
+        if (tyc == "false") {
+            throw InvalidTCException(errorTYC)
+        }
+    }
+
+    private fun verificaPW(pw1: String, pw2: String): String {
+        var contra = ""
+        if (pw1 == pw2) {
+            contra = pw1
+        }
+        return contra
+    }
+
+    private fun compruebaPW(contra: String) {
+        if (contra == "") {
+            throw InvalidPWException(errorPW1)
+        }
+    }
 
 }
