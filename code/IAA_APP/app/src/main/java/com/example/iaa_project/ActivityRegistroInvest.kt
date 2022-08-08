@@ -1,8 +1,17 @@
 package com.example.iaa_project
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
+import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.view.Gravity
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import com.example.iaa_project.databinding.ActivityRegistroInvestBinding
 import com.example.iaa_project.databinding.ActivityRegistroInvestBinding.inflate
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException
@@ -10,6 +19,7 @@ import com.google.android.gms.common.GooglePlayServicesRepairableException
 import com.google.android.gms.security.ProviderInstaller
 import java.security.KeyManagementException
 import java.security.NoSuchAlgorithmException
+import java.sql.Date
 import java.sql.DriverManager
 import java.util.concurrent.Executors
 import javax.net.ssl.*
@@ -17,6 +27,11 @@ import javax.security.cert.CertificateException
 
 class ActivityRegistroInvest : AppCompatActivity() {
     var variables: ActivityRegistroInvestBinding? = null
+
+    private companion object{
+        private const val CHANNEL_ID = "channel01"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_registro_invest)
@@ -95,7 +110,7 @@ class ActivityRegistroInvest : AppCompatActivity() {
         var contra: String? = null
 
         val id = generaIdInvestigador(nombre, apellidos, dni, fecha)
-        var tyc: String = "false"
+        var tyc = "false"
         if(term){
             tyc = "true"
         }
@@ -106,9 +121,9 @@ class ActivityRegistroInvest : AppCompatActivity() {
             contra = pw1
         }
 
-        //try{
+        try{
             println("Entro en el try")
-            Class.forName("com.mysql.cj.jdbc.Driver")
+            Class.forName("com.mysql.jdbc.Driver")
             //Configuracion de la conexión
             //Configuracion de la conexión
             println("Query que vamos a ejecutar: INSERT INTO `db-tfg`.`investigador` (`idinvestigador`, `dni`, `apellidos`, `nombre`, `fnacimiento`, `contrasena`, `notificaciones`, `terminoscondiciones`) VALUES ('$id', '$dni', '$apellidos', '$nombre', '$fechaDef', '$contra', 'true', '$tyc');")
@@ -119,11 +134,13 @@ class ActivityRegistroInvest : AppCompatActivity() {
                 "pscale_pw_u-YgidCTseLQ0tzJ8c6HThAEjIfcdwZNL6wqk_lImpE"
             )*/
         //"jdbc:mysql://tpfrgiw79q39.eu-west-3.psdb.cloud:3306/iaadb?sslMode=VERIFY_IDENTITY&ssl-ca=/system/etc/security/cacerts.bks"
-        val connection = DriverManager.getConnection(
-            "jdbc:mysql://tpfrgiw79q39.eu-west-3.psdb.cloud:3306/iaadb?sslMode=VERIFY_IDENTITY",
-            "wq2es46v0vv7",
-            "pscale_pw_u-YgidCTseLQ0tzJ8c6HThAEjIfcdwZNL6wqk_lImpE"
-        )
+
+            //TODO Probar esta configuración con el servicio de PlanetScale
+            val connection = DriverManager.getConnection(
+                "jdbc:mysql://b1l1rb6fzqnrv8549nvi-mysql.services.clever-cloud.com",
+                "umk5rnkivqyw4r0m",
+                "06pQBYy1mrut9N1Cps1K"
+            )
 
             println(connection.isValid(0))
             println("hola 2")
@@ -136,14 +153,32 @@ class ActivityRegistroInvest : AppCompatActivity() {
             //val resultSet =
                             //statement.executeQuery("select * from usuarios where usuario = '$resUsuario' and pass = '$resPassword'")
             //"INSERT INTO `db-tfg`.`investigador` (`idinvestigador`, `dni`, `apellidos`, `nombre`, `fnacimiento`, `contrasena`, `notificaciones`, `terminoscondiciones`) VALUES ('$id', '$dni', '$apellidos', '$nombre', '$fecha', '$contra', 'true', '$tyc');"
-            val resultSet =
-                statement.executeQuery("\"INSERT INTO `db-tfg`.`investigador` (`idinvestigador`, `dni`, `apellidos`, `nombre`, `fnacimiento`, `contrasena`, `notificaciones`, `terminoscondiciones`) VALUES ('$id', '$dni', '$apellidos', '$nombre', '$fechaDef', '$contra', 'true', '$tyc');")
+            //var query =   "INSERT INTO `b1l1rb6fzqnrv8549nvi`.`investigador` (`idinvestigador`, `dni`, `apellidos`, `nombre`, `fnacimiento`, `contrasena`, `notificaciones`, `terminoscondiciones`) VALUES (`$id`, `$dni`, `$apellidos`, `$nombre`, `$fechaDef`, `$contra`, `true`, `true`);"
+            val query =   "INSERT INTO `b1l1rb6fzqnrv8549nvi`.`investigador` (`idinvestigador`, `dni`, `apellidos`, `nombre`, `fnacimiento`, `contrasena`, `notificaciones`, `terminoscondiciones`) VALUES ('$id', '$dni', '$apellidos', '$nombre', '$fechaDef', '$contra', 'true', 'true');"
+            println(query)
+            val resultSet = statement.executeUpdate(query)
 
-            Toast.makeText(this,"¡REGISTRADO CORRECTAMENTE! Su identificador es $id", Toast.LENGTH_LONG).show()
+            Handler(Looper.getMainLooper()).post {
+                // write your code here
+                val txtMostrar = Toast . makeText (this,"¡REGISTRADO CORRECTAMENTE! Su identificador es $id", Toast.LENGTH_LONG)
+                createNotificationChannel()
+                var builder = NotificationCompat.Builder(this, CHANNEL_ID)
+                    .setSmallIcon(R.drawable.ic_launcher_background)
+                    .setContentTitle("Nuevo investigador registrado")
+                    .setContentText("El ID del investigador es $id, ¡inicie sesión con él!")
+                    .setStyle(NotificationCompat.BigTextStyle().bigText("El ID del investigador es $id, y la contraseña es la que ha indicado. ¡Inicie sesión con él!"))
+                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                val notifationManagerCompat = NotificationManagerCompat.from(this)
+                notifationManagerCompat.notify(123456,builder.build())
 
-        /*} catch (e: Exception) {
+                txtMostrar.setGravity(Gravity.CENTER_VERTICAL,0,0)
+                txtMostrar.show()
+                super.onBackPressed()
+            }
+
+        } catch (e: Exception) {
             println(e.toString())
-        }*/
+        }
 
     }
 
@@ -168,8 +203,8 @@ class ActivityRegistroInvest : AppCompatActivity() {
                 break
             }
         }
-        var partes = fecha.split("/")
-        var ano = partes[2]
+        val partes = fecha.split("/")
+        val ano = partes[2]
         for(j in ano.indices){
             if(j>1){
                 identificador += ano[j]
@@ -179,8 +214,26 @@ class ActivityRegistroInvest : AppCompatActivity() {
     }
 
     private fun formateaFecha(fecha: String): String {
-        var partes = fecha.split("/")
+        val partes = fecha.split("/")
         return partes[2]+"-"+partes[1]+"-"+partes[0]
     }
+
+    private fun createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val name = getString(R.string.app_name)
+            val descriptionText = getString(R.string.welcome)
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
+                description = descriptionText
+            }
+            // Register the channel with the system
+            val notificationManager: NotificationManager =
+                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
+    }
+
 
 }
