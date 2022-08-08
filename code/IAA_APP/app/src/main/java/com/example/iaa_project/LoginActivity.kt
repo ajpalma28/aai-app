@@ -1,5 +1,6 @@
 package com.example.iaa_project
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
@@ -86,6 +87,9 @@ class LoginActivity : AppCompatActivity() {
                 txtMostrar.setGravity(Gravity.CENTER_VERTICAL, 0, 0)
                 txtMostrar.show()
             }
+            val intento2 = Intent(this, PrincipalActivity::class.java)
+            intento2.putExtra("idSesionIniciada", id)
+            startActivity(intento2)
             println("El inicio de sesión se ha llevado a cabo con éxito.")
 
         } catch (e1: InvalidIDException) {

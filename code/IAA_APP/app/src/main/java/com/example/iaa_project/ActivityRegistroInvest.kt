@@ -12,7 +12,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import androidx.core.content.ContextCompat.getSystemService
 import com.example.iaa_project.databinding.ActivityRegistroInvestBinding
 import com.example.iaa_project.databinding.ActivityRegistroInvestBinding.inflate
 import com.example.iaa_project.exceptions.*
@@ -111,7 +110,7 @@ class ActivityRegistroInvest : AppCompatActivity() {
         val pw1 = entradaPW1.toString()
         val pw2 = entradaPW2.toString()
         val term = entradaTC.isChecked
-        var contra: String? = null
+        val contra: String
 
         val id = generaIdInvestigador(nombre, apellidos, dni, fecha)
         var tyc = "false"
@@ -124,7 +123,7 @@ class ActivityRegistroInvest : AppCompatActivity() {
         try {
             println("Entro en el try")
             compruebaTyC(tyc)
-            var contra = verificaPW(pw1, pw2)
+            contra = verificaPW(pw1, pw2)
             compruebaPW(contra)
             Class.forName("com.mysql.jdbc.Driver")
             //Configuracion de la conexión
@@ -169,7 +168,7 @@ class ActivityRegistroInvest : AppCompatActivity() {
                     Toast.LENGTH_LONG
                 )
                 createNotificationChannel()
-                var builder = NotificationCompat.Builder(this, CHANNEL_ID)
+                val builder = NotificationCompat.Builder(this, CHANNEL_ID)
                     .setSmallIcon(R.drawable.ic_launcher_background)
                     .setContentTitle("Nuevo investigador registrado")
                     .setContentText("El ID del investigador es $id, ¡inicie sesión con él!")
@@ -208,7 +207,7 @@ class ActivityRegistroInvest : AppCompatActivity() {
                     "No se ha podido registrar, ha ocurrido un error con la base de datos"
                 val txtMostrar = Toast.makeText(this, mensajeError, Toast.LENGTH_LONG)
                 createNotificationChannel()
-                var builder = NotificationCompat.Builder(this, CHANNEL_ID)
+                val builder = NotificationCompat.Builder(this, CHANNEL_ID)
                     .setSmallIcon(R.drawable.ic_launcher_background)
                     .setContentTitle("Error en la base de datos")
                     .setContentText(mensajeError)
