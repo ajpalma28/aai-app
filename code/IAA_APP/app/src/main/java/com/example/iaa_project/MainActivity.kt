@@ -26,8 +26,13 @@ class MainActivity : AppCompatActivity() {
         }
 
         botonInSes.setOnClickListener{
-            //val intento2 = Intent(this, LoginActivity::class.java)
-            //startActivity(intento2)
+            val intento2 = Intent(this, LoginActivity::class.java)
+            startActivity(intento2)
         }
+
+        botonAcercaDe.setOnClickListener{
+            //TODO
+        }
+
     }
 }

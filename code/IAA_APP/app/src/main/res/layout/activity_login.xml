@@ -7,7 +7,7 @@
     tools:context=".LoginActivity">
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/btnCanceIS"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="60dp"
@@ -17,7 +17,7 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName2"
+        android:id="@+id/insertaPW"
         android:layout_width="291dp"
         android:layout_height="55dp"
         android:ems="10"
@@ -26,11 +26,11 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName"
+        app:layout_constraintTop_toBottomOf="@+id/insertaID"
         app:layout_constraintVertical_bias="0.052" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName"
+        android:id="@+id/insertaID"
         android:layout_width="291dp"
         android:layout_height="55dp"
         android:layout_marginTop="296dp"
@@ -42,13 +42,13 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btnAcepIS"
         android:layout_width="122dp"
         android:layout_height="49dp"
         android:layout_marginBottom="100dp"
         android:text="Aceptar"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/button2"
+        app:layout_constraintEnd_toStartOf="@+id/btnCanceIS"
         app:layout_constraintHorizontal_bias="0.521"
         app:layout_constraintStart_toStartOf="parent" />
 

@@ -15,10 +15,9 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat.getSystemService
 import com.example.iaa_project.databinding.ActivityRegistroInvestBinding
 import com.example.iaa_project.databinding.ActivityRegistroInvestBinding.inflate
+import com.example.iaa_project.exceptions.*
 import com.example.iaa_project.exceptions.InvalidPWException
 import com.example.iaa_project.exceptions.InvalidTCException
-import com.example.iaa_project.exceptions.errorPW1
-import com.example.iaa_project.exceptions.errorTYC
 import java.sql.DriverManager
 import java.util.concurrent.Executors
 import javax.net.ssl.*
