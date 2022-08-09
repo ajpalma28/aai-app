@@ -40,4 +40,31 @@ class FuncionesAuxiliares {
         return identificador
     }
 
+    fun longitudCorrectaDNINIF(dni:String) : Boolean {
+        var res = false
+        if(dni.length==9){
+            res = true
+        }
+        return res
+    }
+
+    fun formatoCorrectoDNINIF(dni: String) : Boolean {
+        var res = true
+        var i = 0
+        for (e in dni){
+            if(i==9){
+                if(e.isDigit()){
+                    res=false
+                    break
+                }
+            }else if(i in 1..8){
+                if(e.isLetter()){
+                    res=false
+                    break
+                }
+            }
+        }
+        return res
+    }
+
 }

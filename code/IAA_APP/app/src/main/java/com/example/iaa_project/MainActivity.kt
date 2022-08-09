@@ -13,12 +13,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val variables = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(variables.root)
+        variables = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(variables!!.root)
 
-        val botonReg = variables.btnRegistro
-        val botonInSes = variables.btnInicioSesion
-        val botonAcercaDe = variables.btnAcercaDe
+        val botonReg = variables!!.btnRegistro
+        val botonInSes = variables!!.btnInicioSesion
+        val botonAcercaDe = variables!!.btnAcercaDe
 
         botonReg.setOnClickListener{
             val intento1 = Intent(this, ActivityRegistroInvest::class.java)
@@ -31,7 +31,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         botonAcercaDe.setOnClickListener{
-            //TODO
+            val intento3 = Intent(this, AcercaDeActivity::class.java)
+            startActivity(intento3)
         }
 
     }
