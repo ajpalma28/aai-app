@@ -62,7 +62,6 @@
         android:layout_height="104dp"
         android:layout_marginStart="64dp"
         android:layout_marginTop="44dp"
-        android:text="Desactivar Notificaciones"
         app:layout_constraintStart_toEndOf="@+id/btnMiPerfil"
         app:layout_constraintTop_toBottomOf="@+id/btnConsultUsu" />
 

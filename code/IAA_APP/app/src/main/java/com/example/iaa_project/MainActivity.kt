@@ -4,8 +4,6 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.iaa_project.databinding.ActivityMainBinding
-import com.example.iaa_project.databinding.ActivityRegistroInvestBinding
-import com.example.iaa_project.databinding.ActivityRegistroInvestBinding.*
 
 class MainActivity : AppCompatActivity() {
     var variables: ActivityMainBinding? = null
@@ -36,4 +34,9 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
+
+    override fun onBackPressed() {
+        moveTaskToBack(true)
+    }
+
 }

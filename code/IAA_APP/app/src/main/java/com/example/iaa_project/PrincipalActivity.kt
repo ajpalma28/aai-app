@@ -1,22 +1,50 @@
 package com.example.iaa_project
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.view.Gravity
+import android.widget.Button
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import com.example.iaa_project.databinding.ActivityPrincipalBinding
+import java.sql.DriverManager
+import java.util.concurrent.Executors
 
 class PrincipalActivity : AppCompatActivity() {
 
     var variables: ActivityPrincipalBinding? = null
+    var idUsuDef = ""
+    var dniUsuDef = ""
+    var apellUsuDef = ""
+    var nombUsuDef = ""
+    var fechaUsuDef = ""
+    var pwUsuDef = ""
+    var btnNotificaciones: Button? = null
+
+    private companion object {
+        private const val CHANNEL_ID = "channel01"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_principal)
 
         val bundle = intent.extras
-        val idSesionIniciada = bundle?.getString("idSesionIniciada")
-        Toast.makeText(this, "¡Bienvenido, $idSesionIniciada!", Toast.LENGTH_LONG).show()
+        idUsuDef = bundle?.getString("idUsuDef").toString()
+        dniUsuDef = bundle?.getString("dniUsuDef").toString()
+        apellUsuDef = bundle?.getString("apellUsuDef").toString()
+        nombUsuDef = bundle?.getString("nombUsuDef").toString()
+        fechaUsuDef = bundle?.getString("fechaUsuDef").toString()
+        pwUsuDef = bundle?.getString("pwUsuDef").toString()
+        var notifUsuDef = bundle?.getBoolean("notifUsuDef")
 
         variables = ActivityPrincipalBinding.inflate(layoutInflater)
         setContentView(variables!!.root)
@@ -26,8 +54,15 @@ class PrincipalActivity : AppCompatActivity() {
         val btnStartMed = variables!!.btnInicioMed
         val btnConsUsu = variables!!.btnConsultUsu
         val btnMiPerfil = variables!!.btnMiPerfil
-        val btnNotificaciones = variables!!.btnNotific
+        btnNotificaciones = variables!!.btnNotific
+        if(notifUsuDef == true){
+            variables!!.btnNotific.setText("Desactivar Notificaciones")
+        }else{
+            variables!!.btnNotific.setText("Activar notificaciones")
+        }
         val btnCierreSesion = variables!!.btnCierreSesion
+
+        val myExecutor = Executors.newSingleThreadExecutor()
 
         btnRegistroUsu.setOnClickListener{
             val intent = Intent(this, RegistrarUsuarioActivity::class.java)
@@ -51,11 +86,23 @@ class PrincipalActivity : AppCompatActivity() {
 
         btnMiPerfil.setOnClickListener{
             val intent = Intent(this, MiPerfilActivity::class.java)
+            intent.putExtra("idUsuDef", idUsuDef)
+            intent.putExtra("dniUsuDef", dniUsuDef)
+            intent.putExtra("apellUsuDef", apellUsuDef)
+            intent.putExtra("nombUsuDef", nombUsuDef)
+            intent.putExtra("fechaUsuDef", fechaUsuDef)
+            intent.putExtra("pwUsuDef", pwUsuDef)
+            intent.putExtra("notifUsuDef", notifUsuDef)
             startActivity(intent)
         }
 
-        btnNotificaciones.setOnClickListener{
-            //TODO
+        btnNotificaciones!!.setOnClickListener{
+            myExecutor.execute{
+                if (notifUsuDef != null) {
+                    alternaNotificaciones(notifUsuDef)
+                }
+            }
+
         }
 
         btnCierreSesion.setOnClickListener{
@@ -63,5 +110,157 @@ class PrincipalActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+    }
+
+    private fun createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val name = getString(R.string.app_name)
+            val descriptionText = getString(R.string.welcome)
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val channel = NotificationChannel(PrincipalActivity.CHANNEL_ID, name, importance).apply {
+                description = descriptionText
+            }
+            // Register the channel with the system
+            val notificationManager: NotificationManager =
+                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
+    }
+
+    private fun alternaNotificaciones(notifUsuDef: Boolean){
+        if(notifUsuDef){
+            val b1 = false
+            try {
+                Class.forName("com.mysql.jdbc.Driver")
+                //Configuracion de la conexión
+                //Configuracion de la conexión
+                println("UPDATE b1l1rb6fzqnrv8549nvi.investigador SET notificaciones='false' WHERE idinvestigador='$idUsuDef';")
+
+                val connection = DriverManager.getConnection(
+                    "jdbc:mysql://b1l1rb6fzqnrv8549nvi-mysql.services.clever-cloud.com",
+                    "umk5rnkivqyw4r0m",
+                    "06pQBYy1mrut9N1Cps1K"
+                )
+
+                println(connection.isValid(0))
+                println("hola 2")
+
+                val statement = connection.createStatement()
+                println("Voy a la query")
+                //Guardo en resultSet el resultado de la consulta
+                //statement.executeQuery("select * from usuarios where usuario = '$resUsuario' and pass = '$resPassword'")
+                //"UPDATE b1l1rb6fzqnrv8549nvi.investigador SET notificaciones='false' WHERE idinvestigador='$idUsuDef';"
+                val query =
+                    "UPDATE b1l1rb6fzqnrv8549nvi.investigador SET notificaciones='false' WHERE idinvestigador='$idUsuDef';"
+                println(query)
+                val resultSet = statement.executeUpdate(query)
+
+
+
+                Handler(Looper.getMainLooper()).post {
+                    // write your code here
+                    val txtMostrar = Toast.makeText(
+                        this,
+                        "Se han desactivado las notificaciones para el investigador $idUsuDef",
+                        Toast.LENGTH_LONG
+                    )
+                    txtMostrar.setGravity(Gravity.CENTER_VERTICAL, 0, 0)
+                    txtMostrar.show()
+                }
+                val intent = Intent(this, PrincipalActivity::class.java)
+                intent.putExtra("idUsuDef", idUsuDef)
+                intent.putExtra("dniUsuDef", dniUsuDef)
+                intent.putExtra("apellUsuDef", apellUsuDef)
+                intent.putExtra("nombUsuDef", nombUsuDef)
+                intent.putExtra("fechaUsuDef", fechaUsuDef)
+                intent.putExtra("pwUsuDef", pwUsuDef)
+                intent.putExtra("notifUsuDef", b1)
+                startActivity(intent)
+            } catch (e: Exception) {
+                println(e.toString())
+                Handler(Looper.getMainLooper()).post {
+                    // write your code here
+                    val mensajeError =
+                        "No se han podido modificar las notificaciones para el investigador $idUsuDef"
+                    val txtMostrar = Toast.makeText(this, mensajeError, Toast.LENGTH_LONG)
+                    txtMostrar.setGravity(Gravity.CENTER_VERTICAL, 0, 0)
+                    txtMostrar.show()
+                }
+            }
+        }else{
+            val b1 = true
+            try {
+                Class.forName("com.mysql.jdbc.Driver")
+                //Configuracion de la conexión
+                //Configuracion de la conexión
+                println("UPDATE b1l1rb6fzqnrv8549nvi.investigador SET notificaciones='true' WHERE idinvestigador='$idUsuDef';")
+
+                val connection = DriverManager.getConnection(
+                    "jdbc:mysql://b1l1rb6fzqnrv8549nvi-mysql.services.clever-cloud.com",
+                    "umk5rnkivqyw4r0m",
+                    "06pQBYy1mrut9N1Cps1K"
+                )
+
+                println(connection.isValid(0))
+                println("hola 2")
+
+
+                val statement = connection.createStatement()
+                println("Voy a la query")
+                //Guardo en resultSet el resultado de la consulta
+                //statement.executeQuery("select * from usuarios where usuario = '$resUsuario' and pass = '$resPassword'")
+                //"UPDATE b1l1rb6fzqnrv8549nvi.investigador SET notificaciones='true' WHERE idinvestigador='$idUsuDef';"
+                val query =
+                    "UPDATE b1l1rb6fzqnrv8549nvi.investigador SET notificaciones='true' WHERE idinvestigador='$idUsuDef';"
+                println(query)
+                val resultSet = statement.executeUpdate(query)
+
+                Handler(Looper.getMainLooper()).post {
+                    val txtMostrar = Toast.makeText(
+                        this,
+                        "Se han activado las notificaciones para el investigador $idUsuDef",
+                        Toast.LENGTH_LONG
+                    )
+                    txtMostrar.setGravity(Gravity.CENTER_VERTICAL, 0, 0)
+                    txtMostrar.show()
+                    createNotificationChannel()
+                    val builder = NotificationCompat.Builder(this,
+                        PrincipalActivity.CHANNEL_ID
+                    )
+                        .setSmallIcon(R.drawable.ic_launcher_background)
+                        .setContentTitle("Notificaciones activadas")
+                        .setContentText("Se han activado las notificaciones de la aplicación para el investigador $nombUsuDef $apellUsuDef (id: $idUsuDef)")
+                        .setStyle(NotificationCompat.BigTextStyle().bigText("Se han activado las notificaciones de la aplicación para el investigador $nombUsuDef $apellUsuDef (id: $idUsuDef)"))
+                        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                    val notifationManagerCompat = NotificationManagerCompat.from(this)
+                    notifationManagerCompat.notify(123456, builder.build())
+                    val intent = Intent(this, PrincipalActivity::class.java)
+                    intent.putExtra("idUsuDef", idUsuDef)
+                    intent.putExtra("dniUsuDef", dniUsuDef)
+                    intent.putExtra("apellUsuDef", apellUsuDef)
+                    intent.putExtra("nombUsuDef", nombUsuDef)
+                    intent.putExtra("fechaUsuDef", fechaUsuDef)
+                    intent.putExtra("pwUsuDef", pwUsuDef)
+                    intent.putExtra("notifUsuDef", b1)
+                    startActivity(intent)
+                }
+            } catch (e: Exception) {
+                println(e.toString())
+                Handler(Looper.getMainLooper()).post {
+                    // write your code here
+                    val mensajeError =
+                        "No se han podido modificar las notificaciones para el investigador $idUsuDef"
+                    val txtMostrar = Toast.makeText(this, mensajeError, Toast.LENGTH_LONG)
+                    txtMostrar.setGravity(Gravity.CENTER_VERTICAL, 0, 0)
+                    txtMostrar.show()
+                }
+            }
+        }
+    }
+
+    override fun onBackPressed() {
+        moveTaskToBack(true)
     }
 }

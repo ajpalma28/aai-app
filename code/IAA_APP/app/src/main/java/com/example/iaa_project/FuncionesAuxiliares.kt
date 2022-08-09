@@ -67,4 +67,13 @@ class FuncionesAuxiliares {
         return res
     }
 
+    fun formateaFechaRev(fecha: String): String {
+        val partes = fecha.split("-")
+        return partes[2] + "/" + partes[1] + "/" + partes[0]
+    }
+
+    fun traduceNotificaciones(notific: String): Boolean{
+        return notific=="true"
+    }
+
 }
