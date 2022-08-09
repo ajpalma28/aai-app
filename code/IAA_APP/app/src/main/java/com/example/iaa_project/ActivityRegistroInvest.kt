@@ -24,6 +24,7 @@ import javax.security.cert.CertificateException
 
 class ActivityRegistroInvest : AppCompatActivity() {
     var variables: ActivityRegistroInvestBinding? = null
+    private var errorProvocadoFecha = ""
 
     private companion object {
         private const val CHANNEL_ID = "channel01"
@@ -112,19 +113,20 @@ class ActivityRegistroInvest : AppCompatActivity() {
         val term = entradaTC.isChecked
         val contra: String
 
-        val id = generaIdInvestigador(nombre, apellidos, dni, fecha)
+        val id = FuncionesAuxiliares().generaIdPersona(nombre, apellidos, dni, fecha)
         var tyc = "false"
         if (term) {
             tyc = "true"
         }
 
-        val fechaDef = formateaFecha(fecha)
+        val fechaDef = FuncionesAuxiliares().formateaFecha(fecha)
 
         try {
             println("Entro en el try")
             compruebaTyC(tyc)
             contra = verificaPW(pw1, pw2)
             compruebaPW(contra)
+            compruebaFormatoFecha(fechaDef)
             Class.forName("com.mysql.jdbc.Driver")
             //Configuracion de la conexión
             //Configuracion de la conexión
@@ -199,6 +201,13 @@ class ActivityRegistroInvest : AppCompatActivity() {
                 txtMostrar.show()
             }
             println(e2)
+        } catch (e3: InvalidFechaException){
+            Handler(Looper.getMainLooper()).post {
+                val txtMostrar = Toast.makeText(this, errorProvocadoFecha, Toast.LENGTH_LONG)
+                txtMostrar.setGravity(Gravity.CENTER_VERTICAL, 0, 0)
+                txtMostrar.show()
+            }
+            println(e3)
         } catch (e: Exception) {
             println(e.toString())
             Handler(Looper.getMainLooper()).post {
@@ -221,47 +230,6 @@ class ActivityRegistroInvest : AppCompatActivity() {
             }
         }
 
-    }
-
-    private fun generaIdInvestigador(
-        nombre: String,
-        apellidos: String,
-        dni: String,
-        fecha: String
-    ): String {
-        var identificador = ""
-        for (i in nombre.indices) {
-            if (i < 4) {
-                identificador += nombre[i]
-            } else {
-                break
-            }
-        }
-        for (j in dni.indices) {
-            if (j > 5) {
-                identificador += dni[j]
-            }
-        }
-        for (i in apellidos.indices) {
-            if (i < 4) {
-                identificador += apellidos[i]
-            } else {
-                break
-            }
-        }
-        val partes = fecha.split("/")
-        val ano = partes[2]
-        for (j in ano.indices) {
-            if (j > 1) {
-                identificador += ano[j]
-            }
-        }
-        return identificador
-    }
-
-    private fun formateaFecha(fecha: String): String {
-        val partes = fecha.split("/")
-        return partes[2] + "-" + partes[1] + "-" + partes[0]
     }
 
     private fun createNotificationChannel() {
@@ -298,6 +266,44 @@ class ActivityRegistroInvest : AppCompatActivity() {
     private fun compruebaPW(contra: String) {
         if (contra == "") {
             throw InvalidPWException(errorPW1)
+        }
+    }
+
+    private fun compruebaFormatoFecha(fecha: String) {
+        val partes = fecha.split("-")
+        val ano = partes[0].toInt()
+        val mes = partes[1].toInt()
+        val dia = partes[2].toInt()
+        if (partes[0].length != 4) {
+            errorProvocadoFecha = errorFecha1
+            throw InvalidFechaException(errorFecha1)
+        }
+        if (partes[1].length != 2 || mes < 1 || mes > 12) {
+            errorProvocadoFecha = errorFecha2
+            throw InvalidFechaException(errorFecha2)
+        }
+        if (partes[2].length != 2) {
+            errorProvocadoFecha = errorFecha3
+            throw InvalidFechaException(errorFecha3)
+        } else {
+            if (mes == 2) {
+                if(ano%4==0 && dia>29){
+                    errorProvocadoFecha = errorFecha3
+                    throw InvalidFechaException(errorFecha3)
+                }
+                if(ano%4!=0 && dia>28){
+                    errorProvocadoFecha = errorFecha3
+                    throw InvalidFechaException(errorFecha3)
+                }
+            } else if (mes == 4 || mes == 6 || mes == 9 || mes == 11) {
+                if (dia > 30) {
+                    errorProvocadoFecha = errorFecha3
+                    throw InvalidFechaException(errorFecha3)
+                }
+            } else if (dia > 31) {
+                errorProvocadoFecha = errorFecha3
+                throw InvalidFechaException(errorFecha3)
+            }
         }
     }
 

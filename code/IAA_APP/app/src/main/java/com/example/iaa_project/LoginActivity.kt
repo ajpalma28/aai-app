@@ -21,7 +21,6 @@ import java.util.concurrent.Executors
 class LoginActivity : AppCompatActivity() {
     var variables: ActivityLoginBinding? = null
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -83,7 +82,7 @@ class LoginActivity : AppCompatActivity() {
             }
 
             Handler(Looper.getMainLooper()).post {
-                val txtMostrar = Toast.makeText(this, "Éxito en el inicio de sesión", Toast.LENGTH_LONG)
+                val txtMostrar = Toast.makeText(this, "Éxito en el inicio de sesión", Toast.LENGTH_SHORT)
                 txtMostrar.setGravity(Gravity.CENTER_VERTICAL, 0, 0)
                 txtMostrar.show()
             }
