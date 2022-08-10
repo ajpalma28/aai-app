@@ -95,6 +95,7 @@ class PrincipalActivity : AppCompatActivity() {
 
         btnConsUsu.setOnClickListener{
             val intent = Intent(this, BuscarUsuarioActivity::class.java)
+            intent.putExtra("notifUsuDef", notifUsuDef)
             startActivity(intent)
         }
 
