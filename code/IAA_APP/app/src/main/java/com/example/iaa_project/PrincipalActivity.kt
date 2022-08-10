@@ -4,14 +4,16 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.Gravity
-import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SwitchCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.example.iaa_project.databinding.ActivityPrincipalBinding
@@ -27,7 +29,8 @@ class PrincipalActivity : AppCompatActivity() {
     var nombUsuDef = ""
     var fechaUsuDef = ""
     var pwUsuDef = ""
-    var btnNotificaciones: Button? = null
+    var swNotif: SwitchCompat? = null
+    var notifUsuDef: Boolean = true
 
     private companion object {
         private const val CHANNEL_ID = "channel01"
@@ -44,7 +47,7 @@ class PrincipalActivity : AppCompatActivity() {
         nombUsuDef = bundle?.getString("nombUsuDef").toString()
         fechaUsuDef = bundle?.getString("fechaUsuDef").toString()
         pwUsuDef = bundle?.getString("pwUsuDef").toString()
-        var notifUsuDef = bundle?.getBoolean("notifUsuDef")
+        notifUsuDef = bundle?.getBoolean("notifUsuDef") == true
 
         variables = ActivityPrincipalBinding.inflate(layoutInflater)
         setContentView(variables!!.root)
@@ -54,11 +57,22 @@ class PrincipalActivity : AppCompatActivity() {
         val btnStartMed = variables!!.btnInicioMed
         val btnConsUsu = variables!!.btnConsultUsu
         val btnMiPerfil = variables!!.btnMiPerfil
-        btnNotificaciones = variables!!.btnNotific
-        if(notifUsuDef == true){
+        //btnNotificaciones = variables!!.btnNotific
+        swNotif = variables!!.swNotif
+        /*if(bundle?.getBoolean("notifUsuDef") == true){
             variables!!.btnNotific.setText("Desactivar Notificaciones")
+            swNotif!!.isChecked = true
         }else{
             variables!!.btnNotific.setText("Activar notificaciones")
+            swNotif!!.isChecked = false
+        }*/
+        swNotif!!.isChecked = bundle?.getBoolean("notifUsuDef") == true
+        if(swNotif!!.isChecked){
+            swNotif!!.text="Notificaciones ACTIVADAS"
+            swNotif!!.setTextColor(Color.BLACK)
+        }else{
+            swNotif!!.text="Notificaciones DESACTIVADAS"
+            swNotif!!.setTextColor(Color.RED)
         }
         val btnCierreSesion = variables!!.btnCierreSesion
 
@@ -96,14 +110,26 @@ class PrincipalActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        btnNotificaciones!!.setOnClickListener{
+        swNotif!!.setOnClickListener{
+            myExecutor.execute{
+                if(notifUsuDef!=null){
+                    if(swNotif!!.isChecked) {
+                        alternaNotificaciones(false)
+                    } else {
+                        alternaNotificaciones(true)
+                    }
+                }
+            }
+        }
+
+        /*btnNotificaciones!!.setOnClickListener{
             myExecutor.execute{
                 if (notifUsuDef != null) {
                     alternaNotificaciones(notifUsuDef)
                 }
             }
 
-        }
+        }*/
 
         btnCierreSesion.setOnClickListener{
             val intent = Intent(this, MainActivity::class.java)
@@ -131,7 +157,6 @@ class PrincipalActivity : AppCompatActivity() {
 
     private fun alternaNotificaciones(notifUsuDef: Boolean){
         if(notifUsuDef){
-            val b1 = false
             try {
                 Class.forName("com.mysql.jdbc.Driver")
                 //Configuracion de la conexión
@@ -157,8 +182,6 @@ class PrincipalActivity : AppCompatActivity() {
                 println(query)
                 val resultSet = statement.executeUpdate(query)
 
-
-
                 Handler(Looper.getMainLooper()).post {
                     // write your code here
                     val txtMostrar = Toast.makeText(
@@ -168,8 +191,11 @@ class PrincipalActivity : AppCompatActivity() {
                     )
                     txtMostrar.setGravity(Gravity.CENTER_VERTICAL, 0, 0)
                     txtMostrar.show()
+                    this@PrincipalActivity.notifUsuDef = notifUsuDef
+                    swNotif!!.text="Notificaciones DESACTIVADAS"
+                    swNotif!!.setTextColor(Color.RED)
                 }
-                val intent = Intent(this, PrincipalActivity::class.java)
+                /*val intent = Intent(this, PrincipalActivity::class.java)
                 intent.putExtra("idUsuDef", idUsuDef)
                 intent.putExtra("dniUsuDef", dniUsuDef)
                 intent.putExtra("apellUsuDef", apellUsuDef)
@@ -177,20 +203,32 @@ class PrincipalActivity : AppCompatActivity() {
                 intent.putExtra("fechaUsuDef", fechaUsuDef)
                 intent.putExtra("pwUsuDef", pwUsuDef)
                 intent.putExtra("notifUsuDef", b1)
-                startActivity(intent)
+                startActivity(intent)*/
             } catch (e: Exception) {
                 println(e.toString())
                 Handler(Looper.getMainLooper()).post {
                     // write your code here
                     val mensajeError =
-                        "No se han podido modificar las notificaciones para el investigador $idUsuDef"
+                        "No se han podido desactivar las notificaciones para el investigador $idUsuDef, inténtelo de nuevo más tarde"
                     val txtMostrar = Toast.makeText(this, mensajeError, Toast.LENGTH_LONG)
                     txtMostrar.setGravity(Gravity.CENTER_VERTICAL, 0, 0)
                     txtMostrar.show()
+                    swNotif!!.isChecked=true
+                    createNotificationChannel()
+                    val builder = NotificationCompat.Builder(this,
+                        PrincipalActivity.CHANNEL_ID
+                    )
+                        .setSmallIcon(R.drawable.ic_launcher_background)
+                        .setContentTitle("Error en el cambio de las notificaciones")
+                        .setContentText("No se han podido desactivar las notificaciones de la aplicación para el investigador $nombUsuDef $apellUsuDef (id: $idUsuDef). Inténtelo de nuevo más tarde.")
+                        .setStyle(NotificationCompat.BigTextStyle().bigText("No se han podido desactivar las notificaciones de la aplicación para el investigador $nombUsuDef $apellUsuDef (id: $idUsuDef). Inténtelo de nuevo más tarde."))
+                        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                    val notifationManagerCompat = NotificationManagerCompat.from(this)
+                    notifationManagerCompat.notify(123456, builder.build())
                 }
             }
+
         }else{
-            val b1 = true
             try {
                 Class.forName("com.mysql.jdbc.Driver")
                 //Configuracion de la conexión
@@ -236,25 +274,30 @@ class PrincipalActivity : AppCompatActivity() {
                         .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                     val notifationManagerCompat = NotificationManagerCompat.from(this)
                     notifationManagerCompat.notify(123456, builder.build())
-                    val intent = Intent(this, PrincipalActivity::class.java)
-                    intent.putExtra("idUsuDef", idUsuDef)
-                    intent.putExtra("dniUsuDef", dniUsuDef)
-                    intent.putExtra("apellUsuDef", apellUsuDef)
-                    intent.putExtra("nombUsuDef", nombUsuDef)
-                    intent.putExtra("fechaUsuDef", fechaUsuDef)
-                    intent.putExtra("pwUsuDef", pwUsuDef)
-                    intent.putExtra("notifUsuDef", b1)
-                    startActivity(intent)
+                    this@PrincipalActivity.notifUsuDef = notifUsuDef
+                    swNotif!!.text="Notificaciones ACTIVADAS"
+                    swNotif!!.setTextColor(Color.BLACK)
+
                 }
+                /*val intent = Intent(this, PrincipalActivity::class.java)
+                intent.putExtra("idUsuDef", idUsuDef)
+                intent.putExtra("dniUsuDef", dniUsuDef)
+                intent.putExtra("apellUsuDef", apellUsuDef)
+                intent.putExtra("nombUsuDef", nombUsuDef)
+                intent.putExtra("fechaUsuDef", fechaUsuDef)
+                intent.putExtra("pwUsuDef", pwUsuDef)
+                intent.putExtra("notifUsuDef", b1)
+                startActivity(intent)*/
             } catch (e: Exception) {
                 println(e.toString())
                 Handler(Looper.getMainLooper()).post {
                     // write your code here
                     val mensajeError =
-                        "No se han podido modificar las notificaciones para el investigador $idUsuDef"
+                        "No se han podido activar las notificaciones para el investigador $idUsuDef, inténtelo de nuevo más tarde"
                     val txtMostrar = Toast.makeText(this, mensajeError, Toast.LENGTH_LONG)
                     txtMostrar.setGravity(Gravity.CENTER_VERTICAL, 0, 0)
                     txtMostrar.show()
+                    swNotif!!.isChecked=false
                 }
             }
         }
