@@ -19,15 +19,15 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.core.view.isVisible
 import com.example.iaa_project.databinding.ActivityBuscarUsuarioBinding
 import com.example.iaa_project.databinding.ActivityPerfilUsuarioBinding
-import com.example.iaa_project.exceptions.InvalidIDException
-import com.example.iaa_project.exceptions.errorID1
+import com.example.iaa_project.exceptions.*
+import com.example.iaa_project.exceptions.InvalidFechaException
 import java.security.Principal
 import java.sql.DriverManager
 import java.util.concurrent.Executors
 
 class PerfilUsuarioActivity : AppCompatActivity() {
 
-    var variables : ActivityPerfilUsuarioBinding? = null
+    var variables: ActivityPerfilUsuarioBinding? = null
     var idUsuarioPac = ""
     var dniUsuarioPac = ""
     var nombUsuarioPac = ""
@@ -41,11 +41,20 @@ class PerfilUsuarioActivity : AppCompatActivity() {
     var fechaUsuDef = ""
     var pwUsuDef = ""
     var estadoEdicion = false
-    var editNombre: EditText? = null; var editApel: EditText? = null; var editFecha: EditText? = null
+    var editNombre: EditText? = null;
+    var editApel: EditText? = null;
+    var editFecha: EditText? = null
     var btnEditarUsuario: Button? = null
-    var imgbtnEditNom: ImageButton? = null; var imgbtnSaveNom: ImageButton? = null; var imgbtnCancelNom: ImageButton? = null
-    var imgbtnEditApe: ImageButton? = null; var imgbtnSaveApe: ImageButton? = null; var imgbtnCancelApe: ImageButton? = null
-    var imgbtnEditFN: ImageButton? = null; var imgbtnSaveFN: ImageButton? = null; var imgbtnCancelFN: ImageButton? = null
+    var imgbtnEditNom: ImageButton? = null;
+    var imgbtnSaveNom: ImageButton? = null;
+    var imgbtnCancelNom: ImageButton? = null
+    var imgbtnEditApe: ImageButton? = null;
+    var imgbtnSaveApe: ImageButton? = null;
+    var imgbtnCancelApe: ImageButton? = null
+    var imgbtnEditFN: ImageButton? = null;
+    var imgbtnSaveFN: ImageButton? = null;
+    var imgbtnCancelFN: ImageButton? = null
+    var errorProvocadoFecha = ""
 
     private companion object {
         private const val CHANNEL_ID = "channel01"
@@ -73,7 +82,7 @@ class PerfilUsuarioActivity : AppCompatActivity() {
         pwUsuDef = bundle?.getString("pwUsuDef").toString()
 
         var textID = variables!!.textView12
-        textID.text=idUsuarioPac
+        textID.text = idUsuarioPac
 
         var editDNI = variables!!.editTextUsuarioDNI
         editDNI.setText(dniUsuarioPac)
@@ -114,21 +123,21 @@ class PerfilUsuarioActivity : AppCompatActivity() {
         }
 
         btnEditarUsuario!!.setOnClickListener {
-            if(!estadoEdicion){
-                editNombre?.isEnabled=true
-                editApel?.isEnabled=true
-                editFecha?.isEnabled=true
-                btnEditarUsuario!!.text="Guardar Usuario"
-                estadoEdicion=true
+            if (!estadoEdicion) {
+                editNombre?.isEnabled = true
+                editApel?.isEnabled = true
+                editFecha?.isEnabled = true
+                btnEditarUsuario!!.text = "Guardar Usuario"
+                estadoEdicion = true
                 cancelaEdicionNombreIconos()
                 cancelaEdicionApellidosIconos()
                 cancelaEdicionFechaIconos()
                 desaparecerIconosDeEdicion()
-            }else{
+            } else {
                 var nom = editNombre?.text.toString()
                 var apel = editApel?.text.toString()
                 var fn = FuncionesAuxiliares().formateaFecha(editFecha?.text.toString())
-                myExecutor.execute{
+                myExecutor.execute {
                     actualizaUsuarioTotal(idUsuarioPac, nom, apel, fn)
                 }
                 mostrarIconosDeEdicion()
@@ -137,67 +146,85 @@ class PerfilUsuarioActivity : AppCompatActivity() {
         }
 
         btnCancelar.setOnClickListener {
-            if(estadoEdicion){
+            if (estadoEdicion) {
                 cancelaEdicionGeneral(nombUsuarioPac, apellUsuarioPac, fechaUsuarioPac)
                 cancelaEdicionNombreIconos()
                 cancelaEdicionApellidosIconos()
                 cancelaEdicionFechaIconos()
-            }else{
-                super.onBackPressed()
+            } else {
+                val intent = Intent(this, PrincipalActivity::class.java)
+                intent.putExtra("idUsuDef", idUsuDef)
+                intent.putExtra("dniUsuDef", dniUsuDef)
+                intent.putExtra("apellUsuDef", apellUsuDef)
+                intent.putExtra("nombUsuDef", nombUsuDef)
+                intent.putExtra("fechaUsuDef", fechaUsuDef)
+                intent.putExtra("pwUsuDef", pwUsuDef)
+                intent.putExtra("notifUsuDef", notifUsuDef)
+                startActivity(intent)
             }
         }
 
-        imgbtnEditNom!!.setOnClickListener{
+        imgbtnEditNom!!.setOnClickListener {
             editarNombreIconos()
-            editNombre?.isEnabled=true
+            editNombre?.isEnabled = true
         }
 
-        //TODO: Implementar actualización de solo este campo
         imgbtnSaveNom!!.setOnClickListener {
-
+            var nombreNew = editNombre?.text.toString()
+            myExecutor.execute {
+                actualizaCampoUsuario(idUsuarioPac,"nombre",nombreNew)
+            }
+            editNombre?.isEnabled=false
         }
 
-        imgbtnCancelNom!!.setOnClickListener{
+        imgbtnCancelNom!!.setOnClickListener {
             cancelaEdicionNombreIconos()
-            editNombre?.isEnabled=false
+            editNombre?.isEnabled = false
             editNombre?.setText(nombUsuarioPac)
         }
 
-        imgbtnEditApe!!.setOnClickListener{
+        imgbtnEditApe!!.setOnClickListener {
             editarApellidosIconos()
-            editApel?.isEnabled=true
+            editApel?.isEnabled = true
         }
 
-        //TODO: Implementar actualización de solo este campo
         imgbtnSaveApe!!.setOnClickListener {
-
+            var apellidosNew = editApel?.text.toString()
+            myExecutor.execute {
+                actualizaCampoUsuario(idUsuarioPac, "apellidos", apellidosNew)
+            }
+            editApel?.isEnabled=false
         }
 
-        imgbtnCancelApe!!.setOnClickListener{
+        imgbtnCancelApe!!.setOnClickListener {
             cancelaEdicionApellidosIconos()
-            editApel?.isEnabled=false
+            editApel?.isEnabled = false
             editApel?.setText(apellUsuarioPac)
         }
 
-        imgbtnEditFN!!.setOnClickListener{
+        imgbtnEditFN!!.setOnClickListener {
             editarFechaIconos()
-            editFecha?.isEnabled=true
+            editFecha?.isEnabled = true
         }
 
-        //TODO: Implementar actualización de solo este campo
         imgbtnSaveFN!!.setOnClickListener {
-
+            var fechaNew = editFecha?.text.toString()
+            var fechaForm = FuncionesAuxiliares().formateaFecha(fechaNew)
+            myExecutor.execute {
+                actualizaCampoUsuario(idUsuarioPac,"fnacimiento", fechaForm)
+            }
+            editFecha?.isEnabled=false
         }
 
         imgbtnCancelFN!!.setOnClickListener {
             cancelaEdicionFechaIconos()
-            editFecha?.isEnabled=false
+            editFecha?.isEnabled = false
             editFecha?.setText(fechaUsuarioPac)
         }
 
     }
 
-    private fun borradoUsuario(id: String){
+    private fun borradoUsuario(id: String) {
         try {
             println("Entro en el try")
             Class.forName("com.mysql.jdbc.Driver")
@@ -216,10 +243,18 @@ class PerfilUsuarioActivity : AppCompatActivity() {
             println(query2)
             statement.executeUpdate(query2)
             Handler(Looper.getMainLooper()).post {
-                val txtMostrar = Toast.makeText(this, "Se ha borrado correctamente el usuario $id", Toast.LENGTH_SHORT)
+                val txtMostrar = Toast.makeText(
+                    this,
+                    "Se ha borrado correctamente el usuario $id",
+                    Toast.LENGTH_SHORT
+                )
                 txtMostrar.setGravity(Gravity.CENTER_VERTICAL, 0, 0)
                 txtMostrar.show()
-                lanzaNotificacion(notifUsuDef, "Usuario eliminado del sistema", "Se ha eliminado del sistema el usuario $nombUsuarioPac $apellUsuarioPac (id: $idUsuarioPac)")
+                lanzaNotificacion(
+                    notifUsuDef,
+                    "Usuario eliminado del sistema",
+                    "Se ha eliminado del sistema el usuario $nombUsuarioPac $apellUsuarioPac (id: $idUsuarioPac)"
+                )
             }
             val intento2 = Intent(this, PrincipalActivity::class.java)
             intento2.putExtra("notifUsuDef", notifUsuDef)
@@ -230,7 +265,7 @@ class PerfilUsuarioActivity : AppCompatActivity() {
             intento2.putExtra("fechaUsuDef", fechaUsuDef)
             intento2.putExtra("pwUsuDef", pwUsuDef)
             startActivity(intento2)
-            println("La búsqueda del usuario se ha llevado a cabo con éxito.")
+            println("El borrado del usuario se ha llevado a cabo con éxito.")
         } catch (e: Exception) {
             println(e.toString())
             Handler(Looper.getMainLooper()).post {
@@ -240,16 +275,23 @@ class PerfilUsuarioActivity : AppCompatActivity() {
                 val txtMostrar = Toast.makeText(this, mensajeError, Toast.LENGTH_LONG)
                 txtMostrar.setGravity(Gravity.CENTER_VERTICAL, 0, 0)
                 txtMostrar.show()
+                lanzaNotificacion(
+                    notifUsuDef,
+                    "Error al actualizar el usuario",
+                    mensajeError
+                )
             }
         }
     }
 
-    private fun actualizaUsuarioTotal(id: String, nom: String, ape: String, fn: String){
+    private fun actualizaUsuarioTotal(id: String, nom: String, ape: String, fn: String) {
         try {
             println("Entro en el try")
             Class.forName("com.mysql.jdbc.Driver")
             //Configuracion de la conexión
             println("Query que vamos a ejecutar: UPDATE b1l1rb6fzqnrv8549nvi.usuario SET nombre='$nom', apellidos='$ape', fnacimiento='$fn' WHERE idusuario='$id';")
+
+            compruebaFormatoFecha(fn)
 
             val connection = DriverManager.getConnection(
                 "jdbc:mysql://b1l1rb6fzqnrv8549nvi-mysql.services.clever-cloud.com",
@@ -259,32 +301,140 @@ class PerfilUsuarioActivity : AppCompatActivity() {
 
             val statement = connection.createStatement()
             println("Voy a la query")
-            val query2 = "UPDATE b1l1rb6fzqnrv8549nvi.usuario SET nombre='$nom', apellidos='$ape', fnacimiento='$fn' WHERE idusuario='$id';"
+            val query2 =
+                "UPDATE b1l1rb6fzqnrv8549nvi.usuario SET nombre='$nom', apellidos='$ape', fnacimiento='$fn' WHERE idusuario='$id';"
             println(query2)
             statement.executeUpdate(query2)
             Handler(Looper.getMainLooper()).post {
-                val txtMostrar = Toast.makeText(this, "Se ha actualizado correctamente el usuario $id", Toast.LENGTH_SHORT)
+                val txtMostrar = Toast.makeText(
+                    this,
+                    "Se ha actualizado correctamente el usuario $id",
+                    Toast.LENGTH_SHORT
+                )
                 txtMostrar.setGravity(Gravity.CENTER_VERTICAL, 0, 0)
                 txtMostrar.show()
-                lanzaNotificacion(notifUsuDef, "Usuario actualizado", "Se han actualizado los datos del usuario $nombUsuarioPac $apellUsuarioPac (id: $idUsuarioPac)")
-                nombUsuarioPac=nom; apellUsuarioPac=ape; fechaUsuarioPac=fn
+                lanzaNotificacion(
+                    notifUsuDef,
+                    "Usuario actualizado",
+                    "Se han actualizado los datos del usuario $nombUsuarioPac $apellUsuarioPac (id: $idUsuarioPac)"
+                )
+                nombUsuarioPac = nom; apellUsuarioPac = ape; fechaUsuarioPac = fn
                 cancelaEdicionGeneral(nom, ape, fn)
+            }
+        } catch (e1: InvalidFechaException) {
+            println(e1)
+            Handler(Looper.getMainLooper()).post {
+                // write your code here
+                val mensajeError =
+                    "No se ha podido actualizar el usuario $id: $errorProvocadoFecha"
+                val txtMostrar = Toast.makeText(this, mensajeError, Toast.LENGTH_LONG)
+                txtMostrar.setGravity(Gravity.CENTER_VERTICAL, 0, 0)
+                txtMostrar.show()
+                lanzaNotificacion(
+                    notifUsuDef,
+                    "Error al actualizar el usuario",
+                    mensajeError
+                )
+                cancelaTodo(nombUsuarioPac, apellUsuarioPac, fechaUsuarioPac)
             }
         } catch (e: Exception) {
             println(e.toString())
             Handler(Looper.getMainLooper()).post {
                 // write your code here
                 val mensajeError =
-                    "No se ha podido eliminar el usuario $id, ha ocurrido un error con la base de datos."
+                    "No se ha podido actualizar el usuario $id, ha ocurrido un error con la base de datos."
                 val txtMostrar = Toast.makeText(this, mensajeError, Toast.LENGTH_LONG)
                 txtMostrar.setGravity(Gravity.CENTER_VERTICAL, 0, 0)
                 txtMostrar.show()
+                lanzaNotificacion(
+                    notifUsuDef,
+                    "Error al actualizar el usuario",
+                    mensajeError
+                )
+                cancelaTodo(nombUsuarioPac, apellUsuarioPac, fechaUsuarioPac)
             }
         }
     }
 
-    private fun lanzaNotificacion(notif: Boolean, titulo: String, mensaje: String){
-        if(notif){
+    private fun actualizaCampoUsuario(id: String, campo: String, valor: String) {
+        try {
+            println("Entro en el try")
+            if (campo == "fnacimiento") {
+                compruebaFormatoFecha(valor)
+            }
+            Class.forName("com.mysql.jdbc.Driver")
+            //Configuracion de la conexión
+            println("Query que vamos a ejecutar: UPDATE b1l1rb6fzqnrv8549nvi.usuario SET $campo='$valor' WHERE idusuario='$id';")
+
+            val connection = DriverManager.getConnection(
+                "jdbc:mysql://b1l1rb6fzqnrv8549nvi-mysql.services.clever-cloud.com",
+                "umk5rnkivqyw4r0m",
+                "06pQBYy1mrut9N1Cps1K"
+            )
+
+            val statement = connection.createStatement()
+            println("Voy a la query")
+            val query2 =
+                "UPDATE b1l1rb6fzqnrv8549nvi.usuario SET $campo='$valor' WHERE idusuario='$id';"
+            println(query2)
+            statement.executeUpdate(query2)
+            Handler(Looper.getMainLooper()).post {
+                val txtMostrar = Toast.makeText(
+                    this,
+                    "Se ha actualizado correctamente el usuario $id",
+                    Toast.LENGTH_SHORT
+                )
+                txtMostrar.setGravity(Gravity.CENTER_VERTICAL, 0, 0)
+                txtMostrar.show()
+                lanzaNotificacion(
+                    notifUsuDef,
+                    "Usuario actualizado",
+                    "Se ha actualizado el campo '$campo' del usuario $nombUsuarioPac $apellUsuarioPac (id: $idUsuarioPac)"
+                )
+                when(campo){
+                    "nombre" -> { nombUsuarioPac=valor; cancelaEdicionNombreIconos() }
+                    "apellidos" -> { apellUsuarioPac=valor; cancelaEdicionApellidosIconos() }
+                    "fnacimiento" -> { fechaUsuarioPac=valor; cancelaEdicionFechaIconos() }
+                }
+            }
+        } catch (e1: InvalidFechaException) {
+            println(e1)
+            Handler(Looper.getMainLooper()).post {
+                // write your code here
+                val mensajeError =
+                    "No se ha podido actualizar el usuario $id: $errorProvocadoFecha"
+                val txtMostrar = Toast.makeText(this, mensajeError, Toast.LENGTH_LONG)
+                txtMostrar.setGravity(Gravity.CENTER_VERTICAL, 0, 0)
+                txtMostrar.show()
+                lanzaNotificacion(
+                    notifUsuDef,
+                    "Error al actualizar el usuario",
+                    mensajeError
+                )
+                cancelaTodo(nombUsuarioPac, apellUsuarioPac, fechaUsuarioPac)
+            }
+
+        } catch (e: Exception) {
+            println(e.toString())
+            Handler(Looper.getMainLooper()).post {
+                // write your code here
+                val mensajeError =
+                    "No se ha podido actualizar el usuario $id, ha ocurrido un error con la base de datos."
+                val txtMostrar = Toast.makeText(this, mensajeError, Toast.LENGTH_LONG)
+                txtMostrar.setGravity(Gravity.CENTER_VERTICAL, 0, 0)
+                txtMostrar.show()
+                lanzaNotificacion(
+                    notifUsuDef,
+                    "Error al actualizar el usuario",
+                    mensajeError
+                )
+                cancelaTodo(nombUsuarioPac, apellUsuarioPac, fechaUsuarioPac)
+            }
+        }
+    }
+
+    private fun lanzaNotificacion(notif: Boolean, titulo: String, mensaje: String) {
+        if (notif) {
             createNotificationChannel()
             val builder = NotificationCompat.Builder(this, CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_launcher_background)
@@ -314,63 +464,88 @@ class PerfilUsuarioActivity : AppCompatActivity() {
         }
     }
 
-    private fun cancelaEdicionGeneral(nom: String, ape: String, fn: String){
-        editNombre?.isEnabled=false
+    private fun cancelaEdicionGeneral(nom: String, ape: String, fn: String) {
+        editNombre?.isEnabled = false
         editNombre?.setText(nom)
-        editApel?.isEnabled=false
+        editApel?.isEnabled = false
         editApel?.setText(ape)
-        editFecha?.isEnabled=false
+        editFecha?.isEnabled = false
         editFecha?.setText(fn)
-        btnEditarUsuario!!.text="Editar Usuario"
-        estadoEdicion=false
+        btnEditarUsuario!!.text = "Editar Usuario"
+        estadoEdicion = false
     }
 
-    private fun editarNombreIconos(){
+    private fun editarNombreIconos() {
         imgbtnEditNom!!.visibility = INVISIBLE
         imgbtnSaveNom!!.visibility = VISIBLE
         imgbtnCancelNom!!.visibility = VISIBLE
     }
 
-    private fun cancelaEdicionNombreIconos(){
+    private fun cancelaEdicionNombreIconos() {
         imgbtnEditNom!!.visibility = VISIBLE
         imgbtnSaveNom!!.visibility = INVISIBLE
         imgbtnCancelNom!!.visibility = INVISIBLE
     }
 
-    private fun editarApellidosIconos(){
+    private fun editarApellidosIconos() {
         imgbtnEditApe!!.visibility = INVISIBLE
         imgbtnSaveApe!!.visibility = VISIBLE
         imgbtnCancelApe!!.visibility = VISIBLE
     }
 
-    private fun cancelaEdicionApellidosIconos(){
+    private fun cancelaEdicionApellidosIconos() {
         imgbtnEditApe!!.visibility = VISIBLE
         imgbtnSaveApe!!.visibility = INVISIBLE
         imgbtnCancelApe!!.visibility = INVISIBLE
     }
 
-    private fun editarFechaIconos(){
+    private fun editarFechaIconos() {
         imgbtnEditFN!!.visibility = INVISIBLE
         imgbtnSaveFN!!.visibility = VISIBLE
         imgbtnCancelFN!!.visibility = VISIBLE
     }
 
-    private fun cancelaEdicionFechaIconos(){
+    private fun cancelaEdicionFechaIconos() {
         imgbtnEditFN!!.visibility = VISIBLE
         imgbtnSaveFN!!.visibility = INVISIBLE
         imgbtnCancelFN!!.visibility = INVISIBLE
     }
 
-    private fun mostrarIconosDeEdicion(){
+    private fun mostrarIconosDeEdicion() {
         imgbtnEditNom!!.visibility = VISIBLE
         imgbtnEditApe!!.visibility = VISIBLE
         imgbtnEditFN!!.visibility = VISIBLE
     }
 
-    private fun desaparecerIconosDeEdicion(){
+    private fun desaparecerIconosDeEdicion() {
         imgbtnEditNom!!.visibility = INVISIBLE
         imgbtnEditApe!!.visibility = INVISIBLE
         imgbtnEditFN!!.visibility = INVISIBLE
+    }
+
+    private fun compruebaFormatoFecha(fecha: String) {
+        if (!FuncionesAuxiliares().formatoCorrectoAnyoFecha(fecha)) {
+            errorProvocadoFecha = errorFecha1
+            throw InvalidFechaException(errorFecha1)
+        }
+        if (!FuncionesAuxiliares().formatoCorrectoMesFecha(fecha)) {
+            errorProvocadoFecha = errorFecha2
+            throw InvalidFechaException(errorFecha2)
+        }
+        if (!FuncionesAuxiliares().formatoCorrectoDiaFecha(fecha)) {
+            errorProvocadoFecha = errorFecha3
+            throw InvalidFechaException(errorFecha3)
+        }
+    }
+
+    private fun cancelaTodo(n: String, ap: String, fn: String ){
+        cancelaEdicionGeneral(n, ap, fn)
+        cancelaEdicionNombreIconos()
+        cancelaEdicionApellidosIconos()
+        cancelaEdicionFechaIconos()
+        editFecha?.setText(fn)
+        editApel?.setText(ap)
+        editNombre?.setText(n)
     }
 
 }

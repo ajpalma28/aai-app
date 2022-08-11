@@ -52,17 +52,18 @@ class FuncionesAuxiliares {
         var res = true
         var i = 0
         for (e in dni){
-            if(i==9){
+            if(i==8){
                 if(e.isDigit()){
                     res=false
                     break
                 }
-            }else if(i in 1..8){
+            }else if(i in 1..7){
                 if(e.isLetter()){
                     res=false
                     break
                 }
             }
+            i++
         }
         return res
     }
