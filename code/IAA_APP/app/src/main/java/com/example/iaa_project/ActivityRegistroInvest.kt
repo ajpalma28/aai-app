@@ -270,40 +270,17 @@ class ActivityRegistroInvest : AppCompatActivity() {
     }
 
     private fun compruebaFormatoFecha(fecha: String) {
-        val partes = fecha.split("-")
-        val ano = partes[0].toInt()
-        val mes = partes[1].toInt()
-        val dia = partes[2].toInt()
-        if (partes[0].length != 4) {
+        if(!FuncionesAuxiliares().formatoCorrectoAnyoFecha(fecha)){
             errorProvocadoFecha = errorFecha1
             throw InvalidFechaException(errorFecha1)
         }
-        if (partes[1].length != 2 || mes < 1 || mes > 12) {
+        if(!FuncionesAuxiliares().formatoCorrectoMesFecha(fecha)){
             errorProvocadoFecha = errorFecha2
             throw InvalidFechaException(errorFecha2)
         }
-        if (partes[2].length != 2) {
+        if(!FuncionesAuxiliares().formatoCorrectoDiaFecha(fecha)){
             errorProvocadoFecha = errorFecha3
             throw InvalidFechaException(errorFecha3)
-        } else {
-            if (mes == 2) {
-                if(ano%4==0 && dia>29){
-                    errorProvocadoFecha = errorFecha3
-                    throw InvalidFechaException(errorFecha3)
-                }
-                if(ano%4!=0 && dia>28){
-                    errorProvocadoFecha = errorFecha3
-                    throw InvalidFechaException(errorFecha3)
-                }
-            } else if (mes == 4 || mes == 6 || mes == 9 || mes == 11) {
-                if (dia > 30) {
-                    errorProvocadoFecha = errorFecha3
-                    throw InvalidFechaException(errorFecha3)
-                }
-            } else if (dia > 31) {
-                errorProvocadoFecha = errorFecha3
-                throw InvalidFechaException(errorFecha3)
-            }
         }
     }
 

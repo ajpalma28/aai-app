@@ -8,6 +8,7 @@ import android.os.Looper
 import android.view.Gravity
 import android.widget.Button
 import android.widget.Toast
+import androidx.appcompat.widget.SwitchCompat
 import com.example.iaa_project.databinding.ActivityBuscarUsuarioBinding
 import com.example.iaa_project.databinding.ActivityPrincipalBinding
 import com.example.iaa_project.exceptions.InvalidIDException
@@ -24,6 +25,12 @@ class BuscarUsuarioActivity : AppCompatActivity() {
     var editID : String = ""
     var notifUsuDef : Boolean = false
     var errorProvocado = ""
+    var idUsuDef = ""
+    var dniUsuDef = ""
+    var apellUsuDef = ""
+    var nombUsuDef = ""
+    var fechaUsuDef = ""
+    var pwUsuDef = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +41,12 @@ class BuscarUsuarioActivity : AppCompatActivity() {
 
         val bundle = intent.extras
         notifUsuDef = bundle?.getBoolean("notifUsuDef") == true
+        idUsuDef = bundle?.getString("idUsuDef").toString()
+        dniUsuDef = bundle?.getString("dniUsuDef").toString()
+        apellUsuDef = bundle?.getString("apellUsuDef").toString()
+        nombUsuDef = bundle?.getString("nombUsuDef").toString()
+        fechaUsuDef = bundle?.getString("fechaUsuDef").toString()
+        pwUsuDef = bundle?.getString("pwUsuDef").toString()
 
         btnBusq = variables!!.btnBusquedaUsuario
         var campoID = variables!!.idBusqIDUsu
@@ -69,13 +82,10 @@ class BuscarUsuarioActivity : AppCompatActivity() {
 
             val statement = connection.createStatement()
             println("Voy a la query")
-            //Guardo en resultSet el resultado de la consulta
-            //statement.executeQuery("select * from usuarios where usuario = '$resUsuario' and pass = '$resPassword'")
             //"INSERT INTO `db-tfg`.`investigador` (`idinvestigador`, `dni`, `apellidos`, `nombre`, `fnacimiento`, `contrasena`, `notificaciones`, `terminoscondiciones`) VALUES ('$id', '$dni', '$apellidos', '$nombre', '$fecha', '$contra', 'true', '$tyc');"
             val query2 = "SELECT * FROM b1l1rb6fzqnrv8549nvi.usuario WHERE idusuario='$id';"
             println(query2)
             val resultSet2 = statement.executeQuery(query2)
-            //println(resultSet2.get)
             var idUsuarioPac = ""
             var dniUsuarioPac = ""
             var apellUsuarioPac = ""
@@ -106,6 +116,13 @@ class BuscarUsuarioActivity : AppCompatActivity() {
             intento2.putExtra("apellUsuarioPac", apellUsuarioPac)
             intento2.putExtra("nombUsuarioPac", nombUsuarioPac)
             intento2.putExtra("fechaUsuarioPac", fechaUsuarioPac)
+            intento2.putExtra("notifUsuDef", notifUsuDef)
+            intento2.putExtra("idUsuDef", idUsuDef)
+            intento2.putExtra("dniUsuDef", dniUsuDef)
+            intento2.putExtra("apellUsuDef", apellUsuDef)
+            intento2.putExtra("nombUsuDef", nombUsuDef)
+            intento2.putExtra("fechaUsuDef", fechaUsuDef)
+            intento2.putExtra("pwUsuDef", pwUsuDef)
             startActivity(intento2)
             println("La búsqueda del usuario se ha llevado a cabo con éxito.")
             println("$idUsuarioPac - $dniUsuarioPac - $apellUsuarioPac - $nombUsuarioPac - $fechaUsuarioPac")
@@ -120,7 +137,6 @@ class BuscarUsuarioActivity : AppCompatActivity() {
         } catch (e: Exception) {
             println(e.toString())
             Handler(Looper.getMainLooper()).post {
-                // write your code here
                 val mensajeError =
                     "No se ha podido iniciar sesión, ha ocurrido un error con la base de datos."
                 val txtMostrar = Toast.makeText(this, mensajeError, Toast.LENGTH_LONG)

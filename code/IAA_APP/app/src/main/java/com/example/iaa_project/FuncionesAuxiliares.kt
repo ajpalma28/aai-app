@@ -76,4 +76,50 @@ class FuncionesAuxiliares {
         return notific=="true"
     }
 
+    fun formatoCorrectoAnyoFecha(fecha: String): Boolean{
+        var res=true
+        val partes = fecha.split("-")
+        if (partes[0].length != 4) {
+            res = false
+        }
+        return res
+    }
+
+    fun formatoCorrectoMesFecha(fecha: String): Boolean{
+        var res=true
+        val partes = fecha.split("-")
+        val mes = partes[1].toInt()
+        if (partes[1].length != 2 || mes < 1 || mes > 12) {
+            res=false
+        }
+        return res
+    }
+
+    fun formatoCorrectoDiaFecha(fecha: String): Boolean{
+        var res = true
+        val partes = fecha.split("-")
+        val ano = partes[0].toInt()
+        val mes = partes[1].toInt()
+        val dia = partes[2].toInt()
+        if (partes[2].length != 2) {
+            res = false
+        } else {
+            if (mes == 2) {
+                if(ano%4==0 && dia>29){
+                    res = false
+                }
+                if(ano%4!=0 && dia>28){
+                    res = false
+                }
+            } else if (mes == 4 || mes == 6 || mes == 9 || mes == 11) {
+                if (dia > 30) {
+                    res = false
+                }
+            } else if (dia > 31) {
+                res = false
+            }
+        }
+        return res
+    }
+
 }
