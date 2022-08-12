@@ -210,7 +210,15 @@ class MiPerfilActivity : AppCompatActivity() {
 
         // TODO: Hacer toda la parte del cambio de contraseña del investigador
         cambioPW.setOnClickListener {
-
+            val intent = Intent(this, CambioPwActivity::class.java)
+            intent.putExtra("idUsuDef", idUsuDef)
+            intent.putExtra("dniUsuDef", dniUsuDef)
+            intent.putExtra("apellUsuDef", apellUsuDef)
+            intent.putExtra("nombUsuDef", nombUsuDef)
+            intent.putExtra("fechaUsuDef", fechaUsuDef)
+            intent.putExtra("pwUsuDef", pwUsuDef)
+            intent.putExtra("notifUsuDef", notifUsuDef)
+            startActivity(intent)
         }
 
         deleteInvest.setOnClickListener {

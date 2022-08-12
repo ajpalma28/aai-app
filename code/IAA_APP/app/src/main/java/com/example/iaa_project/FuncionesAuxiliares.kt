@@ -123,4 +123,35 @@ class FuncionesAuxiliares {
         return res
     }
 
+    fun longitudCorrectaPW(pw: String): Boolean{
+        var res = true
+        if(pw.length>6){
+            res = false
+        }
+        return res
+    }
+
+    fun estructuraCorrectaPW(pw: String): Boolean{
+        var res=false
+        var res1=false; var res2=false; var res3=false; var res4=false
+        if(pw.contains('@') || pw.contains('.') || pw.contains('-') || pw.contains('#') ||
+            pw.contains('+') || pw.contains('*') || pw.contains('~') || pw.contains('=') ||
+                pw.contains('$')){
+            res1=true
+        }
+        for(l in pw){
+            if(l.isDigit()){
+                res2=true
+            }else if(l.isUpperCase()){
+                res3=true
+            }else if(l.isLowerCase()){
+                res4=true
+            }
+        }
+        if(res1 && res2 && res3 && res4){
+            res=true
+        }
+        return res
+    }
+
 }

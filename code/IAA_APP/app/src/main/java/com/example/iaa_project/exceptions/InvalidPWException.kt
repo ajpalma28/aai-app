@@ -5,5 +5,6 @@ val errorPW2 = "El formato de la contraseña no es el adecuado"
 val errorPW3 = "ID o contraseña incorrectos. ¿Ha olvidado sus datos?"
 val errorPW4 = "La contraseña no se corresponde con la suya, revíselo"
 val errorPW5 = "La nueva contraseña no puede ser igual a la contraseña anterior"
+val errorPW6 = "Error al confirmar la contraseña nueva"
 
 internal class InvalidPWException(mensaje: String?) : Exception(mensaje)
