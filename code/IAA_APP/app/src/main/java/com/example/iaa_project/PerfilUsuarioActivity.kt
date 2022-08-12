@@ -4,26 +4,25 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.Gravity
-import android.view.View
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
+import android.view.ViewGroup
 import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import androidx.core.view.isVisible
-import com.example.iaa_project.databinding.ActivityBuscarUsuarioBinding
+import androidx.core.view.updateLayoutParams
 import com.example.iaa_project.databinding.ActivityPerfilUsuarioBinding
 import com.example.iaa_project.exceptions.*
-import com.example.iaa_project.exceptions.InvalidFechaException
-import java.security.Principal
 import java.sql.DriverManager
 import java.util.concurrent.Executors
+
 
 class PerfilUsuarioActivity : AppCompatActivity() {
 
@@ -55,6 +54,14 @@ class PerfilUsuarioActivity : AppCompatActivity() {
     var imgbtnSaveFN: ImageButton? = null;
     var imgbtnCancelFN: ImageButton? = null
     var errorProvocadoFecha = ""
+    var tablaSesiones: TableLayout? = null
+    var contadorSesiones = 0
+    var listaSesionID : ArrayList<String> = ArrayList()
+    var listaSesionOrg : ArrayList<String> = ArrayList()
+    var listaSesionInv : ArrayList<String> = ArrayList()
+    var listaSesionUsu : ArrayList<String> = ArrayList()
+    var listaSesionFecha : ArrayList<String> = ArrayList()
+    var listaSesionRes : ArrayList<String> = ArrayList()
 
     private companion object {
         private const val CHANNEL_ID = "channel01"
@@ -80,6 +87,13 @@ class PerfilUsuarioActivity : AppCompatActivity() {
         nombUsuDef = bundle?.getString("nombUsuDef").toString()
         fechaUsuDef = bundle?.getString("fechaUsuDef").toString()
         pwUsuDef = bundle?.getString("pwUsuDef").toString()
+        listaSesionID.addAll(bundle?.getStringArrayList("listaSesionID")!!)
+        listaSesionOrg.addAll(bundle?.getStringArrayList("listaSesionOrg")!!)
+        listaSesionInv.addAll(bundle?.getStringArrayList("listaSesionInv")!!)
+        listaSesionUsu.addAll(bundle?.getStringArrayList("listaSesionUsu")!!)
+        listaSesionFecha.addAll(bundle?.getStringArrayList("listaSesionFecha")!!)
+        listaSesionRes.addAll(bundle?.getStringArrayList("listaSesionRes")!!)
+        contadorSesiones = bundle?.getInt("contadorSesiones")!!
 
         var textID = variables!!.textView12
         textID.text = idUsuarioPac
@@ -113,6 +127,13 @@ class PerfilUsuarioActivity : AppCompatActivity() {
         imgbtnEditFN = variables!!.imgbtnfnUsu
         imgbtnSaveFN = variables!!.ibSaveFNUsu
         imgbtnCancelFN = variables!!.ibCancelFNUsu
+
+        val textoSesiones = variables!!.textView13.text.toString()
+        variables!!.textView13.text="$textoSesiones $contadorSesiones"
+
+        tablaSesiones = variables!!.sesionesUsuario
+
+        añadeFilaTabla(listaSesionID)
 
         val myExecutor = Executors.newSingleThreadExecutor()
 
@@ -546,6 +567,40 @@ class PerfilUsuarioActivity : AppCompatActivity() {
         editFecha?.setText(fn)
         editApel?.setText(ap)
         editNombre?.setText(n)
+    }
+
+    private fun añadeFilaTabla(lista: ArrayList<String>){
+        var layoutCelda: TableRow.LayoutParams
+        val layoutFila = TableRow.LayoutParams(
+            TableRow.LayoutParams.WRAP_CONTENT,
+            TableRow.LayoutParams.WRAP_CONTENT
+        )
+        val fila = TableRow(this)
+        fila.layoutParams = layoutFila
+
+        for (l in lista) {
+            var texto = TextView(this)
+            texto.text = "$l"
+            texto.gravity = Gravity.CENTER_HORIZONTAL
+            layoutCelda = TableRow.LayoutParams(
+                TableRow.LayoutParams.MATCH_PARENT,
+                TableRow.LayoutParams.WRAP_CONTENT
+            )
+            texto.layoutParams = layoutCelda
+            fila.addView(texto)
+            val boton = Button(this)
+            //boton.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+            //boton.layoutParams.height=ViewGroup.LayoutParams.MATCH_PARENT
+            //TODO: Ver cómo se puede personalizar o modificar un poquito el botón, para meterle una imagen o algo así
+            boton.text = "Ver"
+            boton.id=lista.indexOf(l)
+            fila.addView(boton)
+
+            // TODO: Me falta añadir la funcionalidad a los botones de las sesiones
+        }
+
+        tablaSesiones!!.addView(fila)
+
     }
 
 }

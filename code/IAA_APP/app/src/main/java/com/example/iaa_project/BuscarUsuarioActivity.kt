@@ -31,6 +31,13 @@ class BuscarUsuarioActivity : AppCompatActivity() {
     var nombUsuDef = ""
     var fechaUsuDef = ""
     var pwUsuDef = ""
+    var contadorSesiones = 0
+    var listaSesionID : ArrayList<String> = ArrayList()
+    var listaSesionOrg : ArrayList<String> = ArrayList()
+    var listaSesionInv : ArrayList<String> = ArrayList()
+    var listaSesionUsu : ArrayList<String> = ArrayList()
+    var listaSesionFecha : ArrayList<String> = ArrayList()
+    var listaSesionRes : ArrayList<String> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,6 +76,7 @@ class BuscarUsuarioActivity : AppCompatActivity() {
 
     private fun buscaUsuario(id: String){
         try {
+            contadorSesiones=0
             println("Entro en el try")
             Class.forName("com.mysql.jdbc.Driver")
             //Configuracion de la conexión
@@ -105,6 +113,19 @@ class BuscarUsuarioActivity : AppCompatActivity() {
             }
             fechaUsuarioPac = FuncionesAuxiliares().formateaFechaRev(fechaAux)
 
+            val query3 = "SELECT * FROM b1l1rb6fzqnrv8549nvi.sesion WHERE idusuario='$id';"
+            println("Siguiente query: $query3")
+            val resultSet3 = statement.executeQuery(query3)
+            while(resultSet3.next()){
+                listaSesionID.add(resultSet3.getString(1))
+                listaSesionOrg.add(resultSet3.getString(2))
+                listaSesionInv.add(resultSet3.getString(3))
+                listaSesionUsu.add(resultSet3.getString(4))
+                listaSesionFecha.add(resultSet3.getString(5))
+                listaSesionRes.add(resultSet3.getString(6))
+                contadorSesiones++
+            }
+
             Handler(Looper.getMainLooper()).post {
                 val txtMostrar = Toast.makeText(this, "Éxito en la búsqueda del usuario $idUsuarioPac", Toast.LENGTH_SHORT)
                 txtMostrar.setGravity(Gravity.CENTER_VERTICAL, 0, 0)
@@ -123,6 +144,13 @@ class BuscarUsuarioActivity : AppCompatActivity() {
             intento2.putExtra("nombUsuDef", nombUsuDef)
             intento2.putExtra("fechaUsuDef", fechaUsuDef)
             intento2.putExtra("pwUsuDef", pwUsuDef)
+            intento2.putExtra("listaSesionID",listaSesionID)
+            intento2.putExtra("listaSesionOrg",listaSesionOrg)
+            intento2.putExtra("listaSesionInv",listaSesionInv)
+            intento2.putExtra("listaSesionUsu",listaSesionUsu)
+            intento2.putExtra("listaSesionFecha",listaSesionFecha)
+            intento2.putExtra("listaSesionRes",listaSesionRes)
+            intento2.putExtra("contadorSesiones",contadorSesiones)
             startActivity(intento2)
             println("La búsqueda del usuario se ha llevado a cabo con éxito.")
             println("$idUsuarioPac - $dniUsuarioPac - $apellUsuarioPac - $nombUsuarioPac - $fechaUsuarioPac")
