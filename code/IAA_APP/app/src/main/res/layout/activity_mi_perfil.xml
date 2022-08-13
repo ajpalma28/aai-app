@@ -61,7 +61,6 @@
             android:layout_marginTop="46dp"
             android:layout_marginBottom="11dp"
             android:backgroundTint="#FFC107"
-            app:layout_constraintBottom_toTopOf="@+id/btnCancReg"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/editTextInvestigadorFecha"
@@ -175,6 +174,58 @@
             tools:ignore="MissingConstraints" />
 
         <TextView
+            android:id="@+id/textView14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Organizaciones a las que perteneces:"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.299"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextInvestigadorFecha"
+            tools:ignore="MissingConstraints" />
+
+        <TableLayout
+            android:id="@+id/organizacionesInv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="40dp"
+            android:background="#F1F1F1"
+            android:gravity="center"
+            android:textAlignment="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView14" />
+
+        <TextView
+            android:id="@+id/textView15"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Número de Sesiones:"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.19"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/organizacionesInv"
+            tools:ignore="MissingConstraints" />
+
+        <TableLayout
+            android:id="@+id/sesionesInv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="52dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="52dp"
+            android:background="#F1F1F1"
+            android:gravity="center"
+            android:textAlignment="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView15" />
+
+        <TextView
             android:id="@+id/textView3"
             android:layout_width="234dp"
             android:layout_height="22dp"
@@ -215,13 +266,13 @@
             android:id="@+id/btnCancReg"
             android:layout_width="129dp"
             android:layout_height="70dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="48dp"
             android:layout_marginBottom="15dp"
             android:text="Cancelar"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextInvestigadorFecha"
+            app:layout_constraintTop_toBottomOf="@+id/sesionesInv"
             app:layout_constraintVertical_bias="0.0"
             tools:ignore="MissingConstraints" />
 
@@ -229,7 +280,7 @@
             android:id="@+id/btnEditInvestigador"
             android:layout_width="129dp"
             android:layout_height="70dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="51dp"
             android:layout_marginBottom="15dp"
             android:onClick="registerInvest"
@@ -238,7 +289,7 @@
             app:layout_constraintEnd_toStartOf="@+id/btnCancReg"
             app:layout_constraintHorizontal_bias="0.962"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextInvestigadorFecha"
+            app:layout_constraintTop_toBottomOf="@+id/sesionesInv"
             app:layout_constraintVertical_bias="0.0" />
 
         <TextView
@@ -290,7 +341,6 @@
             android:layout_marginBottom="11dp"
             android:backgroundTint="#4CAF50"
             android:visibility="invisible"
-            app:layout_constraintBottom_toTopOf="@+id/btnCancReg"
             app:layout_constraintStart_toEndOf="@+id/editTextInvestigadorFecha"
             app:layout_constraintTop_toBottomOf="@+id/ibSaveApeInv"
             app:srcCompat="@android:drawable/ic_menu_save" />
@@ -303,7 +353,6 @@
             android:layout_marginBottom="11dp"
             android:backgroundTint="#800000"
             android:visibility="invisible"
-            app:layout_constraintBottom_toTopOf="@+id/btnCancReg"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/ibSaveFNInv"

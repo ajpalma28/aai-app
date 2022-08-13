@@ -11,10 +11,7 @@ import android.os.Handler
 import android.os.Looper
 import android.view.Gravity
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageButton
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
@@ -53,6 +50,21 @@ class MiPerfilActivity : AppCompatActivity() {
     var imgbtnCancelFN: ImageButton? = null
     var errorProvocadoFecha = ""
     var estadoEdicion2 = false
+    var contadorSesiones = 0
+    var contadorOrganizaciones = 0
+    var listaSesionID : ArrayList<String> = ArrayList()
+    var listaSesionOrg : ArrayList<String> = ArrayList()
+    var listaSesionInv : ArrayList<String> = ArrayList()
+    var listaSesionUsu : ArrayList<String> = ArrayList()
+    var listaSesionFecha : ArrayList<String> = ArrayList()
+    var listaSesionRes : ArrayList<String> = ArrayList()
+    var listaAsocID : ArrayList<String> = ArrayList()
+    var listaAsocOrganizacion : ArrayList<String> = ArrayList()
+    var listaAsocInv : ArrayList<String> = ArrayList()
+    var textoSesiones = ""
+    var textoOrg = ""
+    var tablaOrganizaciones: TableLayout? = null
+    var tablaSesiones: TableLayout? = null
 
     private companion object {
         private const val CHANNEL_ID = "channel01"
@@ -73,6 +85,16 @@ class MiPerfilActivity : AppCompatActivity() {
         nombUsuDef = bundle?.getString("nombUsuDef").toString()
         fechaUsuDef = bundle?.getString("fechaUsuDef").toString()
         pwUsuDef = bundle?.getString("pwUsuDef").toString()
+        listaSesionID = bundle?.getStringArrayList("listaSesionID")!!
+        listaSesionOrg = bundle.getStringArrayList("listaSesionOrg")!!
+        listaSesionInv = bundle.getStringArrayList("listaSesionInv")!!
+        listaSesionUsu = bundle.getStringArrayList("listaSesionUsu")!!
+        listaSesionFecha = bundle.getStringArrayList("listaSesionFecha")!!
+        listaSesionRes = bundle.getStringArrayList("listaSesionRes")!!
+        contadorSesiones = bundle.getInt("contadorSesiones")
+        listaAsocID = bundle.getStringArrayList("listaAsocID")!!
+        listaAsocOrganizacion = bundle.getStringArrayList("listaAsocOrganizacion")!!
+        contadorOrganizaciones = bundle.getInt("contadorOrganizaciones")
 
         var tvID = variables!!.textView12
         tvID.text = idUsuDef
@@ -110,6 +132,19 @@ class MiPerfilActivity : AppCompatActivity() {
 
         // TODO: TODA LA PARTE DE LAS ORGANIZACIONES, NO SE HA HECHO AÚN NADA
         // TODO: TODA LA PARTE DE LAS SESIONES, NO SE HA HECHO AÚN NADA NI AQUÍ NI EN EL USUARIO
+
+        textoOrg = variables!!.textView14.text.toString()
+        variables!!.textView14.text = "$textoOrg $contadorOrganizaciones"
+
+        textoSesiones = variables!!.textView15.text.toString()
+        variables!!.textView15.text = "$textoSesiones $contadorSesiones"
+
+        tablaOrganizaciones = variables!!.organizacionesInv
+
+        tablaSesiones = variables!!.sesionesInv
+
+        añadeFilaTabla(listaSesionFecha)
+        cargaOrganizaciones(listaAsocOrganizacion)
 
         imgbtnEditNom!!.setOnClickListener {
             editarNombreIconos()
@@ -577,6 +612,346 @@ class MiPerfilActivity : AppCompatActivity() {
         if(imgbtnEditNom!!.visibility==View.VISIBLE && imgbtnEditApe!!.visibility==View.VISIBLE && imgbtnEditFN!!.visibility==View.VISIBLE){
             if(estadoEdicion){ estadoEdicion=false }
         }
+    }
+
+    private fun añadeFilaTabla(lista: ArrayList<String>) {
+        var layoutCelda: TableRow.LayoutParams
+        val layoutFila = TableRow.LayoutParams(
+            TableRow.LayoutParams.WRAP_CONTENT,
+            TableRow.LayoutParams.WRAP_CONTENT
+        )
+
+        var aux = 0
+        for (l in lista) {
+            val fila = TableRow(this)
+            val numero = lista.indexOf(l)
+            fila.id=numero
+            fila.layoutParams = layoutFila
+            fila.textAlignment = TableRow.TEXT_ALIGNMENT_CENTER
+            val texto = TextView(this)
+            texto.text = "          ${FuncionesAuxiliares().formateaFechaRev(l)}         "
+            texto.gravity = Gravity.CENTER_HORIZONTAL
+            layoutCelda = TableRow.LayoutParams(
+                TableRow.LayoutParams.WRAP_CONTENT,
+                TableRow.LayoutParams.WRAP_CONTENT
+            )
+            texto.layoutParams = layoutCelda
+            texto.textSize=19.0F
+            fila.addView(texto)
+            /*var separa1 = TextView(this)
+            separa1.text = " | "
+            separa1.layoutParams = layoutCelda
+            fila.addView(separa1)
+            var org = TextView(this)
+            org.text = "${listaSesionOrg.get(aux)}"
+            texto.layoutParams = layoutCelda
+            fila.addView(org)*/
+            val boton = Button(this)
+            //boton.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+            //boton.layoutParams.height=ViewGroup.LayoutParams.MATCH_PARENT
+            //TODO: Ver cómo se puede personalizar o modificar un poquito el botón, para meterle una imagen o algo así
+            boton.text = "Ver"
+            boton.id = lista.indexOf(l)
+            fila.addView(boton)
+            aux++
+            tablaSesiones!!.addView(fila)
+
+            val executorSesion = Executors.newSingleThreadExecutor()
+
+            boton.setOnClickListener {
+                executorSesion.execute {
+                    buscaDatosSesion(listaSesionID.get(numero))
+                }
+            }
+
+        }
+
+        tablaSesiones!!.textAlignment = TableLayout.TEXT_ALIGNMENT_CENTER
+
+    }
+
+    private fun buscaDatosSesion(id: String){
+        try {
+            println("Entro en el try")
+            Class.forName("com.mysql.jdbc.Driver")
+            //Configuracion de la conexión
+            println("Query que vamos a ejecutar: SELECT * FROM b1l1rb6fzqnrv8549nvi.sesion WHERE idsesion='$id';")
+
+            val connection = DriverManager.getConnection(
+                "jdbc:mysql://b1l1rb6fzqnrv8549nvi-mysql.services.clever-cloud.com",
+                "umk5rnkivqyw4r0m",
+                "06pQBYy1mrut9N1Cps1K"
+            )
+
+            val statement = connection.createStatement()
+            println("Voy a la query")
+            val query2 = "SELECT * FROM b1l1rb6fzqnrv8549nvi.sesion WHERE idsesion='$id';"
+            println(query2)
+            var resultSet2 = statement.executeQuery(query2)
+            var idSesionMarc = ""
+            var idOrgMarc = ""
+            var idInvMarc = ""
+            var idUsuMarc = ""
+            var fechaMarc = ""
+            var resumenMarc = ""
+            while (resultSet2.next()){
+                idSesionMarc = resultSet2.getString(1)
+                idOrgMarc = resultSet2.getString(2)
+                idInvMarc = resultSet2.getString(3)
+                idUsuMarc = resultSet2.getString(4)
+                fechaMarc = resultSet2.getString(5)
+                resumenMarc = resultSet2.getString(6)
+            }
+            val intento2 = Intent(this, DatosSesionActivity::class.java)
+            intento2.putExtra("notifUsuDef", notifUsuDef)
+            intento2.putExtra("idUsuDef", idUsuDef)
+            intento2.putExtra("dniUsuDef", dniUsuDef)
+            intento2.putExtra("apellUsuDef", apellUsuDef)
+            intento2.putExtra("nombUsuDef", nombUsuDef)
+            intento2.putExtra("fechaUsuDef", fechaUsuDef)
+            intento2.putExtra("pwUsuDef", pwUsuDef)
+            intento2.putExtra("listaSesionID",listaSesionID)
+            intento2.putExtra("listaSesionOrg",listaSesionOrg)
+            intento2.putExtra("listaSesionInv",listaSesionInv)
+            intento2.putExtra("listaSesionUsu",listaSesionUsu)
+            intento2.putExtra("listaSesionFecha",listaSesionFecha)
+            intento2.putExtra("listaSesionRes",listaSesionRes)
+            intento2.putExtra("contadorSesiones",contadorSesiones)
+            intento2.putExtra("idSesionMarc",idSesionMarc)
+            intento2.putExtra("idOrgMarc",idOrgMarc)
+            intento2.putExtra("idInvMarc",idInvMarc)
+            intento2.putExtra("idUsuMarc",idUsuMarc)
+            intento2.putExtra("fechaMarc",FuncionesAuxiliares().formateaFechaRev(fechaMarc))
+            intento2.putExtra("resumenMarc",resumenMarc)
+            startActivity(intento2)
+            println("La búsqueda se ha llevado a cabo con éxito.")
+        } catch (e: Exception) {
+            println(e.toString())
+            Handler(Looper.getMainLooper()).post {
+                // write your code here
+                val mensajeError =
+                    "No se ha podido buscar los datos de la sesión $id, ha ocurrido un error con la base de datos."
+                val txtMostrar = Toast.makeText(this, mensajeError, Toast.LENGTH_LONG)
+                txtMostrar.setGravity(Gravity.CENTER_VERTICAL, 0, 0)
+                txtMostrar.show()
+                lanzaNotificacion(
+                    notifUsuDef,
+                    "Error al buscar la sesión",
+                    mensajeError
+                )
+            }
+        }
+    }
+
+    private fun cargaOrganizaciones(lista: ArrayList<String>) {
+        var layoutCelda: TableRow.LayoutParams
+        val layoutFila = TableRow.LayoutParams(
+            TableRow.LayoutParams.WRAP_CONTENT,
+            TableRow.LayoutParams.WRAP_CONTENT
+        )
+
+        var aux = 0
+        for (l in lista) {
+            val fila = TableRow(this)
+            val numero = lista.indexOf(l)
+            fila.id=numero
+            fila.layoutParams = layoutFila
+            fila.textAlignment = TableRow.TEXT_ALIGNMENT_CENTER
+            val texto = TextView(this)
+            texto.text = " $l "
+            texto.gravity = Gravity.CENTER_HORIZONTAL
+            layoutCelda = TableRow.LayoutParams(
+                TableRow.LayoutParams.WRAP_CONTENT,
+                TableRow.LayoutParams.WRAP_CONTENT
+            )
+            texto.layoutParams = layoutCelda
+            texto.textSize=18.0F
+            fila.addView(texto)
+            /*var separa1 = TextView(this)
+            separa1.text = " | "
+            separa1.layoutParams = layoutCelda
+            fila.addView(separa1)
+            var org = TextView(this)
+            org.text = "${listaSesionOrg.get(aux)}"
+            texto.layoutParams = layoutCelda
+            fila.addView(org)*/
+            val boton = Button(this)
+            //boton.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+            //boton.layoutParams.height=ViewGroup.LayoutParams.MATCH_PARENT
+            //TODO: Ver cómo se puede personalizar o modificar un poquito el botón, para meterle una imagen o algo así
+            boton.text = "Ver"
+            boton.id = lista.indexOf(l)
+            fila.addView(boton)
+            val boton2 = Button(this)
+            boton2.text = "Borrar"
+            boton2.id = numero
+            fila.addView(boton2)
+            aux++
+            tablaOrganizaciones!!.addView(fila)
+
+            val executorSesion = Executors.newSingleThreadExecutor()
+
+            boton.setOnClickListener {
+                executorSesion.execute {
+                    buscaDatosOrg(listaAsocOrganizacion[numero])
+                }
+            }
+
+            boton2.setOnClickListener {
+                val builder = AlertDialog.Builder(this)
+                //set title for alert dialog
+                builder.setTitle(R.string.app_name)
+                //set message for alert dialog
+                builder.setMessage("¿Está seguro de querer desvincularse de la organización ${listaAsocOrganizacion[numero]}? Si lo hace, tendrá que vincularse con ella de nuevo en caso de necesitarlo.")
+                builder.setIcon(android.R.drawable.ic_dialog_alert)
+                builder.setPositiveButton("Sí"){dialogInterface, which ->
+                    executorSesion.execute {
+                        executorSesion.execute {
+                            borraAsociacion(numero)
+                        }
+                    }
+                }
+                builder.setNegativeButton("No"){dialogInterface, which ->
+
+                }
+                // Create the AlertDialog
+                val alertDialog: AlertDialog = builder.create()
+                // Set other dialog properties
+                alertDialog.setCancelable(false)
+                alertDialog.show()
+            }
+
+        }
+
+        tablaSesiones!!.textAlignment = TableLayout.TEXT_ALIGNMENT_CENTER
+
+    }
+
+    private fun buscaDatosOrg(id: String){
+        try {
+            println("Entro en el try")
+            Class.forName("com.mysql.jdbc.Driver")
+            //Configuracion de la conexión
+            println("Query que vamos a ejecutar: SELECT * FROM b1l1rb6fzqnrv8549nvi.organizacion WHERE idorganizacion='$id';")
+
+            val connection = DriverManager.getConnection(
+                "jdbc:mysql://b1l1rb6fzqnrv8549nvi-mysql.services.clever-cloud.com",
+                "umk5rnkivqyw4r0m",
+                "06pQBYy1mrut9N1Cps1K"
+            )
+
+            val statement = connection.createStatement()
+            println("Voy a la query")
+            val query2 = "SELECT * FROM b1l1rb6fzqnrv8549nvi.organizacion WHERE idorganizacion='$id';"
+            println(query2)
+            var resultSet2 = statement.executeQuery(query2)
+            var idOrgMarc = ""
+            var nomOrgMarc = ""
+            var dirOrgMarc = ""
+            var locOrgMarc = ""
+            while (resultSet2.next()){
+                idOrgMarc = resultSet2.getString(1)
+                nomOrgMarc = resultSet2.getString(2)
+                dirOrgMarc = resultSet2.getString(3)
+                locOrgMarc = resultSet2.getString(4)
+            }
+            println("Segunda query")
+            val query3 = "SELECT investigador FROM b1l1rb6fzqnrv8549nvi.asociacion WHERE organizacion='$id';"
+            println(query3)
+            var result3 = statement.executeQuery(query3)
+            while(result3.next()){
+                listaAsocInv.add(result3.getString(1))
+            }
+            val intento2 = Intent(this, DatosOrganizacionActivity::class.java)
+            intento2.putExtra("notifUsuDef", notifUsuDef)
+            intento2.putExtra("idUsuDef", idUsuDef)
+            intento2.putExtra("dniUsuDef", dniUsuDef)
+            intento2.putExtra("apellUsuDef", apellUsuDef)
+            intento2.putExtra("nombUsuDef", nombUsuDef)
+            intento2.putExtra("fechaUsuDef", fechaUsuDef)
+            intento2.putExtra("pwUsuDef", pwUsuDef)
+            intento2.putExtra("idOrgMarc",idOrgMarc)
+            intento2.putExtra("nomOrgMarc",nomOrgMarc)
+            intento2.putExtra("dirOrgMarc",dirOrgMarc)
+            intento2.putExtra("locOrgMarc",locOrgMarc)
+            intento2.putExtra("listaAsocInv",listaAsocInv)
+            startActivity(intento2)
+            println("La búsqueda se ha llevado a cabo con éxito.")
+        } catch (e: Exception) {
+            println(e.toString())
+            Handler(Looper.getMainLooper()).post {
+                // write your code here
+                val mensajeError =
+                    "No se ha podido buscar los datos de la sesión $id, ha ocurrido un error con la base de datos."
+                val txtMostrar = Toast.makeText(this, mensajeError, Toast.LENGTH_LONG)
+                txtMostrar.setGravity(Gravity.CENTER_VERTICAL, 0, 0)
+                txtMostrar.show()
+                lanzaNotificacion(
+                    notifUsuDef,
+                    "Error al buscar la sesión",
+                    mensajeError
+                )
+            }
+        }
+    }
+
+    private fun borraAsociacion(numero: Int){
+        var id = listaAsocID[numero]
+        try {
+            println("Entro en el try")
+            Class.forName("com.mysql.jdbc.Driver")
+            //Configuracion de la conexión
+            println("Query que vamos a ejecutar: DELETE FROM b1l1rb6fzqnrv8549nvi.asociacion WHERE idasociacion='$id';")
+
+            val connection = DriverManager.getConnection(
+                "jdbc:mysql://b1l1rb6fzqnrv8549nvi-mysql.services.clever-cloud.com",
+                "umk5rnkivqyw4r0m",
+                "06pQBYy1mrut9N1Cps1K"
+            )
+
+            val statement = connection.createStatement()
+            println("Voy a la query")
+            val query2 = "DELETE FROM b1l1rb6fzqnrv8549nvi.asociacion WHERE idasociacion='$id';"
+            println(query2)
+            statement.executeUpdate(query2)
+            Handler(Looper.getMainLooper()).post {
+                val txtMostrar = Toast.makeText(
+                    this,
+                    "Se ha borrado correctamente la asociación con la organización $id",
+                    Toast.LENGTH_SHORT
+                )
+                txtMostrar.setGravity(Gravity.CENTER_VERTICAL, 0, 0)
+                txtMostrar.show()
+                lanzaNotificacion(
+                    notifUsuDef,
+                    "Asociación eliminada del sistema",
+                    "Se ha borrado correctamente la asociación con la organización $id"
+                )
+                eliminaFila(numero)
+
+            }
+        } catch (e: Exception) {
+            println(e.toString())
+            Handler(Looper.getMainLooper()).post {
+                // write your code here
+                val mensajeError =
+                    "No se ha podido desvincular de la organización $id, ha ocurrido un error con la base de datos."
+                val txtMostrar = Toast.makeText(this, mensajeError, Toast.LENGTH_LONG)
+                txtMostrar.setGravity(Gravity.CENTER_VERTICAL, 0, 0)
+                txtMostrar.show()
+                lanzaNotificacion(
+                    notifUsuDef,
+                    "Error al desvincular de la organización",
+                    mensajeError
+                )
+            }
+        }
+    }
+
+    private fun eliminaFila(numero: Int){
+        tablaOrganizaciones?.removeViewAt(numero)
+        contadorOrganizaciones--
+        variables!!.textView14.text = "$textoOrg $contadorOrganizaciones"
     }
 
 }

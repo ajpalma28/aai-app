@@ -17,6 +17,8 @@ import androidx.appcompat.widget.SwitchCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.example.iaa_project.databinding.ActivityPrincipalBinding
+import com.example.iaa_project.exceptions.InvalidIDException
+import com.example.iaa_project.exceptions.errorID1
 import java.sql.DriverManager
 import java.util.concurrent.Executors
 
@@ -31,6 +33,16 @@ class PrincipalActivity : AppCompatActivity() {
     var pwUsuDef = ""
     var swNotif: SwitchCompat? = null
     var notifUsuDef: Boolean = true
+    var contadorSesiones = 0
+    var contadorOrganizaciones = 0
+    var listaSesionID : ArrayList<String> = ArrayList()
+    var listaSesionOrg : ArrayList<String> = ArrayList()
+    var listaSesionInv : ArrayList<String> = ArrayList()
+    var listaSesionUsu : ArrayList<String> = ArrayList()
+    var listaSesionFecha : ArrayList<String> = ArrayList()
+    var listaSesionRes : ArrayList<String> = ArrayList()
+    var listaAsocID : ArrayList<String> = ArrayList()
+    var listaAsocOrganizacion : ArrayList<String> = ArrayList()
 
     private companion object {
         private const val CHANNEL_ID = "channel01"
@@ -106,15 +118,9 @@ class PrincipalActivity : AppCompatActivity() {
         }
 
         btnMiPerfil.setOnClickListener{
-            val intent = Intent(this, MiPerfilActivity::class.java)
-            intent.putExtra("idUsuDef", idUsuDef)
-            intent.putExtra("dniUsuDef", dniUsuDef)
-            intent.putExtra("apellUsuDef", apellUsuDef)
-            intent.putExtra("nombUsuDef", nombUsuDef)
-            intent.putExtra("fechaUsuDef", fechaUsuDef)
-            intent.putExtra("pwUsuDef", pwUsuDef)
-            intent.putExtra("notifUsuDef", notifUsuDef)
-            startActivity(intent)
+            myExecutor.execute {
+                cargaInformacionInv(idUsuDef)
+            }
         }
 
         swNotif!!.setOnClickListener{
@@ -312,5 +318,77 @@ class PrincipalActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         moveTaskToBack(true)
+    }
+
+    private fun cargaInformacionInv(id: String){
+        try {
+            contadorSesiones=0
+            contadorOrganizaciones=0
+            println("Entro en el try")
+            Class.forName("com.mysql.jdbc.Driver")
+            //Configuracion de la conexión
+            println("Query que vamos a ejecutar: SELECT * FROM b1l1rb6fzqnrv8549nvi.sesion WHERE idinvestigador='$id';")
+
+            val connection = DriverManager.getConnection(
+                "jdbc:mysql://b1l1rb6fzqnrv8549nvi-mysql.services.clever-cloud.com",
+                "umk5rnkivqyw4r0m",
+                "06pQBYy1mrut9N1Cps1K"
+            )
+
+            val statement = connection.createStatement()
+            println("Voy a la query")
+            //"INSERT INTO `db-tfg`.`investigador` (`idinvestigador`, `dni`, `apellidos`, `nombre`, `fnacimiento`, `contrasena`, `notificaciones`, `terminoscondiciones`) VALUES ('$id', '$dni', '$apellidos', '$nombre', '$fecha', '$contra', 'true', '$tyc');"
+            val query2 = "SELECT * FROM b1l1rb6fzqnrv8549nvi.sesion WHERE idinvestigador='$id';"
+            println(query2)
+            val resultSet2 = statement.executeQuery(query2)
+            while(resultSet2.next()){
+                listaSesionID.add(resultSet2.getString(1))
+                listaSesionOrg.add(resultSet2.getString(2))
+                listaSesionInv.add(resultSet2.getString(3))
+                listaSesionUsu.add(resultSet2.getString(4))
+                listaSesionFecha.add(resultSet2.getString(5))
+                listaSesionRes.add(resultSet2.getString(6))
+                contadorSesiones++
+            }
+
+            val query3 = "SELECT idasociacion, organizacion FROM b1l1rb6fzqnrv8549nvi.asociacion WHERE investigador='$id';"
+            println("Siguiente query: $query3")
+            val resultSet3 = statement.executeQuery(query3)
+            while(resultSet3.next()){
+                listaAsocID.add(resultSet3.getString(1))
+                listaAsocOrganizacion.add(resultSet3.getString(2))
+                contadorOrganizaciones++
+            }
+            val intento2 = Intent(this, MiPerfilActivity::class.java)
+            intento2.putExtra("notifUsuDef", notifUsuDef)
+            intento2.putExtra("idUsuDef", idUsuDef)
+            intento2.putExtra("dniUsuDef", dniUsuDef)
+            intento2.putExtra("apellUsuDef", apellUsuDef)
+            intento2.putExtra("nombUsuDef", nombUsuDef)
+            intento2.putExtra("fechaUsuDef", fechaUsuDef)
+            intento2.putExtra("pwUsuDef", pwUsuDef)
+            intento2.putExtra("listaSesionID",listaSesionID)
+            intento2.putExtra("listaSesionOrg",listaSesionOrg)
+            intento2.putExtra("listaSesionInv",listaSesionInv)
+            intento2.putExtra("listaSesionUsu",listaSesionUsu)
+            intento2.putExtra("listaSesionFecha",listaSesionFecha)
+            intento2.putExtra("listaSesionRes",listaSesionRes)
+            intento2.putExtra("contadorSesiones",contadorSesiones)
+            intento2.putExtra("listaAsocID",listaAsocID)
+            intento2.putExtra("listaAsocOrganizacion",listaAsocOrganizacion)
+            intento2.putExtra("contadorOrganizaciones",contadorOrganizaciones)
+            startActivity(intento2)
+            println("La búsqueda del usuario se ha llevado a cabo con éxito.")
+
+        } catch (e: Exception) {
+            println(e.toString())
+            Handler(Looper.getMainLooper()).post {
+                val mensajeError =
+                    "No se ha podido cargar la información, ha ocurrido un error con la base de datos."
+                val txtMostrar = Toast.makeText(this, mensajeError, Toast.LENGTH_LONG)
+                txtMostrar.setGravity(Gravity.CENTER_VERTICAL, 0, 0)
+                txtMostrar.show()
+            }
+        }
     }
 }
