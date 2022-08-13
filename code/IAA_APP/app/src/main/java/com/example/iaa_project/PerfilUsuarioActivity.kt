@@ -1,23 +1,22 @@
 package com.example.iaa_project
 
+import android.app.AlertDialog
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.Gravity
+import android.view.View
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
-import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import androidx.core.view.updateLayoutParams
 import com.example.iaa_project.databinding.ActivityPerfilUsuarioBinding
 import com.example.iaa_project.exceptions.*
 import java.sql.DriverManager
@@ -39,7 +38,7 @@ class PerfilUsuarioActivity : AppCompatActivity() {
     var nombUsuDef = ""
     var fechaUsuDef = ""
     var pwUsuDef = ""
-    var estadoEdicion = false
+    var estadoEdicion = false; var estadoEdicion2 = false;
     var editNombre: EditText? = null;
     var editApel: EditText? = null;
     var editFecha: EditText? = null
@@ -56,12 +55,14 @@ class PerfilUsuarioActivity : AppCompatActivity() {
     var errorProvocadoFecha = ""
     var tablaSesiones: TableLayout? = null
     var contadorSesiones = 0
-    var listaSesionID : ArrayList<String> = ArrayList()
-    var listaSesionOrg : ArrayList<String> = ArrayList()
-    var listaSesionInv : ArrayList<String> = ArrayList()
-    var listaSesionUsu : ArrayList<String> = ArrayList()
-    var listaSesionFecha : ArrayList<String> = ArrayList()
-    var listaSesionRes : ArrayList<String> = ArrayList()
+    var listaSesionID: ArrayList<String> = ArrayList()
+    var listaSesionOrg: ArrayList<String> = ArrayList()
+    var listaSesionInv: ArrayList<String> = ArrayList()
+    var listaSesionUsu: ArrayList<String> = ArrayList()
+    var listaSesionFecha: ArrayList<String> = ArrayList()
+    var listaSesionRes: ArrayList<String> = ArrayList()
+    var filas: ArrayList<TableRow> = ArrayList()
+    var textoSesiones = ""
 
     private companion object {
         private const val CHANNEL_ID = "channel01"
@@ -88,17 +89,17 @@ class PerfilUsuarioActivity : AppCompatActivity() {
         fechaUsuDef = bundle?.getString("fechaUsuDef").toString()
         pwUsuDef = bundle?.getString("pwUsuDef").toString()
         listaSesionID.addAll(bundle?.getStringArrayList("listaSesionID")!!)
-        listaSesionOrg.addAll(bundle?.getStringArrayList("listaSesionOrg")!!)
-        listaSesionInv.addAll(bundle?.getStringArrayList("listaSesionInv")!!)
-        listaSesionUsu.addAll(bundle?.getStringArrayList("listaSesionUsu")!!)
-        listaSesionFecha.addAll(bundle?.getStringArrayList("listaSesionFecha")!!)
-        listaSesionRes.addAll(bundle?.getStringArrayList("listaSesionRes")!!)
-        contadorSesiones = bundle?.getInt("contadorSesiones")!!
+        listaSesionOrg.addAll(bundle.getStringArrayList("listaSesionOrg")!!)
+        listaSesionInv.addAll(bundle.getStringArrayList("listaSesionInv")!!)
+        listaSesionUsu.addAll(bundle.getStringArrayList("listaSesionUsu")!!)
+        listaSesionFecha.addAll(bundle.getStringArrayList("listaSesionFecha")!!)
+        listaSesionRes.addAll(bundle.getStringArrayList("listaSesionRes")!!)
+        contadorSesiones = bundle.getInt("contadorSesiones")
 
-        var textID = variables!!.textView12
+        val textID = variables!!.textView12
         textID.text = idUsuarioPac
 
-        var editDNI = variables!!.editTextUsuarioDNI
+        val editDNI = variables!!.editTextUsuarioDNI
         editDNI.setText(dniUsuarioPac)
 
         editNombre = variables!!.editTextUsuarioNombre
@@ -110,11 +111,11 @@ class PerfilUsuarioActivity : AppCompatActivity() {
         editFecha = variables!!.editTextUsuarioFecha
         editFecha?.setText(fechaUsuarioPac)
 
-        var btnBorradoUsu = variables!!.btnBorrarUsuarioFull
+        val btnBorradoUsu = variables!!.btnBorrarUsuarioFull
         //TODO: No se han implementado aún las sesiones de mediciones
         var btnBorraSesiones = variables!!.btnBorraSesionesUsuarioFull
         btnEditarUsuario = variables!!.btnEditUsuario
-        var btnCancelar = variables!!.btnCancReg
+        val btnCancelar = variables!!.btnCancReg
 
         imgbtnEditNom = variables!!.imgbtnNomUsu
         imgbtnSaveNom = variables!!.ibSaveNomUsu
@@ -128,28 +129,67 @@ class PerfilUsuarioActivity : AppCompatActivity() {
         imgbtnSaveFN = variables!!.ibSaveFNUsu
         imgbtnCancelFN = variables!!.ibCancelFNUsu
 
-        val textoSesiones = variables!!.textView13.text.toString()
-        variables!!.textView13.text="$textoSesiones $contadorSesiones"
+        textoSesiones = variables!!.textView13.text.toString()
+        variables!!.textView13.text = "$textoSesiones $contadorSesiones"
 
         tablaSesiones = variables!!.sesionesUsuario
 
-        añadeFilaTabla(listaSesionID)
+        añadeFilaTabla(listaSesionFecha)
 
         val myExecutor = Executors.newSingleThreadExecutor()
 
         btnBorradoUsu.setOnClickListener {
-            myExecutor.execute {
-                borradoUsuario(idUsuarioPac)
+            val builder = AlertDialog.Builder(this)
+            //set title for alert dialog
+            builder.setTitle(R.string.app_name)
+            //set message for alert dialog
+            builder.setMessage("¿Está seguro de querer borrar este usuario? Si lo hace, perderá toda la información que había almacenada en el sistema. Además, lo tendrá que registrar de nuevo en caso de necesitarlo.")
+            builder.setIcon(android.R.drawable.ic_dialog_alert)
+            builder.setPositiveButton("Sí"){dialogInterface, which ->
+                myExecutor.execute {
+                    borradoUsuario(idUsuarioPac)
+                }
             }
+            builder.setNegativeButton("No"){dialogInterface, which ->
+
+            }
+            // Create the AlertDialog
+            val alertDialog: AlertDialog = builder.create()
+            // Set other dialog properties
+            alertDialog.setCancelable(false)
+            alertDialog.show()
+        }
+
+        btnBorraSesiones.setOnClickListener {
+            val builder = AlertDialog.Builder(this)
+            //set title for alert dialog
+            builder.setTitle(R.string.app_name)
+            //set message for alert dialog
+            builder.setMessage("¿Está seguro de querer borrar las sesiones de este usuario? Si lo hace, perderá todas las sesiones que habían registradas en el sistema.")
+            builder.setIcon(android.R.drawable.ic_dialog_alert)
+            builder.setPositiveButton("Sí"){dialogInterface, which ->
+                myExecutor.execute {
+                    borradoSesiones(idUsuarioPac)
+                }
+            }
+            builder.setNegativeButton("No"){dialogInterface, which ->
+
+            }
+            // Create the AlertDialog
+            val alertDialog: AlertDialog = builder.create()
+            // Set other dialog properties
+            alertDialog.setCancelable(false)
+            alertDialog.show()
         }
 
         btnEditarUsuario!!.setOnClickListener {
-            if (!estadoEdicion) {
+            if (!estadoEdicion2 || estadoEdicion) {
                 editNombre?.isEnabled = true
                 editApel?.isEnabled = true
                 editFecha?.isEnabled = true
                 btnEditarUsuario!!.text = "Guardar Usuario"
-                estadoEdicion = true
+                estadoEdicion2 = true
+                estadoEdicion = false
                 cancelaEdicionNombreIconos()
                 cancelaEdicionApellidosIconos()
                 cancelaEdicionFechaIconos()
@@ -167,7 +207,7 @@ class PerfilUsuarioActivity : AppCompatActivity() {
         }
 
         btnCancelar.setOnClickListener {
-            if (estadoEdicion) {
+            if (estadoEdicion || estadoEdicion2) {
                 cancelaEdicionGeneral(nombUsuarioPac, apellUsuarioPac, fechaUsuarioPac)
                 cancelaEdicionNombreIconos()
                 cancelaEdicionApellidosIconos()
@@ -191,11 +231,11 @@ class PerfilUsuarioActivity : AppCompatActivity() {
         }
 
         imgbtnSaveNom!!.setOnClickListener {
-            var nombreNew = editNombre?.text.toString()
+            val nombreNew = editNombre?.text.toString()
             myExecutor.execute {
-                actualizaCampoUsuario(idUsuarioPac,"nombre",nombreNew)
+                actualizaCampoUsuario(idUsuarioPac, "nombre", nombreNew)
             }
-            editNombre?.isEnabled=false
+            editNombre?.isEnabled = false
         }
 
         imgbtnCancelNom!!.setOnClickListener {
@@ -210,11 +250,11 @@ class PerfilUsuarioActivity : AppCompatActivity() {
         }
 
         imgbtnSaveApe!!.setOnClickListener {
-            var apellidosNew = editApel?.text.toString()
+            val apellidosNew = editApel?.text.toString()
             myExecutor.execute {
                 actualizaCampoUsuario(idUsuarioPac, "apellidos", apellidosNew)
             }
-            editApel?.isEnabled=false
+            editApel?.isEnabled = false
         }
 
         imgbtnCancelApe!!.setOnClickListener {
@@ -229,12 +269,12 @@ class PerfilUsuarioActivity : AppCompatActivity() {
         }
 
         imgbtnSaveFN!!.setOnClickListener {
-            var fechaNew = editFecha?.text.toString()
-            var fechaForm = FuncionesAuxiliares().formateaFecha(fechaNew)
+            val fechaNew = editFecha?.text.toString()
+            val fechaForm = FuncionesAuxiliares().formateaFecha(fechaNew)
             myExecutor.execute {
-                actualizaCampoUsuario(idUsuarioPac,"fnacimiento", fechaForm)
+                actualizaCampoUsuario(idUsuarioPac, "fnacimiento", fechaForm)
             }
-            editFecha?.isEnabled=false
+            editFecha?.isEnabled = false
         }
 
         imgbtnCancelFN!!.setOnClickListener {
@@ -286,6 +326,61 @@ class PerfilUsuarioActivity : AppCompatActivity() {
             intento2.putExtra("fechaUsuDef", fechaUsuDef)
             intento2.putExtra("pwUsuDef", pwUsuDef)
             startActivity(intento2)
+            println("El borrado del usuario se ha llevado a cabo con éxito.")
+        } catch (e: Exception) {
+            println(e.toString())
+            Handler(Looper.getMainLooper()).post {
+                // write your code here
+                val mensajeError =
+                    "No se ha podido eliminar el usuario $id, ha ocurrido un error con la base de datos."
+                val txtMostrar = Toast.makeText(this, mensajeError, Toast.LENGTH_LONG)
+                txtMostrar.setGravity(Gravity.CENTER_VERTICAL, 0, 0)
+                txtMostrar.show()
+                lanzaNotificacion(
+                    notifUsuDef,
+                    "Error al actualizar el usuario",
+                    mensajeError
+                )
+            }
+        }
+    }
+
+    private fun borradoSesiones(id: String) {
+        try {
+            println("Entro en el try")
+            Class.forName("com.mysql.jdbc.Driver")
+            //Configuracion de la conexión
+            println("Query que vamos a ejecutar: DELETE FROM b1l1rb6fzqnrv8549nvi.sesion WHERE idusuario='$id';")
+
+            val connection = DriverManager.getConnection(
+                "jdbc:mysql://b1l1rb6fzqnrv8549nvi-mysql.services.clever-cloud.com",
+                "umk5rnkivqyw4r0m",
+                "06pQBYy1mrut9N1Cps1K"
+            )
+
+            val statement = connection.createStatement()
+            println("Voy a la query")
+            val query2 = "DELETE FROM b1l1rb6fzqnrv8549nvi.sesion WHERE idusuario='$id';"
+            println(query2)
+            statement.executeUpdate(query2)
+            Handler(Looper.getMainLooper()).post {
+                val txtMostrar = Toast.makeText(
+                    this,
+                    "Se han borrado correctamente las sesiones del usuario $id",
+                    Toast.LENGTH_SHORT
+                )
+                txtMostrar.setGravity(Gravity.CENTER_VERTICAL, 0, 0)
+                txtMostrar.show()
+                lanzaNotificacion(
+                    notifUsuDef,
+                    "Sesiones eliminadas del sistema",
+                    "Se han eliminado del sistema las sesiones del usuario $nombUsuarioPac $apellUsuarioPac (id: $idUsuarioPac)"
+                )
+                while(contadorSesiones!=0){
+                    eliminaFila(contadorSesiones-1)
+                }
+                variables!!.textView13.text = "$textoSesiones $contadorSesiones"
+            }
             println("El borrado del usuario se ha llevado a cabo con éxito.")
         } catch (e: Exception) {
             println(e.toString())
@@ -412,10 +507,16 @@ class PerfilUsuarioActivity : AppCompatActivity() {
                     "Usuario actualizado",
                     "Se ha actualizado el campo '$campo' del usuario $nombUsuarioPac $apellUsuarioPac (id: $idUsuarioPac)"
                 )
-                when(campo){
-                    "nombre" -> { nombUsuarioPac=valor; cancelaEdicionNombreIconos() }
-                    "apellidos" -> { apellUsuarioPac=valor; cancelaEdicionApellidosIconos() }
-                    "fnacimiento" -> { fechaUsuarioPac=valor; cancelaEdicionFechaIconos() }
+                when (campo) {
+                    "nombre" -> {
+                        nombUsuarioPac = valor; cancelaEdicionNombreIconos()
+                    }
+                    "apellidos" -> {
+                        apellUsuarioPac = valor; cancelaEdicionApellidosIconos()
+                    }
+                    "fnacimiento" -> {
+                        fechaUsuarioPac = valor; cancelaEdicionFechaIconos()
+                    }
                 }
             }
         } catch (e1: InvalidFechaException) {
@@ -494,42 +595,49 @@ class PerfilUsuarioActivity : AppCompatActivity() {
         editFecha?.setText(fn)
         btnEditarUsuario!!.text = "Editar Usuario"
         estadoEdicion = false
+        estadoEdicion2=false
     }
 
     private fun editarNombreIconos() {
         imgbtnEditNom!!.visibility = INVISIBLE
         imgbtnSaveNom!!.visibility = VISIBLE
         imgbtnCancelNom!!.visibility = VISIBLE
+        estadoEdicion=true
     }
 
     private fun cancelaEdicionNombreIconos() {
         imgbtnEditNom!!.visibility = VISIBLE
         imgbtnSaveNom!!.visibility = INVISIBLE
         imgbtnCancelNom!!.visibility = INVISIBLE
+        desactivaBoolean1()
     }
 
     private fun editarApellidosIconos() {
         imgbtnEditApe!!.visibility = INVISIBLE
         imgbtnSaveApe!!.visibility = VISIBLE
         imgbtnCancelApe!!.visibility = VISIBLE
+        estadoEdicion=true
     }
 
     private fun cancelaEdicionApellidosIconos() {
         imgbtnEditApe!!.visibility = VISIBLE
         imgbtnSaveApe!!.visibility = INVISIBLE
         imgbtnCancelApe!!.visibility = INVISIBLE
+        desactivaBoolean1()
     }
 
     private fun editarFechaIconos() {
         imgbtnEditFN!!.visibility = INVISIBLE
         imgbtnSaveFN!!.visibility = VISIBLE
         imgbtnCancelFN!!.visibility = VISIBLE
+        estadoEdicion=true
     }
 
     private fun cancelaEdicionFechaIconos() {
         imgbtnEditFN!!.visibility = VISIBLE
         imgbtnSaveFN!!.visibility = INVISIBLE
         imgbtnCancelFN!!.visibility = INVISIBLE
+        desactivaBoolean1()
     }
 
     private fun mostrarIconosDeEdicion() {
@@ -542,6 +650,12 @@ class PerfilUsuarioActivity : AppCompatActivity() {
         imgbtnEditNom!!.visibility = INVISIBLE
         imgbtnEditApe!!.visibility = INVISIBLE
         imgbtnEditFN!!.visibility = INVISIBLE
+    }
+
+    private fun desactivaBoolean1(){
+        if(imgbtnEditNom!!.visibility== View.VISIBLE && imgbtnEditApe!!.visibility== View.VISIBLE && imgbtnEditFN!!.visibility== View.VISIBLE){
+            if(estadoEdicion){ estadoEdicion=false }
+        }
     }
 
     private fun compruebaFormatoFecha(fecha: String) {
@@ -559,7 +673,7 @@ class PerfilUsuarioActivity : AppCompatActivity() {
         }
     }
 
-    private fun cancelaTodo(n: String, ap: String, fn: String ){
+    private fun cancelaTodo(n: String, ap: String, fn: String) {
         cancelaEdicionGeneral(n, ap, fn)
         cancelaEdicionNombreIconos()
         cancelaEdicionApellidosIconos()
@@ -569,38 +683,230 @@ class PerfilUsuarioActivity : AppCompatActivity() {
         editNombre?.setText(n)
     }
 
-    private fun añadeFilaTabla(lista: ArrayList<String>){
+    private fun añadeFilaTabla(lista: ArrayList<String>) {
         var layoutCelda: TableRow.LayoutParams
         val layoutFila = TableRow.LayoutParams(
             TableRow.LayoutParams.WRAP_CONTENT,
             TableRow.LayoutParams.WRAP_CONTENT
         )
-        val fila = TableRow(this)
-        fila.layoutParams = layoutFila
 
+        var aux = 0
         for (l in lista) {
-            var texto = TextView(this)
-            texto.text = "$l"
+            val fila = TableRow(this)
+            val numero = lista.indexOf(l)
+            fila.id=numero
+            fila.layoutParams = layoutFila
+            fila.textAlignment = TableRow.TEXT_ALIGNMENT_CENTER
+            val texto = TextView(this)
+            texto.text = "    ${FuncionesAuxiliares().formateaFechaRev(l)}  "
             texto.gravity = Gravity.CENTER_HORIZONTAL
             layoutCelda = TableRow.LayoutParams(
-                TableRow.LayoutParams.MATCH_PARENT,
+                TableRow.LayoutParams.WRAP_CONTENT,
                 TableRow.LayoutParams.WRAP_CONTENT
             )
             texto.layoutParams = layoutCelda
+            texto.textSize=19.0F
             fila.addView(texto)
+            /*var separa1 = TextView(this)
+            separa1.text = " | "
+            separa1.layoutParams = layoutCelda
+            fila.addView(separa1)
+            var org = TextView(this)
+            org.text = "${listaSesionOrg.get(aux)}"
+            texto.layoutParams = layoutCelda
+            fila.addView(org)*/
             val boton = Button(this)
             //boton.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
             //boton.layoutParams.height=ViewGroup.LayoutParams.MATCH_PARENT
             //TODO: Ver cómo se puede personalizar o modificar un poquito el botón, para meterle una imagen o algo así
             boton.text = "Ver"
-            boton.id=lista.indexOf(l)
+            boton.id = lista.indexOf(l)
             fila.addView(boton)
+            val boton2 = Button(this)
+            //boton.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+            //boton.layoutParams.height=ViewGroup.LayoutParams.MATCH_PARENT
+            //TODO: Ver cómo se puede personalizar o modificar un poquito el botón, para meterle una imagen o algo así
+            boton2.text = "Borrar"
+            boton2.id = numero
+            fila.addView(boton2)
+            aux++
+            tablaSesiones!!.addView(fila)
 
-            // TODO: Me falta añadir la funcionalidad a los botones de las sesiones
+            val executorSesion = Executors.newSingleThreadExecutor()
+
+            boton.setOnClickListener {
+                executorSesion.execute {
+                    buscaDatosSesion(listaSesionID.get(numero))
+                }
+            }
+
+            // TODO: BORRA LA SESIÓN DE LA BASE DE DATOS
+            boton2.setOnClickListener {
+                val builder = AlertDialog.Builder(this)
+                //set title for alert dialog
+                builder.setTitle(R.string.app_name)
+                //set message for alert dialog
+                builder.setMessage("¿Está seguro de querer borrar esta sesión? Si lo hace, perderá toda la información de dicha sesión que había almacenada en el sistema.")
+                builder.setIcon(android.R.drawable.ic_dialog_alert)
+                builder.setPositiveButton("Sí"){dialogInterface, which ->
+                    executorSesion.execute {
+                        executorSesion.execute {
+                            eliminaSesion(numero)
+                        }
+                    }
+                }
+                builder.setNegativeButton("No"){dialogInterface, which ->
+
+                }
+                // Create the AlertDialog
+                val alertDialog: AlertDialog = builder.create()
+                // Set other dialog properties
+                alertDialog.setCancelable(false)
+                alertDialog.show()
+            }
+
         }
 
-        tablaSesiones!!.addView(fila)
+        tablaSesiones!!.textAlignment = TableLayout.TEXT_ALIGNMENT_CENTER
 
+    }
+
+    private fun eliminaSesion(numero: Int){
+        val id = listaSesionID.get(numero)
+        try {
+            println("Entro en el try")
+            Class.forName("com.mysql.jdbc.Driver")
+            //Configuracion de la conexión
+            println("Query que vamos a ejecutar: DELETE FROM b1l1rb6fzqnrv8549nvi.sesion WHERE idsesion='$id';")
+
+            val connection = DriverManager.getConnection(
+                "jdbc:mysql://b1l1rb6fzqnrv8549nvi-mysql.services.clever-cloud.com",
+                "umk5rnkivqyw4r0m",
+                "06pQBYy1mrut9N1Cps1K"
+            )
+
+            val statement = connection.createStatement()
+            println("Voy a la query")
+            val query2 = "DELETE FROM b1l1rb6fzqnrv8549nvi.sesion WHERE idsesion='$id';"
+            println(query2)
+            statement.executeUpdate(query2)
+            Handler(Looper.getMainLooper()).post {
+                val txtMostrar = Toast.makeText(
+                    this,
+                    "Se ha borrado correctamente la sesión de $nombUsuarioPac $apellUsuarioPac",
+                    Toast.LENGTH_SHORT
+                )
+                txtMostrar.setGravity(Gravity.CENTER_VERTICAL, 0, 0)
+                txtMostrar.show()
+                lanzaNotificacion(
+                    notifUsuDef,
+                    "Usuario eliminado del sistema",
+                    "Se ha eliminado del sistema la sesión de $nombUsuarioPac $apellUsuarioPac (id: $idUsuarioPac)"
+                )
+                eliminaFila(numero)
+            }
+            /*val intento2 = Intent(this, MainActivity::class.java)
+            startActivity(intento2)*/
+            println("El borrado de la sesión se ha llevado a cabo con éxito.")
+        } catch (e: Exception) {
+            println(e.toString())
+            Handler(Looper.getMainLooper()).post {
+                // write your code here
+                val mensajeError =
+                    "No se ha podido eliminar la sesión $id, ha ocurrido un error con la base de datos."
+                val txtMostrar = Toast.makeText(this, mensajeError, Toast.LENGTH_LONG)
+                txtMostrar.setGravity(Gravity.CENTER_VERTICAL, 0, 0)
+                txtMostrar.show()
+                lanzaNotificacion(
+                    notifUsuDef,
+                    "Error al eliminar la sesión",
+                    mensajeError
+                )
+            }
+        }
+    }
+
+    private fun eliminaFila(id: Int){
+        tablaSesiones?.removeViewAt(id)
+        contadorSesiones--
+    }
+
+    private fun buscaDatosSesion(id: String){
+        try {
+            println("Entro en el try")
+            Class.forName("com.mysql.jdbc.Driver")
+            //Configuracion de la conexión
+            println("Query que vamos a ejecutar: SELECT * FROM b1l1rb6fzqnrv8549nvi.sesion WHERE idsesion='$id';")
+
+            val connection = DriverManager.getConnection(
+                "jdbc:mysql://b1l1rb6fzqnrv8549nvi-mysql.services.clever-cloud.com",
+                "umk5rnkivqyw4r0m",
+                "06pQBYy1mrut9N1Cps1K"
+            )
+
+            val statement = connection.createStatement()
+            println("Voy a la query")
+            val query2 = "SELECT * FROM b1l1rb6fzqnrv8549nvi.sesion WHERE idsesion='$id';"
+            println(query2)
+            var resultSet2 = statement.executeQuery(query2)
+            var idSesionMarc = ""
+            var idOrgMarc = ""
+            var idInvMarc = ""
+            var idUsuMarc = ""
+            var fechaMarc = ""
+            var resumenMarc = ""
+            while (resultSet2.next()){
+                idSesionMarc = resultSet2.getString(1)
+                idOrgMarc = resultSet2.getString(2)
+                idInvMarc = resultSet2.getString(3)
+                idUsuMarc = resultSet2.getString(4)
+                fechaMarc = resultSet2.getString(5)
+                resumenMarc = resultSet2.getString(6)
+            }
+            val intento2 = Intent(this, DatosSesionActivity::class.java)
+            intento2.putExtra("idUsuarioPac", idUsuarioPac)
+            intento2.putExtra("dniUsuarioPac", dniUsuarioPac)
+            intento2.putExtra("apellUsuarioPac", apellUsuarioPac)
+            intento2.putExtra("nombUsuarioPac", nombUsuarioPac)
+            intento2.putExtra("fechaUsuarioPac", fechaUsuarioPac)
+            intento2.putExtra("notifUsuDef", notifUsuDef)
+            intento2.putExtra("idUsuDef", idUsuDef)
+            intento2.putExtra("dniUsuDef", dniUsuDef)
+            intento2.putExtra("apellUsuDef", apellUsuDef)
+            intento2.putExtra("nombUsuDef", nombUsuDef)
+            intento2.putExtra("fechaUsuDef", fechaUsuDef)
+            intento2.putExtra("pwUsuDef", pwUsuDef)
+            intento2.putExtra("listaSesionID",listaSesionID)
+            intento2.putExtra("listaSesionOrg",listaSesionOrg)
+            intento2.putExtra("listaSesionInv",listaSesionInv)
+            intento2.putExtra("listaSesionUsu",listaSesionUsu)
+            intento2.putExtra("listaSesionFecha",listaSesionFecha)
+            intento2.putExtra("listaSesionRes",listaSesionRes)
+            intento2.putExtra("contadorSesiones",contadorSesiones)
+            intento2.putExtra("idSesionMarc",idSesionMarc)
+            intento2.putExtra("idOrgMarc",idOrgMarc)
+            intento2.putExtra("idInvMarc",idInvMarc)
+            intento2.putExtra("idUsuMarc",idUsuMarc)
+            intento2.putExtra("fechaMarc",FuncionesAuxiliares().formateaFechaRev(fechaMarc))
+            intento2.putExtra("resumenMarc",resumenMarc)
+            startActivity(intento2)
+            println("La búsqueda se ha llevado a cabo con éxito.")
+        } catch (e: Exception) {
+            println(e.toString())
+            Handler(Looper.getMainLooper()).post {
+                // write your code here
+                val mensajeError =
+                    "No se ha podido buscar los datos de la sesión $id, ha ocurrido un error con la base de datos."
+                val txtMostrar = Toast.makeText(this, mensajeError, Toast.LENGTH_LONG)
+                txtMostrar.setGravity(Gravity.CENTER_VERTICAL, 0, 0)
+                txtMostrar.show()
+                lanzaNotificacion(
+                    notifUsuDef,
+                    "Error al buscar la sesión",
+                    mensajeError
+                )
+            }
+        }
     }
 
 }
