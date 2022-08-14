@@ -125,7 +125,6 @@ class BuscaDispositivosActivity : AppCompatActivity() {
                 starBLEScan()
             }*/
             var myExecutor = Executors.newSingleThreadExecutor()
-
             myExecutor.execute {
                 starBLEScan()
             }
@@ -134,6 +133,7 @@ class BuscaDispositivosActivity : AppCompatActivity() {
         //variables!!.selectDeviceRefresh.setOnClickListener{pairedDeviceList()}
         variables!!.selectDeviceRefresh.setOnClickListener {
             Log.v(TAG,imprimeMap(foundDevices))
+            this.onBackPressed()
         }
 
     }
@@ -294,16 +294,31 @@ class BuscaDispositivosActivity : AppCompatActivity() {
 
 
 
-
-/*
-    fun stopScan(){
+    private fun stopScan(){
         if(callback!=null){
+            if (ActivityCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.BLUETOOTH_SCAN
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                println("SEÑAL X: ¿He entrado aquí para detener el escaneo?")
+                if (Build.VERSION.SDK_INT == Build.VERSION_CODES.Q) {
+                    ActivityCompat.requestPermissions(
+                        this,
+                        arrayOf(
+                            Manifest.permission.ACCESS_FINE_LOCATION,
+                            Manifest.permission.ACCESS_BACKGROUND_LOCATION,
+                            Manifest.permission.BLUETOOTH_SCAN
+                        ),
+                        1
+                    )
+                }
+            }
             scanner!!.stopScan(callback)
             scanner = null
             callback = null
         }
     }
-*/
     inner class BleScanCallback : ScanCallback() {
         override fun onScanResult(callbackType: Int, result: ScanResult?) {
             Log.v(TAG, "Pues aquí estamos porque hemos venido")
@@ -313,6 +328,7 @@ class BuscaDispositivosActivity : AppCompatActivity() {
         }
 
         override fun onBatchScanResults(results: MutableList<ScanResult>?) {
+            super.onBatchScanResults(results)
             results!!.forEach { result ->
                 foundDevices[result!!.device.address] = result.device
             }
@@ -324,6 +340,7 @@ class BuscaDispositivosActivity : AppCompatActivity() {
     override fun onBackPressed() {
         super.onBackPressed()
         actividad = false
+        stopScan()
     }
 
     private fun imprimeMap(map: HashMap<String, BluetoothDevice>): String{
