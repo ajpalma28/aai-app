@@ -16,12 +16,11 @@
             android:layout_width="40dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
-            android:layout_marginEnd="28dp"
             android:backgroundTint="#800000"
             android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@+id/imgbtnApeUsu"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/ibSaveApeUsu"
             app:layout_constraintTop_toBottomOf="@+id/ibCancelNomUsu"
             app:srcCompat="@android:drawable/ic_menu_close_clear_cancel" />
 

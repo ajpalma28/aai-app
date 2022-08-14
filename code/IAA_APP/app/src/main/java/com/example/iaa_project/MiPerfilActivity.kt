@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -15,11 +16,13 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.ContentProviderCompat.requireContext
 import com.example.iaa_project.databinding.ActivityMiPerfilBinding
 import com.example.iaa_project.exceptions.InvalidFechaException
 import com.example.iaa_project.exceptions.errorFecha1
 import com.example.iaa_project.exceptions.errorFecha2
 import com.example.iaa_project.exceptions.errorFecha3
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import java.sql.DriverManager
 import java.util.concurrent.Executors
 
