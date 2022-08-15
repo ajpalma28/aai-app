@@ -1,5 +1,6 @@
 package com.example.iaa_project
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -9,6 +10,7 @@ import android.bluetooth.BluetoothManager
 import android.bluetooth.le.BluetoothLeScanner
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -18,6 +20,7 @@ import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.example.iaa_project.databinding.ActivityConectaDispositivosBinding
@@ -101,12 +104,29 @@ class ConectaDispositivosActivity : AppCompatActivity() {
                     }
                 }
             })*/
+            if (ActivityCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.BLUETOOTH_CONNECT
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                if (Build.VERSION.SDK_INT == Build.VERSION_CODES.Q) {
+                    ActivityCompat.requestPermissions(
+                        this,
+                        arrayOf(
+                            Manifest.permission.ACCESS_FINE_LOCATION,
+                            Manifest.permission.ACCESS_BACKGROUND_LOCATION
+                        ),
+                        1
+                    )
+                }
+            }
+            mPairedDevices = bAdapter!!.bondedDevices
             myHandler = Handler(Looper.getMainLooper())
             myHandler!!.post(object : Runnable {
                 override fun run() {
                     if (actividad) {
                         println("SEÑAL 1: Empiezo a ejecutarme aquí")
-                        //cargaListado()
+                        cargaListado()
                         myHandler!!.postDelayed(this, 10000 /*5 segundos*/)
                         println("SEÑAL 7: Y A MIMIR")
                     }

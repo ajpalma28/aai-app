@@ -20,11 +20,13 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.example.iaa_project.databinding.ActivityBuscaDispositivosBinding
+import kotlinx.coroutines.delay
 import java.time.LocalTime
 import java.util.*
 import java.util.concurrent.Executor
@@ -115,7 +117,7 @@ class BuscaDispositivosActivity : AppCompatActivity() {
                     if (actividad) {
                         println("SEÑAL 1: Empiezo a ejecutarme aquí")
                         cargaListado()
-                        myHandler!!.postDelayed(this, 10000 /*5 segundos*/)
+                        myHandler!!.postDelayed(this, 5000 /*5 segundos*/)
                         println("SEÑAL 7: Y A MIMIR")
                     }
                 }
@@ -124,15 +126,16 @@ class BuscaDispositivosActivity : AppCompatActivity() {
             myHandler!!.post {
                 starBLEScan()
             }*/
-            var myExecutor = Executors.newSingleThreadExecutor()
+            /*var myExecutor = Executors.newSingleThreadExecutor()
             myExecutor.execute {
                 starBLEScan()
-            }
+            }*/
 
         }
         //variables!!.selectDeviceRefresh.setOnClickListener{pairedDeviceList()}
         variables!!.selectDeviceRefresh.setOnClickListener {
             Log.v(TAG,imprimeMap(foundDevices))
+            //
             this.onBackPressed()
         }
 
@@ -368,12 +371,12 @@ class BuscaDispositivosActivity : AppCompatActivity() {
             }
         }
         val list : ArrayList<BluetoothDevice> = ArrayList()
-        if(mPairedDevices.isNotEmpty()) {
+        /*if(mPairedDevices.isNotEmpty()) {
             Log.v(TAG,"Número de dispositivos en el conjunto: ${mPairedDevices.size}")
             for(device: BluetoothDevice in mPairedDevices){
                 list.add(device)
             }
-        }else if(dL2.isNotEmpty()) {
+        }else*/ if(dL2.isNotEmpty()) {
             Log.v(TAG,"Número de dispositivos en la lista: ${dL2.size}")
             for(device: BluetoothDevice in dL2){
                 list.add(device)
@@ -384,16 +387,45 @@ class BuscaDispositivosActivity : AppCompatActivity() {
 
         val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, list)
         variables!!.selectDeviceList.adapter = adapter
-        /*vario.selectDeviceList.onItemClickListener = AdapterView.OnItemClickListener{ _, _, position, _ ->
-            val device: BluetoothDevice = list[position]
+        variables!!.selectDeviceList.onItemClickListener = AdapterView.OnItemClickListener{ _, _, position, _ ->
+            /*val device: BluetoothDevice = list[position]
             val address: String = device.address
             val name: String = device.name
 
             val intent = Intent(this, ControlActivity::class.java)
             intent.putExtra(EXTRA_ADDRESS, address)
-            startActivity(intent)
+            startActivity(intent)*/
+            val dispositivo: BluetoothDevice = list[position]
+            if (ActivityCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.BLUETOOTH_CONNECT
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                println("SEÑAL X: ¿He entrado aquí para detener el escaneo?")
+                if (Build.VERSION.SDK_INT == Build.VERSION_CODES.Q) {
+                    ActivityCompat.requestPermissions(
+                        this,
+                        arrayOf(
+                            Manifest.permission.ACCESS_FINE_LOCATION,
+                            Manifest.permission.ACCESS_BACKGROUND_LOCATION,
+                            Manifest.permission.BLUETOOTH_CONNECT
+                        ),
+                        1
+                    )
+                }
+            }
+            dispositivo.createBond()
 
-        }*/
+            while(dispositivo.bondState==BluetoothDevice.BOND_BONDING){
+                Toast.makeText(this, "Vinculando con el dispositivo ${dispositivo.name}, con dirección ${dispositivo.address}", Toast.LENGTH_SHORT).show()
+            }
+            if(dispositivo.bondState==BluetoothDevice.BOND_BONDED){
+                Toast.makeText(this, "Dispositivo ${dispositivo.name}, con dirección ${dispositivo.address}, VINCULADO", Toast.LENGTH_SHORT).show()
+            }else{
+                Toast.makeText(this, "No se ha podido vincular con el dispositivo ${dispositivo.name}, con dirección ${dispositivo.address}", Toast.LENGTH_SHORT).show()
+            }
+
+        }
     }
 
 /*override fun onResume(){
