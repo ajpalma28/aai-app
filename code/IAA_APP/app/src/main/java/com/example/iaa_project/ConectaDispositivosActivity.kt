@@ -240,4 +240,9 @@ class ConectaDispositivosActivity : AppCompatActivity() {
         }*/
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        actividad = false
+    }
+
 }

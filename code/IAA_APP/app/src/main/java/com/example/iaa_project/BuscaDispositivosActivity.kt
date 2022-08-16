@@ -4,9 +4,7 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.bluetooth.BluetoothAdapter
-import android.bluetooth.BluetoothDevice
-import android.bluetooth.BluetoothManager
+import android.bluetooth.*
 import android.bluetooth.le.*
 import android.content.Context
 import android.content.Intent
@@ -26,12 +24,9 @@ import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.example.iaa_project.databinding.ActivityBuscaDispositivosBinding
-import kotlinx.coroutines.delay
 import java.time.LocalTime
 import java.util.*
-import java.util.concurrent.Executor
 import java.util.concurrent.Executors
-import kotlin.collections.HashMap
 
 
 class BuscaDispositivosActivity : AppCompatActivity() {
@@ -60,6 +55,7 @@ class BuscaDispositivosActivity : AppCompatActivity() {
         val BLUETOOTH_REQUEST_CODE = 1
     }
 
+    @RequiresApi(Build.VERSION_CODES.S)
     @SuppressLint("MissingPermission")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -97,6 +93,23 @@ class BuscaDispositivosActivity : AppCompatActivity() {
 
         }
 
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.BLUETOOTH_CONNECT
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            if (Build.VERSION.SDK_INT == Build.VERSION_CODES.Q) {
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(
+                        Manifest.permission.ACCESS_FINE_LOCATION,
+                        Manifest.permission.ACCESS_BACKGROUND_LOCATION
+                    ),
+                    1
+                )
+            }
+        }
+
 
         if (bAdapter!!.isEnabled) {
             /*myHandler = Handler(Looper.getMainLooper())
@@ -126,10 +139,10 @@ class BuscaDispositivosActivity : AppCompatActivity() {
             myHandler!!.post {
                 starBLEScan()
             }*/
-            /*var myExecutor = Executors.newSingleThreadExecutor()
+            var myExecutor = Executors.newSingleThreadExecutor()
             myExecutor.execute {
                 starBLEScan()
-            }*/
+            }
 
         }
         //variables!!.selectDeviceRefresh.setOnClickListener{pairedDeviceList()}
@@ -178,6 +191,7 @@ class BuscaDispositivosActivity : AppCompatActivity() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.S)
     fun starBLEScan() {
         Log.v(TAG, "${LocalTime.now()} - StartBLEScan")
         val scanFilter = ScanFilter.Builder().build()
@@ -191,7 +205,6 @@ class BuscaDispositivosActivity : AppCompatActivity() {
             callback = BleScanCallback()
             scanner = bAdapter!!.bluetoothLeScanner
             //checkBlePermissions()
-
 
             if (ActivityCompat.checkSelfPermission(
                     this,
@@ -333,7 +346,7 @@ class BuscaDispositivosActivity : AppCompatActivity() {
         override fun onBatchScanResults(results: MutableList<ScanResult>?) {
             super.onBatchScanResults(results)
             results!!.forEach { result ->
-                foundDevices[result!!.device.address] = result.device
+                foundDevices[result.device.address] = result.device
             }
         }
 
@@ -347,14 +360,12 @@ class BuscaDispositivosActivity : AppCompatActivity() {
     }
 
     private fun imprimeMap(map: HashMap<String, BluetoothDevice>): String{
-        var res = ""
-        var com = "IAA-PROJECT: Contenido del MAP"
+        val com = "IAA-PROJECT: Contenido del MAP"
         var añade = ""
         for(e in map){
             añade = "$añade\n${e.key}"
         }
-        res = "$com $añade"
-        return res
+        return "$com $añade"
     }
 
     private fun cargaListado(){
@@ -379,6 +390,7 @@ class BuscaDispositivosActivity : AppCompatActivity() {
         }else*/ if(dL2.isNotEmpty()) {
             Log.v(TAG,"Número de dispositivos en la lista: ${dL2.size}")
             for(device: BluetoothDevice in dL2){
+                //if(device.name=="LegMonitor" || device.name=="ChestMonitor" || device.name=="WristMonitor")
                 list.add(device)
             }
         }else {
@@ -414,15 +426,15 @@ class BuscaDispositivosActivity : AppCompatActivity() {
                     )
                 }
             }
-            dispositivo.createBond()
 
-            while(dispositivo.bondState==BluetoothDevice.BOND_BONDING){
+            if(dispositivo.bondState==BluetoothDevice.BOND_NONE){
+                dispositivo.createBond()
                 Toast.makeText(this, "Vinculando con el dispositivo ${dispositivo.name}, con dirección ${dispositivo.address}", Toast.LENGTH_SHORT).show()
-            }
-            if(dispositivo.bondState==BluetoothDevice.BOND_BONDED){
-                Toast.makeText(this, "Dispositivo ${dispositivo.name}, con dirección ${dispositivo.address}, VINCULADO", Toast.LENGTH_SHORT).show()
+                Log.v(TAG, "Vinculando con el dispositivo ${dispositivo.name}, con dirección ${dispositivo.address}")
             }else{
-                Toast.makeText(this, "No se ha podido vincular con el dispositivo ${dispositivo.name}, con dirección ${dispositivo.address}", Toast.LENGTH_SHORT).show()
+                removeBond(dispositivo)
+                Toast.makeText(this, "Dispositivo ${dispositivo.name}, con dirección ${dispositivo.address}, DESVINCULADO", Toast.LENGTH_SHORT).show()
+                Log.v(TAG, "Dispositivo ${dispositivo.name}, con dirección ${dispositivo.address}, DESVINCULADO")
             }
 
         }
@@ -438,6 +450,12 @@ class BuscaDispositivosActivity : AppCompatActivity() {
     }
 }*/
 
-
+    private fun removeBond(device: BluetoothDevice) {
+        try {
+            device::class.java.getMethod("removeBond").invoke(device)
+        } catch (e: Exception) {
+            Log.e(TAG, "Removing bond has been failed. ${e.message}")
+        }
+    }
 
 }
