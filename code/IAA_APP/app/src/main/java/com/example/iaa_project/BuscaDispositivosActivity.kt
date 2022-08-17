@@ -2,6 +2,7 @@ package com.example.iaa_project
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.bluetooth.*
@@ -11,15 +12,15 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.*
 import android.util.Log
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Toast
+import android.view.Gravity
+import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.view.allViews
 import com.example.iaa_project.databinding.ActivityBuscaDispositivosBinding
 import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.delay
@@ -47,6 +48,7 @@ class BuscaDispositivosActivity : AppCompatActivity() {
     var pwUsuDef = ""
     var myHandler: Handler? = null
     var actividad = true
+    var tablaDispositivos: TableLayout? = null
 
     private companion object {
         private const val CHANNEL_ID = "channel01"
@@ -74,6 +76,8 @@ class BuscaDispositivosActivity : AppCompatActivity() {
 
         val btm = getSystemService(BLUETOOTH_SERVICE) as BluetoothManager
         bAdapter = btm.adapter
+
+        tablaDispositivos = variables!!.selectDeviceList
 
         if (bAdapter == null) {
             Toast.makeText(this, "Este dispositivo no soporta Bluetooth", Toast.LENGTH_SHORT).show()
@@ -373,7 +377,7 @@ class BuscaDispositivosActivity : AppCompatActivity() {
         }
         return "$com $añade"
     }
-
+/*
     private fun cargaListado() {
         // variables
         if (foundDevices.isNotEmpty()) {
@@ -448,6 +452,121 @@ class BuscaDispositivosActivity : AppCompatActivity() {
 
 
             }
+    }*/
+
+    private fun cargaListado() {
+        tablaDispositivos!!.removeAllViews()
+        // variables
+        if (foundDevices.isNotEmpty()) {
+            Log.v(TAG, "Número de dispositivos encontrados: ${foundDevices.size}")
+            for (e in foundDevices) {
+                /*if (!mPairedDevices.contains(e.value)){
+                    mPairedDevices.plusElement(e.value)
+                }*/
+                if (!dL2.contains(e.value)) {
+                    dL2.add(e.value)
+                }
+            }
+        }
+        val list: ArrayList<BluetoothDevice> = ArrayList()
+        if (dL2.isNotEmpty()) {
+            Log.v(TAG, "Número de dispositivos en la lista: ${dL2.size}")
+            for (device: BluetoothDevice in dL2) {
+                //if(device.name=="LegMonitor" || device.name=="ChestMonitor" || device.name=="WristMonitor")
+                list.add(device)
+            }
+        } else {
+            Toast.makeText(this, "No se han encontrado dispositivos", Toast.LENGTH_SHORT).show()
+        }
+
+        var layoutCelda: TableRow.LayoutParams
+        val layoutFila = TableRow.LayoutParams(
+            TableRow.LayoutParams.MATCH_PARENT,
+            200
+        )
+        var aux = 0
+        for (l in list) {
+            val fila = TableRow(this)
+            val numero = list.indexOf(l)
+            fila.id = numero
+            fila.layoutParams = layoutFila
+            fila.textAlignment = TableRow.TEXT_ALIGNMENT_CENTER
+            val texto = TextView(this)
+            if (ActivityCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.BLUETOOTH_CONNECT
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                if (Build.VERSION.SDK_INT == Build.VERSION_CODES.Q) {
+                    ActivityCompat.requestPermissions(
+                        this,
+                        arrayOf(
+                            Manifest.permission.ACCESS_FINE_LOCATION,
+                            Manifest.permission.ACCESS_BACKGROUND_LOCATION,
+                            Manifest.permission.BLUETOOTH_CONNECT
+                        ),
+                        1
+                    )
+                }
+            }
+            texto.text = "${l.name}\n${l.address}"
+            texto.gravity = Gravity.CENTER_VERTICAL
+            texto.textSize = 19.0F
+            layoutCelda = TableRow.LayoutParams(
+                TableRow.LayoutParams.MATCH_PARENT,
+                200
+            )
+            texto.layoutParams = layoutCelda
+            fila.addView(texto)
+            /*var separa1 = TextView(this)
+            separa1.text = " | "
+            separa1.layoutParams = layoutCelda
+            fila.addView(separa1)
+            var org = TextView(this)
+            org.text = "${listaSesionOrg.get(aux)}"
+            texto.layoutParams = layoutCelda
+            fila.addView(org)*/
+            val boton = Button(this)
+            //boton.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+            //boton.layoutParams.height=ViewGroup.LayoutParams.MATCH_PARENT
+            //TODO: Ver cómo se puede personalizar o modificar un poquito el botón, para meterle una imagen o algo así
+            boton.text = "Conectar"
+            boton.id = list.indexOf(l)
+            fila.addView(boton)
+            fila.gravity=Gravity.CENTER
+            aux++
+            tablaDispositivos!!.addView(fila)
+
+            val executorSesion = Executors.newSingleThreadExecutor()
+
+            boton.setOnClickListener {
+                val builder = AlertDialog.Builder(this)
+                //set title for alert dialog
+                builder.setTitle(R.string.app_name)
+                //set message for alert dialog
+                builder.setMessage("¿Quiere conectarse a este dispositivo?")
+                builder.setIcon(android.R.drawable.ic_dialog_alert)
+                builder.setPositiveButton("Sí") { dialogInterface, which ->
+                    executorSesion.execute {
+                        executorSesion.execute {
+                            //eliminaSesion(numero)
+                        }
+                    }
+                }
+                builder.setNegativeButton("No") { dialogInterface, which ->
+
+                }
+                // Create the AlertDialog
+                val alertDialog: AlertDialog = builder.create()
+                // Set other dialog properties
+                alertDialog.setCancelable(false)
+                alertDialog.show()
+            }
+
+        }
+
+        tablaDispositivos!!.textAlignment = TableLayout.TEXT_ALIGNMENT_CENTER
+        tablaDispositivos!!.gravity = Gravity.CENTER_HORIZONTAL
     }
 
 /*override fun onResume(){
