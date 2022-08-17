@@ -57,7 +57,7 @@ class BuscaDispositivosActivity : AppCompatActivity() {
         val BLUETOOTH_REQUEST_CODE = 1
     }
 
-    var bluetoothGatt : BluetoothGatt? = null
+    var bluetoothGatt: BluetoothGatt? = null
 
     @RequiresApi(Build.VERSION_CODES.S)
     @SuppressLint("MissingPermission")
@@ -118,6 +118,11 @@ class BuscaDispositivosActivity : AppCompatActivity() {
 
 
         if (bAdapter!!.isEnabled) {
+
+            //TODO: V2 (Lo que aproximadamente funciona)
+            val handler2 = Handler(Looper.getMainLooper())
+            handler2.post { starBLEScan() }
+
             /*myHandler = Handler(Looper.getMainLooper())
 
             myHandler!!.post(object : Runnable {
@@ -130,25 +135,33 @@ class BuscaDispositivosActivity : AppCompatActivity() {
                     }
                 }
             })*/
+            //TODO: V2 (Lo que aproximadamente funciona)
+
             myHandler = Handler(Looper.getMainLooper())
             myHandler!!.post(object : Runnable {
                 override fun run() {
                     if (actividad) {
                         println("SEÑAL 1: Empiezo a ejecutarme aquí")
                         cargaListado()
-                        myHandler!!.postDelayed(this, 5000 /*5 segundos*/)
-                        println("SEÑAL 7: Y A MIMIR")
+                        myHandler!!.postDelayed(this, 5000)
                     }
                 }
             })
-            /*myHandler = Handler(Looper.getMainLooper())
-            myHandler!!.post {
-                starBLEScan()
-            }*/
+            /*
             var myExecutor = Executors.newSingleThreadExecutor()
             myExecutor.execute {
                 starBLEScan()
-            }
+            }*/
+            //TODO: Algo que parece que no funciona
+            /*runOnUiThread { starBLEScan() }
+            myHandler = Handler(Looper.getMainLooper())
+            //myHandler!!.post { starBLEScan() }
+            myHandler!!.postDelayed({
+                if (actividad) {
+                    println("SEÑAL 1: Empiezo a ejecutarme aquí")
+                    cargaListado()
+                }
+            },5000L)*/
 
         }
         //variables!!.selectDeviceRefresh.setOnClickListener{pairedDeviceList()}
@@ -220,14 +233,6 @@ class BuscaDispositivosActivity : AppCompatActivity() {
                     Manifest.permission.BLUETOOTH_SCAN
                 ) != PackageManager.PERMISSION_GRANTED
             ) {
-                // TODO: Consider calling
-                //    ActivityCompat#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for ActivityCompat#requestPermissions for more details.
-                //return
                 println("SEÑAL X: ¿He entrado aquí?")
                 if (Build.VERSION.SDK_INT == Build.VERSION_CODES.Q) {
                     ActivityCompat.requestPermissions(
@@ -241,7 +246,9 @@ class BuscaDispositivosActivity : AppCompatActivity() {
                     )
                 }
             }
+            Log.v(TAG, "Ejecuto fuera de los permisos")
             scanner!!.startScan(scanFilters, scanSettings, callback)
+            Log.v(TAG, "Escaner supuestamente iniciado")
         }
 
     }
@@ -357,6 +364,7 @@ class BuscaDispositivosActivity : AppCompatActivity() {
         }
 
         override fun onBatchScanResults(results: MutableList<ScanResult>?) {
+            Log.v(TAG, "onBatchScanResults - Lo pongo porque no sé qué hace")
             super.onBatchScanResults(results)
             results!!.forEach { result ->
                 foundDevices[result.device.address] = result.device
@@ -495,7 +503,7 @@ class BuscaDispositivosActivity : AppCompatActivity() {
                 scaleType = ImageView.ScaleType.CENTER
                 setImageResource(ib_bt_search)
             }
-            if(conectados.contains(l)){
+            if (conectados.contains(l)) {
                 imgBT.setImageResource(ib_bt_connect)
             }
             fila.addView(imgBT)
@@ -523,7 +531,7 @@ class BuscaDispositivosActivity : AppCompatActivity() {
             }
             texto.text = "${l.name}\n${l.address}    "
             texto.gravity = Gravity.CENTER_VERTICAL
-            texto.textSize = 19.0F
+            texto.textSize = 16.0F
             layoutCelda = TableRow.LayoutParams(
                 TableRow.LayoutParams.MATCH_PARENT,
                 200
@@ -542,42 +550,81 @@ class BuscaDispositivosActivity : AppCompatActivity() {
             //boton.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
             //boton.layoutParams.height=ViewGroup.LayoutParams.MATCH_PARENT
             //TODO: Ver cómo se puede personalizar o modificar un poquito el botón, para meterle una imagen o algo así
-            if(conectados.contains(l)){
+            if (conectados.contains(l)) {
                 boton.text = "Desconectar"
-            }else{
+            } else {
                 boton.text = "Conectar"
             }
             boton.id = list.indexOf(l)
+            boton.width = 336
             fila.addView(boton)
-            fila.gravity=Gravity.CENTER
+            fila.gravity = Gravity.CENTER
             aux++
             tablaDispositivos!!.addView(fila)
 
             val executorSesion = Executors.newSingleThreadExecutor()
 
             boton.setOnClickListener {
-                val builder = AlertDialog.Builder(this)
-                //set title for alert dialog
-                builder.setTitle(R.string.app_name)
-                //set message for alert dialog
-                builder.setMessage("¿Quiere conectarse a este dispositivo?")
-                builder.setIcon(android.R.drawable.ic_dialog_alert)
-                builder.setPositiveButton("Sí") { dialogInterface, which ->
-                    executorSesion.execute {
+                if (boton.text == "Conectar") {
+                    val builder = AlertDialog.Builder(this)
+                    //set title for alert dialog
+                    builder.setTitle(R.string.app_name)
+                    //set message for alert dialog
+                    builder.setMessage("¿Quiere conectarse a este dispositivo?")
+                    builder.setIcon(android.R.drawable.ic_dialog_alert)
+                    builder.setPositiveButton("Sí") { dialogInterface, which ->
                         executorSesion.execute {
-                            //eliminaSesion(numero)
-                            conectarDispositivo(l)
+                            executorSesion.execute {
+                                //eliminaSesion(numero)
+                                conectarDispositivo(l)
+                                lanzaNotificacion(
+                                    notifUsuDef,
+                                    "Dispositivo Bluetooth conectado",
+                                    "Se ha conectado correctamente con el dispositivo ${l.name}"
+                                )
+                                conectados.add(l)
+                            }
                         }
                     }
-                }
-                builder.setNegativeButton("No") { dialogInterface, which ->
+                    builder.setNegativeButton("No") { dialogInterface, which ->
 
+                    }
+                    // Create the AlertDialog
+                    val alertDialog: AlertDialog = builder.create()
+                    // Set other dialog properties
+                    alertDialog.setCancelable(false)
+                    alertDialog.show()
+                } else {
+                    println("El width del botón es ${boton.width}\nEl height es ${boton.height}")
+                    val builder = AlertDialog.Builder(this)
+                    //set title for alert dialog
+                    builder.setTitle(R.string.app_name)
+                    //set message for alert dialog
+                    builder.setMessage("¿Quiere desconectar este dispositivo?")
+                    builder.setIcon(android.R.drawable.ic_dialog_alert)
+                    builder.setPositiveButton("Sí") { dialogInterface, which ->
+                        executorSesion.execute {
+                            executorSesion.execute {
+                                bluetoothGatt?.disconnect()
+                                bluetoothGatt?.close()
+                                conectados.remove(l)
+                                lanzaNotificacion(
+                                    notifUsuDef,
+                                    "Dispositivo Bluetooth desconectado",
+                                    "Se ha desconectado correctamente del dispositivo ${l.name}"
+                                )
+                            }
+                        }
+                    }
+                    builder.setNegativeButton("No") { dialogInterface, which ->
+
+                    }
+                    // Create the AlertDialog
+                    val alertDialog: AlertDialog = builder.create()
+                    // Set other dialog properties
+                    alertDialog.setCancelable(false)
+                    alertDialog.show()
                 }
-                // Create the AlertDialog
-                val alertDialog: AlertDialog = builder.create()
-                // Set other dialog properties
-                alertDialog.setCancelable(false)
-                alertDialog.show()
             }
 
         }
@@ -596,15 +643,7 @@ class BuscaDispositivosActivity : AppCompatActivity() {
     }
 }*/
 
-    private fun removeBond(device: BluetoothDevice) {
-        try {
-            device::class.java.getMethod("removeBond").invoke(device)
-        } catch (e: Exception) {
-            Log.e(TAG, "Removing bond has been failed. ${e.message}")
-        }
-    }
-
-    private fun conectarDispositivo(device: BluetoothDevice){
+    private fun conectarDispositivo(device: BluetoothDevice) {
         Log.v(TAG, "conectarDispositivo")
         if (ActivityCompat.checkSelfPermission(
                 this,
@@ -624,15 +663,14 @@ class BuscaDispositivosActivity : AppCompatActivity() {
             }
         }
         bluetoothGatt = device.connectGatt(this, false, bleGattCallback)
-        conectados.add(device)
     }
 
-    private val bleGattCallback : BluetoothGattCallback by lazy {
-        object : BluetoothGattCallback(){
+    private val bleGattCallback: BluetoothGattCallback by lazy {
+        object : BluetoothGattCallback() {
             override fun onConnectionStateChange(gatt: BluetoothGatt?, status: Int, newState: Int) {
 //                super.onConnectionStateChange(gatt, status, newState)
                 Log.v(TAG, "onConnectionStateChange")
-                if(newState==BluetoothProfile.STATE_CONNECTED){
+                if (newState == BluetoothProfile.STATE_CONNECTED) {
                     if (ActivityCompat.checkSelfPermission(
                             this@BuscaDispositivosActivity,
                             Manifest.permission.BLUETOOTH_CONNECT
@@ -657,6 +695,12 @@ class BuscaDispositivosActivity : AppCompatActivity() {
             override fun onServicesDiscovered(gatt: BluetoothGatt?, status: Int) {
                 //
                 Log.v(TAG, "onServicesDiscovered")
+                /*val service = gatt!!.getService(SERVICE_UUID)
+                val characteristic = service.getCharacteristic(CHARACTERISTIC_STATE_UUID)
+                characteristic.writeType = BluetoothGattCharacteristic.WRITE_TYPE_DEFAULT
+                gatt.setCharacteristicNotification(characteristic, true)
+
+                enviarMensaje()*/
             }
 
             override fun onCharacteristicRead(
@@ -677,5 +721,33 @@ class BuscaDispositivosActivity : AppCompatActivity() {
             }
         }
     }
+
+    /*private fun enviarMensaje(){
+        val service : BluetoothGattService? = bluetoothGatt?.getService(SERVICE_UUID)
+        val caracteristica = service?.getCharacteristic(CHARACTERISTIC_STATE_UUID)
+        val mensaje : String = "Ready"
+
+        var mensajeBytes = ByteArray(0)
+        mensajeBytes = mensaje.toByteArray(charset("UTF-8"))
+        caracteristica!!.value = mensajeBytes
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.BLUETOOTH_CONNECT
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            if (Build.VERSION.SDK_INT == Build.VERSION_CODES.Q) {
+                ActivityCompat.requestPermissions(
+                    this@BuscaDispositivosActivity,
+                    arrayOf(
+                        Manifest.permission.ACCESS_FINE_LOCATION,
+                        Manifest.permission.ACCESS_BACKGROUND_LOCATION
+                    ),
+                    1
+                )
+            }
+        }
+        bluetoothGatt?.writeCharacteristic(caracteristica)
+
+    }*/
 
 }

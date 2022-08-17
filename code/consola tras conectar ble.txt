@@ -18,3 +18,6 @@ D/BluetoothGatt: onConnectionUpdated() - Device=4C:11:AE:91:17:FA interval=39 la
 
 OJITO:
 Todo esto me puede servir de referencia para ver cómo funciona el escaner BLE y la conexión
+
+Otra a tener en cuenta:
+W/ple.iaa_project: type=1400 audit(0.0:3636123): avc: granted { execute } for path="/data/data/com.example.iaa_project/code_cache/startup_agents/4ba71210-agent.so" dev="sdc46" ino=6685017 scontext=u:r:untrusted_app:s0:c113,c257,c512,c768 tcontext=u:object_r:app_data_file:s0:c113,c257,c512,c768 tclass=file app=com.example.iaa_project

@@ -234,15 +234,7 @@ class MiPerfilActivity : AppCompatActivity() {
                 cancelaEdicionApellidosIconos()
                 cancelaEdicionFechaIconos()
             } else {
-                val intent = Intent(this, PrincipalActivity::class.java)
-                intent.putExtra("idUsuDef", idUsuDef)
-                intent.putExtra("dniUsuDef", dniUsuDef)
-                intent.putExtra("apellUsuDef", apellUsuDef)
-                intent.putExtra("nombUsuDef", nombUsuDef)
-                intent.putExtra("fechaUsuDef", fechaUsuDef)
-                intent.putExtra("pwUsuDef", pwUsuDef)
-                intent.putExtra("notifUsuDef", notifUsuDef)
-                startActivity(intent)
+                onBackPressed()
             }
         }
 
@@ -955,6 +947,18 @@ class MiPerfilActivity : AppCompatActivity() {
         tablaOrganizaciones?.removeViewAt(numero)
         contadorOrganizaciones--
         variables!!.textView14.text = "$textoOrg $contadorOrganizaciones"
+    }
+
+    override fun onBackPressed() {
+        val intent = Intent(this, PrincipalActivity::class.java)
+        intent.putExtra("idUsuDef", idUsuDef)
+        intent.putExtra("dniUsuDef", dniUsuDef)
+        intent.putExtra("apellUsuDef", apellUsuDef)
+        intent.putExtra("nombUsuDef", nombUsuDef)
+        intent.putExtra("fechaUsuDef", fechaUsuDef)
+        intent.putExtra("pwUsuDef", pwUsuDef)
+        intent.putExtra("notifUsuDef", notifUsuDef)
+        startActivity(intent)
     }
 
 }
