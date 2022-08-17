@@ -20,10 +20,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import androidx.core.view.allViews
+import androidx.core.view.ViewCompat
+import com.example.iaa_project.R.mipmap.ib_bt_connect
+import com.example.iaa_project.R.mipmap.ib_bt_search
 import com.example.iaa_project.databinding.ActivityBuscaDispositivosBinding
-import kotlinx.coroutines.asCoroutineDispatcher
-import kotlinx.coroutines.delay
 import java.time.LocalTime
 import java.util.*
 import java.util.concurrent.Executors
@@ -49,12 +49,15 @@ class BuscaDispositivosActivity : AppCompatActivity() {
     var myHandler: Handler? = null
     var actividad = true
     var tablaDispositivos: TableLayout? = null
+    var conectados = ArrayList<BluetoothDevice>()
 
     private companion object {
         private const val CHANNEL_ID = "channel01"
         val TAG = "IAAPROJECT"
         val BLUETOOTH_REQUEST_CODE = 1
     }
+
+    var bluetoothGatt : BluetoothGatt? = null
 
     @RequiresApi(Build.VERSION_CODES.S)
     @SuppressLint("MissingPermission")
@@ -487,6 +490,15 @@ class BuscaDispositivosActivity : AppCompatActivity() {
         var aux = 0
         for (l in list) {
             val fila = TableRow(this)
+            var imgBT: ImageView = ImageView(this).apply {
+                id = ViewCompat.generateViewId()
+                scaleType = ImageView.ScaleType.CENTER
+                setImageResource(ib_bt_search)
+            }
+            if(conectados.contains(l)){
+                imgBT.setImageResource(ib_bt_connect)
+            }
+            fila.addView(imgBT)
             val numero = list.indexOf(l)
             fila.id = numero
             fila.layoutParams = layoutFila
@@ -509,7 +521,7 @@ class BuscaDispositivosActivity : AppCompatActivity() {
                     )
                 }
             }
-            texto.text = "${l.name}\n${l.address}"
+            texto.text = "${l.name}\n${l.address}    "
             texto.gravity = Gravity.CENTER_VERTICAL
             texto.textSize = 19.0F
             layoutCelda = TableRow.LayoutParams(
@@ -530,7 +542,11 @@ class BuscaDispositivosActivity : AppCompatActivity() {
             //boton.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
             //boton.layoutParams.height=ViewGroup.LayoutParams.MATCH_PARENT
             //TODO: Ver cómo se puede personalizar o modificar un poquito el botón, para meterle una imagen o algo así
-            boton.text = "Conectar"
+            if(conectados.contains(l)){
+                boton.text = "Desconectar"
+            }else{
+                boton.text = "Conectar"
+            }
             boton.id = list.indexOf(l)
             fila.addView(boton)
             fila.gravity=Gravity.CENTER
@@ -550,6 +566,7 @@ class BuscaDispositivosActivity : AppCompatActivity() {
                     executorSesion.execute {
                         executorSesion.execute {
                             //eliminaSesion(numero)
+                            conectarDispositivo(l)
                         }
                     }
                 }
@@ -584,6 +601,80 @@ class BuscaDispositivosActivity : AppCompatActivity() {
             device::class.java.getMethod("removeBond").invoke(device)
         } catch (e: Exception) {
             Log.e(TAG, "Removing bond has been failed. ${e.message}")
+        }
+    }
+
+    private fun conectarDispositivo(device: BluetoothDevice){
+        Log.v(TAG, "conectarDispositivo")
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.BLUETOOTH_CONNECT
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            if (Build.VERSION.SDK_INT == Build.VERSION_CODES.Q) {
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(
+                        Manifest.permission.ACCESS_FINE_LOCATION,
+                        Manifest.permission.ACCESS_BACKGROUND_LOCATION,
+                        Manifest.permission.BLUETOOTH_CONNECT
+                    ),
+                    1
+                )
+            }
+        }
+        bluetoothGatt = device.connectGatt(this, false, bleGattCallback)
+        conectados.add(device)
+    }
+
+    private val bleGattCallback : BluetoothGattCallback by lazy {
+        object : BluetoothGattCallback(){
+            override fun onConnectionStateChange(gatt: BluetoothGatt?, status: Int, newState: Int) {
+//                super.onConnectionStateChange(gatt, status, newState)
+                Log.v(TAG, "onConnectionStateChange")
+                if(newState==BluetoothProfile.STATE_CONNECTED){
+                    if (ActivityCompat.checkSelfPermission(
+                            this@BuscaDispositivosActivity,
+                            Manifest.permission.BLUETOOTH_CONNECT
+                        ) != PackageManager.PERMISSION_GRANTED
+                    ) {
+                        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.Q) {
+                            ActivityCompat.requestPermissions(
+                                this@BuscaDispositivosActivity,
+                                arrayOf(
+                                    Manifest.permission.ACCESS_FINE_LOCATION,
+                                    Manifest.permission.ACCESS_BACKGROUND_LOCATION,
+                                    Manifest.permission.BLUETOOTH_CONNECT
+                                ),
+                                1
+                            )
+                        }
+                    }
+                    bluetoothGatt?.discoverServices()
+                }
+            }
+
+            override fun onServicesDiscovered(gatt: BluetoothGatt?, status: Int) {
+                //
+                Log.v(TAG, "onServicesDiscovered")
+            }
+
+            override fun onCharacteristicRead(
+                gatt: BluetoothGatt?,
+                characteristic: BluetoothGattCharacteristic?,
+                status: Int
+            ) {
+                //super.onCharacteristicRead(gatt, characteristic, status)
+                Log.v(TAG, "onCharacteristicRead")
+            }
+
+            override fun onCharacteristicChanged(
+                gatt: BluetoothGatt?,
+                characteristic: BluetoothGattCharacteristic?
+            ) {
+                //super.onCharacteristicChanged(gatt, characteristic)
+                Log.v(TAG, "onCharacteristicChanged")
+            }
         }
     }
 

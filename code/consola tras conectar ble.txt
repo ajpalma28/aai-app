@@ -1,0 +1,20 @@
+V/IAAPROJECT: conectarDispositivo
+D/BluetoothGatt: connect() - device: 4C:11:AE:91:17:FA, auto: false
+D/BluetoothGatt: registerApp()
+D/BluetoothGatt: registerApp() - UUID=b69974c5-2902-4065-8b0a-6ef218c2f200
+D/BluetoothGatt: onClientRegistered() - status=0 clientIf=14
+D/OpenGLRenderer: endAllActiveAnimators on 0xb40000733fc96a00 (RippleDrawable) with handle 0xb400007351e65780
+D/View: [Warning] assignParent to null: this = DecorView@623945d[BuscaDispositivosActivity]
+I/InputTransport: Destroy ARC handle: 0xb4000073b62dc260
+D/BluetoothGatt: onClientConnectionState() - status=0 clientIf=14 device=4C:11:AE:91:17:FA
+V/IAAPROJECT: onConnectionStateChange
+D/BluetoothGatt: discoverServices() - device: 4C:11:AE:91:17:FA
+D/BluetoothGatt: onConnectionUpdated() - Device=4C:11:AE:91:17:FA interval=6 latency=0 timeout=500 status=0
+D/BluetoothGatt: onSearchComplete() = Device=4C:11:AE:91:17:FA Status=0
+V/IAAPROJECT: onServicesDiscovered
+D/BluetoothGatt: onConnectionUpdated() - Device=4C:11:AE:91:17:FA interval=39 latency=0 timeout=500 status=0
+
+
+
+OJITO:
+Todo esto me puede servir de referencia para ver cómo funciona el escaner BLE y la conexión
