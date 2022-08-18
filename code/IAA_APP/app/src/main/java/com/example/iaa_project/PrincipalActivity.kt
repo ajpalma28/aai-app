@@ -236,15 +236,7 @@ class PrincipalActivity : AppCompatActivity() {
                     swNotif!!.text="Notificaciones DESACTIVADAS"
                     swNotif!!.setTextColor(Color.RED)
                 }
-                /*val intent = Intent(this, PrincipalActivity::class.java)
-                intent.putExtra("idUsuDef", idUsuDef)
-                intent.putExtra("dniUsuDef", dniUsuDef)
-                intent.putExtra("apellUsuDef", apellUsuDef)
-                intent.putExtra("nombUsuDef", nombUsuDef)
-                intent.putExtra("fechaUsuDef", fechaUsuDef)
-                intent.putExtra("pwUsuDef", pwUsuDef)
-                intent.putExtra("notifUsuDef", b1)
-                startActivity(intent)*/
+
             } catch (e: Exception) {
                 println(e.toString())
                 Handler(Looper.getMainLooper()).post {
@@ -273,7 +265,6 @@ class PrincipalActivity : AppCompatActivity() {
             try {
                 Class.forName("com.mysql.jdbc.Driver")
                 //Configuracion de la conexión
-                //Configuracion de la conexión
                 println("UPDATE b1l1rb6fzqnrv8549nvi.investigador SET notificaciones='true' WHERE idinvestigador='$idUsuDef';")
 
                 val connection = DriverManager.getConnection(
@@ -289,7 +280,6 @@ class PrincipalActivity : AppCompatActivity() {
                 val statement = connection.createStatement()
                 println("Voy a la query")
                 //Guardo en resultSet el resultado de la consulta
-                //statement.executeQuery("select * from usuarios where usuario = '$resUsuario' and pass = '$resPassword'")
                 //"UPDATE b1l1rb6fzqnrv8549nvi.investigador SET notificaciones='true' WHERE idinvestigador='$idUsuDef';"
                 val query =
                     "UPDATE b1l1rb6fzqnrv8549nvi.investigador SET notificaciones='true' WHERE idinvestigador='$idUsuDef';"
@@ -320,15 +310,6 @@ class PrincipalActivity : AppCompatActivity() {
                     swNotif!!.setTextColor(Color.BLACK)
 
                 }
-                /*val intent = Intent(this, PrincipalActivity::class.java)
-                intent.putExtra("idUsuDef", idUsuDef)
-                intent.putExtra("dniUsuDef", dniUsuDef)
-                intent.putExtra("apellUsuDef", apellUsuDef)
-                intent.putExtra("nombUsuDef", nombUsuDef)
-                intent.putExtra("fechaUsuDef", fechaUsuDef)
-                intent.putExtra("pwUsuDef", pwUsuDef)
-                intent.putExtra("notifUsuDef", b1)
-                startActivity(intent)*/
             } catch (e: Exception) {
                 println(e.toString())
                 Handler(Looper.getMainLooper()).post {

@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity() {
 
     private val BLE_PERMISSIONS_REQUEST_CODE = 0x55 // Could be any other positive integer value
 
-    private var permissionsCount = 0
+    private var contadorPermisos = 0
 
     private companion object {
         private const val CHANNEL_ID = "channel01"
@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
         variables = ActivityMainBinding.inflate(layoutInflater)
         setContentView(variables!!.root)
 
-        checkBlePermissions()
+        compruebaPermisosBLE()
 
         val botonReg = variables!!.btnRegistro
         val botonInSes = variables!!.btnInicioSesion
@@ -54,7 +54,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun getMissingLocationPermission(): String? {
+    private fun permisoUbicacionQueFalta(): String? {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
             && Build.VERSION.SDK_INT < Build.VERSION_CODES.Q
         ) {
@@ -68,18 +68,18 @@ class MainActivity : AppCompatActivity() {
         return null
     }
 
-    private fun hasLocationPermission(locPermission: String?): Boolean {
-        return if (locPermission == null) true else ContextCompat.checkSelfPermission(
+    private fun compruebaPermisoUbicacion(permUbicacion: String?): Boolean {
+        return if (permUbicacion == null) true else ContextCompat.checkSelfPermission(
             applicationContext,
-            locPermission
+            permUbicacion
         ) ==
                 PackageManager.PERMISSION_GRANTED // An Android version that doesn't need a location permission
     }
 
 
-    private fun getMissingBlePermissions(): Array<String?>? {
-        var missingPermissions: Array<String?>? = null
-        val locationPermission = getMissingLocationPermission()
+    private fun getPermisosQueFaltanBLE(): Array<String?>? {
+        var permisosQueFaltan: Array<String?>? = null
+        val permisoUbicacion = permisoUbicacionQueFalta()
         // For Android 12 and above
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             if (ContextCompat.checkSelfPermission(
@@ -88,8 +88,8 @@ class MainActivity : AppCompatActivity() {
                 )
                 != PackageManager.PERMISSION_GRANTED
             ) {
-                missingPermissions = arrayOfNulls(1)
-                missingPermissions[0] = Manifest.permission.BLUETOOTH_SCAN
+                permisosQueFaltan = arrayOfNulls(1)
+                permisosQueFaltan[0] = Manifest.permission.BLUETOOTH_SCAN
             }
             if (ContextCompat.checkSelfPermission(
                     applicationContext,
@@ -97,40 +97,37 @@ class MainActivity : AppCompatActivity() {
                 )
                 != PackageManager.PERMISSION_GRANTED
             ) {
-                if (missingPermissions == null) {
-                    missingPermissions = arrayOfNulls(1)
-                    missingPermissions[0] = Manifest.permission.BLUETOOTH_CONNECT
+                if (permisosQueFaltan == null) {
+                    permisosQueFaltan = arrayOfNulls(1)
+                    permisosQueFaltan[0] = Manifest.permission.BLUETOOTH_CONNECT
                 } else {
-                    missingPermissions =
-                        Arrays.copyOf(missingPermissions, missingPermissions.size + 1)
-                    missingPermissions[missingPermissions.size - 1] =
+                    permisosQueFaltan =
+                        Arrays.copyOf(permisosQueFaltan, permisosQueFaltan.size + 1)
+                    permisosQueFaltan[permisosQueFaltan.size - 1] =
                         Manifest.permission.BLUETOOTH_CONNECT
                 }
             }
-        } else if (!hasLocationPermission(locationPermission)) {
-            missingPermissions = arrayOfNulls(1)
-            missingPermissions[0] = getMissingLocationPermission()
+        } else if (!compruebaPermisoUbicacion(permisoUbicacion)) {
+            permisosQueFaltan = arrayOfNulls(1)
+            permisosQueFaltan[0] = permisoUbicacionQueFalta()
         }
-        return missingPermissions
+        return permisosQueFaltan
     }
 
-    private fun checkBlePermissions() {
-        val missingPermissions = getMissingBlePermissions()
-        if (missingPermissions == null || missingPermissions.size == 0) {
-            Log.i(TAG, "checkBlePermissions: Permissions is already granted")
+    private fun compruebaPermisosBLE() {
+        val permisosQueFaltan = getPermisosQueFaltanBLE()
+        if (permisosQueFaltan == null || permisosQueFaltan.isEmpty()) {
+            Log.i(TAG, "compruebaPermisosBLE: Todos los permisos se han concedido")
             return
         }
-        for (perm in missingPermissions) Log.d(
+        for (perm in permisosQueFaltan) Log.d(
             TAG,
-            "checkBlePermissions: missing permissions $perm"
+            "compruebaPermisosBLE: Falta el permiso $perm"
         )
-        permissionsCount = missingPermissions.size
-        requestPermissions(missingPermissions, BLE_PERMISSIONS_REQUEST_CODE)
+        contadorPermisos = permisosQueFaltan.size
+        requestPermissions(permisosQueFaltan, BLE_PERMISSIONS_REQUEST_CODE)
     }
 
-    // Maybe some other codes...
-
-    // Maybe some other codes...
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<String>,
@@ -140,15 +137,14 @@ class MainActivity : AppCompatActivity() {
             val index = 0
             for (result in grantResults) {
                 if (result == PackageManager.PERMISSION_GRANTED) {
-                    Log.d(TAG, "Permission granted for " + permissions[index])
-                    if (permissionsCount > 0) permissionsCount--
-                    if (permissionsCount === 0) {
+                    Log.d(TAG, "Permiso concedido: " + permissions[index])
+                    if (contadorPermisos > 0) contadorPermisos--
+                    if (contadorPermisos === 0) {
                         // All permissions have been granted from user.
                         // Here you can notify other parts of the app ie. using a custom callback or a viewmodel so on.
                     }
                 } else {
-                    Log.d(TAG, "Permission denied for " + permissions[index])
-                    // TODO handle user denial i.e. show an informing dialog
+                    Log.d(TAG, "Permiso denegado: " + permissions[index])
                 }
             }
         } else {

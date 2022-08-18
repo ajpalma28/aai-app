@@ -33,7 +33,6 @@ class BuscaDispositivosActivity : AppCompatActivity() {
 
     var variables: ActivityBuscaDispositivosBinding? = null
     var bAdapter: BluetoothAdapter? = null
-    private var mPairedDevices: Set<BluetoothDevice> = TreeSet<BluetoothDevice>()
     val dL2 = ArrayList<BluetoothDevice>()
     private val REQUEST_ENABLE_BLUETOOTH = 1
     private var scanner: BluetoothLeScanner? = null
@@ -119,23 +118,8 @@ class BuscaDispositivosActivity : AppCompatActivity() {
 
         if (bAdapter!!.isEnabled) {
 
-            //TODO: V2 (Lo que aproximadamente funciona)
             val handler2 = Handler(Looper.getMainLooper())
             handler2.post { starBLEScan() }
-
-            /*myHandler = Handler(Looper.getMainLooper())
-
-            myHandler!!.post(object : Runnable {
-                override fun run() {
-                    if (actividad) {
-                        println("SEÑAL 1: Empiezo a ejecutarme aquí")
-                        starBLEScan()
-                        myHandler!!.postDelayed(this, 10000 /*5 segundos*/)
-                        println("SEÑAL 7: Y A MIMIR")
-                    }
-                }
-            })*/
-            //TODO: V2 (Lo que aproximadamente funciona)
 
             myHandler = Handler(Looper.getMainLooper())
             myHandler!!.post {
@@ -156,21 +140,6 @@ class BuscaDispositivosActivity : AppCompatActivity() {
                     }
                 }
             },2000)
-            /*
-            var myExecutor = Executors.newSingleThreadExecutor()
-            myExecutor.execute {
-                starBLEScan()
-            }*/
-            //TODO: Algo que parece que no funciona
-            /*runOnUiThread { starBLEScan() }
-            myHandler = Handler(Looper.getMainLooper())
-            //myHandler!!.post { starBLEScan() }
-            myHandler!!.postDelayed({
-                if (actividad) {
-                    println("SEÑAL 1: Empiezo a ejecutarme aquí")
-                    cargaListado()
-                }
-            },5000L)*/
 
         }
         variables!!.selectDeviceRefresh.setOnClickListener {
@@ -382,7 +351,6 @@ class BuscaDispositivosActivity : AppCompatActivity() {
 
     }
 
-
     override fun onBackPressed() {
         super.onBackPressed()
         actividad = false
@@ -397,82 +365,6 @@ class BuscaDispositivosActivity : AppCompatActivity() {
         }
         return "$com $añade"
     }
-/*
-    private fun cargaListado() {
-        // variables
-        if (foundDevices.isNotEmpty()) {
-            Log.v(TAG, "Número de dispositivos encontrados: ${foundDevices.size}")
-            for (e in foundDevices) {
-                /*if (!mPairedDevices.contains(e.value)){
-                    mPairedDevices.plusElement(e.value)
-                }*/
-                if (!dL2.contains(e.value)) {
-                    dL2.add(e.value)
-                }
-            }
-        }
-        val list: ArrayList<BluetoothDevice> = ArrayList()
-        /*if(mPairedDevices.isNotEmpty()) {
-            Log.v(TAG,"Número de dispositivos en el conjunto: ${mPairedDevices.size}")
-            for(device: BluetoothDevice in mPairedDevices){
-                list.add(device)
-            }
-        }else*/ if (dL2.isNotEmpty()) {
-            Log.v(TAG, "Número de dispositivos en la lista: ${dL2.size}")
-            for (device: BluetoothDevice in dL2) {
-                //if(device.name=="LegMonitor" || device.name=="ChestMonitor" || device.name=="WristMonitor")
-                list.add(device)
-            }
-        } else {
-            Toast.makeText(this, "No se han encontrado dispositivos", Toast.LENGTH_SHORT).show()
-        }
-
-        val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, list)
-        variables!!.selectDeviceList.adapter = adapter
-        variables!!.selectDeviceList.onItemClickListener =
-            AdapterView.OnItemClickListener { _, _, position, _ ->
-                /*val device: BluetoothDevice = list[position]
-                val address: String = device.address
-                val name: String = device.name
-
-                val intent = Intent(this, ControlActivity::class.java)
-                intent.putExtra(EXTRA_ADDRESS, address)
-                startActivity(intent)*/
-                val dispositivo: BluetoothDevice = list[position]
-                if (ActivityCompat.checkSelfPermission(
-                        this,
-                        Manifest.permission.BLUETOOTH_CONNECT
-                    ) != PackageManager.PERMISSION_GRANTED
-                ) {
-                    println("SEÑAL X: ¿He entrado aquí para detener el escaneo?")
-                    if (Build.VERSION.SDK_INT == Build.VERSION_CODES.Q) {
-                        ActivityCompat.requestPermissions(
-                            this,
-                            arrayOf(
-                                Manifest.permission.ACCESS_FINE_LOCATION,
-                                Manifest.permission.ACCESS_BACKGROUND_LOCATION,
-                                Manifest.permission.BLUETOOTH_CONNECT
-                            ),
-                            1
-                        )
-                    }
-                }
-
-                //TODO: ESTABLECER CONEXIÓN ENTRE APP Y DISPOSITIVOS
-
-                /*if(dispositivo.bondState==BluetoothDevice.BOND_NONE){
-                    dispositivo.createBond()
-                    Toast.makeText(this, "Vinculando con el dispositivo ${dispositivo.name}, con dirección ${dispositivo.address}", Toast.LENGTH_SHORT).show()
-                    Log.v(TAG, "Vinculando con el dispositivo ${dispositivo.name}, con dirección ${dispositivo.address}")
-                }else{
-                    removeBond(dispositivo)
-                    Toast.makeText(this, "Dispositivo ${dispositivo.name}, con dirección ${dispositivo.address}, DESVINCULADO", Toast.LENGTH_SHORT).show()
-                    Log.v(TAG, "Dispositivo ${dispositivo.name}, con dirección ${dispositivo.address}, DESVINCULADO")
-                }*/
-
-
-            }
-    }*/
 
     private fun cargaListado() {
         tablaDispositivos!!.removeAllViews()
@@ -547,18 +439,7 @@ class BuscaDispositivosActivity : AppCompatActivity() {
             )
             texto.layoutParams = layoutCelda
             fila.addView(texto)
-            /*var separa1 = TextView(this)
-            separa1.text = " | "
-            separa1.layoutParams = layoutCelda
-            fila.addView(separa1)
-            var org = TextView(this)
-            org.text = "${listaSesionOrg.get(aux)}"
-            texto.layoutParams = layoutCelda
-            fila.addView(org)*/
             val boton = Button(this)
-            //boton.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
-            //boton.layoutParams.height=ViewGroup.LayoutParams.MATCH_PARENT
-            //TODO: Ver cómo se puede personalizar o modificar un poquito el botón, para meterle una imagen o algo así
             if (conectados.contains(l)) {
                 boton.text = "Desconectar"
             } else {
@@ -606,9 +487,7 @@ class BuscaDispositivosActivity : AppCompatActivity() {
                 } else {
                     println("El width del botón es ${boton.width}\nEl height es ${boton.height}")
                     val builder = AlertDialog.Builder(this)
-                    //set title for alert dialog
                     builder.setTitle(R.string.app_name)
-                    //set message for alert dialog
                     builder.setMessage("¿Quiere desconectar este dispositivo?")
                     builder.setIcon(android.R.drawable.ic_dialog_alert)
                     builder.setPositiveButton("Sí") { dialogInterface, which ->
@@ -641,16 +520,6 @@ class BuscaDispositivosActivity : AppCompatActivity() {
         tablaDispositivos!!.textAlignment = TableLayout.TEXT_ALIGNMENT_CENTER
         tablaDispositivos!!.gravity = Gravity.CENTER_HORIZONTAL
     }
-
-/*override fun onResume(){
-    super.onResume()
-    if(bAdapter!!.isEnabled){
-        starBLEScan()
-    }else{
-        val btIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
-        getAction.launch(btIntent)
-    }
-}*/
 
     private fun conectarDispositivo(device: BluetoothDevice) {
         Log.v(TAG, "conectarDispositivo")
@@ -702,14 +571,7 @@ class BuscaDispositivosActivity : AppCompatActivity() {
             }
 
             override fun onServicesDiscovered(gatt: BluetoothGatt?, status: Int) {
-                //
                 Log.v(TAG, "onServicesDiscovered")
-                /*val service = gatt!!.getService(SERVICE_UUID)
-                val characteristic = service.getCharacteristic(CHARACTERISTIC_STATE_UUID)
-                characteristic.writeType = BluetoothGattCharacteristic.WRITE_TYPE_DEFAULT
-                gatt.setCharacteristicNotification(characteristic, true)
-
-                enviarMensaje()*/
             }
 
             override fun onCharacteristicRead(
@@ -717,7 +579,6 @@ class BuscaDispositivosActivity : AppCompatActivity() {
                 characteristic: BluetoothGattCharacteristic?,
                 status: Int
             ) {
-                //super.onCharacteristicRead(gatt, characteristic, status)
                 Log.v(TAG, "onCharacteristicRead")
             }
 
@@ -725,38 +586,9 @@ class BuscaDispositivosActivity : AppCompatActivity() {
                 gatt: BluetoothGatt?,
                 characteristic: BluetoothGattCharacteristic?
             ) {
-                //super.onCharacteristicChanged(gatt, characteristic)
                 Log.v(TAG, "onCharacteristicChanged")
             }
         }
     }
-
-    /*private fun enviarMensaje(){
-        val service : BluetoothGattService? = bluetoothGatt?.getService(SERVICE_UUID)
-        val caracteristica = service?.getCharacteristic(CHARACTERISTIC_STATE_UUID)
-        val mensaje : String = "Ready"
-
-        var mensajeBytes = ByteArray(0)
-        mensajeBytes = mensaje.toByteArray(charset("UTF-8"))
-        caracteristica!!.value = mensajeBytes
-        if (ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.BLUETOOTH_CONNECT
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            if (Build.VERSION.SDK_INT == Build.VERSION_CODES.Q) {
-                ActivityCompat.requestPermissions(
-                    this@BuscaDispositivosActivity,
-                    arrayOf(
-                        Manifest.permission.ACCESS_FINE_LOCATION,
-                        Manifest.permission.ACCESS_BACKGROUND_LOCATION
-                    ),
-                    1
-                )
-            }
-        }
-        bluetoothGatt?.writeCharacteristic(caracteristica)
-
-    }*/
 
 }
