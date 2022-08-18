@@ -3,6 +3,7 @@ package com.example.iaa_project
 import android.app.AlertDialog
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.bluetooth.BluetoothDevice
 import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
@@ -44,6 +45,7 @@ class PrincipalActivity : AppCompatActivity() {
     var listaSesionRes : ArrayList<String> = ArrayList()
     var listaAsocID : ArrayList<String> = ArrayList()
     var listaAsocOrganizacion : ArrayList<String> = ArrayList()
+    var conectados = ArrayList<BluetoothDevice>()
 
     private companion object {
         private const val CHANNEL_ID = "channel01"
@@ -97,7 +99,7 @@ class PrincipalActivity : AppCompatActivity() {
         }
 
         btnGestDisp.setOnClickListener{
-            val intent = Intent(this, BuscaDispositivosActivity::class.java)
+            val intent = Intent(this, GestionDispActivity::class.java)
             intent.putExtra("idUsuDef", idUsuDef)
             intent.putExtra("dniUsuDef", dniUsuDef)
             intent.putExtra("apellUsuDef", apellUsuDef)
@@ -105,6 +107,7 @@ class PrincipalActivity : AppCompatActivity() {
             intent.putExtra("fechaUsuDef", fechaUsuDef)
             intent.putExtra("pwUsuDef", pwUsuDef)
             intent.putExtra("notifUsuDef", notifUsuDef)
+            intent.putParcelableArrayListExtra("conectados",conectados)
             startActivity(intent)
         }
 

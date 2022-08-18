@@ -1,5 +1,13 @@
 package com.example.iaa_project
 
+import android.Manifest
+import android.app.Activity
+import android.bluetooth.BluetoothDevice
+import android.bluetooth.BluetoothGatt
+import android.content.Context
+import android.content.pm.PackageManager
+import android.os.Build
+import androidx.core.app.ActivityCompat
 import com.example.iaa_project.exceptions.*
 
 class FuncionesAuxiliares {

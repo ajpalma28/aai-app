@@ -27,6 +27,7 @@ import com.example.iaa_project.databinding.ActivityBuscaDispositivosBinding
 import java.time.LocalTime
 import java.util.*
 import java.util.concurrent.Executors
+import kotlin.collections.ArrayList
 
 
 class BuscaDispositivosActivity : AppCompatActivity() {
@@ -52,8 +53,8 @@ class BuscaDispositivosActivity : AppCompatActivity() {
 
     private companion object {
         private const val CHANNEL_ID = "channel01"
-        val TAG = "IAAPROJECT"
-        val BLUETOOTH_REQUEST_CODE = 1
+        const val TAG = "IAAPROJECT"
+        const val BLUETOOTH_REQUEST_CODE = 1
     }
 
     var bluetoothGatt: BluetoothGatt? = null
@@ -75,6 +76,7 @@ class BuscaDispositivosActivity : AppCompatActivity() {
         nombUsuDef = bundle?.getString("nombUsuDef").toString()
         fechaUsuDef = bundle?.getString("fechaUsuDef").toString()
         pwUsuDef = bundle?.getString("pwUsuDef").toString()
+        conectados.addAll(bundle?.getParcelableArrayList<BluetoothDevice>("conectados")!!)
 
         val btm = getSystemService(BLUETOOTH_SERVICE) as BluetoothManager
         bAdapter = btm.adapter
@@ -123,29 +125,41 @@ class BuscaDispositivosActivity : AppCompatActivity() {
 
             myHandler = Handler(Looper.getMainLooper())
             myHandler!!.post {
-                val avisoComienzo = Toast.makeText(
+                Toast.makeText(
                     this,
                     "Inicializando el escáner de dispositivos Bluetooth",
                     Toast.LENGTH_SHORT
-                )
-                avisoComienzo.setGravity(Gravity.CENTER,0,0)
-                avisoComienzo.show()
+                ).show()
             }
             myHandler!!.postDelayed(object : Runnable {
                 override fun run() {
                     if (actividad) {
-                        println("SEÑAL 1: Empiezo a ejecutarme aquí")
-                        cargaListado()
-                        myHandler!!.postDelayed(this, 2000)
+                            println("SEÑAL 1: Empiezo a ejecutarme aquí")
+                            cargaListado()
+                            myHandler!!.postDelayed(this, 5000)
+
                     }
                 }
-            },2000)
+            }, 2000)
 
         }
         variables!!.selectDeviceRefresh.setOnClickListener {
             Log.v(TAG, imprimeMap(foundDevices))
             //
-            this.onBackPressed()
+            //this.onBackPressed()
+            val intent = Intent(this, GestionDispActivity::class.java)
+            intent.putExtra("idUsuDef", idUsuDef)
+            intent.putExtra("dniUsuDef", dniUsuDef)
+            intent.putExtra("apellUsuDef", apellUsuDef)
+            intent.putExtra("nombUsuDef", nombUsuDef)
+            intent.putExtra("fechaUsuDef", fechaUsuDef)
+            intent.putExtra("pwUsuDef", pwUsuDef)
+            intent.putExtra("notifUsuDef", notifUsuDef)
+            //intent.putExtra("conectados",conectados)
+            intent.putParcelableArrayListExtra("conectados",conectados)
+            startActivity(intent)
+            stopScan()
+            actividad=false
         }
 
     }
@@ -196,14 +210,12 @@ class BuscaDispositivosActivity : AppCompatActivity() {
 
         val scanFilters: MutableList<ScanFilter> = mutableListOf()
         scanFilters.add(scanFilter)
-        //scanFilters.add(ScanFilter.Builder().setServiceUuid(ParcelUuid.fromString("0000acc0-0000-1000-8000-00805f9b34fb")).build())
 
         val scanSettings =
             ScanSettings.Builder().setScanMode(ScanSettings.SCAN_MODE_LOW_LATENCY).build()
         if (callback == null) {
             callback = BleScanCallback()
             scanner = bAdapter!!.bluetoothLeScanner
-            //checkBlePermissions()
 
             if (ActivityCompat.checkSelfPermission(
                     this,
@@ -231,79 +243,6 @@ class BuscaDispositivosActivity : AppCompatActivity() {
 
     }
 
-    private fun getMissingLocationPermission(): String? {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
-            && Build.VERSION.SDK_INT < Build.VERSION_CODES.Q
-        ) {
-            // COARSE is needed for Android 6 to Android 10
-            return Manifest.permission.ACCESS_COARSE_LOCATION;
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            // FINE is needed for Android 10 and above
-            return Manifest.permission.ACCESS_FINE_LOCATION;
-        }
-        // No location permission is needed for Android 6 and below
-        return null;
-    }
-
-    /*private fun hasLocationPermission(): Boolean {
-        var missingLocationPermission: String = getMissingLocationPermission()!!
-        if(missingLocationPermission == null) return true; // No permissions needed
-        return ContextCompat.checkSelfPermission(requireContext(), missingLocationPermission) ==
-                PackageManager.PERMISSION_GRANTED;
-    }
-
-    private fun checkLocationService(@Nullable r: Runnable?): Boolean {
-        val locationServiceState: Boolean = isLocationServiceEnabled()
-        val stateVerbose = if (locationServiceState) "Location is on" else "Location is off"
-        Log.d(TAG, stateVerbose)
-        if (!locationServiceState) {
-            MaterialAlertDialogBuilder(requireContext())
-                .setCancelable(false)
-                .setTitle("Location Service Off")
-                .setView("Location service must be enabled in order to scan the bluetooth devices.")
-                .setPositiveButton(android.R.string.ok,
-                    DialogInterface.OnClickListener { dialog: DialogInterface?, which: Int ->
-                        startActivity(
-                            Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
-                        )
-                    })
-                .setNegativeButton(android.R.string.cancel,
-                    DialogInterface.OnClickListener { dialog: DialogInterface?, which: Int -> r?.run() })
-                .create().show()
-        }
-        return locationServiceState
-    }
-
-    private fun isLocationServiceEnabled(): Boolean {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            // This is provided as of API 28
-            val lm = this.baseContext.getSystemService(LOCATION_SERVICE) as LocationManager
-            lm.isLocationServiceEnabled()
-        } else {
-            // This is deprecated as of API 28
-            val mod: Int = Settings.Secure.getInt(
-                baseContext.contentResolver, Settings.Secure.LOCATION_MODE,
-                Settings.Secure.LOCATION_MODE_OFF
-            )
-            mod != Settings.Secure.LOCATION_MODE_OFF
-        }
-    }
-
-    private fun startScanning() {
-        // Here we intervene the scanning process and check whether the user allowed us to use location.
-        if(!hasLocationPermission()) {
-            // Here you have to request the approprite location permission similar to that main activity class
-            return;
-        }
-        // Location service must be enabled
-        if(!checkLocationService(() -> // Pass a Runnable that starts scanning)) return;
-
-
-
-        // Everything is good, CAN START SCANNING
-    }*/
-
-
     private fun stopScan() {
         if (callback != null) {
             if (ActivityCompat.checkSelfPermission(
@@ -317,8 +256,7 @@ class BuscaDispositivosActivity : AppCompatActivity() {
                         this,
                         arrayOf(
                             Manifest.permission.ACCESS_FINE_LOCATION,
-                            Manifest.permission.ACCESS_BACKGROUND_LOCATION,
-                            Manifest.permission.BLUETOOTH_SCAN
+                            Manifest.permission.ACCESS_BACKGROUND_LOCATION
                         ),
                         1
                     )
@@ -359,14 +297,17 @@ class BuscaDispositivosActivity : AppCompatActivity() {
 
     private fun imprimeMap(map: HashMap<String, BluetoothDevice>): String {
         val com = "IAA-PROJECT: Contenido del MAP"
-        var añade = ""
+        var anade = ""
         for (e in map) {
-            añade = "$añade\n${e.key}"
+            anade = "$anade\n${e.key}"
         }
-        return "$com $añade"
+        return "$com $anade"
     }
 
+
+    @SuppressLint("SetTextI18n")
     private fun cargaListado() {
+
         tablaDispositivos!!.removeAllViews()
         // variables
         if (foundDevices.isNotEmpty()) {
@@ -389,6 +330,13 @@ class BuscaDispositivosActivity : AppCompatActivity() {
             }
         } else {
             Toast.makeText(this, "No se han encontrado dispositivos", Toast.LENGTH_SHORT).show()
+        }
+        if(conectados.isNotEmpty()){
+            for (c in conectados){
+                if(!list.contains(c)){
+                    list.add(c)
+                }
+            }
         }
 
         var layoutCelda: TableRow.LayoutParams
@@ -423,8 +371,7 @@ class BuscaDispositivosActivity : AppCompatActivity() {
                         this,
                         arrayOf(
                             Manifest.permission.ACCESS_FINE_LOCATION,
-                            Manifest.permission.ACCESS_BACKGROUND_LOCATION,
-                            Manifest.permission.BLUETOOTH_CONNECT
+                            Manifest.permission.ACCESS_BACKGROUND_LOCATION
                         ),
                         1
                     )
@@ -519,6 +466,7 @@ class BuscaDispositivosActivity : AppCompatActivity() {
 
         tablaDispositivos!!.textAlignment = TableLayout.TEXT_ALIGNMENT_CENTER
         tablaDispositivos!!.gravity = Gravity.CENTER_HORIZONTAL
+
     }
 
     private fun conectarDispositivo(device: BluetoothDevice) {

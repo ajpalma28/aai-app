@@ -2,11 +2,10 @@ package com.example.iaa_project
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.bluetooth.BluetoothAdapter
-import android.bluetooth.BluetoothDevice
-import android.bluetooth.BluetoothManager
+import android.bluetooth.*
 import android.bluetooth.le.BluetoothLeScanner
 import android.content.Context
 import android.content.Intent
@@ -17,12 +16,13 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
-import android.widget.ArrayAdapter
-import android.widget.Toast
+import android.view.Gravity
+import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.view.ViewCompat
 import com.example.iaa_project.databinding.ActivityConectaDispositivosBinding
 import java.util.*
 import java.util.concurrent.Executors
@@ -35,7 +35,7 @@ class ConectaDispositivosActivity : AppCompatActivity() {
     private var mPairedDevices: Set<BluetoothDevice> = TreeSet<BluetoothDevice>()
     val dL2 = ArrayList<BluetoothDevice>()
     private val REQUEST_ENABLE_BLUETOOTH = 1
-    private var scanner : BluetoothLeScanner? = null
+    private var scanner: BluetoothLeScanner? = null
     private var callback: BuscaDispositivosActivity.BleScanCallback? = null
     private val foundDevices = HashMap<String, BluetoothDevice>()
     var notifUsuDef = false
@@ -47,6 +47,9 @@ class ConectaDispositivosActivity : AppCompatActivity() {
     var pwUsuDef = ""
     var myHandler: Handler? = null
     var actividad = true
+    var conectados = ArrayList<BluetoothDevice>()
+    var bluetoothGatt: BluetoothGatt? = null
+    var tablaDispositivos: TableLayout? = null
 
     private companion object {
         private const val CHANNEL_ID = "channel01"
@@ -69,9 +72,12 @@ class ConectaDispositivosActivity : AppCompatActivity() {
         nombUsuDef = bundle?.getString("nombUsuDef").toString()
         fechaUsuDef = bundle?.getString("fechaUsuDef").toString()
         pwUsuDef = bundle?.getString("pwUsuDef").toString()
+        conectados.addAll(bundle?.getParcelableArrayList<BluetoothDevice>("conectados")!!)
 
         val btm = getSystemService(BLUETOOTH_SERVICE) as BluetoothManager
         bAdapter = btm.adapter
+        tablaDispositivos = variables!!.listaDispVinculados
+
 
         if (bAdapter == null) {
             Toast.makeText(this, "Este dispositivo no soporta Bluetooth", Toast.LENGTH_SHORT).show()
@@ -104,6 +110,7 @@ class ConectaDispositivosActivity : AppCompatActivity() {
                     }
                 }
             })*/
+            conectaDispositivos(conectados)
             if (ActivityCompat.checkSelfPermission(
                     this,
                     Manifest.permission.BLUETOOTH_CONNECT
@@ -120,9 +127,9 @@ class ConectaDispositivosActivity : AppCompatActivity() {
                     )
                 }
             }
-            mPairedDevices = bAdapter!!.bondedDevices
+            cargaListado()
             myHandler = Handler(Looper.getMainLooper())
-            myHandler!!.post(object : Runnable {
+            /*myHandler!!.post(object : Runnable {
                 override fun run() {
                     if (actividad) {
                         println("SEÑAL 1: Empiezo a ejecutarme aquí")
@@ -131,21 +138,25 @@ class ConectaDispositivosActivity : AppCompatActivity() {
                         println("SEÑAL 7: Y A MIMIR")
                     }
                 }
-            })
+            })*/
             /*myHandler = Handler(Looper.getMainLooper())
             myHandler!!.post {
                 starBLEScan()
             }*/
-            var myExecutor = Executors.newSingleThreadExecutor()
-
-            myExecutor.execute {
-                //starBLEScan()
-            }
 
         }
-        //variables!!.selectDeviceRefresh.setOnClickListener{pairedDeviceList()}
         variables!!.btnCancelaConex.setOnClickListener {
-            onBackPressed()
+            val intent = Intent(this, GestionDispActivity::class.java)
+            intent.putExtra("idUsuDef", idUsuDef)
+            intent.putExtra("dniUsuDef", dniUsuDef)
+            intent.putExtra("apellUsuDef", apellUsuDef)
+            intent.putExtra("nombUsuDef", nombUsuDef)
+            intent.putExtra("fechaUsuDef", fechaUsuDef)
+            intent.putExtra("pwUsuDef", pwUsuDef)
+            intent.putExtra("notifUsuDef", notifUsuDef)
+            intent.putParcelableArrayListExtra("conectados",conectados)
+            startActivity(intent)
+            actividad = false
         }
 
     }
@@ -187,62 +198,188 @@ class ConectaDispositivosActivity : AppCompatActivity() {
         }
     }
 
-    private fun imprimeMap(map: HashMap<String, BluetoothDevice>): String{
+    private fun imprimeMap(map: HashMap<String, BluetoothDevice>): String {
         var res = ""
         var com = "IAA-PROJECT: Contenido del MAP"
         var añade = ""
-        for(e in map){
+        for (e in map) {
             añade = "$añade\n${e.key}"
         }
         res = "$com $añade"
         return res
     }
 
-    private fun cargaListado(){
-        // variables
-        if(foundDevices.isNotEmpty()){
-            Log.v(TAG,"Número de dispositivos encontrados: ${foundDevices.size}")
-            for (e in foundDevices) {
-                /*if (!mPairedDevices.contains(e.value)){
-                    mPairedDevices.plusElement(e.value)
-                }*/
-                if(!dL2.contains(e.value)) {
-                    dL2.add(e.value)
+    private fun cargaListado() {
+
+        tablaDispositivos!!.removeAllViews()
+        var layoutCelda: TableRow.LayoutParams
+        val layoutFila = TableRow.LayoutParams(
+            TableRow.LayoutParams.MATCH_PARENT,
+            200
+        )
+        var aux = 0
+        for (l in conectados) {
+            val fila = TableRow(this)
+            var imgBT: ImageView = ImageView(this).apply {
+                id = ViewCompat.generateViewId()
+                scaleType = ImageView.ScaleType.CENTER
+                setImageResource(R.mipmap.ib_bt_connect)
+            }
+            fila.addView(imgBT)
+            val numero = conectados.indexOf(l)
+            fila.id = numero
+            fila.layoutParams = layoutFila
+            fila.textAlignment = TableRow.TEXT_ALIGNMENT_CENTER
+            val texto = TextView(this)
+            if (ActivityCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.BLUETOOTH_CONNECT
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                if (Build.VERSION.SDK_INT == Build.VERSION_CODES.Q) {
+                    ActivityCompat.requestPermissions(
+                        this,
+                        arrayOf(
+                            Manifest.permission.ACCESS_FINE_LOCATION,
+                            Manifest.permission.ACCESS_BACKGROUND_LOCATION
+                        ),
+                        1
+                    )
                 }
             }
-        }
-        val list : ArrayList<BluetoothDevice> = ArrayList()
-        if(mPairedDevices.isNotEmpty()) {
-            Log.v(TAG,"Número de dispositivos en el conjunto: ${mPairedDevices.size}")
-            for(device: BluetoothDevice in mPairedDevices){
-                list.add(device)
+            texto.text = "${l.name}\n${l.address}    "
+            texto.gravity = Gravity.CENTER_VERTICAL
+            texto.textSize = 16.0F
+            layoutCelda = TableRow.LayoutParams(
+                TableRow.LayoutParams.MATCH_PARENT,
+                200
+            )
+            texto.layoutParams = layoutCelda
+            fila.addView(texto)
+            val boton = Button(this)
+            boton.text = "Desconectar"
+            boton.id = numero
+            boton.width = 336
+            fila.addView(boton)
+            fila.gravity = Gravity.CENTER
+            aux++
+            tablaDispositivos!!.addView(fila)
+
+            val executorSesion = Executors.newSingleThreadExecutor()
+
+            boton.setOnClickListener {
+                println("El width del botón es ${boton.width}\nEl height es ${boton.height}")
+                val builder = AlertDialog.Builder(this)
+                builder.setTitle(R.string.app_name)
+                builder.setMessage("¿Quiere desconectar este dispositivo?")
+                builder.setIcon(android.R.drawable.ic_dialog_alert)
+                builder.setPositiveButton("Sí") { dialogInterface, which ->
+                    executorSesion.execute {
+                        executorSesion.execute {
+                            bluetoothGatt?.disconnect()
+                            bluetoothGatt?.close()
+                            conectados.remove(l)
+                            lanzaNotificacion(
+                                notifUsuDef,
+                                "Dispositivo Bluetooth desconectado",
+                                "Se ha desconectado correctamente del dispositivo ${l.name}"
+                            )
+                            myHandler!!.post {
+                                cargaListado()
+                            }
+                        }
+                    }
+                }
+                builder.setNegativeButton("No") { dialogInterface, which ->
+
+                }
+                // Create the AlertDialog
+                val alertDialog: AlertDialog = builder.create()
+                // Set other dialog properties
+                alertDialog.setCancelable(false)
+                alertDialog.show()
             }
-        }else if(dL2.isNotEmpty()) {
-            Log.v(TAG,"Número de dispositivos en la lista: ${dL2.size}")
-            for(device: BluetoothDevice in dL2){
-                list.add(device)
-            }
-        }else {
-            Toast.makeText(this, "No se han encontrado dispositivos", Toast.LENGTH_SHORT).show()
+
         }
 
-        val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, list)
-        variables!!.listaDispVinculados.adapter = adapter
-        /*vario.selectDeviceList.onItemClickListener = AdapterView.OnItemClickListener{ _, _, position, _ ->
-            val device: BluetoothDevice = list[position]
-            val address: String = device.address
-            val name: String = device.name
+        tablaDispositivos!!.textAlignment = TableLayout.TEXT_ALIGNMENT_CENTER
+        tablaDispositivos!!.gravity = Gravity.CENTER_HORIZONTAL
 
-            val intent = Intent(this, ControlActivity::class.java)
-            intent.putExtra(EXTRA_ADDRESS, address)
-            startActivity(intent)
+    }
 
-        }*/
+    private fun conectaDispositivos(lista: ArrayList<BluetoothDevice>) {
+        for (l in lista) {
+            if (ActivityCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.BLUETOOTH_CONNECT
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                if (Build.VERSION.SDK_INT == Build.VERSION_CODES.Q) {
+                    ActivityCompat.requestPermissions(
+                        this,
+                        arrayOf(
+                            Manifest.permission.ACCESS_FINE_LOCATION,
+                            Manifest.permission.ACCESS_BACKGROUND_LOCATION,
+                            Manifest.permission.BLUETOOTH_CONNECT
+                        ),
+                        1
+                    )
+                }
+            }
+            bluetoothGatt = l.connectGatt(this, false, bleGattCallback)
+        }
+    }
+
+    private val bleGattCallback: BluetoothGattCallback by lazy {
+        object : BluetoothGattCallback() {
+            override fun onConnectionStateChange(gatt: BluetoothGatt?, status: Int, newState: Int) {
+//                super.onConnectionStateChange(gatt, status, newState)
+                Log.v(TAG, "onConnectionStateChange")
+                if (newState == BluetoothProfile.STATE_CONNECTED) {
+                    if (ActivityCompat.checkSelfPermission(
+                            this@ConectaDispositivosActivity,
+                            Manifest.permission.BLUETOOTH_CONNECT
+                        ) != PackageManager.PERMISSION_GRANTED
+                    ) {
+                        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.Q) {
+                            ActivityCompat.requestPermissions(
+                                this@ConectaDispositivosActivity,
+                                arrayOf(
+                                    Manifest.permission.ACCESS_FINE_LOCATION,
+                                    Manifest.permission.ACCESS_BACKGROUND_LOCATION,
+                                    Manifest.permission.BLUETOOTH_CONNECT
+                                ),
+                                1
+                            )
+                        }
+                    }
+                    bluetoothGatt?.discoverServices()
+                }
+            }
+
+            override fun onServicesDiscovered(gatt: BluetoothGatt?, status: Int) {
+                Log.v(TAG, "onServicesDiscovered")
+            }
+
+            override fun onCharacteristicRead(
+                gatt: BluetoothGatt?,
+                characteristic: BluetoothGattCharacteristic?,
+                status: Int
+            ) {
+                Log.v(TAG, "onCharacteristicRead")
+            }
+
+            override fun onCharacteristicChanged(
+                gatt: BluetoothGatt?,
+                characteristic: BluetoothGattCharacteristic?
+            ) {
+                Log.v(TAG, "onCharacteristicChanged")
+            }
+        }
     }
 
     override fun onBackPressed() {
         super.onBackPressed()
-        actividad = false
     }
 
 }
