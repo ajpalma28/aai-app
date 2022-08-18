@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.core.app.ActivityCompat
 import com.example.iaa_project.databinding.ActivityGestionDispBinding
-import java.security.Principal
 
 class GestionDispActivity : AppCompatActivity() {
 
@@ -38,7 +37,7 @@ class GestionDispActivity : AppCompatActivity() {
         fechaUsuDef = bundle?.getString("fechaUsuDef").toString()
         pwUsuDef = bundle?.getString("pwUsuDef").toString()
         if(bundle?.getParcelableArrayList<BluetoothDevice>("conectados")!!.isNotEmpty()){
-            conectados.addAll(bundle?.getParcelableArrayList<BluetoothDevice>("conectados")!!)
+            conectados.addAll(bundle.getParcelableArrayList("conectados")!!)
         }
 
         val btnBuscar = variables!!.btnBuscaDisp

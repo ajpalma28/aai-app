@@ -50,6 +50,8 @@ class BuscaDispositivosActivity : AppCompatActivity() {
     var actividad = true
     var tablaDispositivos: TableLayout? = null
     var conectados = ArrayList<BluetoothDevice>()
+    var estanConectados = false
+    var btnConectarTodo: Button? = null
 
     private companion object {
         private const val CHANNEL_ID = "channel01"
@@ -121,7 +123,9 @@ class BuscaDispositivosActivity : AppCompatActivity() {
         if (bAdapter!!.isEnabled) {
 
             val handler2 = Handler(Looper.getMainLooper())
-            handler2.post { starBLEScan() }
+            handler2.post {
+                starBLEScan()
+            }
 
             myHandler = Handler(Looper.getMainLooper())
             myHandler!!.post {
@@ -160,6 +164,16 @@ class BuscaDispositivosActivity : AppCompatActivity() {
             startActivity(intent)
             stopScan()
             actividad=false
+        }
+
+        btnConectarTodo = variables!!.btnConectaAll
+
+        btnConectarTodo!!.setOnClickListener {
+            if(!estanConectados){
+                conectaTodos(dL2)
+            }else{
+                desconectaTodos(dL2)
+            }
         }
 
     }
@@ -385,6 +399,7 @@ class BuscaDispositivosActivity : AppCompatActivity() {
                 200
             )
             texto.layoutParams = layoutCelda
+            texto.isLongClickable=true
             fila.addView(texto)
             val boton = Button(this)
             if (conectados.contains(l)) {
@@ -407,7 +422,7 @@ class BuscaDispositivosActivity : AppCompatActivity() {
                     //set title for alert dialog
                     builder.setTitle(R.string.app_name)
                     //set message for alert dialog
-                    builder.setMessage("¿Quiere conectarse a este dispositivo?")
+                    builder.setMessage("¿Quiere conectarse al dispositivo ${l.name}?")
                     builder.setIcon(android.R.drawable.ic_dialog_alert)
                     builder.setPositiveButton("Sí") { dialogInterface, which ->
                         executorSesion.execute {
@@ -435,7 +450,7 @@ class BuscaDispositivosActivity : AppCompatActivity() {
                     println("El width del botón es ${boton.width}\nEl height es ${boton.height}")
                     val builder = AlertDialog.Builder(this)
                     builder.setTitle(R.string.app_name)
-                    builder.setMessage("¿Quiere desconectar este dispositivo?")
+                    builder.setMessage("¿Quiere desconectar el dispositivo ${l.name}?")
                     builder.setIcon(android.R.drawable.ic_dialog_alert)
                     builder.setPositiveButton("Sí") { dialogInterface, which ->
                         executorSesion.execute {
@@ -461,12 +476,162 @@ class BuscaDispositivosActivity : AppCompatActivity() {
                     alertDialog.show()
                 }
             }
+            texto.setOnLongClickListener {
+                if (boton.text == "Conectar") {
+                    val builder = AlertDialog.Builder(this)
+                    //set title for alert dialog
+                    builder.setTitle(R.string.app_name)
+                    //set message for alert dialog
+                    builder.setMessage("¿Quiere conectarse al dispositivo ${l.name}?")
+                    builder.setIcon(android.R.drawable.ic_dialog_alert)
+                    builder.setPositiveButton("Sí") { dialogInterface, which ->
+                        executorSesion.execute {
+                            executorSesion.execute {
+                                //eliminaSesion(numero)
+                                conectarDispositivo(l)
+                                lanzaNotificacion(
+                                    notifUsuDef,
+                                    "Dispositivo Bluetooth conectado",
+                                    "Se ha conectado correctamente con el dispositivo ${l.name}"
+                                )
+                                conectados.add(l)
+                            }
+                        }
+                    }
+                    builder.setNegativeButton("No") { dialogInterface, which ->
+
+                    }
+                    // Create the AlertDialog
+                    val alertDialog: AlertDialog = builder.create()
+                    // Set other dialog properties
+                    alertDialog.setCancelable(false)
+                    alertDialog.show()
+                } else {
+                    println("El width del botón es ${boton.width}\nEl height es ${boton.height}")
+                    val builder = AlertDialog.Builder(this)
+                    builder.setTitle(R.string.app_name)
+                    builder.setMessage("¿Quiere desconectar el dispositivo ${l.name}?")
+                    builder.setIcon(android.R.drawable.ic_dialog_alert)
+                    builder.setPositiveButton("Sí") { dialogInterface, which ->
+                        executorSesion.execute {
+                            executorSesion.execute {
+                                bluetoothGatt?.disconnect()
+                                bluetoothGatt?.close()
+                                conectados.remove(l)
+                                lanzaNotificacion(
+                                    notifUsuDef,
+                                    "Dispositivo Bluetooth desconectado",
+                                    "Se ha desconectado correctamente del dispositivo ${l.name}"
+                                )
+                            }
+                        }
+                    }
+                    builder.setNegativeButton("No") { dialogInterface, which ->
+
+                    }
+                    // Create the AlertDialog
+                    val alertDialog: AlertDialog = builder.create()
+                    // Set other dialog properties
+                    alertDialog.setCancelable(false)
+                    alertDialog.show()
+                }
+                true
+            }
 
         }
 
         tablaDispositivos!!.textAlignment = TableLayout.TEXT_ALIGNMENT_CENTER
         tablaDispositivos!!.gravity = Gravity.CENTER_HORIZONTAL
+        if(estanConectados){
+            btnConectarTodo?.text = "Desconectar todo"
+        }else{
+            btnConectarTodo?.text="Conectar todo"
+        }
 
+    }
+
+    private fun conectaTodos(lista: ArrayList<BluetoothDevice>){
+        val executorSesion = Executors.newSingleThreadExecutor()
+        val builder = AlertDialog.Builder(this)
+        //set title for alert dialog
+        builder.setTitle(R.string.app_name)
+        //set message for alert dialog
+        builder.setMessage("¿Quiere conectarse a todos los dispositivos?")
+        builder.setIcon(android.R.drawable.ic_dialog_alert)
+        builder.setPositiveButton("Sí") { dialogInterface, which ->
+            executorSesion.execute {
+                executorSesion.execute {
+                    for(l in lista){
+                        conectarDispositivo(l)
+                        conectados.add(l)
+                    }
+                }
+                lanzaNotificacion(
+                    notifUsuDef,
+                    "Dispositivos Bluetooth conectados",
+                    "Se han conectado correctamente todos los dispositivos"
+                )
+            }
+        }
+        builder.setNegativeButton("No") { dialogInterface, which ->
+
+        }
+        // Create the AlertDialog
+        val alertDialog: AlertDialog = builder.create()
+        // Set other dialog properties
+        alertDialog.setCancelable(false)
+        alertDialog.show()
+        estanConectados=true
+    }
+
+    private fun desconectaTodos(lista: ArrayList<BluetoothDevice>){
+        val executorSesion = Executors.newSingleThreadExecutor()
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle(R.string.app_name)
+        builder.setMessage("¿Quiere desconectar todos los dispositivos?")
+        builder.setIcon(android.R.drawable.ic_dialog_alert)
+        builder.setPositiveButton("Sí") { dialogInterface, which ->
+            executorSesion.execute {
+                executorSesion.execute {
+                    if (ActivityCompat.checkSelfPermission(
+                            this,
+                            Manifest.permission.BLUETOOTH_CONNECT
+                        ) != PackageManager.PERMISSION_GRANTED
+                    ) {
+                        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.Q) {
+                            ActivityCompat.requestPermissions(
+                                this,
+                                arrayOf(
+                                    Manifest.permission.ACCESS_FINE_LOCATION,
+                                    Manifest.permission.ACCESS_BACKGROUND_LOCATION
+                                ),
+                                1
+                            )
+                        }
+                    }
+                    for(l in lista){
+                        bluetoothGatt?.disconnect()
+                        bluetoothGatt?.close()
+                        conectados.remove(l)
+
+                    }
+                    lanzaNotificacion(
+                        notifUsuDef,
+                        "Dispositivos Bluetooth desconectados",
+                        "Se han desconectado correctamente todos los dispositivos"
+                    )
+                }
+            }
+        }
+        builder.setNegativeButton("No") { dialogInterface, which ->
+
+        }
+        // Create the AlertDialog
+        val alertDialog: AlertDialog = builder.create()
+        // Set other dialog properties
+        alertDialog.setCancelable(false)
+        alertDialog.show()
+        estanConectados=false
     }
 
     private fun conectarDispositivo(device: BluetoothDevice) {
