@@ -1,5 +1,6 @@
 package com.example.iaa_project
 
+import android.app.AlertDialog
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
@@ -150,10 +151,30 @@ class PrincipalActivity : AppCompatActivity() {
             }
 
         }*/
-
+        val executorSesion = Executors.newSingleThreadExecutor()
         btnCierreSesion.setOnClickListener{
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
+            val builder = AlertDialog.Builder(this)
+            //set title for alert dialog
+            builder.setTitle(R.string.app_name)
+            //set message for alert dialog
+            builder.setMessage("¿Está seguro de querer la cerrar sesión?")
+            builder.setIcon(android.R.drawable.ic_dialog_alert)
+            builder.setPositiveButton("Sí") { dialogInterface, which ->
+                executorSesion.execute {
+                    executorSesion.execute {
+                        val intent = Intent(this, MainActivity::class.java)
+                        startActivity(intent)
+                    }
+                }
+            }
+            builder.setNegativeButton("No") { dialogInterface, which ->
+
+            }
+            // Create the AlertDialog
+            val alertDialog: AlertDialog = builder.create()
+            // Set other dialog properties
+            alertDialog.setCancelable(false)
+            alertDialog.show()
         }
 
     }

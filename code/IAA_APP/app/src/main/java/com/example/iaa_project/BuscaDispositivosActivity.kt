@@ -138,15 +138,24 @@ class BuscaDispositivosActivity : AppCompatActivity() {
             //TODO: V2 (Lo que aproximadamente funciona)
 
             myHandler = Handler(Looper.getMainLooper())
-            myHandler!!.post(object : Runnable {
+            myHandler!!.post {
+                val avisoComienzo = Toast.makeText(
+                    this,
+                    "Inicializando el escáner de dispositivos Bluetooth",
+                    Toast.LENGTH_SHORT
+                )
+                avisoComienzo.setGravity(Gravity.CENTER,0,0)
+                avisoComienzo.show()
+            }
+            myHandler!!.postDelayed(object : Runnable {
                 override fun run() {
                     if (actividad) {
                         println("SEÑAL 1: Empiezo a ejecutarme aquí")
                         cargaListado()
-                        myHandler!!.postDelayed(this, 5000)
+                        myHandler!!.postDelayed(this, 2000)
                     }
                 }
-            })
+            },2000)
             /*
             var myExecutor = Executors.newSingleThreadExecutor()
             myExecutor.execute {
@@ -164,7 +173,6 @@ class BuscaDispositivosActivity : AppCompatActivity() {
             },5000L)*/
 
         }
-        //variables!!.selectDeviceRefresh.setOnClickListener{pairedDeviceList()}
         variables!!.selectDeviceRefresh.setOnClickListener {
             Log.v(TAG, imprimeMap(foundDevices))
             //
@@ -247,6 +255,7 @@ class BuscaDispositivosActivity : AppCompatActivity() {
                 }
             }
             Log.v(TAG, "Ejecuto fuera de los permisos")
+            bAdapter!!.startDiscovery()
             scanner!!.startScan(scanFilters, scanSettings, callback)
             Log.v(TAG, "Escaner supuestamente iniciado")
         }

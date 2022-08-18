@@ -31,6 +31,8 @@ class MainActivity : AppCompatActivity() {
         variables = ActivityMainBinding.inflate(layoutInflater)
         setContentView(variables!!.root)
 
+        checkBlePermissions()
+
         val botonReg = variables!!.btnRegistro
         val botonInSes = variables!!.btnInicioSesion
         val botonAcercaDe = variables!!.btnAcercaDe
