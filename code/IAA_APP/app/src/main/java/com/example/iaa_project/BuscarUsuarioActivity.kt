@@ -166,7 +166,7 @@ class BuscarUsuarioActivity : AppCompatActivity() {
             println(e.toString())
             Handler(Looper.getMainLooper()).post {
                 val mensajeError =
-                    "No se ha podido iniciar sesión, ha ocurrido un error con la base de datos."
+                    "No se ha podido encontrar el usuario $id, ha ocurrido un error con la base de datos."
                 val txtMostrar = Toast.makeText(this, mensajeError, Toast.LENGTH_LONG)
                 txtMostrar.setGravity(Gravity.CENTER_VERTICAL, 0, 0)
                 txtMostrar.show()

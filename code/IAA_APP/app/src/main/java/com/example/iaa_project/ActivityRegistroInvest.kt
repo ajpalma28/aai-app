@@ -21,6 +21,7 @@ import java.sql.DriverManager
 import java.util.concurrent.Executors
 import javax.net.ssl.*
 import javax.security.cert.CertificateException
+import kotlin.random.Random
 
 class ActivityRegistroInvest : AppCompatActivity() {
     var variables: ActivityRegistroInvestBinding? = null
@@ -180,7 +181,8 @@ class ActivityRegistroInvest : AppCompatActivity() {
                     )
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 val notifationManagerCompat = NotificationManagerCompat.from(this)
-                notifationManagerCompat.notify(123456, builder.build())
+                notifationManagerCompat.notify(
+                    Random.nextInt(0,999999), builder.build())
 
                 txtMostrar.setGravity(Gravity.CENTER_VERTICAL, 0, 0)
                 txtMostrar.show()
@@ -223,7 +225,7 @@ class ActivityRegistroInvest : AppCompatActivity() {
                     .setStyle(NotificationCompat.BigTextStyle().bigText(mensajeError))
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 val notifationManagerCompat = NotificationManagerCompat.from(this)
-                notifationManagerCompat.notify(123456, builder.build())
+                notifationManagerCompat.notify(Random.nextInt(0,999999), builder.build())
 
                 txtMostrar.setGravity(Gravity.CENTER_VERTICAL, 0, 0)
                 txtMostrar.show()

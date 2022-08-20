@@ -64,6 +64,13 @@ class BuscaDispositivosActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.S)
     @SuppressLint("MissingPermission")
     override fun onCreate(savedInstanceState: Bundle?) {
+        if(conectados.isEmpty()){
+            Log.v(TAG,"No hay dispositivos conectados")
+        }else{
+            for(d in conectados){
+                Log.v(TAG,"Dispositivo conectado: ${d.name}")
+            }
+        }
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_busca_dispositivos)
 
@@ -150,20 +157,8 @@ class BuscaDispositivosActivity : AppCompatActivity() {
         variables!!.selectDeviceRefresh.setOnClickListener {
             Log.v(TAG, imprimeMap(foundDevices))
             //
-            //this.onBackPressed()
-            val intent = Intent(this, GestionDispActivity::class.java)
-            intent.putExtra("idUsuDef", idUsuDef)
-            intent.putExtra("dniUsuDef", dniUsuDef)
-            intent.putExtra("apellUsuDef", apellUsuDef)
-            intent.putExtra("nombUsuDef", nombUsuDef)
-            intent.putExtra("fechaUsuDef", fechaUsuDef)
-            intent.putExtra("pwUsuDef", pwUsuDef)
-            intent.putExtra("notifUsuDef", notifUsuDef)
-            //intent.putExtra("conectados",conectados)
-            intent.putParcelableArrayListExtra("conectados",conectados)
-            startActivity(intent)
-            stopScan()
-            actividad=false
+            this.onBackPressed()
+
         }
 
         btnConectarTodo = variables!!.btnConectaAll
@@ -304,9 +299,19 @@ class BuscaDispositivosActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        super.onBackPressed()
-        actividad = false
+        val intent = Intent(this, GestionDispActivity::class.java)
+        intent.putExtra("idUsuDef", idUsuDef)
+        intent.putExtra("dniUsuDef", dniUsuDef)
+        intent.putExtra("apellUsuDef", apellUsuDef)
+        intent.putExtra("nombUsuDef", nombUsuDef)
+        intent.putExtra("fechaUsuDef", fechaUsuDef)
+        intent.putExtra("pwUsuDef", pwUsuDef)
+        intent.putExtra("notifUsuDef", notifUsuDef)
+        //intent.putExtra("conectados",conectados)
+        intent.putParcelableArrayListExtra("conectados",conectados)
+        startActivity(intent)
         stopScan()
+        actividad=false
     }
 
     private fun imprimeMap(map: HashMap<String, BluetoothDevice>): String {

@@ -18,6 +18,7 @@ import com.example.iaa_project.exceptions.*
 import com.example.iaa_project.exceptions.InvalidFechaException
 import java.sql.DriverManager
 import java.util.concurrent.Executors
+import kotlin.random.Random
 
 class RegistrarUsuarioActivity : AppCompatActivity() {
 
@@ -109,7 +110,7 @@ class RegistrarUsuarioActivity : AppCompatActivity() {
                     )
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 val notifationManagerCompat = NotificationManagerCompat.from(this)
-                notifationManagerCompat.notify(123456, builder.build())
+                notifationManagerCompat.notify(Random.nextInt(0,999999), builder.build())
 
                 txtMostrar.setGravity(Gravity.CENTER_VERTICAL, 0, 0)
                 txtMostrar.show()
@@ -137,7 +138,7 @@ class RegistrarUsuarioActivity : AppCompatActivity() {
                     .setStyle(NotificationCompat.BigTextStyle().bigText(mensajeError))
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 val notifationManagerCompat = NotificationManagerCompat.from(this)
-                notifationManagerCompat.notify(123456, builder.build())
+                notifationManagerCompat.notify(Random.nextInt(0,999999), builder.build())
 
                 txtMostrar.setGravity(Gravity.CENTER_VERTICAL, 0, 0)
                 txtMostrar.show()

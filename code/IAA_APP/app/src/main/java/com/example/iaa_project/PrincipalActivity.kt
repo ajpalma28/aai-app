@@ -1,5 +1,6 @@
 package com.example.iaa_project
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -12,6 +13,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.Gravity
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -49,8 +51,10 @@ class PrincipalActivity : AppCompatActivity() {
 
     private companion object {
         private const val CHANNEL_ID = "channel01"
+        const val TAG = "IAAPROJECT"
     }
 
+    @SuppressLint("MissingPermission")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_principal)
@@ -63,6 +67,16 @@ class PrincipalActivity : AppCompatActivity() {
         fechaUsuDef = bundle?.getString("fechaUsuDef").toString()
         pwUsuDef = bundle?.getString("pwUsuDef").toString()
         notifUsuDef = bundle?.getBoolean("notifUsuDef") == true
+        if(bundle?.getParcelableArrayList<BluetoothDevice>("conectados")!!.isNotEmpty()){
+            conectados.addAll(bundle.getParcelableArrayList("conectados")!!)
+        }
+        if(conectados.isEmpty()){
+            Log.v(TAG,"No hay dispositivos conectados")
+        }else{
+            for(d in conectados){
+                Log.v(TAG,"Dispositivo conectado: ${d.name}")
+            }
+        }
 
         variables = ActivityPrincipalBinding.inflate(layoutInflater)
         setContentView(variables!!.root)
@@ -112,7 +126,15 @@ class PrincipalActivity : AppCompatActivity() {
         }
 
         btnStartMed.setOnClickListener{
-            val intent = Intent(this, VisualiMedActivity::class.java)
+            val intent = Intent(this, ComienzoMedicionesActivity::class.java)
+            intent.putExtra("idUsuDef", idUsuDef)
+            intent.putExtra("dniUsuDef", dniUsuDef)
+            intent.putExtra("apellUsuDef", apellUsuDef)
+            intent.putExtra("nombUsuDef", nombUsuDef)
+            intent.putExtra("fechaUsuDef", fechaUsuDef)
+            intent.putExtra("pwUsuDef", pwUsuDef)
+            intent.putExtra("notifUsuDef", notifUsuDef)
+            intent.putParcelableArrayListExtra("conectados",conectados)
             startActivity(intent)
         }
 

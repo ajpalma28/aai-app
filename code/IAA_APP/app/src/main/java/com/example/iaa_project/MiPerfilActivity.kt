@@ -25,6 +25,7 @@ import com.example.iaa_project.exceptions.errorFecha3
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import java.sql.DriverManager
 import java.util.concurrent.Executors
+import kotlin.random.Random
 
 
 class MiPerfilActivity : AppCompatActivity() {
@@ -486,7 +487,7 @@ class MiPerfilActivity : AppCompatActivity() {
                 .setStyle(NotificationCompat.BigTextStyle().bigText(mensaje))
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             val notifationManagerCompat = NotificationManagerCompat.from(this)
-            notifationManagerCompat.notify(123456, builder.build())
+            notifationManagerCompat.notify(Random.nextInt(0,999999), builder.build())
         }
     }
 

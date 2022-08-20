@@ -1,11 +1,13 @@
 package com.example.iaa_project
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.bluetooth.BluetoothDevice
 import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.core.app.ActivityCompat
 import com.example.iaa_project.databinding.ActivityGestionDispBinding
 
@@ -21,6 +23,11 @@ class GestionDispActivity : AppCompatActivity() {
     var pwUsuDef = ""
     var conectados = ArrayList<BluetoothDevice>()
 
+    private companion object{
+        const val TAG = "IAAPROJECT"
+    }
+
+    @SuppressLint("MissingPermission")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_gestion_disp)
@@ -38,6 +45,14 @@ class GestionDispActivity : AppCompatActivity() {
         pwUsuDef = bundle?.getString("pwUsuDef").toString()
         if(bundle?.getParcelableArrayList<BluetoothDevice>("conectados")!!.isNotEmpty()){
             conectados.addAll(bundle.getParcelableArrayList("conectados")!!)
+        }
+
+        if(conectados.isEmpty()){
+            Log.v(TAG,"No hay dispositivos conectados")
+        }else{
+            for(d in conectados){
+                Log.v(TAG,"Dispositivo conectado: ${d.name}")
+            }
         }
 
         val btnBuscar = variables!!.btnBuscaDisp

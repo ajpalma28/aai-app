@@ -1,5 +1,6 @@
 package com.example.iaa_project
 
+import android.bluetooth.BluetoothDevice
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -103,6 +104,7 @@ class LoginActivity : AppCompatActivity() {
                 bienve.setGravity(Gravity.CENTER_VERTICAL, 0, 0)
                 bienve.show()
             }
+            val conectados = ArrayList<BluetoothDevice>()
             val intento2 = Intent(this, PrincipalActivity::class.java)
             intento2.putExtra("idUsuDef", idUsuDef)
             intento2.putExtra("dniUsuDef", dniUsuDef)
@@ -111,6 +113,7 @@ class LoginActivity : AppCompatActivity() {
             intento2.putExtra("fechaUsuDef", fechaUsuDef)
             intento2.putExtra("pwUsuDef", pwUsuDef)
             intento2.putExtra("notifUsuDef", notifUsuDef)
+            intento2.putParcelableArrayListExtra("conectados",conectados)
             startActivity(intento2)
             println("El inicio de sesión se ha llevado a cabo con éxito.")
 

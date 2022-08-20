@@ -21,6 +21,7 @@ import com.example.iaa_project.databinding.ActivityPerfilUsuarioBinding
 import com.example.iaa_project.exceptions.*
 import java.sql.DriverManager
 import java.util.concurrent.Executors
+import kotlin.random.Random
 
 
 class PerfilUsuarioActivity : AppCompatActivity() {
@@ -565,7 +566,7 @@ class PerfilUsuarioActivity : AppCompatActivity() {
                 .setStyle(NotificationCompat.BigTextStyle().bigText(mensaje))
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             val notifationManagerCompat = NotificationManagerCompat.from(this)
-            notifationManagerCompat.notify(123456, builder.build())
+            notifationManagerCompat.notify(Random.nextInt(0,999999), builder.build())
         }
     }
 

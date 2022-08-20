@@ -26,6 +26,7 @@ import com.example.iaa_project.databinding.ActivityConectaDispositivosBinding
 import java.util.*
 import java.util.concurrent.Executors
 import kotlin.collections.HashMap
+import kotlin.random.Random
 
 class ConectaDispositivosActivity : AppCompatActivity() {
 
@@ -187,7 +188,7 @@ class ConectaDispositivosActivity : AppCompatActivity() {
                 .setStyle(NotificationCompat.BigTextStyle().bigText(mensaje))
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             val notifationManagerCompat = NotificationManagerCompat.from(this)
-            notifationManagerCompat.notify(123456, builder.build())
+            notifationManagerCompat.notify(Random.nextInt(0,999999), builder.build())
         }
     }
 

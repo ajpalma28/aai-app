@@ -10,7 +10,8 @@
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
-    <uses-permission android:name="android.permission.BLUETOOTH_PRIVILEGED"
+    <uses-permission
+        android:name="android.permission.BLUETOOTH_PRIVILEGED"
         tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADVERTISE" />
@@ -31,6 +32,9 @@
         android:theme="@style/Theme.IAA_PROJECT"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <activity
+            android:name=".ComienzoMedicionesActivity"
+            android:exported="false" />
         <activity
             android:name=".ConectaDispositivosActivity"
             android:exported="false" />
@@ -86,9 +90,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <service
-            android:foregroundServiceType="location"
-            android:name="com.example.iaa_project.BuscaDispositivosActivity" />
+            android:name=".BuscaDispositivosActivity"
+            android:foregroundServiceType="location" />
     </application>
 
 </manifest>
