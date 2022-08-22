@@ -63,22 +63,23 @@
             app:layout_constraintTop_toBottomOf="@+id/divider70"
             tools:ignore="MissingConstraints" />
 
-        <Button
-            android:id="@+id/repreFreqRespT3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="36dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="28dp"
-            android:backgroundTint="#49D64F"
-            android:enabled="false"
-            android:text="-"
-            android:textColor="#000000"
-            app:layout_constraintEnd_toStartOf="@+id/divider72"
-            app:layout_constraintStart_toEndOf="@+id/nomGirosT17"
-            app:layout_constraintTop_toBottomOf="@+id/repreFreqCardT3" />
+            <Button
+                android:id="@+id/repreFreqRespT3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="36dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="28dp"
+                android:backgroundTint="#49D64F"
+                android:enabled="false"
+                android:text="-"
+                android:textColor="#000000"
+                app:layout_constraintEnd_toStartOf="@+id/divider72"
+                app:layout_constraintHorizontal_bias="0.666"
+                app:layout_constraintStart_toEndOf="@+id/nomGirosT17"
+                app:layout_constraintTop_toBottomOf="@+id/repreFreqCardT3" />
 
-        <View
+            <View
             android:id="@+id/divider69"
             android:layout_width="3dp"
             android:layout_height="330dp"
@@ -99,22 +100,20 @@
             app:layout_constraintStart_toEndOf="@+id/divider69"
             app:layout_constraintTop_toBottomOf="@+id/nombT17" />
 
-        <Button
-            android:id="@+id/button54"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="28dp"
-            android:backgroundTint="#D30E00"
-            android:enabled="false"
-            android:text="-"
-            android:textColor="#FFFFFF"
-            app:layout_constraintEnd_toStartOf="@+id/divider72"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@+id/nomNivBatT19"
-            app:layout_constraintTop_toBottomOf="@+id/repreTempAmbT3" />
+            <Button
+                android:id="@+id/repreGirosT3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="28dp"
+                android:backgroundTint="#D30E00"
+                android:enabled="false"
+                android:text="-"
+                android:textColor="#FFFFFF"
+                app:layout_constraintEnd_toStartOf="@+id/divider72"
+                app:layout_constraintTop_toBottomOf="@+id/repreTempAmbT3" />
 
-        <View
+            <View
             android:id="@+id/divider70"
             android:layout_width="330dp"
             android:layout_height="3dp"
@@ -134,37 +133,39 @@
             app:layout_constraintStart_toEndOf="@+id/divider69"
             app:layout_constraintTop_toBottomOf="@+id/nomGirosT17" />
 
-        <Button
-            android:id="@+id/button56"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="60dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="28dp"
-            android:backgroundTint="#D30E00"
-            android:enabled="false"
-            android:text="-"
-            android:textColor="#FFFFFF"
-            app:layout_constraintEnd_toStartOf="@+id/divider72"
-            app:layout_constraintStart_toEndOf="@+id/nomNivBatT18"
-            app:layout_constraintTop_toBottomOf="@+id/button54" />
+            <Button
+                android:id="@+id/repreBattT3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="60dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="28dp"
+                android:backgroundTint="#D30E00"
+                android:enabled="false"
+                android:text="-"
+                android:textColor="#FFFFFF"
+                app:layout_constraintEnd_toStartOf="@+id/divider72"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toEndOf="@+id/nomNivBatT18"
+                app:layout_constraintTop_toBottomOf="@+id/repreGirosT3" />
 
-        <Button
-            android:id="@+id/repreTempAmbT3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="38dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="28dp"
-            android:backgroundTint="#FFEB3B"
-            android:enabled="false"
-            android:text="-"
-            android:textColor="#000000"
-            app:layout_constraintEnd_toStartOf="@+id/divider72"
-            app:layout_constraintStart_toEndOf="@+id/nomTempAmbT17"
-            app:layout_constraintTop_toBottomOf="@+id/repreFreqRespT3" />
+            <Button
+                android:id="@+id/repreTempAmbT3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="38dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="28dp"
+                android:backgroundTint="#FFEB3B"
+                android:enabled="false"
+                android:text="-"
+                android:textColor="#000000"
+                app:layout_constraintEnd_toStartOf="@+id/divider72"
+                app:layout_constraintHorizontal_bias="0.666"
+                app:layout_constraintStart_toEndOf="@+id/nomTempAmbT17"
+                app:layout_constraintTop_toBottomOf="@+id/repreFreqRespT3" />
 
-        <TextView
+            <TextView
             android:id="@+id/nomNivBatT19"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -232,20 +233,18 @@
             app:layout_constraintEnd_toStartOf="@+id/divider65"
             app:layout_constraintTop_toBottomOf="@+id/repreAcelT2" />
 
-        <Button
-            android:id="@+id/repreAcelT2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="60dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="30dp"
-            android:backgroundTint="#FFEB3B"
-            android:enabled="false"
-            android:text="-"
-            android:textColor="#000000"
-            app:layout_constraintEnd_toStartOf="@+id/divider65"
-            app:layout_constraintStart_toEndOf="@+id/nomTempAmbT16"
-            app:layout_constraintTop_toBottomOf="@+id/repreTempCorpT2" />
+            <Button
+                android:id="@+id/repreAcelT2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="29dp"
+                android:backgroundTint="#FFEB3B"
+                android:enabled="false"
+                android:text="-"
+                android:textColor="#000000"
+                app:layout_constraintEnd_toStartOf="@+id/divider65"
+                app:layout_constraintTop_toBottomOf="@+id/repreTempCorpT2" />
 
         <TextView
             android:id="@+id/nomGirosT16"
@@ -267,15 +266,17 @@
             app:layout_constraintStart_toStartOf="@+id/divider68"
             app:layout_constraintTop_toTopOf="@+id/divider68" />
 
-        <TextView
-            android:id="@+id/nomTempAmbT16"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="55dp"
-            android:layout_marginTop="34dp"
-            android:text="Acelerómetro"
-            app:layout_constraintStart_toEndOf="@+id/divider66"
-            app:layout_constraintTop_toBottomOf="@+id/nomGirosT16" />
+            <TextView
+                android:id="@+id/nomTempAmbT16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="55dp"
+                android:layout_marginTop="34dp"
+                android:layout_marginEnd="67dp"
+                android:text="Acelerómetro"
+                app:layout_constraintEnd_toStartOf="@+id/repreAcelT2"
+                app:layout_constraintStart_toEndOf="@+id/divider66"
+                app:layout_constraintTop_toBottomOf="@+id/nomGirosT16" />
 
         <TextView
             android:id="@+id/nombT16"

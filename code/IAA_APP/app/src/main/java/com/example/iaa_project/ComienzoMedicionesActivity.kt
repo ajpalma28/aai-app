@@ -193,8 +193,8 @@ class ComienzoMedicionesActivity : AppCompatActivity() {
             intento2.putExtra("nombUsuDef", nombUsuDef)
             intento2.putExtra("fechaUsuDef", fechaUsuDef)
             intento2.putExtra("pwUsuDef", pwUsuDef)
-            intent.putParcelableArrayListExtra("conectados",conectados)
-            intent.putExtra("pacienteMed", pacienteMed)
+            intento2.putParcelableArrayListExtra("conectados",conectados)
+            intento2.putExtra("pacienteMed", pacienteMed)
             startActivity(intento2)
             println("La búsqueda del usuario se ha llevado a cabo con éxito: $idUsuarioPac")
         } catch (e1: InvalidIDException) {
