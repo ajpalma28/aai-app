@@ -2,315 +2,372 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scrollView"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".VisualiMedActivity">
+    android:layout_height="match_parent">
 
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".VisualiMedActivity">
 
-    <Button
-        android:id="@+id/repreAcelT17"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="696dp"
-        android:layout_marginEnd="64dp"
-        android:enabled="false"
-        android:text="Button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nombT1" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".VisualiMedActivity">
 
-    <TextView
-        android:id="@+id/nomGirosT17"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Frecuencia respiratoria"
-        tools:layout_editor_absoluteX="68dp"
-        tools:layout_editor_absoluteY="853dp" />
+        <Button
+            android:id="@+id/repreFreqCardT3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="28dp"
+            android:enabled="false"
+            android:text="-"
+            app:layout_constraintEnd_toStartOf="@+id/divider72"
+            app:layout_constraintTop_toBottomOf="@+id/nombT17" />
 
-    <TextView
-        android:id="@+id/nomNivBatT18"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="92dp"
-        android:layout_marginTop="772dp"
-        android:text="Nivel de batería"
-        app:layout_constraintEnd_toStartOf="@+id/button4"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nomTempAmbT1" />
+        <TextView
+            android:id="@+id/nomGirosT17"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="34dp"
+            android:text="Frecuencia respiratoria"
+            app:layout_constraintStart_toEndOf="@+id/divider69"
+            app:layout_constraintTop_toBottomOf="@+id/nomAcelT17" />
 
-    <TextView
-        android:id="@+id/nombT17"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Tipo 3"
-        android:textSize="20sp"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="177dp"
-        tools:layout_editor_absoluteY="749dp" />
+        <TextView
+            android:id="@+id/nomNivBatT18"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="47dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="22dp"
+            android:text="Nivel de batería"
+            app:layout_constraintBottom_toTopOf="@+id/divider71"
+            app:layout_constraintStart_toEndOf="@+id/divider69"
+            app:layout_constraintTop_toBottomOf="@+id/nomNivBatT19" />
 
-    <Button
-        android:id="@+id/button57"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="688dp"
-        android:layout_marginEnd="72dp"
-        android:backgroundTint="#49D64F"
-        android:enabled="false"
-        android:text="Button"
-        android:textColor="#000000"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/repreAcelT1" />
+        <TextView
+            android:id="@+id/nombT17"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="136dp"
+            android:layout_marginTop="18dp"
+            android:layout_marginEnd="135dp"
+            android:text="Tipo 3"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toStartOf="@+id/divider72"
+            app:layout_constraintStart_toEndOf="@+id/divider69"
+            app:layout_constraintTop_toBottomOf="@+id/divider70"
+            tools:ignore="MissingConstraints" />
 
-    <View
-        android:id="@+id/divider69"
-        android:layout_width="3dp"
-        android:layout_height="330dp"
-        android:background="@color/purple_500"
-        tools:layout_editor_absoluteX="39dp"
-        tools:layout_editor_absoluteY="733dp" />
+        <Button
+            android:id="@+id/repreFreqRespT3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="36dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="28dp"
+            android:backgroundTint="#49D64F"
+            android:enabled="false"
+            android:text="-"
+            android:textColor="#000000"
+            app:layout_constraintEnd_toStartOf="@+id/divider72"
+            app:layout_constraintStart_toEndOf="@+id/nomGirosT17"
+            app:layout_constraintTop_toBottomOf="@+id/repreFreqCardT3" />
 
-    <TextView
-        android:id="@+id/nomAcelT17"
-        android:layout_width="141dp"
-        android:layout_height="20dp"
-        android:text="Frecuencia cardíaca"
-        android:textAlignment="center"
-        tools:layout_editor_absoluteX="68dp"
-        tools:layout_editor_absoluteY="801dp" />
+        <View
+            android:id="@+id/divider69"
+            android:layout_width="3dp"
+            android:layout_height="330dp"
+            android:background="@color/purple_500"
+            app:layout_constraintStart_toStartOf="@+id/divider70"
+            app:layout_constraintTop_toTopOf="@+id/divider70" />
 
-    <Button
-        android:id="@+id/button54"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="688dp"
-        android:layout_marginEnd="64dp"
-        android:backgroundTint="#D30E00"
-        android:enabled="false"
-        android:text="Button"
-        android:textColor="#FFFFFF"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button3" />
+        <TextView
+            android:id="@+id/nomAcelT17"
+            android:layout_width="141dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginEnd="39dp"
+            android:text="Frecuencia cardíaca"
+            android:textAlignment="center"
+            app:layout_constraintEnd_toStartOf="@+id/repreFreqCardT3"
+            app:layout_constraintStart_toEndOf="@+id/divider69"
+            app:layout_constraintTop_toBottomOf="@+id/nombT17" />
 
-    <View
-        android:id="@+id/divider70"
-        android:layout_width="330dp"
-        android:layout_height="3dp"
-        android:background="@color/purple_500"
-        tools:layout_editor_absoluteX="40dp"
-        tools:layout_editor_absoluteY="733dp" />
+        <Button
+            android:id="@+id/button54"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="28dp"
+            android:backgroundTint="#D30E00"
+            android:enabled="false"
+            android:text="-"
+            android:textColor="#FFFFFF"
+            app:layout_constraintEnd_toStartOf="@+id/divider72"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/nomNivBatT19"
+            app:layout_constraintTop_toBottomOf="@+id/repreTempAmbT3" />
 
-    <TextView
-        android:id="@+id/nomTempAmbT17"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="68dp"
-        android:layout_marginTop="716dp"
-        android:text="Temperatura ambiente"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nomGirosT1" />
+        <View
+            android:id="@+id/divider70"
+            android:layout_width="330dp"
+            android:layout_height="3dp"
+            android:layout_marginTop="40dp"
+            android:background="@color/purple_500"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/divider67" />
 
-    <Button
-        android:id="@+id/button56"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="740dp"
-        android:layout_marginEnd="64dp"
-        android:backgroundTint="#D30E00"
-        android:enabled="false"
-        android:text="Button"
-        android:textColor="#FFFFFF"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button3" />
+        <TextView
+            android:id="@+id/nomTempAmbT17"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="34dp"
+            android:text="Temperatura ambiente"
+            app:layout_constraintStart_toEndOf="@+id/divider69"
+            app:layout_constraintTop_toBottomOf="@+id/nomGirosT17" />
 
-    <Button
-        android:id="@+id/button55"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="688dp"
-        android:layout_marginEnd="64dp"
-        android:backgroundTint="#FFEB3B"
-        android:enabled="false"
-        android:text="Button"
-        android:textColor="#000000"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button2" />
+        <Button
+            android:id="@+id/button56"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="60dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="28dp"
+            android:backgroundTint="#D30E00"
+            android:enabled="false"
+            android:text="-"
+            android:textColor="#FFFFFF"
+            app:layout_constraintEnd_toStartOf="@+id/divider72"
+            app:layout_constraintStart_toEndOf="@+id/nomNivBatT18"
+            app:layout_constraintTop_toBottomOf="@+id/button54" />
 
-    <TextView
-        android:id="@+id/nomNivBatT19"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Giroscopio"
-        tools:layout_editor_absoluteX="108dp"
-        tools:layout_editor_absoluteY="953dp" />
+        <Button
+            android:id="@+id/repreTempAmbT3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="38dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="28dp"
+            android:backgroundTint="#FFEB3B"
+            android:enabled="false"
+            android:text="-"
+            android:textColor="#000000"
+            app:layout_constraintEnd_toStartOf="@+id/divider72"
+            app:layout_constraintStart_toEndOf="@+id/nomTempAmbT17"
+            app:layout_constraintTop_toBottomOf="@+id/repreFreqRespT3" />
 
-    <View
-        android:id="@+id/divider72"
-        android:layout_width="3dp"
-        android:layout_height="330dp"
-        android:background="@color/purple_500"
-        tools:layout_editor_absoluteX="367dp"
-        tools:layout_editor_absoluteY="733dp" />
+        <TextView
+            android:id="@+id/nomNivBatT19"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="65dp"
+            android:layout_marginTop="34dp"
+            android:text="Giroscopio"
+            app:layout_constraintStart_toEndOf="@+id/divider69"
+            app:layout_constraintTop_toBottomOf="@+id/nomTempAmbT17" />
 
-    <View
-        android:id="@+id/divider71"
-        android:layout_width="331dp"
-        android:layout_height="3dp"
-        android:background="@color/purple_500"
-        tools:layout_editor_absoluteX="39dp"
-        tools:layout_editor_absoluteY="1061dp" />
+        <View
+            android:id="@+id/divider72"
+            android:layout_width="3dp"
+            android:layout_height="330dp"
+            android:background="@color/purple_500"
+            app:layout_constraintEnd_toEndOf="@+id/divider70"
+            app:layout_constraintTop_toTopOf="@+id/divider70" />
 
-    <Button
-        android:id="@+id/repreAcelT16"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="328dp"
-        android:layout_marginEnd="72dp"
-        android:enabled="false"
-        android:text="Button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nombT1" />
+        <View
+            android:id="@+id/divider71"
+            android:layout_width="331dp"
+            android:layout_height="3dp"
+            android:layout_marginTop="-3dp"
+            android:layout_marginBottom="70dp"
+            android:background="@color/purple_500"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/divider69" />
 
-    <TextView
-        android:id="@+id/nomNivBatT17"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="92dp"
-        android:layout_marginTop="404dp"
-        android:text="Nivel de batería"
-        app:layout_constraintEnd_toStartOf="@+id/button4"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nomTempAmbT1" />
+        <Button
+            android:id="@+id/repreElectDermT2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="29dp"
+            android:enabled="false"
+            android:text="-"
+            app:layout_constraintEnd_toStartOf="@+id/divider65"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/nomAcelT16"
+            app:layout_constraintTop_toBottomOf="@+id/nombT16" />
 
-    <Button
-        android:id="@+id/button50"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="320dp"
-        android:layout_marginEnd="72dp"
-        android:backgroundTint="#D30E00"
-        android:enabled="false"
-        android:text="Button"
-        android:textColor="#FFFFFF"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button3" />
+        <TextView
+            android:id="@+id/nomNivBatT17"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="44dp"
+            android:layout_marginTop="33dp"
+            android:text="Nivel de batería"
+            app:layout_constraintEnd_toStartOf="@+id/repreBattT2"
+            app:layout_constraintHorizontal_bias="0.049"
+            app:layout_constraintStart_toEndOf="@+id/divider66"
+            app:layout_constraintTop_toBottomOf="@+id/nomNivBatT16" />
 
-    <Button
-        android:id="@+id/button52"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="320dp"
-        android:layout_marginEnd="72dp"
-        android:backgroundTint="#FFEB3B"
-        android:enabled="false"
-        android:text="Button"
-        android:textColor="#000000"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button2" />
+        <Button
+            android:id="@+id/repreGirosT2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="29dp"
+            android:backgroundTint="#D30E00"
+            android:enabled="false"
+            android:text="-"
+            android:textColor="#FFFFFF"
+            app:layout_constraintEnd_toStartOf="@+id/divider65"
+            app:layout_constraintTop_toBottomOf="@+id/repreAcelT2" />
 
-    <TextView
-        android:id="@+id/nomGirosT16"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Temperatura corporal"
-        tools:layout_editor_absoluteX="74dp"
-        tools:layout_editor_absoluteY="481dp" />
+        <Button
+            android:id="@+id/repreAcelT2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="60dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="30dp"
+            android:backgroundTint="#FFEB3B"
+            android:enabled="false"
+            android:text="-"
+            android:textColor="#000000"
+            app:layout_constraintEnd_toStartOf="@+id/divider65"
+            app:layout_constraintStart_toEndOf="@+id/nomTempAmbT16"
+            app:layout_constraintTop_toBottomOf="@+id/repreTempCorpT2" />
 
-    <View
-        android:id="@+id/divider66"
-        android:layout_width="3dp"
-        android:layout_height="330dp"
-        android:background="@color/purple_500"
-        tools:layout_editor_absoluteX="39dp"
-        tools:layout_editor_absoluteY="361dp" />
+        <TextView
+            android:id="@+id/nomGirosT16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="29dp"
+            android:layout_marginTop="34dp"
+            android:layout_marginEnd="38dp"
+            android:text="Temperatura corporal"
+            app:layout_constraintEnd_toStartOf="@+id/repreTempCorpT2"
+            app:layout_constraintStart_toEndOf="@+id/divider66"
+            app:layout_constraintTop_toBottomOf="@+id/nomAcelT16" />
 
-    <TextView
-        android:id="@+id/nomTempAmbT16"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="348dp"
-        android:text="Acelerómetro"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nomGirosT1" />
+        <View
+            android:id="@+id/divider66"
+            android:layout_width="3dp"
+            android:layout_height="330dp"
+            android:background="@color/purple_500"
+            app:layout_constraintStart_toStartOf="@+id/divider68"
+            app:layout_constraintTop_toTopOf="@+id/divider68" />
 
-    <TextView
-        android:id="@+id/nombT16"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Tipo 2"
-        android:textSize="20sp"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="177dp"
-        tools:layout_editor_absoluteY="377dp" />
+        <TextView
+            android:id="@+id/nomTempAmbT16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="55dp"
+            android:layout_marginTop="34dp"
+            android:text="Acelerómetro"
+            app:layout_constraintStart_toEndOf="@+id/divider66"
+            app:layout_constraintTop_toBottomOf="@+id/nomGirosT16" />
 
-    <Button
-        android:id="@+id/button53"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="372dp"
-        android:layout_marginEnd="72dp"
-        android:backgroundTint="#D30E00"
-        android:enabled="false"
-        android:text="Button"
-        android:textColor="#FFFFFF"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button3" />
+        <TextView
+            android:id="@+id/nombT16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:text="Tipo 2"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toStartOf="@+id/divider65"
+            app:layout_constraintHorizontal_bias="0.496"
+            app:layout_constraintStart_toEndOf="@+id/divider66"
+            app:layout_constraintTop_toBottomOf="@+id/divider68"
+            tools:ignore="MissingConstraints" />
 
-    <View
-        android:id="@+id/divider68"
-        android:layout_width="330dp"
-        android:layout_height="3dp"
-        android:background="@color/purple_500"
-        tools:layout_editor_absoluteX="40dp"
-        tools:layout_editor_absoluteY="361dp" />
+        <Button
+            android:id="@+id/repreBattT2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="29dp"
+            android:layout_marginBottom="11dp"
+            android:backgroundTint="#D30E00"
+            android:enabled="false"
+            android:text="-"
+            android:textColor="#FFFFFF"
+            app:layout_constraintBottom_toTopOf="@+id/divider67"
+            app:layout_constraintEnd_toStartOf="@+id/divider65"
+            app:layout_constraintTop_toBottomOf="@+id/repreGirosT2" />
 
-    <View
-        android:id="@+id/divider67"
-        android:layout_width="331dp"
-        android:layout_height="3dp"
-        android:background="@color/purple_500"
-        tools:layout_editor_absoluteX="39dp"
-        tools:layout_editor_absoluteY="689dp" />
+        <View
+            android:id="@+id/divider68"
+            android:layout_width="330dp"
+            android:layout_height="3dp"
+            android:layout_marginTop="40dp"
+            android:background="@color/purple_500"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/divider3" />
 
-    <Button
-        android:id="@+id/button51"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="320dp"
-        android:layout_marginEnd="72dp"
-        android:backgroundTint="#49D64F"
-        android:enabled="false"
-        android:text="Button"
-        android:textColor="#000000"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/nomGirosT1"
-        app:layout_constraintTop_toBottomOf="@+id/repreAcelT1" />
+        <View
+            android:id="@+id/divider67"
+            android:layout_width="331dp"
+            android:layout_height="3dp"
+            android:layout_marginTop="328dp"
+            android:background="@color/purple_500"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.506"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/divider65" />
 
-    <View
-        android:id="@+id/divider65"
-        android:layout_width="3dp"
-        android:layout_height="330dp"
-        android:background="@color/purple_500"
-        tools:layout_editor_absoluteX="367dp"
-        tools:layout_editor_absoluteY="361dp" />
+        <Button
+            android:id="@+id/repreTempCorpT2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="29dp"
+            android:backgroundTint="#49D64F"
+            android:enabled="false"
+            android:text="-"
+            android:textColor="#000000"
+            app:layout_constraintEnd_toStartOf="@+id/divider65"
+            app:layout_constraintTop_toBottomOf="@+id/repreElectDermT2" />
 
-    <TextView
-        android:id="@+id/nomAcelT16"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Electrodérmica"
-        tools:layout_editor_absoluteX="92dp"
-        tools:layout_editor_absoluteY="429dp" />
+        <View
+            android:id="@+id/divider65"
+            android:layout_width="3dp"
+            android:layout_height="330dp"
+            android:background="@color/purple_500"
+            app:layout_constraintEnd_toEndOf="@+id/divider68"
+            app:layout_constraintTop_toTopOf="@+id/divider68" />
 
-    <TextView
-        android:id="@+id/nomNivBatT16"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Giroscopio"
-        tools:layout_editor_absoluteX="108dp"
-        tools:layout_editor_absoluteY="587dp" />
+        <TextView
+            android:id="@+id/nomAcelT16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="47dp"
+            android:layout_marginTop="25dp"
+            android:text="Electrodérmica"
+            app:layout_constraintStart_toEndOf="@+id/divider66"
+            app:layout_constraintTop_toBottomOf="@+id/nombT16" />
+
+        <TextView
+            android:id="@+id/nomNivBatT16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="63dp"
+            android:layout_marginTop="34dp"
+            android:layout_marginEnd="72dp"
+            android:text="Giroscopio"
+            app:layout_constraintEnd_toStartOf="@+id/repreGirosT2"
+            app:layout_constraintStart_toEndOf="@+id/divider66"
+            app:layout_constraintTop_toBottomOf="@+id/nomTempAmbT16" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"
@@ -319,142 +376,174 @@
         android:orientation="vertical"
         app:layout_constraintGuide_begin="139dp" />
 
-    <View
-        android:id="@+id/divider4"
-        android:layout_width="330dp"
-        android:layout_height="3dp"
-        android:background="@color/purple_500"
-        tools:layout_editor_absoluteX="40dp"
-        tools:layout_editor_absoluteY="43dp" />
+        <View
+            android:id="@+id/divider4"
+            android:layout_width="330dp"
+            android:layout_height="3dp"
+            android:layout_marginTop="30dp"
+            android:background="@color/purple_500"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/repreAcelT1"
+        <Button
+            android:id="@+id/repreAcelT1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="27dp"
+            android:enabled="false"
+            android:text="-"
+            app:layout_constraintEnd_toStartOf="@+id/divider2"
+            app:layout_constraintTop_toBottomOf="@+id/nombT1" />
+
+        <View
+            android:id="@+id/divider3"
+            android:layout_width="331dp"
+            android:layout_height="3dp"
+            android:background="@color/purple_500"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/divider" />
+
+        <Button
+            android:id="@+id/repreTempAmbT1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="27dp"
+            android:backgroundTint="#FFEB3B"
+            android:enabled="false"
+            android:text="-"
+            android:textColor="#000000"
+            app:layout_constraintEnd_toStartOf="@+id/divider2"
+            app:layout_constraintTop_toBottomOf="@+id/repreGiroscT1" />
+
+        <TextView
+            android:id="@+id/nomTempAmbT1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="23dp"
+            android:layout_marginTop="32dp"
+            android:text="Temperatura ambiente"
+            app:layout_constraintEnd_toStartOf="@+id/repreTempAmbT1"
+            app:layout_constraintHorizontal_bias="0.052"
+            app:layout_constraintStart_toEndOf="@+id/divider"
+            app:layout_constraintTop_toBottomOf="@+id/nomGirosT1" />
+
+        <Button
+            android:id="@+id/repreGiroscT1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="27dp"
+            android:backgroundTint="#49D64F"
+            android:enabled="false"
+            android:text="-"
+            android:textColor="#000000"
+            app:layout_constraintEnd_toStartOf="@+id/divider2"
+            app:layout_constraintTop_toBottomOf="@+id/repreAcelT1" />
+
+        <TextView
+            android:id="@+id/nomGirosT1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="63dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="71dp"
+            android:text="Giroscopio"
+            app:layout_constraintEnd_toStartOf="@+id/repreGiroscT1"
+            app:layout_constraintStart_toEndOf="@+id/divider"
+            app:layout_constraintTop_toBottomOf="@+id/nomAcelT1" />
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="3dp"
+            android:layout_height="280dp"
+            android:background="@color/purple_500"
+            app:layout_constraintStart_toStartOf="@+id/divider4"
+            app:layout_constraintTop_toTopOf="@+id/divider4" />
+
+        <TextView
+            android:id="@+id/nombT1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="132dp"
+            android:layout_marginTop="18dp"
+            android:layout_marginEnd="136dp"
+            android:text="Tipo 1"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toStartOf="@+id/divider2"
+            app:layout_constraintStart_toEndOf="@+id/divider"
+            app:layout_constraintTop_toBottomOf="@+id/divider4"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/nomNivBatT1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="45dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="60dp"
+            android:layout_marginBottom="30dp"
+            android:text="Nivel de batería"
+            app:layout_constraintBottom_toTopOf="@+id/divider3"
+            app:layout_constraintEnd_toStartOf="@+id/repreBattT1"
+            app:layout_constraintStart_toEndOf="@+id/divider"
+            app:layout_constraintTop_toBottomOf="@+id/nomTempAmbT1" />
+
+        <TextView
+            android:id="@+id/nomAcelT1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="57dp"
+            android:layout_marginTop="28dp"
+            android:layout_marginEnd="60dp"
+            android:text="Acelerómetro"
+            app:layout_constraintEnd_toStartOf="@+id/repreAcelT1"
+            app:layout_constraintStart_toEndOf="@+id/divider"
+            app:layout_constraintTop_toBottomOf="@+id/nombT1" />
+
+        <Button
+            android:id="@+id/repreBattT1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="27dp"
+            android:backgroundTint="#D30E00"
+            android:enabled="false"
+            android:text="-"
+            android:textColor="#FFFFFF"
+            app:layout_constraintEnd_toStartOf="@+id/divider2"
+            app:layout_constraintTop_toBottomOf="@+id/repreTempAmbT1" />
+
+        <View
+            android:id="@+id/divider2"
+            android:layout_width="3dp"
+            android:layout_height="280dp"
+            android:background="@color/purple_500"
+            app:layout_constraintEnd_toEndOf="@+id/divider4"
+            app:layout_constraintTop_toTopOf="@+id/divider4" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/extended_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="72dp"
-        android:enabled="false"
-        android:text="Button"
+        android:layout_gravity="bottom"
+        android:layout_margin="16dp"
+        android:contentDescription="Botón para detener las mediciones"
+        app:icon="@mipmap/stopcircle"
+        android:text="DETENER MEDICIONES"
+        android:textAlignment="center"
+        android:clickable="true"
+        app:layout_constraintBottom_toBottomOf="@id/scrollView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nombT1" />
-
-    <View
-        android:id="@+id/divider3"
-        android:layout_width="331dp"
-        android:layout_height="3dp"
-        android:background="@color/purple_500"
-        tools:layout_editor_absoluteX="39dp"
-        tools:layout_editor_absoluteY="320dp" />
-
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="72dp"
-        android:backgroundTint="#FFEB3B"
-        android:enabled="false"
-        android:text="Button"
-        android:textColor="#000000"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button2" />
-
-    <TextView
-        android:id="@+id/nomTempAmbT1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="68dp"
-        android:layout_marginTop="32dp"
-        android:text="Temperatura ambiente"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nomGirosT1" />
+        tools:ignore="MissingConstraints,RtlCompat" />
 
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="72dp"
-        android:backgroundTint="#49D64F"
-        android:enabled="false"
-        android:text="Button"
-        android:textColor="#000000"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/nomGirosT1"
-        app:layout_constraintTop_toBottomOf="@+id/repreAcelT1" />
-
-    <TextView
-        android:id="@+id/nomGirosT1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="108dp"
-        android:layout_marginTop="32dp"
-        android:text="Giroscopio"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nomAcelT1" />
-
-    <View
-        android:id="@+id/divider"
-        android:layout_width="3dp"
-        android:layout_height="280dp"
-        android:background="@color/purple_500"
-        tools:layout_editor_absoluteX="39dp"
-        tools:layout_editor_absoluteY="43dp" />
-
-    <TextView
-        android:id="@+id/nombT1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Tipo 1"
-        android:textSize="20sp"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="177dp"
-        tools:layout_editor_absoluteY="59dp" />
-
-    <TextView
-        android:id="@+id/nomNivBatT1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="92dp"
-        android:layout_marginTop="32dp"
-        android:text="Nivel de batería"
-        app:layout_constraintEnd_toStartOf="@+id/button4"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nomTempAmbT1" />
-
-    <TextView
-        android:id="@+id/nomAcelT1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="28dp"
-        android:text="Acelerómetro"
-        app:layout_constraintEnd_toStartOf="@+id/repreAcelT1"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nombT1" />
-
-    <Button
-        android:id="@+id/button4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="72dp"
-        android:backgroundTint="#D30E00"
-        android:enabled="false"
-        android:text="Button"
-        android:textColor="#FFFFFF"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button3" />
-
-    <View
-        android:id="@+id/divider2"
-        android:layout_width="3dp"
-        android:layout_height="280dp"
-        android:background="@color/purple_500"
-        tools:layout_editor_absoluteX="367dp"
-        tools:layout_editor_absoluteY="43dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

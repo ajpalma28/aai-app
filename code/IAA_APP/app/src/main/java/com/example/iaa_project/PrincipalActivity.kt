@@ -147,6 +147,7 @@ class PrincipalActivity : AppCompatActivity() {
             intent.putExtra("fechaUsuDef", fechaUsuDef)
             intent.putExtra("pwUsuDef", pwUsuDef)
             intent.putExtra("notifUsuDef", notifUsuDef)
+            intent.putParcelableArrayListExtra("conectados",conectados)
             startActivity(intent)
         }
 
@@ -411,6 +412,7 @@ class PrincipalActivity : AppCompatActivity() {
             intento2.putExtra("listaAsocID",listaAsocID)
             intento2.putExtra("listaAsocOrganizacion",listaAsocOrganizacion)
             intento2.putExtra("contadorOrganizaciones",contadorOrganizaciones)
+            intento2.putParcelableArrayListExtra("conectados",conectados)
             startActivity(intento2)
             println("La búsqueda del usuario se ha llevado a cabo con éxito.")
 

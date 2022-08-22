@@ -3,6 +3,7 @@ package com.example.iaa_project
 import android.app.AlertDialog
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.bluetooth.BluetoothDevice
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
@@ -69,6 +70,7 @@ class MiPerfilActivity : AppCompatActivity() {
     var textoOrg = ""
     var tablaOrganizaciones: TableLayout? = null
     var tablaSesiones: TableLayout? = null
+    var conectados = ArrayList<BluetoothDevice>()
 
     private companion object {
         private const val CHANNEL_ID = "channel01"
@@ -99,6 +101,9 @@ class MiPerfilActivity : AppCompatActivity() {
         listaAsocID = bundle.getStringArrayList("listaAsocID")!!
         listaAsocOrganizacion = bundle.getStringArrayList("listaAsocOrganizacion")!!
         contadorOrganizaciones = bundle.getInt("contadorOrganizaciones")
+        if(bundle?.getParcelableArrayList<BluetoothDevice>("conectados")!!.isNotEmpty()){
+            conectados.addAll(bundle.getParcelableArrayList("conectados")!!)
+        }
 
         var tvID = variables!!.textView12
         tvID.text = idUsuDef
@@ -959,6 +964,7 @@ class MiPerfilActivity : AppCompatActivity() {
         intent.putExtra("fechaUsuDef", fechaUsuDef)
         intent.putExtra("pwUsuDef", pwUsuDef)
         intent.putExtra("notifUsuDef", notifUsuDef)
+        intent.putParcelableArrayListExtra("conectados",conectados)
         startActivity(intent)
     }
 
