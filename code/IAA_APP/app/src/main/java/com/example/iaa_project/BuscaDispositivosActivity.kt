@@ -51,6 +51,7 @@ class BuscaDispositivosActivity : AppCompatActivity() {
     var conectados = ArrayList<BluetoothDevice>()
     var estanConectados = false
     var btnConectarTodo: Button? = null
+    var lecturaAutomatica = true
 
     private companion object {
         private const val CHANNEL_ID = "channel01"
@@ -690,6 +691,18 @@ class BuscaDispositivosActivity : AppCompatActivity() {
 
             override fun onServicesDiscovered(gatt: BluetoothGatt?, status: Int) {
                 Log.v(TAG, "onServicesDiscovered")
+                gatt?.services?.forEach{ it ->
+                    if(it?.uuid.toString().lowercase() == "0000acc0-0000-1000-8000-00805f9b34fb"){
+                        runOnUiThread {
+                            // TODO
+                        }
+                        it.characteristics.forEach {
+                            if(it.uuid.toString().lowercase()=="0000acc5-0000-1000-8000-00805f9b34fb"){
+                                lecturaAutomatica(gatt,it)
+                            }
+                        }
+                    }
+                }
             }
 
             override fun onCharacteristicRead(
@@ -707,6 +720,26 @@ class BuscaDispositivosActivity : AppCompatActivity() {
                 Log.v(TAG, "onCharacteristicChanged")
             }
         }
+    }
+
+    @SuppressLint("MissingPermission")
+    fun lecturaAutomatica(bluetoothGatt: BluetoothGatt, it: BluetoothGattCharacteristic){
+        bluetoothGatt.setCharacteristicNotification(it, lecturaAutomatica)
+        for(d in it.descriptors){
+            val descriptor = it.getDescriptor(UUID.fromString("0000acc5-0000-1000-8000-00805f9b34fb")).apply {
+                if(lecturaAutomatica){
+                    BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE
+                }else{
+                    BluetoothGattDescriptor.DISABLE_NOTIFICATION_VALUE
+                }
+            }
+            println(bluetoothGatt.getService(UUID.fromString("0000acc0-0000-1000-8000-00805f9b34fb")).getCharacteristic(
+                UUID.fromString("0000acc5-0000-1000-8000-00805f9b34fb")).value)
+            //val success = bluetoothGatt.writeDescriptor(descriptor)
+            //bluetoothGatt.readDescriptor(descriptor)
+
+        }
+
     }
 
 }
