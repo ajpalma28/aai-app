@@ -27,7 +27,6 @@ import com.example.iaa_project.databinding.ActivityBuscaDispositivosBinding
 import java.time.LocalTime
 import java.util.*
 import java.util.concurrent.Executors
-import kotlin.collections.ArrayList
 
 
 class BuscaDispositivosActivity : AppCompatActivity() {
@@ -638,6 +637,7 @@ class BuscaDispositivosActivity : AppCompatActivity() {
         alertDialog.show()
         estanConectados=false
     }
+
 
     private fun conectarDispositivo(device: BluetoothDevice) {
         Log.v(TAG, "conectarDispositivo")

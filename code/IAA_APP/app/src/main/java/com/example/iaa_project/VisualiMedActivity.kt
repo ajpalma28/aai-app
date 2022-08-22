@@ -1,22 +1,26 @@
 package com.example.iaa_project
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.bluetooth.*
 import android.content.Context
 import android.content.pm.PackageManager
-import android.content.res.ColorStateList
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.example.iaa_project.databinding.ActivityVisualiMedBinding
+import java.io.DataInputStream
+import java.io.InputStream
+import java.util.*
+import java.util.concurrent.Executors
 import kotlin.random.Random
 
 class VisualiMedActivity : AppCompatActivity() {
@@ -53,6 +57,9 @@ class VisualiMedActivity : AppCompatActivity() {
     var muestraTempAmbT3 : Button? = null
     var muestraGirosT3 : Button? = null
     var muestraBattT3 : Button? = null
+
+    var serverSocket: BluetoothServerSocket? = null
+    val myExecutor = Executors.newSingleThreadExecutor()
 
     private companion object {
         private const val CHANNEL_ID = "channel01"
@@ -105,12 +112,15 @@ class VisualiMedActivity : AppCompatActivity() {
 
         if(conectados.isNotEmpty()){
             conectaDispositivos(conectados)
+            myExecutor.execute {
+                leeDatosDispositivos(conectados)
+            }
         }
 
 
     }
 
-    private fun conectaDispositivos(lista: java.util.ArrayList<BluetoothDevice>) {
+    private fun conectaDispositivos(lista: ArrayList<BluetoothDevice>) {
         for (l in lista) {
             if (ActivityCompat.checkSelfPermission(
                     this,
@@ -167,7 +177,7 @@ class VisualiMedActivity : AppCompatActivity() {
                 // TODO: ESTO ES DE PRUEBA
                 gatt?.services?.forEach { it ->
                     it.characteristics.forEach{ x ->
-                        Log.v(TAG, x.toString())
+                        Log.v(TAG, "Descubierto ${x.toString()}")
                     }
                 }
 
@@ -220,5 +230,72 @@ class VisualiMedActivity : AppCompatActivity() {
             notifationManagerCompat.notify(Random.nextInt(0,999999), builder.build())
         }
     }
+
+    // TODO: ESTO PARECE QUE NO FUNCIONA
+    @SuppressLint("MissingPermission")
+    private fun leeDatosDispositivos(lista: ArrayList<BluetoothDevice>){
+        for(l in lista){
+            if(l.name=="LegMonitor"){
+                actuaTipo1(l)
+            }
+            if(l.name=="WristMonitor"){
+
+            }
+            if(l.name=="ChestMonitor"){
+
+            }
+        }
+    }
+
+    private fun actuaTipo1(device: BluetoothDevice){
+        var socket: BluetoothSocket? = null
+        try {
+            if (ActivityCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.BLUETOOTH_CONNECT
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                if (Build.VERSION.SDK_INT == Build.VERSION_CODES.Q) {
+                    ActivityCompat.requestPermissions(
+                        this,
+                        arrayOf(
+                            Manifest.permission.ACCESS_FINE_LOCATION,
+                            Manifest.permission.ACCESS_BACKGROUND_LOCATION
+                        ),
+                        1
+                    )
+                }
+            }
+            serverSocket = bAdapter?.listenUsingRfcommWithServiceRecord(R.string.app_name.toString(), UUID.randomUUID())
+            socket = serverSocket?.accept()
+        } catch (e: Exception){
+            Log.v(TAG,e.toString())
+        }
+        val buffer = ByteArray(256) // buffer store for the stream
+
+        val bytes: Int // bytes returned from read()
+
+        try {
+            Log.d(this.title as String, "Closing Server Socket.....")
+            serverSocket?.close()
+            var recibido: InputStream? = null
+
+            // Get the BluetoothSocket input and output streams
+            recibido = socket!!.inputStream
+            val mmInStream = DataInputStream(recibido)
+            // here you can use the Input Stream to take the string from the client  whoever is connecting
+            //similarly use the output stream to send the data to the client
+
+            // Read from the InputStream
+            bytes = mmInStream.read(buffer)
+            val readMessage = String(buffer, 0, bytes)
+            // Send the obtained bytes to the UI Activity
+            //text.setText(readMessage)
+            Log.v(TAG,"Recibido esto: $readMessage")
+        } catch (e: java.lang.Exception) {
+            //catch your exception here
+        }
+    }
+    // TODO: HASTA AQUÍ
 
 }
