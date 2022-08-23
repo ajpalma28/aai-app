@@ -10,4 +10,6 @@
     <color name="cuadroNormal">#FF49D64F</color>
     <color name="cuadroPeligro">#FFD30E00</color>
     <color name="cuadroCuidado">#FFFFEB3B</color>
+    <color name="desconectarBD">#FFEA6A6A</color>
+    <color name="conectarBD">#9A3BDA63</color>
 </resources>

@@ -8,6 +8,7 @@ import android.bluetooth.*
 import android.content.Context
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -17,7 +18,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import com.example.iaa_project.R.color.cuadroNormal
 import com.example.iaa_project.databinding.ActivityVisualiMedBinding
 import kotlinx.coroutines.delay
 import java.io.DataInputStream
@@ -254,28 +254,25 @@ class VisualiMedActivity : AppCompatActivity() {
         }
     }
 
-    @SuppressLint("ResourceAsColor", "ResourceType")
+    @SuppressLint("ResourceAsColor")
     private fun normal(boton: Button, valor: String){
         boton.text=valor
         boton.setTextColor(R.color.black)
-        val color = resources.getColor(R.color.cuadroNormal,this.theme)
-        boton.backgroundTintList=this.getColorStateList(color)
+        boton.backgroundTintList=ColorStateList.valueOf(Color.parseColor("#FF49D64F"))
     }
 
-    @SuppressLint("ResourceAsColor", "ResourceType")
+    @SuppressLint("ResourceAsColor")
     private fun peligroso(boton: Button, valor: String){
         boton.text=valor
         boton.setTextColor(R.color.white)
-        val color = resources.getColor(R.color.cuadroPeligro,this.theme)
-        boton.backgroundTintList=this.getColorStateList(color)
+        boton.backgroundTintList=ColorStateList.valueOf(Color.parseColor("#FFD30E00"))
     }
 
-    @SuppressLint("ResourceAsColor", "ResourceType")
+    @SuppressLint("ResourceAsColor")
     private fun cuidado(boton: Button, valor: String){
         boton.text=valor
         boton.setTextColor(R.color.black)
-        val color = resources.getColor(R.color.cuadroCuidado,this.theme)
-        boton.backgroundTintList=this.getColorStateList(color)
+        boton.backgroundTintList=ColorStateList.valueOf(Color.parseColor("#FFFFEB3B"))
     }
 
     /*

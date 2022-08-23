@@ -10,6 +10,8 @@ import android.bluetooth.le.*
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.*
 import android.util.Log
 import android.view.Gravity
@@ -24,6 +26,7 @@ import androidx.core.view.ViewCompat
 import com.example.iaa_project.R.mipmap.ib_bt_connect
 import com.example.iaa_project.R.mipmap.ib_bt_search
 import com.example.iaa_project.databinding.ActivityBuscaDispositivosBinding
+import java.security.Principal
 import java.time.LocalTime
 import java.util.*
 import java.util.concurrent.Executors
@@ -298,7 +301,7 @@ class BuscaDispositivosActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        val intent = Intent(this, GestionDispActivity::class.java)
+        val intent = Intent(this, PrincipalActivity::class.java)
         intent.putExtra("idUsuDef", idUsuDef)
         intent.putExtra("dniUsuDef", dniUsuDef)
         intent.putExtra("apellUsuDef", apellUsuDef)
@@ -408,8 +411,10 @@ class BuscaDispositivosActivity : AppCompatActivity() {
             val boton = Button(this)
             if (conectados.contains(l)) {
                 boton.text = "Desconectar"
+                boton.backgroundTintList= ColorStateList.valueOf(Color.parseColor("#9AEA6A6A"))
             } else {
                 boton.text = "Conectar"
+                boton.backgroundTintList=ColorStateList.valueOf(Color.parseColor("#9A3BDA63"))
             }
             boton.id = list.indexOf(l)
             boton.width = 336
@@ -739,7 +744,7 @@ class BuscaDispositivosActivity : AppCompatActivity() {
             /*println(bluetoothGatt.getService(UUID.fromString("0000acc0-0000-1000-8000-00805f9b34fb")).getCharacteristic(
                 UUID.fromString("0000acc5-0000-1000-8000-00805f9b34fb")).value)*/
             //val success = bluetoothGatt.writeDescriptor(descriptor)
-            bluetoothGatt.readDescriptor(descriptor)
+            //bluetoothGatt.readDescriptor(descriptor)
 
         }
 

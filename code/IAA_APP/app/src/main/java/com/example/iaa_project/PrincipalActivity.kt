@@ -113,7 +113,7 @@ class PrincipalActivity : AppCompatActivity() {
         }
 
         btnGestDisp.setOnClickListener{
-            val intent = Intent(this, GestionDispActivity::class.java)
+            val intent = Intent(this, BuscaDispositivosActivity::class.java)
             intent.putExtra("idUsuDef", idUsuDef)
             intent.putExtra("dniUsuDef", dniUsuDef)
             intent.putExtra("apellUsuDef", apellUsuDef)
