@@ -148,7 +148,6 @@ class BuscaDispositivosActivity : AppCompatActivity() {
                             println("SEÑAL 1: Empiezo a ejecutarme aquí")
                             cargaListado()
                             myHandler!!.postDelayed(this, 5000)
-
                     }
                 }
             }, 2000)
@@ -695,12 +694,13 @@ class BuscaDispositivosActivity : AppCompatActivity() {
                     if(it?.uuid.toString().lowercase() == "0000acc0-0000-1000-8000-00805f9b34fb"){
                         runOnUiThread {
                             // TODO
-                        }
-                        it.characteristics.forEach {
-                            if(it.uuid.toString().lowercase()=="0000acc5-0000-1000-8000-00805f9b34fb"){
-                                lecturaAutomatica(gatt,it)
+                            it.characteristics.forEach {
+                                if(it.uuid.toString().lowercase()=="0000acc5-0000-1000-8000-00805f9b34fb"){
+                                    lecturaAutomatica(gatt,it)
+                                }
                             }
                         }
+
                     }
                 }
             }
@@ -740,6 +740,46 @@ class BuscaDispositivosActivity : AppCompatActivity() {
 
         }
 
+    }
+
+    @SuppressLint("MissingPermission")
+    fun pruebaLee(lista: ArrayList<BluetoothDevice>){
+        for(l in lista){
+            if(l.name=="LegMonitor"){
+                var uuid = l.uuids.find { x -> x.uuid.toString()=="0000acc5-0000-1000-8000-00805f9b34fb" }
+            }
+        }
+    }
+
+    class BluetoothClient(device: BluetoothDevice): Thread() {
+        @SuppressLint("MissingPermission")
+        private val socket = device.createRfcommSocketToServiceRecord(UUID.fromString("0000acc0-0000-1000-8000-00805f9b34fb"))
+
+        @SuppressLint("MissingPermission")
+        override fun run() {
+            Log.i("client", "Connecting")
+            this.socket.connect()
+
+            Log.i("client", "Sending")
+            val outputStream = this.socket.outputStream
+            val inputStream = this.socket.inputStream
+            try {
+                val available = inputStream.available()
+                val bytes = ByteArray(available)
+                Log.i("server", "Reading")
+                inputStream.read(bytes, 0, available)
+                val text = String(bytes)
+                Log.i("server", "Message received")
+                Log.i("server", text)
+                //activity.appendText(text)
+            } catch (e: Exception) {
+                Log.e("client", "Cannot read data", e)
+            } finally {
+                inputStream.close()
+                outputStream.close()
+                socket.close()
+            }
+        }
     }
 
 }

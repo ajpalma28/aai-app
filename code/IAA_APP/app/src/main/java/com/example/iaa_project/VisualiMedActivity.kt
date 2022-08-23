@@ -17,6 +17,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.example.iaa_project.databinding.ActivityVisualiMedBinding
+import kotlinx.coroutines.delay
 import java.io.DataInputStream
 import java.io.InputStream
 import java.util.*
@@ -113,7 +114,11 @@ class VisualiMedActivity : AppCompatActivity() {
         if(conectados.isNotEmpty()){
             conectaDispositivos(conectados)
             myExecutor.execute {
-                leeDatosDispositivos(conectados)
+                var i = 0
+                while(i%1000==0){
+                    leeDatosDispositivos(conectados)
+                    i++
+                }
             }
         }
 
@@ -236,7 +241,7 @@ class VisualiMedActivity : AppCompatActivity() {
     private fun leeDatosDispositivos(lista: ArrayList<BluetoothDevice>){
         for(l in lista){
             if(l.name=="LegMonitor"){
-                actuaTipo1(l)
+                //actuaTipo1(l)
             }
             if(l.name=="WristMonitor"){
 
@@ -247,6 +252,7 @@ class VisualiMedActivity : AppCompatActivity() {
         }
     }
 
+    /*
     private fun actuaTipo1(device: BluetoothDevice){
         var socket: BluetoothSocket? = null
         try {
@@ -271,7 +277,7 @@ class VisualiMedActivity : AppCompatActivity() {
         } catch (e: Exception){
             Log.v(TAG,e.toString())
         }
-        val buffer = ByteArray(256) // buffer store for the stream
+        val buffer = ByteArray(255) // buffer store for the stream
 
         val bytes: Int // bytes returned from read()
 
@@ -297,5 +303,5 @@ class VisualiMedActivity : AppCompatActivity() {
         }
     }
     // TODO: HASTA AQUÍ
-
+*/
 }
