@@ -659,6 +659,7 @@ class BuscaDispositivosActivity : AppCompatActivity() {
             }
         }
         bluetoothGatt = device.connectGatt(this, false, bleGattCallback)
+        BluetoothClient(device)
     }
 
     private val bleGattCallback: BluetoothGattCallback by lazy {
@@ -692,9 +693,11 @@ class BuscaDispositivosActivity : AppCompatActivity() {
                 Log.v(TAG, "onServicesDiscovered")
                 gatt?.services?.forEach{ it ->
                     if(it?.uuid.toString().lowercase() == "0000acc0-0000-1000-8000-00805f9b34fb"){
+                        println("Prueba de fuego 1: ${it.uuid.toString()}")
                         runOnUiThread {
                             // TODO
                             it.characteristics.forEach {
+                                println("Se viene esto, ojito: ${it.uuid.toString()}")
                                 if(it.uuid.toString().lowercase()=="0000acc5-0000-1000-8000-00805f9b34fb"){
                                     lecturaAutomatica(gatt,it)
                                 }
@@ -733,10 +736,10 @@ class BuscaDispositivosActivity : AppCompatActivity() {
                     BluetoothGattDescriptor.DISABLE_NOTIFICATION_VALUE
                 }
             }
-            println(bluetoothGatt.getService(UUID.fromString("0000acc0-0000-1000-8000-00805f9b34fb")).getCharacteristic(
-                UUID.fromString("0000acc5-0000-1000-8000-00805f9b34fb")).value)
+            /*println(bluetoothGatt.getService(UUID.fromString("0000acc0-0000-1000-8000-00805f9b34fb")).getCharacteristic(
+                UUID.fromString("0000acc5-0000-1000-8000-00805f9b34fb")).value)*/
             //val success = bluetoothGatt.writeDescriptor(descriptor)
-            //bluetoothGatt.readDescriptor(descriptor)
+            bluetoothGatt.readDescriptor(descriptor)
 
         }
 
@@ -753,7 +756,7 @@ class BuscaDispositivosActivity : AppCompatActivity() {
 
     class BluetoothClient(device: BluetoothDevice): Thread() {
         @SuppressLint("MissingPermission")
-        private val socket = device.createRfcommSocketToServiceRecord(UUID.fromString("0000acc0-0000-1000-8000-00805f9b34fb"))
+        private val socket = device.createRfcommSocketToServiceRecord(UUID.fromString("0000acc5-0000-1000-8000-00805f9b34fb"))
 
         @SuppressLint("MissingPermission")
         override fun run() {
