@@ -19,24 +19,42 @@ class FuncionesAuxiliares {
 
     fun generaIdPersona(nombre: String, apellidos: String, dni: String, fecha: String): String {
         var identificador = ""
-        for (i in nombre.indices) {
+        val largoNombre = nombre.length
+        val largoApellidos = apellidos.length
+        var i = 0
+        var k = 0
+        while(true) {
             if (i < 4) {
-                identificador += nombre[i]
-            } else {
+                if(i>=largoNombre){
+                    identificador += "X"
+                }else if(nombre[i].isWhitespace()){
+                    identificador += "X"
+                }else{
+                    identificador += nombre[i]
+                }
+            }else{
                 break
             }
+            i++
         }
         for (j in dni.indices) {
             if (j > 5) {
                 identificador += dni[j]
             }
         }
-        for (i in apellidos.indices) {
-            if (i < 4) {
-                identificador += apellidos[i]
-            } else {
+        while(true) {
+            if (k < 4) {
+                if(k>largoApellidos){
+                    identificador += "X"
+                }else if(apellidos[k].isWhitespace()){
+                    identificador += "X"
+                }else{
+                    identificador += apellidos[k]
+                }
+            }else{
                 break
             }
+            k++
         }
         val partes = fecha.split("/")
         val ano = partes[2]
