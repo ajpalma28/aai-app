@@ -327,4 +327,32 @@ class VisualiMedActivity : AppCompatActivity() {
     }
     // TODO: HASTA AQUÍ
 */
+
+    fun lecturaChest(data: ByteArray){
+        if(data.size!=64){
+            //TODO: ERROR EN LA LECTURA
+        }else{
+            var frecuenciaCard = data.slice(0..32)
+            var acelerometro = data.slice(32..44)
+            var giroscopio = data.slice(44..56)
+            var respiracion = data.slice(56..60)
+            var bateria = data.slice(60..62)
+            //TODO: CONTINUAR CODIGO
+        }
+    }
+
+    fun lecturaWrist(data: ByteArray){
+        if(data.size!=36){
+            // TODO: ERROR EN LA LECTURA
+        }else{
+            var electroDermica = data.slice(0..4)
+            var acelerometro = data.slice(4..16)
+            var giroscopio = data.slice(16..28)
+            var bateria = data.slice(28..30)
+            var temperaturaCorporal = data.slice(32..34)
+            var tempAmbiente = data.slice(30..32)
+            //TODO: CONTINUAR CODIGO
+        }
+    }
+
 }

@@ -664,7 +664,7 @@ class BuscaDispositivosActivity : AppCompatActivity() {
             }
         }
         bluetoothGatt = device.connectGatt(this, false, bleGattCallback)
-        BluetoothClient(device)
+        //BluetoothClient(device).run()
     }
 
     private val bleGattCallback: BluetoothGattCallback by lazy {
@@ -737,6 +737,8 @@ class BuscaDispositivosActivity : AppCompatActivity() {
             val descriptor = it.getDescriptor(UUID.fromString("0000acc5-0000-1000-8000-00805f9b34fb")).apply {
                 if(lecturaAutomatica){
                     BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE
+                    bluetoothGatt.requestMtu(100)
+                    println(it.value)
                 }else{
                     BluetoothGattDescriptor.DISABLE_NOTIFICATION_VALUE
                 }
@@ -762,6 +764,7 @@ class BuscaDispositivosActivity : AppCompatActivity() {
     class BluetoothClient(device: BluetoothDevice): Thread() {
         @SuppressLint("MissingPermission")
         private val socket = device.createRfcommSocketToServiceRecord(UUID.fromString("0000acc5-0000-1000-8000-00805f9b34fb"))
+        val movil = device
 
         @SuppressLint("MissingPermission")
         override fun run() {
