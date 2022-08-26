@@ -126,4 +126,101 @@ class FuncionesAuxiliaresTest {
         assertFalse(FuncionesAuxiliares().traduceNotificaciones(notif))
     }
 
+    @Test
+    fun formatoCorrectoAnyoFecha1(){
+        val fecha = "1999-03-01"
+        println("\nTEST 15: ¿El año en formatoCorrectoAnyoFecha($fecha) es correcto?")
+        println("Resultado: true")
+        assertTrue(FuncionesAuxiliares().formatoCorrectoAnyoFecha(fecha))
+    }
+
+    @Test
+    fun formatoCorrectoAnyoFecha2(){
+        val fecha = "20001-03-01"
+        println("TEST 16: ¿El año en formatoCorrectoAnyoFecha($fecha) es correcto?")
+        println("Resultado: false -> Año limitado a 4 dígitos")
+        assertFalse(FuncionesAuxiliares().formatoCorrectoAnyoFecha(fecha))
+    }
+
+    @Test
+    fun formatoCorrectoMesFecha1(){
+        val fecha = "1999-03-01"
+        println("\nTEST 17: ¿El mes en formatoCorrectoMesFecha($fecha) es correcto?")
+        println("Resultado: true")
+        assertTrue(FuncionesAuxiliares().formatoCorrectoMesFecha(fecha))
+    }
+
+    @Test
+    fun formatoCorrectoMesFecha2(){
+        val fecha = "1999-13-01"
+        println("TEST 18: ¿El mes en formatoCorrectoMesFecha($fecha) es correcto?")
+        println("Resultado: false -> Ese mes no existe")
+        assertFalse(FuncionesAuxiliares().formatoCorrectoMesFecha(fecha))
+    }
+
+    @Test
+    fun formatoCorrectoDiaFecha1(){
+        val fecha = "1999-03-01"
+        println("\nTEST 19: ¿El día en formatoCorrectoDiaFecha($fecha) es correcto?")
+        println("Resultado: true")
+        assertTrue(FuncionesAuxiliares().formatoCorrectoDiaFecha(fecha))
+    }
+
+    @Test
+    fun formatoCorrectoDiaFecha2(){
+        val fecha = "1999-02-29"
+        println("TEST 20: ¿El día en formatoCorrectoDiaFecha($fecha) es correcto?")
+        println("Resultado: false -> Ese día no existe")
+        assertFalse(FuncionesAuxiliares().formatoCorrectoDiaFecha(fecha))
+    }
+
+    @Test
+    fun longitudCorrectaPW1(){
+        val pw = "loC@s"
+        println("\nTEST 21: ¿Qué devuelve el método longitudCorrectaPW($pw)?")
+        println("Resultado: false -> Longitud menor a la permitida")
+        assertFalse(FuncionesAuxiliares().longitudCorrectaPW(pw))
+    }
+
+    @Test
+    fun longitudCorrectaPW2(){
+        val pw = "loC@s12"
+        println("TEST 22: ¿Qué devuelve el método longitudCorrectaPW($pw)?")
+        println("Resultado: true")
+        assertTrue(FuncionesAuxiliares().longitudCorrectaPW(pw))
+    }
+
+
+    @Test
+    fun estructuraCorrectaPW1(){
+        val pw = "loC@s12"
+        println("\nTEST 23: ¿Qué devuelve el método estructuraCorrectaPW($pw)?")
+        println("Resultado: true")
+        assertTrue(FuncionesAuxiliares().estructuraCorrectaPW(pw))
+    }
+
+    @Test
+    fun estructuraCorrectaPW2(){
+        val pw = "loc@s12"
+        println("TEST 24: ¿Qué devuelve el método estructuraCorrectaPW($pw)?")
+        println("Resultado: false -> No hay mayúsculas")
+        assertFalse(FuncionesAuxiliares().estructuraCorrectaPW(pw))
+    }
+
+    @Test
+    fun estructuraCorrectaPW3(){
+        val pw = "loC@silla"
+        println("TEST 25: ¿Qué devuelve el método estructuraCorrectaPW($pw)?")
+        println("Resultado: false -> No hay números")
+        assertFalse(FuncionesAuxiliares().estructuraCorrectaPW(pw))
+    }
+
+    @Test
+    fun estructuraCorrectaPW4(){
+        val pw = "loCasi12"
+        println("TEST 26: ¿Qué devuelve el método estructuraCorrectaPW($pw)?")
+        println("Resultado: false -> No hay caracteres especiales")
+        assertFalse(FuncionesAuxiliares().estructuraCorrectaPW(pw))
+    }
+
 }

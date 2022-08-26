@@ -257,7 +257,7 @@ class ActivityRegistroInvest : AppCompatActivity() {
         }
     }
 
-    private fun verificaPW(pw1: String, pw2: String): String {
+    fun verificaPW(pw1: String, pw2: String): String {
         var contra = ""
         if (pw1 == pw2) {
             contra = pw1

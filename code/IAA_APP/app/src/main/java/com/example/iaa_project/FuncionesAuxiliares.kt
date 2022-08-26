@@ -151,7 +151,7 @@ class FuncionesAuxiliares {
 
     fun longitudCorrectaPW(pw: String): Boolean{
         var res = true
-        if(pw.length>6){
+        if(pw.length<6){
             res = false
         }
         return res
@@ -174,9 +174,7 @@ class FuncionesAuxiliares {
                 res4=true
             }
         }
-        if(res1 && res2 && res3 && res4){
-            res=true
-        }
+        res = res1 && res2 && res3 && res4
         return res
     }
 
