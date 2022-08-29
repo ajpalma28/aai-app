@@ -26,6 +26,7 @@ import kotlin.random.Random
 class ActivityRegistroInvest : AppCompatActivity() {
     var variables: ActivityRegistroInvestBinding? = null
     private var errorProvocadoFecha = ""
+    private var errorProvocadoDNI = ""
 
     private companion object {
         private const val CHANNEL_ID = "channel01"
@@ -128,6 +129,7 @@ class ActivityRegistroInvest : AppCompatActivity() {
             contra = verificaPW(pw1, pw2)
             compruebaPW(contra)
             compruebaFormatoFecha(fechaDef)
+            compruebaDNINIE(dni)
             Class.forName("com.mysql.jdbc.Driver")
             //Configuracion de la conexión
             //Configuracion de la conexión
@@ -210,6 +212,12 @@ class ActivityRegistroInvest : AppCompatActivity() {
                 txtMostrar.show()
             }
             println(e3)
+        } catch (e4: InvalidDNIException){
+            Handler(Looper.getMainLooper()).post {
+                val txtMostrar = Toast.makeText(this, errorProvocadoDNI, Toast.LENGTH_LONG)
+                txtMostrar.show()
+            }
+            println(e4)
         } catch (e: Exception) {
             println(e.toString())
             Handler(Looper.getMainLooper()).post {
@@ -283,6 +291,21 @@ class ActivityRegistroInvest : AppCompatActivity() {
         if(!FuncionesAuxiliares().formatoCorrectoDiaFecha(fecha)){
             errorProvocadoFecha = errorFecha3
             throw InvalidFechaException(errorFecha3)
+        }
+    }
+
+    private fun compruebaDNINIE(dni: String){
+        if(!FuncionesAuxiliares().longitudCorrectaDNINIF(dni)){
+            errorProvocadoDNI = errorDNI1
+            throw InvalidDNIException(errorDNI1)
+        }
+        if(!FuncionesAuxiliares().formatoCorrectoDNINIF(dni)){
+            errorProvocadoDNI = errorDNI2
+            throw InvalidDNIException(errorDNI2)
+        }
+        if(!FuncionesAuxiliares().letraCorrectaDNINIF(dni)){
+            errorProvocadoDNI = errorDNI3
+            throw InvalidDNIException(errorDNI3)
         }
     }
 
