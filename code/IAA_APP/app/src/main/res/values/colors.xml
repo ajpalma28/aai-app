@@ -12,4 +12,10 @@
     <color name="cuadroCuidado">#FFFFEB3B</color>
     <color name="desconectarBD">#FFEA6A6A</color>
     <color name="conectarBD">#9A3BDA63</color>
+    <color name="IAA_azulOsc">#FF16697A</color>
+    <color name="IAA_azul">#FF489FB5</color>
+    <color name="IAA_azulClaro">#FF82C0CC</color>
+    <color name="IAA_grisaceo">#FFEDE7E3</color>
+    <color name="IAA_naranja">#FFFFA62B</color>
+    <color name="IAA_naranjaNotif">#FFA62B</color>
 </resources>

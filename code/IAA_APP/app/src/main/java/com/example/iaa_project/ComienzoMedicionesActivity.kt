@@ -92,7 +92,8 @@ class ComienzoMedicionesActivity : AppCompatActivity() {
                             this,
                             CHANNEL_ID
                         )
-                            .setSmallIcon(R.drawable.ic_launcher_background)
+                            .setSmallIcon(R.drawable.ic_iaa_notif)
+                            .setColor(this.getColor(R.color.IAA_naranjaNotif))
                             .setContentTitle("Pruebas con un solo dispositivo")
                             .setContentText(mensajeError)
                             .setStyle(NotificationCompat.BigTextStyle().bigText(mensajeError))
@@ -113,8 +114,9 @@ class ComienzoMedicionesActivity : AppCompatActivity() {
                             this,
                             CHANNEL_ID
                         )
-                            .setSmallIcon(R.drawable.ic_launcher_background)
-                            .setContentTitle("Pruebas con un solo dispositivo")
+                            .setSmallIcon(R.drawable.ic_iaa_notif)
+                            .setColor(this.getColor(R.color.IAA_naranjaNotif))
+                            .setContentTitle("Pruebas con solo dos dispositivos")
                             .setContentText(mensajeError)
                             .setStyle(NotificationCompat.BigTextStyle().bigText(mensajeError))
                             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
@@ -219,7 +221,8 @@ class ComienzoMedicionesActivity : AppCompatActivity() {
         if (notif) {
             createNotificationChannel()
             val builder = NotificationCompat.Builder(this, CHANNEL_ID)
-                .setSmallIcon(R.drawable.ic_launcher_background)
+                .setSmallIcon(R.drawable.ic_iaa_notif)
+                .setColor(this.getColor(R.color.IAA_naranjaNotif))
                 .setContentTitle(titulo)
                 .setContentText(mensaje)
                 .setGroup(GRUPO_NOTIFICACIONES)

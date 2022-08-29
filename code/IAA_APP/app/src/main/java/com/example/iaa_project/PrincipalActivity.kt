@@ -277,7 +277,8 @@ class PrincipalActivity : AppCompatActivity() {
                     val builder = NotificationCompat.Builder(this,
                         PrincipalActivity.CHANNEL_ID
                     )
-                        .setSmallIcon(R.drawable.ic_launcher_background)
+                        .setSmallIcon(R.drawable.ic_iaa_notif)
+                        .setColor(this.getColor(R.color.IAA_naranjaNotif))
                         .setContentTitle("Error en el cambio de las notificaciones")
                         .setContentText("No se han podido desactivar las notificaciones de la aplicación para el investigador $nombUsuDef $apellUsuDef (id: $idUsuDef). Inténtelo de nuevo más tarde.")
                         .setStyle(NotificationCompat.BigTextStyle().bigText("No se han podido desactivar las notificaciones de la aplicación para el investigador $nombUsuDef $apellUsuDef (id: $idUsuDef). Inténtelo de nuevo más tarde."))
@@ -324,7 +325,8 @@ class PrincipalActivity : AppCompatActivity() {
                     val builder = NotificationCompat.Builder(this,
                         PrincipalActivity.CHANNEL_ID
                     )
-                        .setSmallIcon(R.drawable.ic_launcher_background)
+                        .setSmallIcon(R.drawable.ic_iaa_notif)
+                        .setColor(this.getColor(R.color.IAA_naranjaNotif))
                         .setContentTitle("Notificaciones activadas")
                         .setContentText("Se han activado las notificaciones de la aplicación para el investigador $nombUsuDef $apellUsuDef (id: $idUsuDef)")
                         .setStyle(NotificationCompat.BigTextStyle().bigText("Se han activado las notificaciones de la aplicación para el investigador $nombUsuDef $apellUsuDef (id: $idUsuDef)"))

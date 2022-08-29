@@ -178,7 +178,8 @@ class CambioPwActivity : AppCompatActivity() {
         if (notif) {
             createNotificationChannel()
             val builder = NotificationCompat.Builder(this, CHANNEL_ID)
-                .setSmallIcon(R.drawable.ic_launcher_background)
+                .setSmallIcon(R.drawable.ic_iaa_notif)
+                .setColor(this.getColor(R.color.IAA_naranjaNotif))
                 .setContentTitle(titulo)
                 .setContentText(mensaje)
                 .setStyle(NotificationCompat.BigTextStyle().bigText(mensaje))

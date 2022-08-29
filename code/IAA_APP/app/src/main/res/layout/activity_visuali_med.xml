@@ -83,7 +83,7 @@
             android:id="@+id/divider69"
             android:layout_width="3dp"
             android:layout_height="330dp"
-            android:background="@color/purple_500"
+            android:background="@color/IAA_azulOsc"
             app:layout_constraintStart_toStartOf="@+id/divider70"
             app:layout_constraintTop_toTopOf="@+id/divider70" />
 
@@ -118,7 +118,7 @@
             android:layout_width="330dp"
             android:layout_height="3dp"
             android:layout_marginTop="40dp"
-            android:background="@color/purple_500"
+            android:background="@color/IAA_azulOsc"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/divider67" />
@@ -179,7 +179,7 @@
             android:id="@+id/divider72"
             android:layout_width="3dp"
             android:layout_height="330dp"
-            android:background="@color/purple_500"
+            android:background="@color/IAA_azulOsc"
             app:layout_constraintEnd_toEndOf="@+id/divider70"
             app:layout_constraintTop_toTopOf="@+id/divider70" />
 
@@ -189,7 +189,7 @@
             android:layout_height="3dp"
             android:layout_marginTop="-3dp"
             android:layout_marginBottom="70dp"
-            android:background="@color/purple_500"
+            android:background="@color/IAA_azulOsc"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -262,7 +262,7 @@
             android:id="@+id/divider66"
             android:layout_width="3dp"
             android:layout_height="330dp"
-            android:background="@color/purple_500"
+            android:background="@color/IAA_azulOsc"
             app:layout_constraintStart_toStartOf="@+id/divider68"
             app:layout_constraintTop_toTopOf="@+id/divider68" />
 
@@ -311,7 +311,7 @@
             android:layout_width="330dp"
             android:layout_height="3dp"
             android:layout_marginTop="40dp"
-            android:background="@color/purple_500"
+            android:background="@color/IAA_azulOsc"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/divider3" />
@@ -321,7 +321,7 @@
             android:layout_width="331dp"
             android:layout_height="3dp"
             android:layout_marginTop="328dp"
-            android:background="@color/purple_500"
+            android:background="@color/IAA_azulOsc"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.506"
             app:layout_constraintStart_toStartOf="parent"
@@ -344,7 +344,7 @@
             android:id="@+id/divider65"
             android:layout_width="3dp"
             android:layout_height="330dp"
-            android:background="@color/purple_500"
+            android:background="@color/IAA_azulOsc"
             app:layout_constraintEnd_toEndOf="@+id/divider68"
             app:layout_constraintTop_toTopOf="@+id/divider68" />
 
@@ -382,7 +382,7 @@
             android:layout_width="330dp"
             android:layout_height="3dp"
             android:layout_marginTop="30dp"
-            android:background="@color/purple_500"
+            android:background="@color/IAA_azulOsc"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -402,7 +402,7 @@
             android:id="@+id/divider3"
             android:layout_width="331dp"
             android:layout_height="3dp"
-            android:background="@color/purple_500"
+            android:background="@color/IAA_azulOsc"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/divider" />
@@ -461,7 +461,7 @@
             android:id="@+id/divider"
             android:layout_width="3dp"
             android:layout_height="280dp"
-            android:background="@color/purple_500"
+            android:background="@color/IAA_azulOsc"
             app:layout_constraintStart_toStartOf="@+id/divider4"
             app:layout_constraintTop_toTopOf="@+id/divider4" />
 
@@ -522,7 +522,7 @@
             android:id="@+id/divider2"
             android:layout_width="3dp"
             android:layout_height="280dp"
-            android:background="@color/purple_500"
+            android:background="@color/IAA_azulOsc"
             app:layout_constraintEnd_toEndOf="@+id/divider4"
             app:layout_constraintTop_toTopOf="@+id/divider4" />
 

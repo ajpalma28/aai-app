@@ -14,41 +14,53 @@
 
     <Button
         android:id="@+id/btnGestionDispo"
-        android:layout_width="120dp"
-        android:layout_height="104dp"
+        android:layout_width="142dp"
+        android:layout_height="110dp"
         android:layout_marginTop="48dp"
-        android:layout_marginEnd="52dp"
+        android:layout_marginEnd="45dp"
+        android:backgroundTint="#FFFFFF"
+        android:drawableTop="@mipmap/ib_gestionardispositivos"
         android:text="Gestionar Dispositivos"
+        android:textColor="@color/IAA_azulOsc"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btnConsultUsu"
-        android:layout_width="120dp"
-        android:layout_height="104dp"
+        android:layout_width="142dp"
+        android:layout_height="110dp"
         android:layout_marginTop="40dp"
-        android:layout_marginEnd="52dp"
+        android:layout_marginEnd="45dp"
+        android:backgroundTint="#FFFFFF"
+        android:drawableTop="@mipmap/ib_consultarusuario"
         android:text="Consultar Usuario"
+        android:textColor="@color/IAA_azulOsc"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnGestionDispo" />
 
     <Button
         android:id="@+id/btnMiPerfil"
-        android:layout_width="120dp"
-        android:layout_height="104dp"
-        android:layout_marginStart="52dp"
-        android:layout_marginTop="44dp"
+        android:layout_width="142dp"
+        android:layout_height="110dp"
+        android:layout_marginStart="45dp"
+        android:layout_marginTop="40dp"
+        android:backgroundTint="#FFFFFF"
+        android:drawableTop="@mipmap/ib_miperfil"
         android:text="Mi Perfil"
+        android:textColor="@color/IAA_azulOsc"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnInicioMed" />
 
     <Button
         android:id="@+id/btnRegistroUsu"
-        android:layout_width="120dp"
-        android:layout_height="104dp"
-        android:layout_marginStart="52dp"
+        android:layout_width="142dp"
+        android:layout_height="110dp"
+        android:layout_marginStart="45dp"
         android:layout_marginTop="48dp"
+        android:backgroundTint="#FFFFFF"
+        android:drawableTop="@mipmap/ib_registrarusuario"
         android:text="Registrar Usuario"
+        android:textColor="@color/IAA_azulOsc"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -75,25 +87,29 @@
 
     <Button
         android:id="@+id/btnInicioMed"
-        android:layout_width="120dp"
-        android:layout_height="104dp"
+        android:layout_width="142dp"
+        android:layout_height="110dp"
+        android:layout_marginStart="45dp"
         android:layout_marginTop="40dp"
-        android:layout_marginEnd="64dp"
-        android:layout_marginStart="52dp"
+        android:backgroundTint="#FFFFFF"
+        android:drawableTop="@mipmap/ib_comenzarmediciones"
         android:text="Comenzar Mediciones"
+        android:textColor="@color/IAA_azulOsc"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnRegistroUsu" />
 
     <Button
         android:id="@+id/btnCierreSesion"
-        android:layout_width="120dp"
-        android:layout_height="104dp"
-        android:layout_marginTop="44dp"
+        android:layout_width="142dp"
+        android:layout_height="110dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="45dp"
+        android:backgroundTint="#FFFFFF"
+        android:drawableTop="@mipmap/ib_cerrarsesion"
         android:text="Cerrar Sesión"
+        android:textColor="@color/IAA_azulOsc"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.782"
-        app:layout_constraintStart_toStartOf="@id/btnMiPerfil"
         app:layout_constraintTop_toBottomOf="@+id/btnConsultUsu"
         app:layout_constraintVertical_bias="0.0" />
 
