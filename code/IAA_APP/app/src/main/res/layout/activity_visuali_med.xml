@@ -70,10 +70,8 @@
                 android:layout_marginStart="36dp"
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="28dp"
-                android:backgroundTint="#49D64F"
                 android:enabled="false"
                 android:text="-"
-                android:textColor="#000000"
                 app:layout_constraintEnd_toStartOf="@+id/divider72"
                 app:layout_constraintHorizontal_bias="0.666"
                 app:layout_constraintStart_toEndOf="@+id/nomGirosT17"
@@ -106,10 +104,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="28dp"
-                android:backgroundTint="#D30E00"
                 android:enabled="false"
                 android:text="-"
-                android:textColor="#FFFFFF"
                 app:layout_constraintEnd_toStartOf="@+id/divider72"
                 app:layout_constraintTop_toBottomOf="@+id/repreTempAmbT3" />
 
@@ -140,10 +136,8 @@
                 android:layout_marginStart="60dp"
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="28dp"
-                android:backgroundTint="#D30E00"
                 android:enabled="false"
                 android:text="-"
-                android:textColor="#FFFFFF"
                 app:layout_constraintEnd_toStartOf="@+id/divider72"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toEndOf="@+id/nomNivBatT18"
@@ -156,10 +150,8 @@
                 android:layout_marginStart="38dp"
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="28dp"
-                android:backgroundTint="#FFEB3B"
                 android:enabled="false"
                 android:text="-"
-                android:textColor="#000000"
                 app:layout_constraintEnd_toStartOf="@+id/divider72"
                 app:layout_constraintHorizontal_bias="0.666"
                 app:layout_constraintStart_toEndOf="@+id/nomTempAmbT17"
@@ -220,18 +212,16 @@
             app:layout_constraintStart_toEndOf="@+id/divider66"
             app:layout_constraintTop_toBottomOf="@+id/nomNivBatT16" />
 
-        <Button
-            android:id="@+id/repreGirosT2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="29dp"
-            android:backgroundTint="#D30E00"
-            android:enabled="false"
-            android:text="-"
-            android:textColor="#FFFFFF"
-            app:layout_constraintEnd_toStartOf="@+id/divider65"
-            app:layout_constraintTop_toBottomOf="@+id/repreAcelT2" />
+            <Button
+                android:id="@+id/repreGirosT2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="29dp"
+                android:enabled="false"
+                android:text="-"
+                app:layout_constraintEnd_toStartOf="@+id/divider65"
+                app:layout_constraintTop_toBottomOf="@+id/repreAcelT2" />
 
             <Button
                 android:id="@+id/repreAcelT2"
@@ -239,10 +229,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="29dp"
-                android:backgroundTint="#FFEB3B"
                 android:enabled="false"
                 android:text="-"
-                android:textColor="#000000"
                 app:layout_constraintEnd_toStartOf="@+id/divider65"
                 app:layout_constraintTop_toBottomOf="@+id/repreTempCorpT2" />
 
@@ -291,20 +279,18 @@
             app:layout_constraintTop_toBottomOf="@+id/divider68"
             tools:ignore="MissingConstraints" />
 
-        <Button
-            android:id="@+id/repreBattT2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="29dp"
-            android:layout_marginBottom="11dp"
-            android:backgroundTint="#D30E00"
-            android:enabled="false"
-            android:text="-"
-            android:textColor="#FFFFFF"
-            app:layout_constraintBottom_toTopOf="@+id/divider67"
-            app:layout_constraintEnd_toStartOf="@+id/divider65"
-            app:layout_constraintTop_toBottomOf="@+id/repreGirosT2" />
+            <Button
+                android:id="@+id/repreBattT2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="29dp"
+                android:layout_marginBottom="11dp"
+                android:enabled="false"
+                android:text="-"
+                app:layout_constraintBottom_toTopOf="@+id/divider67"
+                app:layout_constraintEnd_toStartOf="@+id/divider65"
+                app:layout_constraintTop_toBottomOf="@+id/repreGirosT2" />
 
         <View
             android:id="@+id/divider68"
@@ -327,18 +313,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/divider65" />
 
-        <Button
-            android:id="@+id/repreTempCorpT2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="29dp"
-            android:backgroundTint="#49D64F"
-            android:enabled="false"
-            android:text="-"
-            android:textColor="#000000"
-            app:layout_constraintEnd_toStartOf="@+id/divider65"
-            app:layout_constraintTop_toBottomOf="@+id/repreElectDermT2" />
+            <Button
+                android:id="@+id/repreTempCorpT2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="29dp"
+                android:enabled="false"
+                android:text="-"
+                app:layout_constraintEnd_toStartOf="@+id/divider65"
+                app:layout_constraintTop_toBottomOf="@+id/repreElectDermT2" />
 
         <View
             android:id="@+id/divider65"
@@ -407,18 +391,17 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/divider" />
 
-        <Button
-            android:id="@+id/repreTempAmbT1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="27dp"
-            android:backgroundTint="#FFEB3B"
-            android:enabled="false"
-            android:text="-"
-            android:textColor="#000000"
-            app:layout_constraintEnd_toStartOf="@+id/divider2"
-            app:layout_constraintTop_toBottomOf="@+id/repreGiroscT1" />
+            <Button
+                android:id="@+id/repreTempAmbT1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="27dp"
+                android:enabled="false"
+                android:text="-"
+                android:textColor="#000000"
+                app:layout_constraintEnd_toStartOf="@+id/divider2"
+                app:layout_constraintTop_toBottomOf="@+id/repreGiroscT1" />
 
         <TextView
             android:id="@+id/nomTempAmbT1"
@@ -432,18 +415,17 @@
             app:layout_constraintStart_toEndOf="@+id/divider"
             app:layout_constraintTop_toBottomOf="@+id/nomGirosT1" />
 
-        <Button
-            android:id="@+id/repreGiroscT1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="27dp"
-            android:backgroundTint="#49D64F"
-            android:enabled="false"
-            android:text="-"
-            android:textColor="#000000"
-            app:layout_constraintEnd_toStartOf="@+id/divider2"
-            app:layout_constraintTop_toBottomOf="@+id/repreAcelT1" />
+            <Button
+                android:id="@+id/repreGiroscT1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="27dp"
+                android:enabled="false"
+                android:text="-"
+                android:textColor="#000000"
+                app:layout_constraintEnd_toStartOf="@+id/divider2"
+                app:layout_constraintTop_toBottomOf="@+id/repreAcelT1" />
 
         <TextView
             android:id="@+id/nomGirosT1"
@@ -505,18 +487,16 @@
             app:layout_constraintStart_toEndOf="@+id/divider"
             app:layout_constraintTop_toBottomOf="@+id/nombT1" />
 
-        <Button
-            android:id="@+id/repreBattT1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="27dp"
-            android:backgroundTint="#D30E00"
-            android:enabled="false"
-            android:text="-"
-            android:textColor="#FFFFFF"
-            app:layout_constraintEnd_toStartOf="@+id/divider2"
-            app:layout_constraintTop_toBottomOf="@+id/repreTempAmbT1" />
+            <Button
+                android:id="@+id/repreBattT1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="27dp"
+                android:enabled="false"
+                android:text="-"
+                app:layout_constraintEnd_toStartOf="@+id/divider2"
+                app:layout_constraintTop_toBottomOf="@+id/repreTempAmbT1" />
 
         <View
             android:id="@+id/divider2"

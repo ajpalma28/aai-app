@@ -33,6 +33,12 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".GuardadoSesionActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ResumenMedicionesActivity"
+            android:exported="false" />
+        <activity
             android:name=".ComienzoMedicionesActivity"
             android:exported="false" />
         <activity

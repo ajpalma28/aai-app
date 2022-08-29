@@ -18,6 +18,7 @@
         <entry key="..\:/GitHub/aai-app/code/IAA_APP/app/src/main/res/layout/activity_datos_sesion.xml" value="0.33" />
         <entry key="..\:/GitHub/aai-app/code/IAA_APP/app/src/main/res/layout/activity_form_inicio_sesion.xml" value="0.358695652173913" />
         <entry key="..\:/GitHub/aai-app/code/IAA_APP/app/src/main/res/layout/activity_gestion_disp.xml" value="0.23550724637681159" />
+        <entry key="..\:/GitHub/aai-app/code/IAA_APP/app/src/main/res/layout/activity_guardado_sesion.xml" value="0.35260416666666666" />
         <entry key="..\:/GitHub/aai-app/code/IAA_APP/app/src/main/res/layout/activity_login.xml" value="0.358695652173913" />
         <entry key="..\:/GitHub/aai-app/code/IAA_APP/app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="..\:/GitHub/aai-app/code/IAA_APP/app/src/main/res/layout/activity_mi_perfil.xml" value="0.36666666666666664" />
@@ -25,6 +26,7 @@
         <entry key="..\:/GitHub/aai-app/code/IAA_APP/app/src/main/res/layout/activity_principal.xml" value="0.358695652173913" />
         <entry key="..\:/GitHub/aai-app/code/IAA_APP/app/src/main/res/layout/activity_registrar_usuario.xml" value="0.25" />
         <entry key="..\:/GitHub/aai-app/code/IAA_APP/app/src/main/res/layout/activity_registro_invest.xml" value="0.358695652173913" />
+        <entry key="..\:/GitHub/aai-app/code/IAA_APP/app/src/main/res/layout/activity_resumen_mediciones.xml" value="0.36666666666666664" />
         <entry key="..\:/GitHub/aai-app/code/IAA_APP/app/src/main/res/layout/activity_visuali_med.xml" value="0.25" />
         <entry key="..\:/GitHub/aai-app/code/IAA_APP/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.3675" />
         <entry key="..\:/GitHub/aai-app/code/IAA_APP/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.3675" />

@@ -2,13 +2,14 @@ package com.example.iaa_project
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.bluetooth.*
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
-import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -19,6 +20,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.example.iaa_project.databinding.ActivityVisualiMedBinding
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import kotlinx.coroutines.delay
 import java.io.DataInputStream
 import java.io.InputStream
@@ -61,8 +63,12 @@ class VisualiMedActivity : AppCompatActivity() {
     var muestraGirosT3 : Button? = null
     var muestraBattT3 : Button? = null
 
+    var extendedFab : ExtendedFloatingActionButton? = null
+
     var serverSocket: BluetoothServerSocket? = null
     val myExecutor = Executors.newSingleThreadExecutor()
+
+    var resumen = "Esto es un texto de prueba.\n\nMuchas gracias."
 
     private companion object {
         private const val CHANNEL_ID = "channel01"
@@ -113,6 +119,8 @@ class VisualiMedActivity : AppCompatActivity() {
         muestraGirosT3 = variables!!.repreGirosT3
         muestraBattT3 = variables!!.repreBattT3
 
+        extendedFab = variables!!.extendedFab
+
         if(conectados.isNotEmpty()){
             conectaDispositivos(conectados)
             myExecutor.execute {
@@ -122,6 +130,41 @@ class VisualiMedActivity : AppCompatActivity() {
                     i++
                 }
             }
+        }
+
+        val executorSesion = Executors.newSingleThreadExecutor()
+
+        extendedFab?.setOnClickListener{
+            val builder = AlertDialog.Builder(this)
+            //set title for alert dialog
+            builder.setTitle(R.string.app_name)
+            //set message for alert dialog
+            builder.setMessage("¿Está seguro de querer detener la sesión?")
+            builder.setIcon(android.R.drawable.ic_dialog_alert)
+            builder.setPositiveButton("Sí"){_, _ ->
+                executorSesion.execute {
+                    val intento2 = Intent(this, ResumenMedicionesActivity::class.java)
+                    intento2.putExtra("notifUsuDef", notifUsuDef)
+                    intento2.putExtra("idUsuDef", idUsuDef)
+                    intento2.putExtra("dniUsuDef", dniUsuDef)
+                    intento2.putExtra("apellUsuDef", apellUsuDef)
+                    intento2.putExtra("nombUsuDef", nombUsuDef)
+                    intento2.putExtra("fechaUsuDef", fechaUsuDef)
+                    intento2.putExtra("pwUsuDef", pwUsuDef)
+                    intento2.putParcelableArrayListExtra("conectados",conectados)
+                    intento2.putExtra("pacienteMed", pacienteMed)
+                    intento2.putExtra("resumenSesion",resumen)
+                    startActivity(intento2)
+                }
+            }
+            builder.setNegativeButton("No"){_, _ ->
+
+            }
+            // Create the AlertDialog
+            val alertDialog: AlertDialog = builder.create()
+            // Set other dialog properties
+            alertDialog.setCancelable(false)
+            alertDialog.show()
         }
 
 
@@ -254,25 +297,22 @@ class VisualiMedActivity : AppCompatActivity() {
         }
     }
 
-    @SuppressLint("ResourceAsColor")
     private fun normal(boton: Button, valor: String){
         boton.text=valor
-        boton.setTextColor(R.color.black)
-        boton.backgroundTintList=ColorStateList.valueOf(Color.parseColor("#FF49D64F"))
+        boton.setTextColor(this.getColor(R.color.black))
+        boton.backgroundTintList=ColorStateList.valueOf(this.getColor(R.color.cuadroNormal))
     }
 
-    @SuppressLint("ResourceAsColor")
     private fun peligroso(boton: Button, valor: String){
         boton.text=valor
-        boton.setTextColor(R.color.white)
-        boton.backgroundTintList=ColorStateList.valueOf(Color.parseColor("#FFD30E00"))
+        boton.setTextColor(this.getColor(R.color.white))
+        boton.backgroundTintList=ColorStateList.valueOf(this.getColor(R.color.cuadroPeligro))
     }
 
-    @SuppressLint("ResourceAsColor")
     private fun cuidado(boton: Button, valor: String){
         boton.text=valor
-        boton.setTextColor(R.color.black)
-        boton.backgroundTintList=ColorStateList.valueOf(Color.parseColor("#FFFFEB3B"))
+        boton.setTextColor(this.getColor(R.color.black))
+        boton.backgroundTintList=ColorStateList.valueOf(this.getColor(R.color.cuadroCuidado))
     }
 
     /*
@@ -337,6 +377,7 @@ class VisualiMedActivity : AppCompatActivity() {
             var giroscopio = data.slice(44..56)
             var respiracion = data.slice(56..60)
             var bateria = data.slice(60..62)
+            var tempAmbiente = data.slice(62..64)
             //TODO: CONTINUAR CODIGO
         }
     }
@@ -353,6 +394,26 @@ class VisualiMedActivity : AppCompatActivity() {
             var tempAmbiente = data.slice(30..32)
             //TODO: CONTINUAR CODIGO
         }
+    }
+
+    fun lecturaLeg(data: ByteArray){
+        if(data.size!=28){
+            // TODO: ERROR EN LA LECTURA
+        }else{
+            var acelerometro = data.slice(0..12)
+            var giroscopio = data.slice(12..24)
+            var bateria = data.slice(24..26)
+            var tempAmbiente = data.slice(26..28)
+            //TODO: CONTINUAR CODIGO
+        }
+    }
+
+    //TODO: Hay que añadir todos los métodos
+
+    fun lecturaBateria(br: ByteArray){
+        var lista = ArrayList<Int>()
+        var largo = br.size
+        // TODO: CONTINUAR
     }
 
 }
