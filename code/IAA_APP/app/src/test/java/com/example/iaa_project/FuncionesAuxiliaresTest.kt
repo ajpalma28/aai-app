@@ -102,6 +102,54 @@ class FuncionesAuxiliaresTest {
     }
 
     @Test
+    fun letraCorrectaDNINIF1(){
+        val dni = "00000000T"
+        println("\nTEST 27: ¿letraCorrectaDNINIF($dni) es correcto?")
+        println("Resultado: true")
+        assertTrue(FuncionesAuxiliares().letraCorrectaDNINIF(dni))
+    }
+
+    @Test
+    fun letraCorrectaDNINIF2(){
+        val dni = "47337348J"
+        println("TEST 28: ¿letraCorrectaDNINIF($dni) es correcto?")
+        println("Resultado: true")
+        assertTrue(FuncionesAuxiliares().letraCorrectaDNINIF(dni))
+    }
+
+    @Test
+    fun letraCorrectaDNINIF3(){
+        val dni = "X7337348A"
+        println("TEST 29: ¿letraCorrectaDNINIF($dni) es correcto?")
+        println("Resultado: true")
+        assertTrue(FuncionesAuxiliares().letraCorrectaDNINIF(dni))
+    }
+
+    @Test
+    fun letraCorrectaDNINIF4(){
+        val dni = "X7337348N"
+        println("TEST 30: ¿letraCorrectaDNINIF($dni) es correcto?")
+        println("Resultado: false -> no se corresponde con la letra que debería ser")
+        assertFalse(FuncionesAuxiliares().letraCorrectaDNINIF(dni))
+    }
+
+    @Test
+    fun letraCorrectaDNINIF5(){
+        val dni = "Y7337348V"
+        println("TEST 31: ¿letraCorrectaDNINIF($dni) es correcto?")
+        println("Resultado: true")
+        assertTrue(FuncionesAuxiliares().letraCorrectaDNINIF(dni))
+    }
+
+    @Test
+    fun letraCorrectaDNINIF6(){
+        val dni = "Z7337348A"
+        println("TEST 32: ¿letraCorrectaDNINIF($dni) es correcto?")
+        println("Resultado: false -> no se corresponde con la letra que debería ser")
+        assertFalse(FuncionesAuxiliares().letraCorrectaDNINIF(dni))
+    }
+
+    @Test
     fun formateaFechaRev1(){
         val fecha = "1999-03-01"
         val resultado = "01/03/1999"

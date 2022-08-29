@@ -1,15 +1,5 @@
 package com.example.iaa_project
 
-import android.Manifest
-import android.app.Activity
-import android.bluetooth.BluetoothDevice
-import android.bluetooth.BluetoothGatt
-import android.content.Context
-import android.content.pm.PackageManager
-import android.os.Build
-import androidx.core.app.ActivityCompat
-import com.example.iaa_project.exceptions.*
-
 class FuncionesAuxiliares {
 
     fun formateaFecha(fecha: String): String {
@@ -88,8 +78,42 @@ class FuncionesAuxiliares {
                     res=false
                     break
                 }
+            }else if(i==0 && e.isLetter()){
+                if(e!='X' && e!='Y' && e!='Z'){
+                    res=false
+                    break
+                }
             }
             i++
+        }
+        return res
+    }
+
+    fun letraCorrectaDNINIF(dni: String): Boolean{
+        var res = false
+        var numDNI = 0
+        val letras = "TRWAGMYFPDXBNJZSQVHLCKE"
+        if(formatoCorrectoDNINIF(dni)){
+            if(dni[0].isDigit()){
+                numDNI = dni.subSequence(0,8).toString().toInt()
+                val numero = numDNI%23
+                if(letras[numero]==(dni[8])){
+                    res = true
+                }
+            }else{
+                var inicial = ""
+                when(dni[0]){
+                    'X' -> inicial="0"
+                    'Y' -> inicial="1"
+                    'Z' -> inicial="2"
+                }
+                val completo = inicial+dni.subSequence(1,8)
+                val numero = completo.toInt()
+                val letra = numero%23
+                if(letras[letra]==dni[8]){
+                    res=true
+                }
+            }
         }
         return res
     }
