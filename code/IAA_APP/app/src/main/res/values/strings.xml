@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">IAA_PROJECT</string>
+    <string name="app_name">IAA App</string>
     <string name="title_activity_form_inicio_sesion">FormInicioSesion</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
@@ -9,5 +9,20 @@
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
-    <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_acerca_de">Acerca de</string>
+    <string name="title_activity_busca_dispositivos">Gestión de Dispositivos</string>
+    <string name="title_activity_buscar_usuario">Buscar Usuario</string>
+    <string name="title_activity_cambio_pw">Cambiar contraseña de Investigador</string>
+    <string name="title_activity_comienzo_mediciones">Comenzar Mediciones</string>
+    <string name="title_activity_datos_organizacion">Datos de la Organización</string>
+    <string name="title_activity_datos_sesion">Datos de la Sesión</string>
+    <string name="title_activity_guardado_sesion">Guardar los resultados de la Sesión</string>
+    <string name="title_activity_login">Inicio de Sesión</string>
+    <string name="title_activity_mi_perfil">Mi Perfil</string>
+    <string name="title_activity_perfil_usuario">Datos del Usuario</string>
+    <string name="title_activity_principal">IAA App: Menú Principal</string>
+    <string name="title_activity_registrar_usuario">Registrar Usuario</string>
+    <string name="title_activity_registro_invest">Registrar Investigador</string>
+    <string name="title_activity_resumen_mediciones">Resumen de la Sesión</string>
+    <string name="title_activity_visuali_med">Visualización en tiempo real</string>
 </resources>

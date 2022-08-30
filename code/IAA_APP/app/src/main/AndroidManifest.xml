@@ -34,59 +34,75 @@
         tools:targetApi="31">
         <activity
             android:name=".GuardadoSesionActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:label="@string/title_activity_guardado_sesion" />
         <activity
             android:name=".ResumenMedicionesActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:label="@string/title_activity_resumen_mediciones" />
         <activity
             android:name=".ComienzoMedicionesActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:label="@string/title_activity_comienzo_mediciones"/>
         <activity
             android:name=".ConectaDispositivosActivity"
             android:exported="false" />
         <activity
             android:name=".BuscaDispositivosActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:label="@string/title_activity_busca_dispositivos"/>
         <activity
             android:name=".DatosOrganizacionActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:label="@string/title_activity_datos_organizacion"/>
         <activity
             android:name=".DatosSesionActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:label="@string/title_activity_datos_sesion"/>
         <activity
             android:name=".CambioPwActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:label="@string/title_activity_cambio_pw"/>
         <activity
             android:name=".PerfilUsuarioActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:label="@string/title_activity_perfil_usuario"/>
         <activity
             android:name=".AcercaDeActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:label="@string/title_activity_acerca_de"/>
         <activity
             android:name=".VisualiMedActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:label="@string/title_activity_visuali_med"/>
         <activity
             android:name=".MiPerfilActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:label="@string/title_activity_mi_perfil" />
         <activity
             android:name=".GestionDispActivity"
             android:exported="false" />
         <activity
             android:name=".RegistrarUsuarioActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:label="@string/title_activity_registrar_usuario"/>
         <activity
             android:name=".BuscarUsuarioActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:label="@string/title_activity_buscar_usuario"/>
         <activity
             android:name=".PrincipalActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:label="@string/title_activity_principal"/>
         <activity
             android:name=".LoginActivity"
             android:exported="false"
-            android:noHistory="true" />
+            android:noHistory="true"
+            android:label="@string/title_activity_login"/>
         <activity
             android:name=".ActivityRegistroInvest"
-            android:exported="false" />
+            android:exported="false"
+            android:label="@string/title_activity_registro_invest"/>
         <activity
             android:name=".MainActivity"
             android:exported="true">

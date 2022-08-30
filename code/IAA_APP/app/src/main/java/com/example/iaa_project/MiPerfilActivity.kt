@@ -101,14 +101,14 @@ class MiPerfilActivity : AppCompatActivity() {
         listaAsocID = bundle.getStringArrayList("listaAsocID")!!
         listaAsocOrganizacion = bundle.getStringArrayList("listaAsocOrganizacion")!!
         contadorOrganizaciones = bundle.getInt("contadorOrganizaciones")
-        if(bundle?.getParcelableArrayList<BluetoothDevice>("conectados")!!.isNotEmpty()){
+        if(bundle.getParcelableArrayList<BluetoothDevice>("conectados")!!.isNotEmpty()){
             conectados.addAll(bundle.getParcelableArrayList("conectados")!!)
         }
 
-        var tvID = variables!!.textView12
+        val tvID = variables!!.textView12
         tvID.text = idUsuDef
 
-        var editDNI = variables!!.editTextInvestigadorDNI
+        val editDNI = variables!!.editTextInvestigadorDNI
         editDNI.setText(dniUsuDef)
 
         editNombre = variables!!.editTextInvestigadorNombre
@@ -121,7 +121,7 @@ class MiPerfilActivity : AppCompatActivity() {
         editFecha!!.setText(fechaUsuDef)
 
         btnEditarInvestigador = variables!!.btnEditInvestigador
-        var cancelar = variables!!.btnCancReg
+        val cancelar = variables!!.btnCancReg
         val cambioPW = variables!!.btnCambioPW
         val deleteInvest = variables!!.btnDeletePerfil
 
