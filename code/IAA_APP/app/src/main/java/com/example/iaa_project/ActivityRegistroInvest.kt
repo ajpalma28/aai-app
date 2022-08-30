@@ -1,5 +1,6 @@
 package com.example.iaa_project
 
+import android.app.AlertDialog
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
@@ -93,6 +94,24 @@ class ActivityRegistroInvest : AppCompatActivity() {
 
         botonCancelar.setOnClickListener {
             super.onBackPressed()
+        }
+
+        val leetyc = variables!!.muestraTyC
+
+        leetyc.setOnClickListener {
+            val builder = AlertDialog.Builder(this)
+            //set title for alert dialog
+            builder.setTitle("Términos y Condiciones de Uso de IAA App")
+            //set message for alert dialog
+            builder.setMessage(R.string.tyc_completo)
+            builder.setIcon(R.mipmap.iaa_logo)
+            builder.setPositiveButton("OK"){_, _ ->
+            }
+            // Create the AlertDialog
+            val alertDialog: AlertDialog = builder.create()
+            // Set other dialog properties
+            alertDialog.setCancelable(false)
+            alertDialog.show()
         }
 
     }
