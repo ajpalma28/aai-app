@@ -30,6 +30,7 @@ import java.security.Principal
 import java.time.LocalTime
 import java.util.*
 import java.util.concurrent.Executors
+import kotlin.random.Random
 
 
 class BuscaDispositivosActivity : AppCompatActivity() {
@@ -209,7 +210,7 @@ class BuscaDispositivosActivity : AppCompatActivity() {
                 .setStyle(NotificationCompat.BigTextStyle().bigText(mensaje))
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             val notifationManagerCompat = NotificationManagerCompat.from(this)
-            notifationManagerCompat.notify(123456, builder.build())
+            notifationManagerCompat.notify(Random.nextInt(0,999999), builder.build())
         }
     }
 
@@ -350,8 +351,6 @@ class BuscaDispositivosActivity : AppCompatActivity() {
                 //if(device.name=="LegMonitor" || device.name=="ChestMonitor" || device.name=="WristMonitor")
                 list.add(device)
             }
-        } else {
-            Toast.makeText(this, "No se han encontrado dispositivos", Toast.LENGTH_SHORT).show()
         }
         if(conectados.isNotEmpty()){
             for (c in conectados){
@@ -359,6 +358,9 @@ class BuscaDispositivosActivity : AppCompatActivity() {
                     list.add(c)
                 }
             }
+        }
+        if(list.isEmpty()){
+            Toast.makeText(this, "No se han encontrado dispositivos", Toast.LENGTH_SHORT).show()
         }
 
         var layoutCelda: TableRow.LayoutParams

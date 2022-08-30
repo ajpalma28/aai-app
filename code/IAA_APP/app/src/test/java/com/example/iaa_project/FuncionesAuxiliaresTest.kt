@@ -2,6 +2,7 @@ package com.example.iaa_project
 
 import org.junit.Test
 import org.junit.Assert.*
+import java.time.LocalDate
 
 class FuncionesAuxiliaresTest {
 
@@ -269,6 +270,54 @@ class FuncionesAuxiliaresTest {
         println("TEST 26: ¿Qué devuelve el método estructuraCorrectaPW($pw)?")
         println("Resultado: false -> No hay caracteres especiales")
         assertFalse(FuncionesAuxiliares().estructuraCorrectaPW(pw))
+    }
+
+    @Test
+    fun idAsociacionTest1(){
+        val org = "UNIVERSEVIL000"
+        val inv = "Anto333Palm95"
+        val asoc = "UNIVERSEVIL000_Anto333Palm95"
+        println("\nTEST 33: ¿Qué id genera el método generaIdAsociacion($org,$inv)?")
+        println("Resultado: $asoc")
+        assertEquals(asoc, FuncionesAuxiliares().generaIdAsociacion(org,inv))
+    }
+
+    @Test
+    fun idSesionTest1(){
+        val org = "UNIVERSEVIL000"
+        val usu = "Anto333Palm95"
+        val date = LocalDate.now().toString()
+        val aux0 = date.replace("-","")
+        val aux1 = "_$usu"
+        val aux2 = "_$org"
+        val sesion = "$aux0$aux1$aux2"
+        println("\nTEST 34: ¿Qué id genera el método generaIdSesion($date, $usu,$org)?")
+        println("Resultado: $sesion")
+        assertEquals(sesion, FuncionesAuxiliares().generaIdSesion(date,usu,org))
+    }
+
+    @Test
+    fun compruebaIdOrg1(){
+        val org = "UNIVERSEVIL000"
+        println("\nTEST 35: ¿Es correcto el funcionamiento de compruebaIdOrg($org)?")
+        println("Resultado obtenido: true")
+        assertTrue(FuncionesAuxiliares().compruebaIdOrg(org))
+    }
+
+    @Test
+    fun compruebaIdOrg2(){
+        val org = "UNIVERSEVIL0000"
+        println("TEST 36: ¿Es correcto el funcionamiento de compruebaIdOrg($org)?")
+        println("Resultado obtenido: false -> Longitud errónea")
+        assertFalse(FuncionesAuxiliares().compruebaIdOrg(org))
+    }
+
+    @Test
+    fun compruebaIdOrg3(){
+        val org = "UNIVERSEVIL 00"
+        println("TEST 37: ¿Es correcto el funcionamiento de compruebaIdOrg($org)?")
+        println("Resultado obtenido: false -> Contiene espacio")
+        assertFalse(FuncionesAuxiliares().compruebaIdOrg(org))
     }
 
 }

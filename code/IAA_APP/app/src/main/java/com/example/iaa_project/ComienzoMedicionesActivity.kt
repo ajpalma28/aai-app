@@ -99,7 +99,7 @@ class ComienzoMedicionesActivity : AppCompatActivity() {
                             .setStyle(NotificationCompat.BigTextStyle().bigText(mensajeError))
                             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                         val notifationManagerCompat = NotificationManagerCompat.from(this)
-                        notifationManagerCompat.notify(123456, builder.build())
+                        notifationManagerCompat.notify(Random.nextInt(0,999999), builder.build())
                         txtMostrar.setGravity(Gravity.CENTER_VERTICAL, 0, 0)
                         txtMostrar.show()
                     }
@@ -121,7 +121,7 @@ class ComienzoMedicionesActivity : AppCompatActivity() {
                             .setStyle(NotificationCompat.BigTextStyle().bigText(mensajeError))
                             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                         val notifationManagerCompat = NotificationManagerCompat.from(this)
-                        notifationManagerCompat.notify(123456, builder.build())
+                        notifationManagerCompat.notify(Random.nextInt(0,999999), builder.build())
                         txtMostrar.setGravity(Gravity.CENTER_VERTICAL, 0, 0)
                         txtMostrar.show()
                     }

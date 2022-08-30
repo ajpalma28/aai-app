@@ -25,6 +25,7 @@ import com.example.iaa_project.exceptions.InvalidIDException
 import com.example.iaa_project.exceptions.errorID1
 import java.sql.DriverManager
 import java.util.concurrent.Executors
+import kotlin.random.Random
 
 class PrincipalActivity : AppCompatActivity() {
 
@@ -284,7 +285,7 @@ class PrincipalActivity : AppCompatActivity() {
                         .setStyle(NotificationCompat.BigTextStyle().bigText("No se han podido desactivar las notificaciones de la aplicación para el investigador $nombUsuDef $apellUsuDef (id: $idUsuDef). Inténtelo de nuevo más tarde."))
                         .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                     val notifationManagerCompat = NotificationManagerCompat.from(this)
-                    notifationManagerCompat.notify(123456, builder.build())
+                    notifationManagerCompat.notify(Random.nextInt(0,999999), builder.build())
                 }
             }
 
@@ -332,7 +333,7 @@ class PrincipalActivity : AppCompatActivity() {
                         .setStyle(NotificationCompat.BigTextStyle().bigText("Se han activado las notificaciones de la aplicación para el investigador $nombUsuDef $apellUsuDef (id: $idUsuDef)"))
                         .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                     val notifationManagerCompat = NotificationManagerCompat.from(this)
-                    notifationManagerCompat.notify(123456, builder.build())
+                    notifationManagerCompat.notify(Random.nextInt(0,999999), builder.build())
                     this@PrincipalActivity.notifUsuDef = notifUsuDef
                     swNotif!!.text="Notificaciones ACTIVADAS"
                     swNotif!!.setTextColor(Color.BLACK)

@@ -202,4 +202,24 @@ class FuncionesAuxiliares {
         return res
     }
 
+    fun generaIdAsociacion(org: String, invest: String) : String{
+        val aux = "_$invest"
+        return "$org$aux"
+    }
+
+    fun generaIdSesion(date: String, usu: String, org: String) : String {
+        val aux0 = date.replace("-","")
+        val aux1 = "_$usu"
+        val aux2 = "_$org"
+        return "$aux0$aux1$aux2"
+    }
+
+    fun compruebaIdOrg(id: String) : Boolean {
+        var res = true
+        if(id.length!=14 || id.contains(" ")){
+            res = false
+        }
+        return res
+    }
+
 }
