@@ -12,7 +12,10 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
 import android.graphics.Color
-import android.os.*
+import android.os.Build
+import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.Gravity
 import android.widget.*
@@ -26,10 +29,14 @@ import androidx.core.view.ViewCompat
 import com.example.iaa_project.R.mipmap.ib_bt_connect
 import com.example.iaa_project.R.mipmap.ib_bt_search
 import com.example.iaa_project.databinding.ActivityBuscaDispositivosBinding
-import java.security.Principal
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
+import java.lang.Thread.sleep
 import java.time.LocalTime
 import java.util.*
 import java.util.concurrent.Executors
+import java.util.concurrent.TimeUnit
+import kotlin.concurrent.thread
 import kotlin.random.Random
 
 
@@ -218,11 +225,27 @@ class BuscaDispositivosActivity : AppCompatActivity() {
     fun starBLEScan() {
         Log.v(TAG, "${LocalTime.now()} - StartBLEScan")
         //val scanFilter = ScanFilter.Builder().build()
-        val scanFilter = ScanFilter.Builder()
+        /*val scanFilter = ScanFilter.Builder()
             .setServiceUuid(ParcelUuid.fromString("0000acc0-0000-1000-8000-00805f9b34fb")).build()
 
         val scanFilters: MutableList<ScanFilter> = mutableListOf()
-        scanFilters.add(scanFilter)
+        scanFilters.add(scanFilter)*/
+
+        val scanFilter1 = ScanFilter.Builder().setDeviceName("LegMonitor").build()
+        val scanFilter2 = ScanFilter.Builder().setDeviceName("Type1").build()
+        val scanFilter3 = ScanFilter.Builder().setDeviceName("WristMonitor").build()
+        val scanFilter4 = ScanFilter.Builder().setDeviceName("Type2").build()
+        val scanFilter5 = ScanFilter.Builder().setDeviceName("ChestMonitor").build()
+        val scanFilter6 = ScanFilter.Builder().setDeviceName("Type3").build()
+
+        val scanFilters: MutableList<ScanFilter> = mutableListOf()
+        scanFilters.add(scanFilter1)
+        scanFilters.add(scanFilter2)
+        scanFilters.add(scanFilter3)
+        scanFilters.add(scanFilter4)
+        scanFilters.add(scanFilter5)
+        scanFilters.add(scanFilter6)
+
 
         val scanSettings =
             ScanSettings.Builder().setScanMode(ScanSettings.SCAN_MODE_LOW_LATENCY).build()
@@ -698,17 +721,49 @@ class BuscaDispositivosActivity : AppCompatActivity() {
             }
 
             override fun onServicesDiscovered(gatt: BluetoothGatt?, status: Int) {
-                Log.v(TAG, "onServicesDiscovered")
+                Log.v(TAG, "onServicesDiscovered, status: $status")
+                if (ActivityCompat.checkSelfPermission(
+                        this@BuscaDispositivosActivity,
+                        Manifest.permission.BLUETOOTH_CONNECT
+                    ) != PackageManager.PERMISSION_GRANTED
+                ) {
+                    if (Build.VERSION.SDK_INT == Build.VERSION_CODES.Q) {
+                        ActivityCompat.requestPermissions(
+                            this@BuscaDispositivosActivity,
+                            arrayOf(
+                                Manifest.permission.ACCESS_FINE_LOCATION,
+                                Manifest.permission.ACCESS_BACKGROUND_LOCATION,
+                                Manifest.permission.BLUETOOTH_CONNECT
+                            ),
+                            1
+                        )
+                    }
+                }
+                gatt?.requestMtu(100)
+                runBlocking {
+                    delay(1500)
+                }
                 gatt?.services?.forEach{ it ->
                     if(it?.uuid.toString().lowercase() == "0000acc0-0000-1000-8000-00805f9b34fb"){
-                        println("Prueba de fuego 1: ${it.uuid.toString()}")
+                        println("Prueba de fuego 1: ${it.uuid}")
+                        println(gatt.getService(UUID.fromString("0000acc0-0000-1000-8000-00805f9b34fb")).toString())
                         runOnUiThread {
                             // TODO
-                            it.characteristics.forEach {
-                                println("Se viene esto, ojito: ${it.uuid.toString()}")
-                                if(it.uuid.toString().lowercase()=="0000acc5-0000-1000-8000-00805f9b34fb"){
-                                    lecturaAutomatica(gatt,it)
-                                }
+                            it.characteristics.forEach { x ->
+                                println("Se viene esto, ojito: ${x.uuid}")
+                                /*if(it.uuid.toString().lowercase()=="0000acc5-0000-1000-8000-00805f9b34fb"){
+                                    //lecturaAutomatica(gatt,it)
+                                    println("Entro en el if")
+
+                                    println("Hola que pasa omio")
+                                    gatt.readCharacteristic(x)
+                                    println("CHACHAAAAN")
+                                }*/
+                                //TODO: VER COMO HACERLO PARA QUE SE REPITA SIN PETAR MUCHO
+                                println("tamos ready")
+                                gatt.setCharacteristicNotification(x,true)
+                                gatt.readCharacteristic(x)
+                                println("leido AAAAAAAAAAAAAA")
                             }
                         }
 
@@ -716,12 +771,19 @@ class BuscaDispositivosActivity : AppCompatActivity() {
                 }
             }
 
+            @SuppressLint("MissingPermission")
             override fun onCharacteristicRead(
                 gatt: BluetoothGatt?,
                 characteristic: BluetoothGattCharacteristic?,
                 status: Int
             ) {
-                Log.v(TAG, "onCharacteristicRead")
+                val data = characteristic!!.value
+                println("reading")
+                var resultadojeje = ""
+                for(i in data){
+                    resultadojeje += "$i "
+                }
+                print("Resultado de ${gatt?.device?.name}: $resultadojeje\n")
             }
 
             override fun onCharacteristicChanged(
@@ -736,32 +798,29 @@ class BuscaDispositivosActivity : AppCompatActivity() {
     @SuppressLint("MissingPermission")
     fun lecturaAutomatica(bluetoothGatt: BluetoothGatt, it: BluetoothGattCharacteristic){
         bluetoothGatt.setCharacteristicNotification(it, lecturaAutomatica)
+        bluetoothGatt.requestMtu(100)
+        bluetoothGatt.readCharacteristic(it)
+        println(it.value)
+        println(bluetoothGatt.readCharacteristic(it).toString())
+        /*
         for(d in it.descriptors){
-            val descriptor = it.getDescriptor(UUID.fromString("0000acc5-0000-1000-8000-00805f9b34fb")).apply {
+            val descriptor = it.getDescriptor(UUID.fromString("0000acc0-0000-1000-8000-00805f9b34fb")).apply {
                 if(lecturaAutomatica){
                     BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE
                     bluetoothGatt.requestMtu(100)
+                    bluetoothGatt.readDescriptor(d)
                     println(it.value)
                 }else{
                     BluetoothGattDescriptor.DISABLE_NOTIFICATION_VALUE
                 }
-            }
+            }*/
             /*println(bluetoothGatt.getService(UUID.fromString("0000acc0-0000-1000-8000-00805f9b34fb")).getCharacteristic(
                 UUID.fromString("0000acc5-0000-1000-8000-00805f9b34fb")).value)*/
             //val success = bluetoothGatt.writeDescriptor(descriptor)
             //bluetoothGatt.readDescriptor(descriptor)
 
-        }
+        //}
 
-    }
-
-    @SuppressLint("MissingPermission")
-    fun pruebaLee(lista: ArrayList<BluetoothDevice>){
-        for(l in lista){
-            if(l.name=="LegMonitor"){
-                var uuid = l.uuids.find { x -> x.uuid.toString()=="0000acc5-0000-1000-8000-00805f9b34fb" }
-            }
-        }
     }
 
     class BluetoothClient(device: BluetoothDevice): Thread() {
