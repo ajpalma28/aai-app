@@ -12,6 +12,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.os.AsyncTask.execute
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -35,8 +36,12 @@ import java.lang.Thread.sleep
 import java.time.LocalTime
 import java.util.*
 import java.util.concurrent.Executors
+import java.util.concurrent.RunnableFuture
+import java.util.concurrent.ScheduledFuture
 import java.util.concurrent.TimeUnit
+import kotlin.concurrent.fixedRateTimer
 import kotlin.concurrent.thread
+import kotlin.concurrent.timerTask
 import kotlin.random.Random
 
 
@@ -339,6 +344,23 @@ class BuscaDispositivosActivity : AppCompatActivity() {
         startActivity(intent)
         stopScan()
         actividad=false
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.BLUETOOTH_CONNECT
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            if (Build.VERSION.SDK_INT == Build.VERSION_CODES.Q) {
+                ActivityCompat.requestPermissions(
+                    this@BuscaDispositivosActivity,
+                    arrayOf(
+                        Manifest.permission.ACCESS_FINE_LOCATION,
+                        Manifest.permission.ACCESS_BACKGROUND_LOCATION
+                    ),
+                    1
+                )
+            }
+        }
+        bluetoothGatt?.close()
     }
 
     private fun imprimeMap(map: HashMap<String, BluetoothDevice>): String {
@@ -709,8 +731,7 @@ class BuscaDispositivosActivity : AppCompatActivity() {
                                 this@BuscaDispositivosActivity,
                                 arrayOf(
                                     Manifest.permission.ACCESS_FINE_LOCATION,
-                                    Manifest.permission.ACCESS_BACKGROUND_LOCATION,
-                                    Manifest.permission.BLUETOOTH_CONNECT
+                                    Manifest.permission.ACCESS_BACKGROUND_LOCATION
                                 ),
                                 1
                             )
@@ -732,8 +753,7 @@ class BuscaDispositivosActivity : AppCompatActivity() {
                             this@BuscaDispositivosActivity,
                             arrayOf(
                                 Manifest.permission.ACCESS_FINE_LOCATION,
-                                Manifest.permission.ACCESS_BACKGROUND_LOCATION,
-                                Manifest.permission.BLUETOOTH_CONNECT
+                                Manifest.permission.ACCESS_BACKGROUND_LOCATION
                             ),
                             1
                         )
@@ -760,10 +780,74 @@ class BuscaDispositivosActivity : AppCompatActivity() {
                                     println("CHACHAAAAN")
                                 }*/
                                 //TODO: VER COMO HACERLO PARA QUE SE REPITA SIN PETAR MUCHO
-                                println("tamos ready")
-                                gatt.setCharacteristicNotification(x,true)
-                                gatt.readCharacteristic(x)
-                                println("leido AAAAAAAAAAAAAA")
+                                if(gatt.device?.name=="LegMonitor" || gatt.device?.name=="Type1"){
+                                    val fixedRateTimer1 = Timer().scheduleAtFixedRate(object: TimerTask(){
+                                        override fun run(){
+                                            if(!actividad) {
+
+                                            }
+                                            println("tamos ready")
+                                            if (ActivityCompat.checkSelfPermission(
+                                                    this@BuscaDispositivosActivity,
+                                                    Manifest.permission.BLUETOOTH_CONNECT
+                                                ) != PackageManager.PERMISSION_GRANTED
+                                            ) {
+                                                if (Build.VERSION.SDK_INT == Build.VERSION_CODES.Q) {
+                                                    ActivityCompat.requestPermissions(
+                                                        this@BuscaDispositivosActivity,
+                                                        arrayOf(
+                                                            Manifest.permission.ACCESS_FINE_LOCATION,
+                                                            Manifest.permission.ACCESS_BACKGROUND_LOCATION
+                                                        ),
+                                                        1
+                                                    )
+                                                }
+                                            }
+                                            gatt.setCharacteristicNotification(x,true)
+                                            gatt.readCharacteristic(x)
+                                            println("leido AAAAAAAAAAAAAA")
+                                        }
+                                    },250,1000)
+                                }
+                                if(gatt.device?.name=="WristMonitor" || gatt.device?.name=="Type2"){
+                                    val myExecutor2 = Executors.newSingleThreadExecutor()
+                                    myExecutor2.execute {
+                                        println("tamos ready")
+                                        gatt.setCharacteristicNotification(x,true)
+                                        gatt.readCharacteristic(x)
+                                        println("leido AAAAAAAAAAAAAA")
+                                    }
+                                }
+                                if(gatt.device?.name=="ChestMonitor" || gatt.device?.name=="Type3"){
+                                    val fixedRateTimer3 = Timer().scheduleAtFixedRate(object: TimerTask(){
+                                        override fun run(){
+                                            if(!actividad) {
+
+                                            }
+                                            println("tamos ready")
+                                            if (ActivityCompat.checkSelfPermission(
+                                                    this@BuscaDispositivosActivity,
+                                                    Manifest.permission.BLUETOOTH_CONNECT
+                                                ) != PackageManager.PERMISSION_GRANTED
+                                            ) {
+                                                if (Build.VERSION.SDK_INT == Build.VERSION_CODES.Q) {
+                                                    ActivityCompat.requestPermissions(
+                                                        this@BuscaDispositivosActivity,
+                                                        arrayOf(
+                                                            Manifest.permission.ACCESS_FINE_LOCATION,
+                                                            Manifest.permission.ACCESS_BACKGROUND_LOCATION
+                                                        ),
+                                                        1
+                                                    )
+                                                }
+                                            }
+                                            gatt.setCharacteristicNotification(x,true)
+                                            gatt.readCharacteristic(x)
+                                            println("leido AAAAAAAAAAAAAA")
+                                        }
+                                    },0,1000)
+
+                                }
                             }
                         }
 
