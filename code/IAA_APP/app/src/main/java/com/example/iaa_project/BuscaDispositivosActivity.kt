@@ -861,13 +861,13 @@ class BuscaDispositivosActivity : AppCompatActivity() {
                 characteristic: BluetoothGattCharacteristic?,
                 status: Int
             ) {
-                val data = characteristic!!.value
+                /*val data = characteristic!!.value
                 println("reading")
                 var resultadojeje = ""
                 for(i in data){
                     resultadojeje += "$i "
                 }
-                print("Resultado de ${gatt?.device?.name}: $resultadojeje\n")
+                print("Resultado de ${gatt?.device?.name}: $resultadojeje\n")*/
             }
 
             override fun onCharacteristicChanged(
