@@ -59,6 +59,7 @@ class RegistrarUsuarioActivity : AppCompatActivity() {
         val apellidos = variables!!.editUsuApell.text.toString()
         val nombre = variables!!.editUsuName.text.toString()
         val fecha = variables!!.editUsuNac.text.toString()
+        val correo = variables!!.editCorreoUsu.text.toString()
 
         val id = FuncionesAuxiliares().generaIdPersona(nombre,apellidos, dni, fecha)
         val fechaDef = FuncionesAuxiliares().formateaFecha(fecha)
@@ -70,7 +71,7 @@ class RegistrarUsuarioActivity : AppCompatActivity() {
             Class.forName("com.mysql.jdbc.Driver")
             //Configuracion de la conexión
             //Configuracion de la conexión
-            println("Query que vamos a ejecutar: INSERT INTO `db-tfg`.`usuario` (`idusuario`, `dni`, `apellidos`, `nombre`, `fnacimiento`) VALUES ('$id', '$dni', '$apellidos', '$nombre', '$fechaDef');")
+            println("Query que vamos a ejecutar: INSERT INTO `db-tfg`.`usuario` (`idusuario`, `dni`, `apellidos`, `nombre`, `fnacimiento`, `correo`) VALUES ('$id', '$dni', '$apellidos', '$nombre', '$fechaDef', '$correo');")
 
             val connection = DriverManager.getConnection(
                 "jdbc:mysql://b1l1rb6fzqnrv8549nvi-mysql.services.clever-cloud.com",
@@ -90,7 +91,7 @@ class RegistrarUsuarioActivity : AppCompatActivity() {
             //statement.executeQuery("select * from usuarios where usuario = '$resUsuario' and pass = '$resPassword'")
             //"INSERT INTO `b1l1rb6fzqnrv8549nvi`.`investigador` (`idusuario`, `dni`, `apellidos`, `nombre`, `fnacimiento`) VALUES ('$id', '$dni', '$apellidos', '$nombre', '$fecha');"
             val query =
-                "INSERT INTO `b1l1rb6fzqnrv8549nvi`.`usuario` (`idusuario`, `dni`, `apellidos`, `nombre`, `fnacimiento`) VALUES ('$id', '$dni', '$apellidos', '$nombre', '$fechaDef');"
+                "INSERT INTO `b1l1rb6fzqnrv8549nvi`.`usuario` (`idusuario`, `dni`, `apellidos`, `nombre`, `fnacimiento`, `correo`) VALUES ('$id', '$dni', '$apellidos', '$nombre', '$fechaDef', '$correo');"
             println(query)
             val resultSet = statement.executeUpdate(query)
 

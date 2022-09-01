@@ -342,19 +342,20 @@
             app:layout_constraintStart_toEndOf="@+id/divider66"
             app:layout_constraintTop_toBottomOf="@+id/nombT16" />
 
-        <TextView
-            android:id="@+id/nomNivBatT16"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="63dp"
-            android:layout_marginTop="34dp"
-            android:layout_marginEnd="72dp"
-            android:text="Giroscopio"
-            app:layout_constraintEnd_toStartOf="@+id/repreGirosT2"
-            app:layout_constraintStart_toEndOf="@+id/divider66"
-            app:layout_constraintTop_toBottomOf="@+id/nomTempAmbT16" />
+            <TextView
+                android:id="@+id/nomNivBatT16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="63dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="72dp"
+                android:text="Giroscopio"
+                app:layout_constraintEnd_toStartOf="@+id/repreGirosT2"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/divider66"
+                app:layout_constraintTop_toBottomOf="@+id/nomTempAmbT16" />
 
-    <androidx.constraintlayout.widget.Guideline
+            <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -425,19 +426,20 @@
                 app:layout_constraintEnd_toStartOf="@+id/divider2"
                 app:layout_constraintTop_toBottomOf="@+id/repreAcelT1" />
 
-        <TextView
-            android:id="@+id/nomGirosT1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="63dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="71dp"
-            android:text="Giroscopio"
-            app:layout_constraintEnd_toStartOf="@+id/repreGiroscT1"
-            app:layout_constraintStart_toEndOf="@+id/divider"
-            app:layout_constraintTop_toBottomOf="@+id/nomAcelT1" />
+            <TextView
+                android:id="@+id/nomGirosT1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="63dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="71dp"
+                android:text="Giroscopio"
+                app:layout_constraintEnd_toStartOf="@+id/repreGiroscT1"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/divider"
+                app:layout_constraintTop_toBottomOf="@+id/nomAcelT1" />
 
-        <View
+            <View
             android:id="@+id/divider"
             android:layout_width="3dp"
             android:layout_height="280dp"
@@ -473,17 +475,18 @@
             app:layout_constraintStart_toEndOf="@+id/divider"
             app:layout_constraintTop_toBottomOf="@+id/nomTempAmbT1" />
 
-        <TextView
-            android:id="@+id/nomAcelT1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="57dp"
-            android:layout_marginTop="28dp"
-            android:layout_marginEnd="60dp"
-            android:text="Acelerómetro"
-            app:layout_constraintEnd_toStartOf="@+id/repreAcelT1"
-            app:layout_constraintStart_toEndOf="@+id/divider"
-            app:layout_constraintTop_toBottomOf="@+id/nombT1" />
+            <TextView
+                android:id="@+id/nomAcelT1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="57dp"
+                android:layout_marginTop="28dp"
+                android:layout_marginEnd="60dp"
+                android:text="Acelerómetro"
+                app:layout_constraintEnd_toStartOf="@+id/repreAcelT1"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/divider"
+                app:layout_constraintTop_toBottomOf="@+id/nombT1" />
 
             <Button
                 android:id="@+id/repreBattT1"

@@ -90,7 +90,7 @@ class ResumenMedicionesActivity : AppCompatActivity() {
             //set title for alert dialog
             builder.setTitle(R.string.app_name)
             //set message for alert dialog
-            builder.setMessage("¿Está seguro de descartar los resultados de la sesión? Ojo, NO PODRÁ RECUPERARLOS.")
+            builder.setMessage("¿Está seguro de descartar los resultados de la sesión? Recuerde, <b>no podrá recuperarlos</b>.")
             builder.setIcon(android.R.drawable.ic_dialog_alert)
             builder.setPositiveButton("Sí"){_, _ ->
                 executorSesion.execute {
