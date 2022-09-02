@@ -193,6 +193,9 @@ class VisualiMedActivity : AppCompatActivity() {
                     intento2.putExtra("pacienteMed", pacienteMed)
                     intento2.putExtra("resumenSesion", resumen)
                     actividad = false
+                    bluetoothGatt?.disconnect()
+                    bluetoothGatt?.close()
+                    bAdapter?.disable()
                     startActivity(intento2)
                 }
             }
@@ -300,8 +303,8 @@ class VisualiMedActivity : AppCompatActivity() {
                                 }*/
                                 //TODO: VER COMO HACERLO PARA QUE SE REPITA SIN PETAR MUCHO
                                 if (gatt.device?.name == "LegMonitor" || gatt.device?.name == "Type1") {
-                                    val fixedRateTimer1 =
-                                        Timer().scheduleAtFixedRate(object : TimerTask() {
+                                    var fixedRateTimer1 = Timer()
+                                    fixedRateTimer1.scheduleAtFixedRate(object : TimerTask() {
                                             override fun run() {
                                                 if (!actividad) {
                                                     if (ActivityCompat.checkSelfPermission(
@@ -346,6 +349,9 @@ class VisualiMedActivity : AppCompatActivity() {
                                                 gatt.readCharacteristic(x)
                                             }
                                         }, 2000, 1000)
+                                    if(!actividad){
+                                        fixedRateTimer1.cancel()
+                                    }
                                 }
                                 if (gatt.device?.name == "WristMonitor" || gatt.device?.name == "Type2") {
                                     val myExecutor2 = Executors.newSingleThreadExecutor()
@@ -359,9 +365,9 @@ class VisualiMedActivity : AppCompatActivity() {
                                     val fixedRateTimer3 =
                                         Timer().scheduleAtFixedRate(object : TimerTask() {
                                             override fun run() {
-                                                if (!actividad) {
+                                                /*if (!actividad) {
                                                     onDestroy()
-                                                }
+                                                }*/
                                                 println("tamos ready")
                                                 if (ActivityCompat.checkSelfPermission(
                                                         this@VisualiMedActivity,
