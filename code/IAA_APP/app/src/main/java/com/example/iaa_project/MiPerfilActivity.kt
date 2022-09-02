@@ -39,10 +39,12 @@ class MiPerfilActivity : AppCompatActivity() {
     var nombUsuDef = ""
     var fechaUsuDef = ""
     var pwUsuDef = ""
+    var correoInvest = ""
     var estadoEdicion = false
-    var editNombre: EditText? = null;
-    var editApel: EditText? = null;
+    var editNombre: EditText? = null
+    var editApel: EditText? = null
     var editFecha: EditText? = null
+    var editCorreo: EditText? = null
     var btnEditarInvestigador: Button? = null
     var imgbtnEditNom: ImageButton? = null;
     var imgbtnSaveNom: ImageButton? = null;
@@ -90,6 +92,7 @@ class MiPerfilActivity : AppCompatActivity() {
         apellUsuDef = bundle?.getString("apellUsuDef").toString()
         nombUsuDef = bundle?.getString("nombUsuDef").toString()
         fechaUsuDef = bundle?.getString("fechaUsuDef").toString()
+        correoInvest = bundle?.getString("correoInvest").toString()
         pwUsuDef = bundle?.getString("pwUsuDef").toString()
         listaSesionID = bundle?.getStringArrayList("listaSesionID")!!
         listaSesionOrg = bundle.getStringArrayList("listaSesionOrg")!!
@@ -119,6 +122,9 @@ class MiPerfilActivity : AppCompatActivity() {
 
         editFecha = variables!!.editTextInvestigadorFecha
         editFecha!!.setText(fechaUsuDef)
+
+        editCorreo = variables!!.editTextInvestigadorCorreo
+        editCorreo!!.setText(correoInvest)
 
         btnEditarInvestigador = variables!!.btnEditInvestigador
         val cancelar = variables!!.btnCancReg
@@ -252,6 +258,7 @@ class MiPerfilActivity : AppCompatActivity() {
             intent.putExtra("apellUsuDef", apellUsuDef)
             intent.putExtra("nombUsuDef", nombUsuDef)
             intent.putExtra("fechaUsuDef", fechaUsuDef)
+            intent.putExtra("correoInvest",correoInvest)
             intent.putExtra("pwUsuDef", pwUsuDef)
             intent.putExtra("notifUsuDef", notifUsuDef)
             startActivity(intent)

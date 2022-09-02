@@ -32,17 +32,20 @@ class PerfilUsuarioActivity : AppCompatActivity() {
     var nombUsuarioPac = ""
     var apellUsuarioPac = ""
     var fechaUsuarioPac = ""
+    var correoPac = ""
     var notifUsuDef = false
     var idUsuDef = ""
     var dniUsuDef = ""
     var apellUsuDef = ""
     var nombUsuDef = ""
     var fechaUsuDef = ""
+    var correoInvest = ""
     var pwUsuDef = ""
     var estadoEdicion = false; var estadoEdicion2 = false;
     var editNombre: EditText? = null;
     var editApel: EditText? = null;
     var editFecha: EditText? = null
+    var editCorreoPac: EditText? = null
     var btnEditarUsuario: Button? = null
     var imgbtnEditNom: ImageButton? = null;
     var imgbtnSaveNom: ImageButton? = null;
@@ -82,12 +85,14 @@ class PerfilUsuarioActivity : AppCompatActivity() {
         nombUsuarioPac = bundle?.getString("nombUsuarioPac").toString()
         apellUsuarioPac = bundle?.getString("apellUsuarioPac").toString()
         fechaUsuarioPac = bundle?.getString("fechaUsuarioPac").toString()
+        correoPac = bundle?.getString("correoPac").toString()
         notifUsuDef = bundle?.getBoolean("notifUsuDef") == true
         idUsuDef = bundle?.getString("idUsuDef").toString()
         dniUsuDef = bundle?.getString("dniUsuDef").toString()
         apellUsuDef = bundle?.getString("apellUsuDef").toString()
         nombUsuDef = bundle?.getString("nombUsuDef").toString()
         fechaUsuDef = bundle?.getString("fechaUsuDef").toString()
+        correoInvest = bundle?.getString("correoInvest").toString()
         pwUsuDef = bundle?.getString("pwUsuDef").toString()
         listaSesionID.addAll(bundle?.getStringArrayList("listaSesionID")!!)
         listaSesionOrg.addAll(bundle.getStringArrayList("listaSesionOrg")!!)
@@ -111,6 +116,9 @@ class PerfilUsuarioActivity : AppCompatActivity() {
 
         editFecha = variables!!.editTextUsuarioFecha
         editFecha?.setText(fechaUsuarioPac)
+
+        editCorreoPac = variables!!.editTextUsuarioCorreo
+        editCorreoPac?.setText(correoPac)
 
         val btnBorradoUsu = variables!!.btnBorrarUsuarioFull
         //TODO: No se han implementado aún las sesiones de mediciones
@@ -220,6 +228,7 @@ class PerfilUsuarioActivity : AppCompatActivity() {
                 intent.putExtra("apellUsuDef", apellUsuDef)
                 intent.putExtra("nombUsuDef", nombUsuDef)
                 intent.putExtra("fechaUsuDef", fechaUsuDef)
+                intent.putExtra("correoInvest",correoInvest)
                 intent.putExtra("pwUsuDef", pwUsuDef)
                 intent.putExtra("notifUsuDef", notifUsuDef)
                 startActivity(intent)
@@ -325,6 +334,7 @@ class PerfilUsuarioActivity : AppCompatActivity() {
             intento2.putExtra("apellUsuDef", apellUsuDef)
             intento2.putExtra("nombUsuDef", nombUsuDef)
             intento2.putExtra("fechaUsuDef", fechaUsuDef)
+            intento2.putExtra("correoInvest",correoInvest)
             intento2.putExtra("pwUsuDef", pwUsuDef)
             startActivity(intento2)
             println("El borrado del usuario se ha llevado a cabo con éxito.")
@@ -871,12 +881,14 @@ class PerfilUsuarioActivity : AppCompatActivity() {
             intento2.putExtra("apellUsuarioPac", apellUsuarioPac)
             intento2.putExtra("nombUsuarioPac", nombUsuarioPac)
             intento2.putExtra("fechaUsuarioPac", fechaUsuarioPac)
+            intento2.putExtra("correoPac",correoPac)
             intento2.putExtra("notifUsuDef", notifUsuDef)
             intento2.putExtra("idUsuDef", idUsuDef)
             intento2.putExtra("dniUsuDef", dniUsuDef)
             intento2.putExtra("apellUsuDef", apellUsuDef)
             intento2.putExtra("nombUsuDef", nombUsuDef)
             intento2.putExtra("fechaUsuDef", fechaUsuDef)
+            intento2.putExtra("correoInvest",correoInvest)
             intento2.putExtra("pwUsuDef", pwUsuDef)
             intento2.putExtra("listaSesionID",listaSesionID)
             intento2.putExtra("listaSesionOrg",listaSesionOrg)

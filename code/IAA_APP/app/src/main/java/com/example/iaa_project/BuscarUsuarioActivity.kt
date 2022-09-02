@@ -30,6 +30,7 @@ class BuscarUsuarioActivity : AppCompatActivity() {
     var apellUsuDef = ""
     var nombUsuDef = ""
     var fechaUsuDef = ""
+    var correoInvest = ""
     var pwUsuDef = ""
     var contadorSesiones = 0
     var listaSesionID : ArrayList<String> = ArrayList()
@@ -53,6 +54,7 @@ class BuscarUsuarioActivity : AppCompatActivity() {
         apellUsuDef = bundle?.getString("apellUsuDef").toString()
         nombUsuDef = bundle?.getString("nombUsuDef").toString()
         fechaUsuDef = bundle?.getString("fechaUsuDef").toString()
+        correoInvest = bundle?.getString("correoInvest").toString()
         pwUsuDef = bundle?.getString("pwUsuDef").toString()
 
         btnBusq = variables!!.btnBusquedaUsuario
@@ -99,6 +101,7 @@ class BuscarUsuarioActivity : AppCompatActivity() {
             var apellUsuarioPac = ""
             var nombUsuarioPac = ""
             var fechaAux = ""
+            var correoPac = ""
             var fechaUsuarioPac = ""
             while (resultSet2.next()){
                 idUsuarioPac = resultSet2.getString(1)
@@ -106,6 +109,7 @@ class BuscarUsuarioActivity : AppCompatActivity() {
                 apellUsuarioPac = resultSet2.getString(3)
                 nombUsuarioPac = resultSet2.getString(4)
                 fechaAux = resultSet2.getString(5)
+                correoPac = resultSet2.getString(6)
             }
             if(idUsuarioPac==""){
                 errorProvocado = errorID1
@@ -137,12 +141,14 @@ class BuscarUsuarioActivity : AppCompatActivity() {
             intento2.putExtra("apellUsuarioPac", apellUsuarioPac)
             intento2.putExtra("nombUsuarioPac", nombUsuarioPac)
             intento2.putExtra("fechaUsuarioPac", fechaUsuarioPac)
+            intento2.putExtra("correoPac",correoPac)
             intento2.putExtra("notifUsuDef", notifUsuDef)
             intento2.putExtra("idUsuDef", idUsuDef)
             intento2.putExtra("dniUsuDef", dniUsuDef)
             intento2.putExtra("apellUsuDef", apellUsuDef)
             intento2.putExtra("nombUsuDef", nombUsuDef)
             intento2.putExtra("fechaUsuDef", fechaUsuDef)
+            intento2.putExtra("correoInvest",correoInvest)
             intento2.putExtra("pwUsuDef", pwUsuDef)
             intento2.putExtra("listaSesionID",listaSesionID)
             intento2.putExtra("listaSesionOrg",listaSesionOrg)

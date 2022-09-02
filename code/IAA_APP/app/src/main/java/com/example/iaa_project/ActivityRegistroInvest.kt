@@ -124,6 +124,7 @@ class ActivityRegistroInvest : AppCompatActivity() {
         val entradaPW1 = variables!!.editInvestContr.text
         val entradaPW2 = variables!!.editInvestConfContr.text
         val entradaTC = variables!!.checkTerminos
+        val entradaCorreo = variables!!.editCorreoInvest.text
 
         val dni = entradaDNI.toString()
         val nombre = entradaNombre.toString()
@@ -133,6 +134,7 @@ class ActivityRegistroInvest : AppCompatActivity() {
         val pw2 = entradaPW2.toString()
         val term = entradaTC.isChecked
         val contra: String
+        val correo = entradaCorreo.toString()
 
         val id = FuncionesAuxiliares().generaIdPersona(nombre, apellidos, dni, fecha)
         var tyc = "false"
@@ -180,7 +182,7 @@ class ActivityRegistroInvest : AppCompatActivity() {
             //statement.executeQuery("select * from usuarios where usuario = '$resUsuario' and pass = '$resPassword'")
             //"INSERT INTO `db-tfg`.`investigador` (`idinvestigador`, `dni`, `apellidos`, `nombre`, `fnacimiento`, `contrasena`, `notificaciones`, `terminoscondiciones`) VALUES ('$id', '$dni', '$apellidos', '$nombre', '$fecha', '$contra', 'true', '$tyc');"
             val query =
-                "INSERT INTO `b1l1rb6fzqnrv8549nvi`.`investigador` (`idinvestigador`, `dni`, `apellidos`, `nombre`, `fnacimiento`, `contrasena`, `notificaciones`, `terminoscondiciones`) VALUES ('$id', '$dni', '$apellidos', '$nombre', '$fechaDef', '$contra', 'true', 'true');"
+                "INSERT INTO `b1l1rb6fzqnrv8549nvi`.`investigador` (`idinvestigador`, `dni`, `apellidos`, `nombre`, `fnacimiento`, `correo`, `contrasena`, `notificaciones`, `terminoscondiciones`) VALUES ('$id', '$dni', '$apellidos', '$nombre', '$fechaDef', '$correo', '$contra', 'true', 'true');"
             println(query)
             val resultSet = statement.executeUpdate(query)
 

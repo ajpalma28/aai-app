@@ -5,6 +5,7 @@ import android.bluetooth.BluetoothDevice
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Html
 import com.example.iaa_project.databinding.ActivityResumenMedicionesBinding
 import java.util.concurrent.Executors
 
@@ -90,7 +91,7 @@ class ResumenMedicionesActivity : AppCompatActivity() {
             //set title for alert dialog
             builder.setTitle(R.string.app_name)
             //set message for alert dialog
-            builder.setMessage("¿Está seguro de descartar los resultados de la sesión? Recuerde, <b>no podrá recuperarlos</b>.")
+            builder.setMessage(Html.fromHtml("¿Está seguro de descartar los resultados de la sesión? Recuerde, <b>no podrá recuperarlos</b>.",0))
             builder.setIcon(android.R.drawable.ic_dialog_alert)
             builder.setPositiveButton("Sí"){_, _ ->
                 executorSesion.execute {

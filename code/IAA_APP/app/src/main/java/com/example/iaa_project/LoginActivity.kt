@@ -69,7 +69,7 @@ class LoginActivity : AppCompatActivity() {
             //Guardo en resultSet el resultado de la consulta
             //statement.executeQuery("select * from usuarios where usuario = '$resUsuario' and pass = '$resPassword'")
             //"INSERT INTO `db-tfg`.`investigador` (`idinvestigador`, `dni`, `apellidos`, `nombre`, `fnacimiento`, `contrasena`, `notificaciones`, `terminoscondiciones`) VALUES ('$id', '$dni', '$apellidos', '$nombre', '$fecha', '$contra', 'true', '$tyc');"
-            val query2 = "SELECT idinvestigador, dni, apellidos, nombre, fnacimiento, contrasena, notificaciones FROM b1l1rb6fzqnrv8549nvi.investigador WHERE idinvestigador='$id' and contrasena='$pw';"
+            val query2 = "SELECT idinvestigador, dni, apellidos, nombre, fnacimiento, correo, contrasena, notificaciones FROM b1l1rb6fzqnrv8549nvi.investigador WHERE idinvestigador='$id' and contrasena='$pw';"
             println(query2)
             val resultSet2 = statement.executeQuery(query2)
             //println(resultSet2.get)
@@ -81,14 +81,16 @@ class LoginActivity : AppCompatActivity() {
             var fechaAux = ""
             var fechaUsuDef = ""
             var notifAux = ""
+            var correoInvest = ""
             while (resultSet2.next()){
                 idUsuDef = resultSet2.getString(1)
                 dniUsuDef = resultSet2.getString(2)
                 apellUsuDef = resultSet2.getString(3)
                 nombUsuDef = resultSet2.getString(4)
                 fechaAux = resultSet2.getString(5)
-                pwUsuDef = resultSet2.getString(6)
-                notifAux = resultSet2.getString(7)
+                correoInvest = resultSet2.getString(6)
+                pwUsuDef = resultSet2.getString(7)
+                notifAux = resultSet2.getString(8)
             }
             if(idUsuDef==""){
                 throw InvalidPWException(errorPW3)
@@ -111,6 +113,7 @@ class LoginActivity : AppCompatActivity() {
             intento2.putExtra("apellUsuDef", apellUsuDef)
             intento2.putExtra("nombUsuDef", nombUsuDef)
             intento2.putExtra("fechaUsuDef", fechaUsuDef)
+            intento2.putExtra("correoInvest", correoInvest)
             intento2.putExtra("pwUsuDef", pwUsuDef)
             intento2.putExtra("notifUsuDef", notifUsuDef)
             intento2.putParcelableArrayListExtra("conectados",conectados)

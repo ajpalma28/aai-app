@@ -60,6 +60,7 @@ class BuscaDispositivosActivity : AppCompatActivity() {
     var apellUsuDef = ""
     var nombUsuDef = ""
     var fechaUsuDef = ""
+    var correoInvest = ""
     var pwUsuDef = ""
     var myHandler: Handler? = null
     var actividad = true
@@ -100,6 +101,7 @@ class BuscaDispositivosActivity : AppCompatActivity() {
         apellUsuDef = bundle?.getString("apellUsuDef").toString()
         nombUsuDef = bundle?.getString("nombUsuDef").toString()
         fechaUsuDef = bundle?.getString("fechaUsuDef").toString()
+        correoInvest = bundle?.getString("correoInvest").toString()
         pwUsuDef = bundle?.getString("pwUsuDef").toString()
         conectados.addAll(bundle?.getParcelableArrayList<BluetoothDevice>("conectados")!!)
 
@@ -107,6 +109,8 @@ class BuscaDispositivosActivity : AppCompatActivity() {
         bAdapter = btm.adapter
 
         tablaDispositivos = variables!!.selectDeviceList
+
+        btnConectarTodo = variables!!.btnConectaAll
 
         if (bAdapter == null) {
             Toast.makeText(this, "Este dispositivo no soporta Bluetooth", Toast.LENGTH_SHORT).show()
@@ -142,6 +146,8 @@ class BuscaDispositivosActivity : AppCompatActivity() {
             }
         }
 
+        println("Notificaciones: $notifUsuDef")
+
 
         if (bAdapter!!.isEnabled) {
 
@@ -175,8 +181,6 @@ class BuscaDispositivosActivity : AppCompatActivity() {
             this.onBackPressed()
 
         }
-
-        btnConectarTodo = variables!!.btnConectaAll
 
         btnConectarTodo!!.setOnClickListener {
             if(!estanConectados){
@@ -339,6 +343,7 @@ class BuscaDispositivosActivity : AppCompatActivity() {
         intent.putExtra("fechaUsuDef", fechaUsuDef)
         intent.putExtra("pwUsuDef", pwUsuDef)
         intent.putExtra("notifUsuDef", notifUsuDef)
+        intent.putExtra("correoInvest", correoInvest)
         //intent.putExtra("conectados",conectados)
         intent.putParcelableArrayListExtra("conectados",conectados)
         startActivity(intent)
@@ -407,6 +412,13 @@ class BuscaDispositivosActivity : AppCompatActivity() {
         if(list.isEmpty()){
             Toast.makeText(this, "No se han encontrado dispositivos", Toast.LENGTH_SHORT).show()
         }
+        var compara = true
+        for(l in list){
+            if(!conectados.contains(l)){
+                compara = false
+            }
+        }
+        estanConectados = compara
 
         var layoutCelda: TableRow.LayoutParams
         val layoutFila = TableRow.LayoutParams(
@@ -459,10 +471,10 @@ class BuscaDispositivosActivity : AppCompatActivity() {
             val boton = Button(this)
             if (conectados.contains(l)) {
                 boton.text = "Desconectar"
-                boton.backgroundTintList= ColorStateList.valueOf(Color.parseColor("#9AEA6A6A"))
+                boton.backgroundTintList= ColorStateList.valueOf(this.getColor(R.color.IAA_naranja))
             } else {
                 boton.text = "Conectar"
-                boton.backgroundTintList=ColorStateList.valueOf(Color.parseColor("#9A3BDA63"))
+                boton.backgroundTintList=ColorStateList.valueOf(this.getColor(R.color.IAA_azulClaro))
             }
             boton.id = list.indexOf(l)
             boton.width = 336
