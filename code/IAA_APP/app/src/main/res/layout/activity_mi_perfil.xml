@@ -113,7 +113,7 @@
             android:layout_width="308dp"
             android:layout_height="70dp"
             android:layout_marginTop="8dp"
-            android:layout_marginBottom="30dp"
+            android:layout_marginBottom="75dp"
             android:backgroundTint="#800000"
             android:ems="10"
             android:text="Eliminar Mi Cuenta"

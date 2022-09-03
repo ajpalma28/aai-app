@@ -17,8 +17,10 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.widget.NestedScrollView
 import com.example.iaa_project.databinding.ActivityPerfilUsuarioBinding
 import com.example.iaa_project.exceptions.*
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import java.sql.DriverManager
 import java.util.concurrent.Executors
 import kotlin.random.Random
@@ -56,6 +58,8 @@ class PerfilUsuarioActivity : AppCompatActivity() {
     var imgbtnEditFN: ImageButton? = null;
     var imgbtnSaveFN: ImageButton? = null;
     var imgbtnCancelFN: ImageButton? = null
+    var btnMover: ExtendedFloatingActionButton? = null
+    var scroll: NestedScrollView? = null
     var errorProvocadoFecha = ""
     var tablaSesiones: TableLayout? = null
     var contadorSesiones = 0
@@ -67,6 +71,7 @@ class PerfilUsuarioActivity : AppCompatActivity() {
     var listaSesionRes: ArrayList<String> = ArrayList()
     var filas: ArrayList<TableRow> = ArrayList()
     var textoSesiones = ""
+    var abajo = false
 
     private companion object {
         private const val CHANNEL_ID = "channel01"
@@ -291,6 +296,33 @@ class PerfilUsuarioActivity : AppCompatActivity() {
             cancelaEdicionFechaIconos()
             editFecha?.isEnabled = false
             editFecha?.setText(fechaUsuarioPac)
+        }
+
+        btnMover = variables!!.botonMover
+        scroll = variables!!.scrollView
+
+        scroll?.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+            if(scrollY==0){
+                btnMover?.icon=this.getDrawable(R.drawable.ic_iaa_down)
+                abajo = false
+            }
+            if(scrollY==v.getChildAt(0).measuredHeight-v.measuredHeight){
+                btnMover?.icon=this.getDrawable(R.drawable.ic_iaa_top)
+                abajo = true
+            }
+        })
+
+        btnMover!!.setOnClickListener{
+            if(!abajo){
+                scroll?.fullScroll(View.FOCUS_DOWN)
+                btnMover?.icon=this.getDrawable(R.drawable.ic_iaa_top)
+                abajo = true
+            }else{
+                scroll?.fullScroll(View.FOCUS_UP)
+                btnMover?.icon=this.getDrawable(R.drawable.ic_iaa_down)
+                abajo = false
+
+            }
         }
 
     }

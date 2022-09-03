@@ -42,6 +42,8 @@
         android:id="@+id/insertaPW"
         android:layout_width="291dp"
         android:layout_height="55dp"
+        android:drawableStart="@drawable/ic_iaa_pw"
+        android:drawableTint="@color/IAA_azulClaro"
         android:ems="10"
         android:inputType="textPassword"
         android:text="root"
@@ -56,9 +58,11 @@
         android:layout_width="291dp"
         android:layout_height="55dp"
         android:layout_marginTop="20dp"
+        android:drawableStart="@drawable/ic_iaa_logid"
+        android:drawableTint="@color/IAA_azulClaro"
         android:ems="10"
-        android:inputType="textPersonName"
         android:hint="Identificador"
+        android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textView5" />
@@ -73,5 +77,6 @@
         app:layout_constraintEnd_toStartOf="@+id/btnCanceIS"
         app:layout_constraintHorizontal_bias="0.521"
         app:layout_constraintStart_toStartOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -33,8 +33,8 @@ class LoginActivity : AppCompatActivity() {
         val myExecutor = Executors.newSingleThreadExecutor()
 
         aceptar.setOnClickListener{
-            var idInv : String = variables!!.insertaID.text.toString()
-            var pwInv : String = variables!!.insertaPW.text.toString()
+            val idInv : String = variables!!.insertaID.text.toString()
+            val pwInv : String = variables!!.insertaPW.text.toString()
             myExecutor.execute{
                 consultaUsuario(idInv,pwInv)
             }
@@ -52,8 +52,6 @@ class LoginActivity : AppCompatActivity() {
             println("Entro en el try")
             Class.forName("com.mysql.jdbc.Driver")
             //Configuracion de la conexión
-            println("Query que vamos a ejecutar: SELECT * FROM b1l1rb6fzqnrv8549nvi.investigador WHERE idinvestigador='$id';")
-
             val connection = DriverManager.getConnection(
                 "jdbc:mysql://b1l1rb6fzqnrv8549nvi-mysql.services.clever-cloud.com",
                 "umk5rnkivqyw4r0m",
@@ -61,8 +59,6 @@ class LoginActivity : AppCompatActivity() {
             )
 
             println(connection.isValid(0))
-            println("hola 2")
-
 
             val statement = connection.createStatement()
             println("Voy a la query")
@@ -117,8 +113,9 @@ class LoginActivity : AppCompatActivity() {
             intento2.putExtra("pwUsuDef", pwUsuDef)
             intento2.putExtra("notifUsuDef", notifUsuDef)
             intento2.putParcelableArrayListExtra("conectados",conectados)
+            println("El inicio de sesión se ha llevado a cabo con éxito.\n $idUsuDef - $dniUsuDef - $apellUsuDef - $nombUsuDef - $fechaUsuDef - $correoInvest - $pwUsuDef - $notifUsuDef")
             startActivity(intento2)
-            println("El inicio de sesión se ha llevado a cabo con éxito.")
+
 
         } catch (e1: InvalidIDException) {
             Handler(Looper.getMainLooper()).post {

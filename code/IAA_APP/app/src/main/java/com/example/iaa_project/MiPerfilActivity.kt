@@ -261,6 +261,17 @@ class MiPerfilActivity : AppCompatActivity() {
         btnMover = variables!!.botonMover
         scroll = variables!!.scrollView
 
+        scroll?.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+            if(scrollY==0){
+                btnMover?.icon=this.getDrawable(R.drawable.ic_iaa_down)
+                abajo = false
+            }
+            if(scrollY==v.getChildAt(0).measuredHeight-v.measuredHeight){
+                btnMover?.icon=this.getDrawable(R.drawable.ic_iaa_top)
+                abajo = true
+            }
+        })
+
         btnMover!!.setOnClickListener{
             if(!abajo){
                 scroll?.fullScroll(View.FOCUS_DOWN)
@@ -270,10 +281,10 @@ class MiPerfilActivity : AppCompatActivity() {
                 scroll?.fullScroll(View.FOCUS_UP)
                 btnMover?.icon=this.getDrawable(R.drawable.ic_iaa_down)
                 abajo = false
+
             }
         }
 
-        // TODO: Hacer toda la parte del cambio de contraseña del investigador
         cambioPW.setOnClickListener {
             val intent = Intent(this, CambioPwActivity::class.java)
             intent.putExtra("idUsuDef", idUsuDef)
