@@ -22,6 +22,10 @@ import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.example.iaa_project.databinding.ActivityVisualiMedBinding
+import com.example.iaa_project.exceptions.InvalidDataException
+import com.example.iaa_project.exceptions.errorType1
+import com.example.iaa_project.exceptions.errorType2
+import com.example.iaa_project.exceptions.errorType3
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
@@ -537,15 +541,15 @@ class VisualiMedActivity : AppCompatActivity() {
 
     fun lecturaChest(data: ByteArray) {
         if (data.size != 72) {
-            //TODO: ERROR EN LA LECTURA
+            throw InvalidDataException(errorType3)
         } else {
-            var frecuenciaCard = data.slice(0..31)
-            var acelerometro = data.slice(32..43)
-            var giroscopio = data.slice(44..55)
-            var respiracion = data.slice(56..59)
-            var bateria = data.slice(60..61)
-            var tempAmbiente = data.slice(62..63)
-            colocaDatoT3("frecuenciaCard", frecuenciaCard)
+            val ecg = data.slice(0..39)
+            val acelerometro = data.slice(40..51)
+            val giroscopio = data.slice(52..63)
+            val respiracion = data.slice(64..67)
+            val bateria = data.slice(68..69)
+            val tempAmbiente = data.slice(70..71)
+            colocaDatoT3("ecg", ecg)
             //colocaDatoT3("acelerometro",acelerometro)
             colocaDatoT3("giroscopio", giroscopio)
             colocaDatoT3("respiracion", respiracion)
@@ -556,27 +560,26 @@ class VisualiMedActivity : AppCompatActivity() {
 
     fun lecturaWrist(data: ByteArray) {
         if (data.size != 36) {
-            // TODO: ERROR EN LA LECTURA
+            throw InvalidDataException(errorType2)
         } else {
-            val electroDermica = data.slice(0..4)
-            val acelerometro = data.slice(4..16)
-            val giroscopio = data.slice(16..28)
-            val bateria = data.slice(28..30)
-            val temperaturaCorporal = data.slice(32..34)
-            val tempAmbiente = data.slice(30..32)
+            val electroDermica = data.slice(0..3)
+            val acelerometro = data.slice(4..15)
+            val giroscopio = data.slice(16..27)
+            val bateria = data.slice(28..29)
+            val tempAmbiente = data.slice(30..31)
+            val temperaturaCorporal = data.slice(32..33)
             colocaDatoT2("electroDermica", electroDermica)
             colocaDatoT2("acelerometro", acelerometro)
             colocaDatoT2("giroscopio", giroscopio)
             colocaDatoT2("bateria", bateria)
-            colocaDatoT2("temperaturaCorporal", temperaturaCorporal)
             colocaDatoT2("tempAmbiente", tempAmbiente)
-
+            colocaDatoT2("temperaturaCorporal", temperaturaCorporal)
         }
     }
 
     fun lecturaLeg(data: ByteArray) {
         if (data.size != 28) {
-            // TODO: ERROR EN LA LECTURA
+            throw InvalidDataException(errorType1)
         } else {
             val acelerometro = data.slice(0..11)
             val giroscopio = data.slice(12..23)
@@ -586,8 +589,6 @@ class VisualiMedActivity : AppCompatActivity() {
             colocaDatoT1("giroscopio", giroscopio)
             colocaDatoT1("bateria", bateria)
             colocaDatoT1("tempAmbiente", tempAmbiente)
-
-            //TODO: CONTINUAR CODIGO
         }
     }
 
@@ -628,7 +629,7 @@ class VisualiMedActivity : AppCompatActivity() {
 
     fun colocaDatoT3(campo: String, br: List<Byte>) {
         when (campo) {
-            "frecuenciaCard" -> muestraFrecCardT3?.let { normal(it, br[0].toString()) }
+            "ecg" -> muestraFrecCardT3?.let { normal(it, br[0].toString()) }
             "respiracion" -> muestraFrecRespT3?.let { normal(it, br[0].toString()) }
             "giroscopio" -> muestraGirosT3?.text=br[0].toString()
             "bateria" -> muestraBattT3?.let { normal(it, lecturaBateria(br).toString()) }
