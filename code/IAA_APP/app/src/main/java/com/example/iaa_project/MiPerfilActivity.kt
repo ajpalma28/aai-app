@@ -1,5 +1,6 @@
 package com.example.iaa_project
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -18,12 +19,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.widget.NestedScrollView
 import com.example.iaa_project.databinding.ActivityMiPerfilBinding
 import com.example.iaa_project.exceptions.InvalidFechaException
 import com.example.iaa_project.exceptions.errorFecha1
 import com.example.iaa_project.exceptions.errorFecha2
 import com.example.iaa_project.exceptions.errorFecha3
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import java.sql.DriverManager
 import java.util.concurrent.Executors
 import kotlin.random.Random
@@ -55,6 +58,7 @@ class MiPerfilActivity : AppCompatActivity() {
     var imgbtnEditFN: ImageButton? = null;
     var imgbtnSaveFN: ImageButton? = null;
     var imgbtnCancelFN: ImageButton? = null
+    var btnMover : ExtendedFloatingActionButton? = null
     var errorProvocadoFecha = ""
     var estadoEdicion2 = false
     var contadorSesiones = 0
@@ -73,11 +77,15 @@ class MiPerfilActivity : AppCompatActivity() {
     var tablaOrganizaciones: TableLayout? = null
     var tablaSesiones: TableLayout? = null
     var conectados = ArrayList<BluetoothDevice>()
+    var abajo = false
+    var scroll : NestedScrollView? = null
+    var actividad = true
 
     private companion object {
         private const val CHANNEL_ID = "channel01"
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_mi_perfil)
@@ -250,6 +258,21 @@ class MiPerfilActivity : AppCompatActivity() {
             }
         }
 
+        btnMover = variables!!.botonMover
+        scroll = variables!!.scrollView
+
+        btnMover!!.setOnClickListener{
+            if(!abajo){
+                scroll?.fullScroll(View.FOCUS_DOWN)
+                btnMover?.icon=this.getDrawable(R.drawable.ic_iaa_top)
+                abajo = true
+            }else{
+                scroll?.fullScroll(View.FOCUS_UP)
+                btnMover?.icon=this.getDrawable(R.drawable.ic_iaa_down)
+                abajo = false
+            }
+        }
+
         // TODO: Hacer toda la parte del cambio de contraseña del investigador
         cambioPW.setOnClickListener {
             val intent = Intent(this, CambioPwActivity::class.java)
@@ -285,6 +308,7 @@ class MiPerfilActivity : AppCompatActivity() {
             alertDialog.setCancelable(false)
             alertDialog.show()
         }
+
     }
 
     private fun borradoInvestigador(id: String) {

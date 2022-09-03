@@ -1,9 +1,12 @@
 package com.example.iaa_project
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -11,8 +14,12 @@ import android.os.Looper
 import android.view.Gravity
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.graphics.drawable.DrawableCompat
+import androidx.core.widget.doOnTextChanged
+import com.example.iaa_project.R.drawable
 import com.example.iaa_project.databinding.ActivityRegistroInvestBinding
 import com.example.iaa_project.databinding.ActivityRegistroInvestBinding.inflate
 import com.example.iaa_project.exceptions.*
@@ -33,6 +40,7 @@ class ActivityRegistroInvest : AppCompatActivity() {
         private const val CHANNEL_ID = "channel01"
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_registro_invest)
@@ -112,6 +120,14 @@ class ActivityRegistroInvest : AppCompatActivity() {
             // Set other dialog properties
             alertDialog.setCancelable(false)
             alertDialog.show()
+        }
+
+        variables!!.editInvestContr.doOnTextChanged { text, start, before, count ->
+            val errorJJ : CharSequence = getString(R.string.formatoPW)
+            val icon = AppCompatResources.getDrawable(this, R.drawable.ic_iaa_alert)
+            icon?.setBounds(0, 0, icon.intrinsicWidth, icon.intrinsicHeight)
+            variables!!.editInvestContr.setError(errorJJ,icon)
+            //variables!!.editInvestContr.error=errorJJ
         }
 
     }
@@ -195,7 +211,7 @@ class ActivityRegistroInvest : AppCompatActivity() {
                 )
                 createNotificationChannel()
                 val builder = NotificationCompat.Builder(this, CHANNEL_ID)
-                    .setSmallIcon(R.drawable.ic_iaa_notif)
+                    .setSmallIcon(drawable.ic_iaa_notif)
                     .setColor(this.getColor(R.color.IAA_naranjaNotif))
                     .setContentTitle("Nuevo investigador registrado")
                     .setContentText("El ID del investigador es $id, ¡inicie sesión con él!")
@@ -249,7 +265,7 @@ class ActivityRegistroInvest : AppCompatActivity() {
                 val txtMostrar = Toast.makeText(this, mensajeError, Toast.LENGTH_LONG)
                 createNotificationChannel()
                 val builder = NotificationCompat.Builder(this, CHANNEL_ID)
-                    .setSmallIcon(R.drawable.ic_iaa_notif)
+                    .setSmallIcon(drawable.ic_iaa_notif)
                     .setColor(this.getColor(R.color.IAA_naranjaNotif))
                     .setContentTitle("Error en la base de datos")
                     .setContentText(mensajeError)

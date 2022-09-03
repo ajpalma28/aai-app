@@ -12,8 +12,10 @@ import android.os.Looper
 import android.view.Gravity
 import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.widget.doOnTextChanged
 import com.example.iaa_project.databinding.ActivityCambioPwBinding
 import com.example.iaa_project.exceptions.*
 import com.example.iaa_project.exceptions.InvalidPWException
@@ -79,6 +81,14 @@ class CambioPwActivity : AppCompatActivity() {
 
         btnCancelar.setOnClickListener {
             super.onBackPressed()
+        }
+
+        editPW2!!.doOnTextChanged { text, start, before, count ->
+            val errorJJ : CharSequence = getString(R.string.formatoPW)
+            val icon = AppCompatResources.getDrawable(this, R.drawable.ic_iaa_alert)
+            icon?.setBounds(0, 0, icon.intrinsicWidth, icon.intrinsicHeight)
+            editPW2!!.setError(errorJJ,icon)
+            //variables!!.editInvestContr.error=errorJJ
         }
 
     }
