@@ -493,6 +493,7 @@ class VisualiMedActivity : AppCompatActivity() {
         boton.backgroundTintList = ColorStateList.valueOf(this.getColor(R.color.cuadroNormal))
     }
 
+    // TODO: SE DEBE IMPLEMENTAR LA NOTIFICACIÓN DE ALGUNA FORMA
     private fun peligroso(boton: Button, valor: String) {
         boton.text = valor
         boton.setTextColor(this.getColor(R.color.white))
