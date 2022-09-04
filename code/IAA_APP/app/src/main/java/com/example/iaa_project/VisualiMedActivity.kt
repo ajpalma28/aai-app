@@ -29,9 +29,9 @@ import com.example.iaa_project.exceptions.errorType3
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
-import java.io.DataInputStream
-import java.io.InputStream
+import java.math.RoundingMode
 import java.sql.Time
+import java.text.DecimalFormat
 import java.time.Instant
 import java.util.*
 import java.util.concurrent.Executors
@@ -77,7 +77,6 @@ class VisualiMedActivity : AppCompatActivity() {
 
     var extendedFab: ExtendedFloatingActionButton? = null
 
-    var serverSocket: BluetoothServerSocket? = null
     val myExecutor = Executors.newSingleThreadExecutor()
 
     var resumen = "Esto es un texto de prueba.\n\nMuchas gracias."
@@ -303,15 +302,6 @@ class VisualiMedActivity : AppCompatActivity() {
                             // TODO
                             it.characteristics.forEach { x ->
                                 println("Se viene esto, ojito: ${x.uuid}")
-                                /*if(it.uuid.toString().lowercase()=="0000acc5-0000-1000-8000-00805f9b34fb"){
-                                    //lecturaAutomatica(gatt,it)
-                                    println("Entro en el if")
-
-                                    println("Hola que pasa omio")
-                                    gatt.readCharacteristic(x)
-                                    println("CHACHAAAAN")
-                                }*/
-                                //TODO: VER COMO HACERLO PARA QUE SE REPITA SIN PETAR MUCHO
                                 if (gatt.device?.name == "LegMonitor" || gatt.device?.name == "Type1") {
                                     val fixedRateTimer1 = Timer()
                                     fixedRateTimer1.scheduleAtFixedRate(object : TimerTask() {
@@ -331,7 +321,6 @@ class VisualiMedActivity : AppCompatActivity() {
                                                 gatt.close()
                                                 this.cancel()
                                             }
-                                            println("tamos ready")
                                             if (ActivityCompat.checkSelfPermission(
                                                     this@VisualiMedActivity,
                                                         Manifest.permission.BLUETOOTH_CONNECT
@@ -346,47 +335,83 @@ class VisualiMedActivity : AppCompatActivity() {
                                                         )
                                                 }
                                             }
-                                            //gatt.setCharacteristicNotification(x, true)
                                             gatt.readCharacteristic(x)
                                         }
-                                    }, 2000, 1000)
+                                    }, 1500, 1000)
                                 }
                                 if (gatt.device?.name == "WristMonitor" || gatt.device?.name == "Type2") {
-                                    val myExecutor2 = Executors.newSingleThreadExecutor()
-                                    myExecutor2.execute {
-                                        println("tamos ready")
-                                        gatt.setCharacteristicNotification(x, true)
-                                        gatt.readCharacteristic(x)
-                                    }
-                                }
-                                if (gatt.device?.name == "ChestMonitor" || gatt.device?.name == "Type3") {
-                                    val fixedRateTimer3 =
-                                        Timer().scheduleAtFixedRate(object : TimerTask() {
-                                            override fun run() {
-                                                /*if (!actividad) {
-                                                    onDestroy()
-                                                }*/
-                                                println("tamos ready")
-                                                if (ActivityCompat.checkSelfPermission(
-                                                        this@VisualiMedActivity,
+                                    val fixedRateTimer2 = Timer()
+                                    fixedRateTimer2.scheduleAtFixedRate(object : TimerTask() {
+                                        override fun run() {
+                                            if (!actividad) {
+                                                if (ActivityCompat.checkSelfPermission(this@VisualiMedActivity,
                                                         Manifest.permission.BLUETOOTH_CONNECT
-                                                    ) != PackageManager.PERMISSION_GRANTED
-                                                ) {
+                                                    ) != PackageManager.PERMISSION_GRANTED) {
                                                     if (Build.VERSION.SDK_INT == Build.VERSION_CODES.Q) {
-                                                        ActivityCompat.requestPermissions(
-                                                            this@VisualiMedActivity,
+                                                        ActivityCompat.requestPermissions(this@VisualiMedActivity,
                                                             arrayOf(
                                                                 Manifest.permission.ACCESS_FINE_LOCATION,
                                                                 Manifest.permission.ACCESS_BACKGROUND_LOCATION
-                                                            ),
-                                                            1
-                                                        )
+                                                            ), 1)
                                                     }
                                                 }
-                                                gatt.setCharacteristicNotification(x, true)
-                                                gatt.readCharacteristic(x)
+                                                gatt.close()
+                                                this.cancel()
                                             }
-                                        }, 0, 1000)
+                                            if (ActivityCompat.checkSelfPermission(
+                                                    this@VisualiMedActivity,
+                                                    Manifest.permission.BLUETOOTH_CONNECT
+                                                ) != PackageManager.PERMISSION_GRANTED) {
+                                                if (Build.VERSION.SDK_INT == Build.VERSION_CODES.Q) {
+                                                    ActivityCompat.requestPermissions(
+                                                        this@VisualiMedActivity,
+                                                        arrayOf(
+                                                            Manifest.permission.ACCESS_FINE_LOCATION,
+                                                            Manifest.permission.ACCESS_BACKGROUND_LOCATION
+                                                        ), 1
+                                                    )
+                                                }
+                                            }
+                                            gatt.readCharacteristic(x)
+                                        }
+                                    }, 3000, 1000)
+                                }
+                                if (gatt.device?.name == "ChestMonitor" || gatt.device?.name == "Type3") {
+                                    val fixedRateTimer3 = Timer()
+                                    fixedRateTimer3.scheduleAtFixedRate(object : TimerTask() {
+                                        override fun run() {
+                                            if (!actividad) {
+                                                if (ActivityCompat.checkSelfPermission(this@VisualiMedActivity,
+                                                        Manifest.permission.BLUETOOTH_CONNECT
+                                                    ) != PackageManager.PERMISSION_GRANTED) {
+                                                    if (Build.VERSION.SDK_INT == Build.VERSION_CODES.Q) {
+                                                        ActivityCompat.requestPermissions(this@VisualiMedActivity,
+                                                            arrayOf(
+                                                                Manifest.permission.ACCESS_FINE_LOCATION,
+                                                                Manifest.permission.ACCESS_BACKGROUND_LOCATION
+                                                            ), 1)
+                                                    }
+                                                }
+                                                gatt.close()
+                                                this.cancel()
+                                            }
+                                            if (ActivityCompat.checkSelfPermission(
+                                                    this@VisualiMedActivity,
+                                                    Manifest.permission.BLUETOOTH_CONNECT
+                                                ) != PackageManager.PERMISSION_GRANTED) {
+                                                if (Build.VERSION.SDK_INT == Build.VERSION_CODES.Q) {
+                                                    ActivityCompat.requestPermissions(
+                                                        this@VisualiMedActivity,
+                                                        arrayOf(
+                                                            Manifest.permission.ACCESS_FINE_LOCATION,
+                                                            Manifest.permission.ACCESS_BACKGROUND_LOCATION
+                                                        ), 1
+                                                    )
+                                                }
+                                            }
+                                            gatt.readCharacteristic(x)
+                                        }
+                                    }, 0, 1000)
 
                                 }
                             }
@@ -480,59 +505,6 @@ class VisualiMedActivity : AppCompatActivity() {
         boton.backgroundTintList = ColorStateList.valueOf(this.getColor(R.color.cuadroCuidado))
     }
 
-    /*
-    private fun actuaTipo1(device: BluetoothDevice){
-        var socket: BluetoothSocket? = null
-        try {
-            if (ActivityCompat.checkSelfPermission(
-                    this,
-                    Manifest.permission.BLUETOOTH_CONNECT
-                ) != PackageManager.PERMISSION_GRANTED
-            ) {
-                if (Build.VERSION.SDK_INT == Build.VERSION_CODES.Q) {
-                    ActivityCompat.requestPermissions(
-                        this,
-                        arrayOf(
-                            Manifest.permission.ACCESS_FINE_LOCATION,
-                            Manifest.permission.ACCESS_BACKGROUND_LOCATION
-                        ),
-                        1
-                    )
-                }
-            }
-            serverSocket = bAdapter?.listenUsingRfcommWithServiceRecord(R.string.app_name.toString(), UUID.randomUUID())
-            socket = serverSocket?.accept()
-        } catch (e: Exception){
-            Log.v(TAG,e.toString())
-        }
-        val buffer = ByteArray(255) // buffer store for the stream
-
-        val bytes: Int // bytes returned from read()
-
-        try {
-            Log.d(this.title as String, "Closing Server Socket.....")
-            serverSocket?.close()
-            var recibido: InputStream? = null
-
-            // Get the BluetoothSocket input and output streams
-            recibido = socket!!.inputStream
-            val mmInStream = DataInputStream(recibido)
-            // here you can use the Input Stream to take the string from the client  whoever is connecting
-            //similarly use the output stream to send the data to the client
-
-            // Read from the InputStream
-            bytes = mmInStream.read(buffer)
-            val readMessage = String(buffer, 0, bytes)
-            // Send the obtained bytes to the UI Activity
-            //text.setText(readMessage)
-            Log.v(TAG,"Recibido esto: $readMessage")
-        } catch (e: java.lang.Exception) {
-            //catch your exception here
-        }
-    }
-    // TODO: HASTA AQUÍ
-*/
-
     fun lecturaChest(data: ByteArray) {
         if (data.size != 72) {
             throw InvalidDataException(errorType3)
@@ -588,10 +560,9 @@ class VisualiMedActivity : AppCompatActivity() {
 
     //TODO: Hay que añadir todos los métodos
 
-    fun lecturaBateria(br: List<Byte>): Float {
+    fun lecturaBateria(br: List<Byte>): String {
         val lista = ArrayList<Float>()
         val largo = br.size
-        println("largo = $largo")
         for (j in 0..1) {
             val aux = br[1]
             val mf = aux.toUInt()
@@ -599,15 +570,40 @@ class VisualiMedActivity : AppCompatActivity() {
             ax = 5 * ax / 3
             lista.add(ax)
         }
-        return lista[0]
+        /*val aux0 = lista[0] * 100
+        val aux1 = aux0.toInt() / 100
+        return aux1.toFloat()*/
+        val df = DecimalFormat("#.###")
+        df.roundingMode = RoundingMode.UP
+        return df.format(lista[0]).replace(',','.')
+    }
+
+    fun lecturaTempAmb(br: List<Byte>): String {
+        val lista = ArrayList<Float>()
+        for(j in 0..1){
+            lista.add((br[j]/26+25).toFloat())
+        }
+        val res = (lista[0]+lista[1]/2)
+        val df = DecimalFormat("#.###")
+        df.roundingMode = RoundingMode.UP
+        return df.format(res).replace(',','.')
     }
 
     fun colocaDatoT1(campo: String, br: List<Byte>) {
         when (campo) {
             "acelerometro" -> muestraAcelT1?.let { normal(it, br[0].toString()) }
             "giroscopio" -> muestraGirosT1?.text = br[0].toString()
-            "bateria" -> muestraBattT1?.let { normal(it, lecturaBateria(br).toString()) }
-            "tempAmbiente" -> muestraTempAmbT1?.text = br[0].toString()
+            "bateria" -> muestraBattT1?.let { normal(it, "${lecturaBateria(br)} V") }
+            "tempAmbiente" -> {
+                if(lecturaTempAmb(br).toDouble()>45.0){
+                    muestraTempAmbT1?.let { peligroso(it, "${lecturaTempAmb(br)} ºC") }
+                }else if(lecturaTempAmb(br).toDouble()>40.0){
+                    muestraTempAmbT1?.let { cuidado(it, "${lecturaTempAmb(br)} ºC") }
+                }else{
+                    muestraTempAmbT1?.let { normal(it, "${lecturaTempAmb(br)} ºC") }
+                }
+
+            }
         }
     }
 
@@ -616,7 +612,7 @@ class VisualiMedActivity : AppCompatActivity() {
             "electroDermica" -> muestraElectDermT2?.let { normal(it, br[0].toString()) }
             "acelerometro" -> muestraAcelT2?.let { normal(it, br[0].toString()) }
             "giroscopio" -> muestraGirosT2?.let { normal(it, br[0].toString()) }
-            "bateria" -> muestraBattT2?.let { normal(it, lecturaBateria(br).toString()) }
+            "bateria" -> muestraBattT2?.let { normal(it, "${lecturaBateria(br)} V") }
             "temperaturaCorporal" -> muestraTempCorpT2?.let { normal(it, br[0].toString()) }
         }
     }
@@ -626,8 +622,17 @@ class VisualiMedActivity : AppCompatActivity() {
             "ecg" -> muestraFrecCardT3?.let { normal(it, br[0].toString()) }
             "respiracion" -> muestraFrecRespT3?.let { normal(it, br[0].toString()) }
             "giroscopio" -> muestraGirosT3?.text=br[0].toString()
-            "bateria" -> muestraBattT3?.let { normal(it, lecturaBateria(br).toString()) }
-            "tempAmbiente" -> muestraTempAmbT3?.let { normal(it, br[0].toString()) }
+            "bateria" -> muestraBattT3?.let { normal(it, "${lecturaBateria(br)} V") }
+            "tempAmbiente" -> {
+                if(lecturaTempAmb(br).toDouble()>45.0){
+                    muestraTempAmbT3?.let { peligroso(it, "${lecturaTempAmb(br)} ºC") }
+                }else if(lecturaTempAmb(br).toDouble()>40.0){
+                    muestraTempAmbT3?.let { cuidado(it, "${lecturaTempAmb(br)} ºC") }
+                }else{
+                    muestraTempAmbT3?.let { normal(it, "${lecturaTempAmb(br)} ºC") }
+                }
+
+            }
         }
     }
 

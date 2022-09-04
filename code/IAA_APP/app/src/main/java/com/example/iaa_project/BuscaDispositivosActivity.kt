@@ -755,133 +755,8 @@ class BuscaDispositivosActivity : AppCompatActivity() {
 
             override fun onServicesDiscovered(gatt: BluetoothGatt?, status: Int) {
                 Log.v(TAG, "onServicesDiscovered, status: $status")
-                if (ActivityCompat.checkSelfPermission(
-                        this@BuscaDispositivosActivity,
-                        Manifest.permission.BLUETOOTH_CONNECT
-                    ) != PackageManager.PERMISSION_GRANTED
-                ) {
-                    if (Build.VERSION.SDK_INT == Build.VERSION_CODES.Q) {
-                        ActivityCompat.requestPermissions(
-                            this@BuscaDispositivosActivity,
-                            arrayOf(
-                                Manifest.permission.ACCESS_FINE_LOCATION,
-                                Manifest.permission.ACCESS_BACKGROUND_LOCATION
-                            ),
-                            1
-                        )
-                    }
-                }
-                gatt?.requestMtu(100)
-                runBlocking {
-                    delay(1500)
-                }
-                gatt?.services?.forEach{ it ->
-                    if(it?.uuid.toString().lowercase() == "0000acc0-0000-1000-8000-00805f9b34fb"){
-                        println("Prueba de fuego 1: ${it.uuid}")
-                        println(gatt.getService(UUID.fromString("0000acc0-0000-1000-8000-00805f9b34fb")).toString())
-                        runOnUiThread {
-                            // TODO
-                            it.characteristics.forEach { x ->
-                                println("Se viene esto, ojito: ${x.uuid}")
-                                /*if(it.uuid.toString().lowercase()=="0000acc5-0000-1000-8000-00805f9b34fb"){
-                                    //lecturaAutomatica(gatt,it)
-                                    println("Entro en el if")
+                // TODO: EL CÓDIGO ESTÁ EN VisualiMedActivity, YA QUE AQUÍ NO SE VAN A LEER LAS TRAMAS
 
-                                    println("Hola que pasa omio")
-                                    gatt.readCharacteristic(x)
-                                    println("CHACHAAAAN")
-                                }*/
-                                //TODO: VER COMO HACERLO PARA QUE SE REPITA SIN PETAR MUCHO
-                                if(gatt.device?.name=="LegMonitor" || gatt.device?.name=="Type1"){
-                                    val fixedRateTimer1 = Timer().scheduleAtFixedRate(object: TimerTask(){
-                                        override fun run(){
-                                            if(!actividad) {
-                                                if (ActivityCompat.checkSelfPermission(
-                                                        this@BuscaDispositivosActivity,
-                                                        Manifest.permission.BLUETOOTH_CONNECT
-                                                    ) != PackageManager.PERMISSION_GRANTED
-                                                ) {
-                                                    if (Build.VERSION.SDK_INT == Build.VERSION_CODES.Q) {
-                                                        ActivityCompat.requestPermissions(
-                                                            this@BuscaDispositivosActivity,
-                                                            arrayOf(
-                                                                Manifest.permission.ACCESS_FINE_LOCATION,
-                                                                Manifest.permission.ACCESS_BACKGROUND_LOCATION
-                                                            ),
-                                                            1
-                                                        )
-                                                    }
-                                                }
-                                                gatt.close()
-                                                this.cancel()
-                                            }
-                                            println("tamos ready")
-                                            if (ActivityCompat.checkSelfPermission(
-                                                    this@BuscaDispositivosActivity,
-                                                    Manifest.permission.BLUETOOTH_CONNECT
-                                                ) != PackageManager.PERMISSION_GRANTED
-                                            ) {
-                                                if (Build.VERSION.SDK_INT == Build.VERSION_CODES.Q) {
-                                                    ActivityCompat.requestPermissions(
-                                                        this@BuscaDispositivosActivity,
-                                                        arrayOf(
-                                                            Manifest.permission.ACCESS_FINE_LOCATION,
-                                                            Manifest.permission.ACCESS_BACKGROUND_LOCATION
-                                                        ),
-                                                        1
-                                                    )
-                                                }
-                                            }
-                                            //gatt.setCharacteristicNotification(x,true)
-                                            gatt.readCharacteristic(x)
-                                            println("leido AAAAAAAAAAAAAA")
-                                        }
-                                    },250,1000)
-                                }
-                                if(gatt.device?.name=="WristMonitor" || gatt.device?.name=="Type2"){
-                                    val myExecutor2 = Executors.newSingleThreadExecutor()
-                                    myExecutor2.execute {
-                                        println("tamos ready")
-                                        //gatt.setCharacteristicNotification(x,true)
-                                        gatt.readCharacteristic(x)
-                                        println("leido AAAAAAAAAAAAAA")
-                                    }
-                                }
-                                if(gatt.device?.name=="ChestMonitor" || gatt.device?.name=="Type3"){
-                                    val fixedRateTimer3 = Timer().scheduleAtFixedRate(object: TimerTask(){
-                                        override fun run(){
-                                            if(!actividad) {
-
-                                            }
-                                            println("tamos ready")
-                                            if (ActivityCompat.checkSelfPermission(
-                                                    this@BuscaDispositivosActivity,
-                                                    Manifest.permission.BLUETOOTH_CONNECT
-                                                ) != PackageManager.PERMISSION_GRANTED
-                                            ) {
-                                                if (Build.VERSION.SDK_INT == Build.VERSION_CODES.Q) {
-                                                    ActivityCompat.requestPermissions(
-                                                        this@BuscaDispositivosActivity,
-                                                        arrayOf(
-                                                            Manifest.permission.ACCESS_FINE_LOCATION,
-                                                            Manifest.permission.ACCESS_BACKGROUND_LOCATION
-                                                        ),
-                                                        1
-                                                    )
-                                                }
-                                            }
-                                            //gatt.setCharacteristicNotification(x,true)
-                                            gatt.readCharacteristic(x)
-                                            println("leido AAAAAAAAAAAAAA")
-                                        }
-                                    },0,1000)
-
-                                }
-                            }
-                        }
-
-                    }
-                }
             }
 
             @SuppressLint("MissingPermission")
@@ -890,13 +765,8 @@ class BuscaDispositivosActivity : AppCompatActivity() {
                 characteristic: BluetoothGattCharacteristic?,
                 status: Int
             ) {
-                /*val data = characteristic!!.value
-                println("reading")
-                var resultadojeje = ""
-                for(i in data){
-                    resultadojeje += "$i "
-                }
-                print("Resultado de ${gatt?.device?.name}: $resultadojeje\n")*/
+                Log.v(TAG, "onCharacteristicRead, status: $status")
+                // TODO: EL CÓDIGO ESTÁ EN VisualiMedActivity, YA QUE AQUÍ NO SE VAN A LEER LAS TRAMAS
             }
 
             override fun onCharacteristicChanged(
@@ -904,66 +774,6 @@ class BuscaDispositivosActivity : AppCompatActivity() {
                 characteristic: BluetoothGattCharacteristic?
             ) {
                 Log.v(TAG, "onCharacteristicChanged")
-            }
-        }
-    }
-
-    @SuppressLint("MissingPermission")
-    fun lecturaAutomatica(bluetoothGatt: BluetoothGatt, it: BluetoothGattCharacteristic){
-        bluetoothGatt.setCharacteristicNotification(it, lecturaAutomatica)
-        bluetoothGatt.requestMtu(100)
-        bluetoothGatt.readCharacteristic(it)
-        println(it.value)
-        println(bluetoothGatt.readCharacteristic(it).toString())
-        /*
-        for(d in it.descriptors){
-            val descriptor = it.getDescriptor(UUID.fromString("0000acc0-0000-1000-8000-00805f9b34fb")).apply {
-                if(lecturaAutomatica){
-                    BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE
-                    bluetoothGatt.requestMtu(100)
-                    bluetoothGatt.readDescriptor(d)
-                    println(it.value)
-                }else{
-                    BluetoothGattDescriptor.DISABLE_NOTIFICATION_VALUE
-                }
-            }*/
-            /*println(bluetoothGatt.getService(UUID.fromString("0000acc0-0000-1000-8000-00805f9b34fb")).getCharacteristic(
-                UUID.fromString("0000acc5-0000-1000-8000-00805f9b34fb")).value)*/
-            //val success = bluetoothGatt.writeDescriptor(descriptor)
-            //bluetoothGatt.readDescriptor(descriptor)
-
-        //}
-
-    }
-
-    class BluetoothClient(device: BluetoothDevice): Thread() {
-        @SuppressLint("MissingPermission")
-        private val socket = device.createRfcommSocketToServiceRecord(UUID.fromString("0000acc5-0000-1000-8000-00805f9b34fb"))
-        val movil = device
-
-        @SuppressLint("MissingPermission")
-        override fun run() {
-            Log.i("client", "Connecting")
-            this.socket.connect()
-
-            Log.i("client", "Sending")
-            val outputStream = this.socket.outputStream
-            val inputStream = this.socket.inputStream
-            try {
-                val available = inputStream.available()
-                val bytes = ByteArray(available)
-                Log.i("server", "Reading")
-                inputStream.read(bytes, 0, available)
-                val text = String(bytes)
-                Log.i("server", "Message received")
-                Log.i("server", text)
-                //activity.appendText(text)
-            } catch (e: Exception) {
-                Log.e("client", "Cannot read data", e)
-            } finally {
-                inputStream.close()
-                outputStream.close()
-                socket.close()
             }
         }
     }
