@@ -796,7 +796,24 @@ class BuscaDispositivosActivity : AppCompatActivity() {
                                     val fixedRateTimer1 = Timer().scheduleAtFixedRate(object: TimerTask(){
                                         override fun run(){
                                             if(!actividad) {
-
+                                                if (ActivityCompat.checkSelfPermission(
+                                                        this@BuscaDispositivosActivity,
+                                                        Manifest.permission.BLUETOOTH_CONNECT
+                                                    ) != PackageManager.PERMISSION_GRANTED
+                                                ) {
+                                                    if (Build.VERSION.SDK_INT == Build.VERSION_CODES.Q) {
+                                                        ActivityCompat.requestPermissions(
+                                                            this@BuscaDispositivosActivity,
+                                                            arrayOf(
+                                                                Manifest.permission.ACCESS_FINE_LOCATION,
+                                                                Manifest.permission.ACCESS_BACKGROUND_LOCATION
+                                                            ),
+                                                            1
+                                                        )
+                                                    }
+                                                }
+                                                gatt.close()
+                                                this.cancel()
                                             }
                                             println("tamos ready")
                                             if (ActivityCompat.checkSelfPermission(
@@ -815,7 +832,7 @@ class BuscaDispositivosActivity : AppCompatActivity() {
                                                     )
                                                 }
                                             }
-                                            gatt.setCharacteristicNotification(x,true)
+                                            //gatt.setCharacteristicNotification(x,true)
                                             gatt.readCharacteristic(x)
                                             println("leido AAAAAAAAAAAAAA")
                                         }
@@ -825,7 +842,7 @@ class BuscaDispositivosActivity : AppCompatActivity() {
                                     val myExecutor2 = Executors.newSingleThreadExecutor()
                                     myExecutor2.execute {
                                         println("tamos ready")
-                                        gatt.setCharacteristicNotification(x,true)
+                                        //gatt.setCharacteristicNotification(x,true)
                                         gatt.readCharacteristic(x)
                                         println("leido AAAAAAAAAAAAAA")
                                     }
@@ -853,7 +870,7 @@ class BuscaDispositivosActivity : AppCompatActivity() {
                                                     )
                                                 }
                                             }
-                                            gatt.setCharacteristicNotification(x,true)
+                                            //gatt.setCharacteristicNotification(x,true)
                                             gatt.readCharacteristic(x)
                                             println("leido AAAAAAAAAAAAAA")
                                         }

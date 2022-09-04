@@ -31,6 +31,8 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import java.io.DataInputStream
 import java.io.InputStream
+import java.sql.Time
+import java.time.Instant
 import java.util.*
 import java.util.concurrent.Executors
 import kotlin.random.Random
@@ -79,6 +81,7 @@ class VisualiMedActivity : AppCompatActivity() {
     val myExecutor = Executors.newSingleThreadExecutor()
 
     var resumen = "Esto es un texto de prueba.\n\nMuchas gracias."
+    var horaCom = ""
 
     private companion object {
         private const val CHANNEL_ID = "channel01"
@@ -185,6 +188,8 @@ class VisualiMedActivity : AppCompatActivity() {
             builder.setIcon(android.R.drawable.ic_dialog_alert)
             builder.setPositiveButton("Sí") { _, _ ->
                 executorSesion.execute {
+                    val horaFin = Time.from(Instant.now()).toString()
+                    val resumenSesion = "Hora del comienzo de la Sesión: $horaCom\n\n$resumen\n\nHora de finalización: $horaFin"
                     val intento2 = Intent(this, ResumenMedicionesActivity::class.java)
                     intento2.putExtra("notifUsuDef", notifUsuDef)
                     intento2.putExtra("idUsuDef", idUsuDef)
@@ -195,7 +200,7 @@ class VisualiMedActivity : AppCompatActivity() {
                     intento2.putExtra("pwUsuDef", pwUsuDef)
                     intento2.putParcelableArrayListExtra("conectados", conectados)
                     intento2.putExtra("pacienteMed", pacienteMed)
-                    intento2.putExtra("resumenSesion", resumen)
+                    intento2.putExtra("resumenSesion", resumenSesion)
                     actividad = false
                     bluetoothGatt?.disconnect()
                     bluetoothGatt?.close()
@@ -213,6 +218,7 @@ class VisualiMedActivity : AppCompatActivity() {
             alertDialog.show()
         }
 
+        horaCom = Time.from(Instant.now()).toString()
 
     }
 
@@ -307,55 +313,43 @@ class VisualiMedActivity : AppCompatActivity() {
                                 }*/
                                 //TODO: VER COMO HACERLO PARA QUE SE REPITA SIN PETAR MUCHO
                                 if (gatt.device?.name == "LegMonitor" || gatt.device?.name == "Type1") {
-                                    var fixedRateTimer1 = Timer()
+                                    val fixedRateTimer1 = Timer()
                                     fixedRateTimer1.scheduleAtFixedRate(object : TimerTask() {
-                                            override fun run() {
-                                                if (!actividad) {
-                                                    if (ActivityCompat.checkSelfPermission(
-                                                            this@VisualiMedActivity,
-                                                            Manifest.permission.BLUETOOTH_CONNECT
-                                                        ) != PackageManager.PERMISSION_GRANTED
-                                                    ) {
-                                                        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.Q) {
-                                                            ActivityCompat.requestPermissions(
-                                                                this@VisualiMedActivity,
-                                                                arrayOf(
-                                                                    Manifest.permission.ACCESS_FINE_LOCATION,
-                                                                    Manifest.permission.ACCESS_BACKGROUND_LOCATION
-                                                                ),
-                                                                1
-                                                            )
-                                                        }
-                                                    }
-                                                    gatt.setCharacteristicNotification(x, false)
-
-                                                    gatt.disconnect()
-                                                    gatt.close()
-                                                }
-                                                println("tamos ready")
-                                                if (ActivityCompat.checkSelfPermission(
-                                                        this@VisualiMedActivity,
+                                        override fun run() {
+                                            if (!actividad) {
+                                                if (ActivityCompat.checkSelfPermission(this@VisualiMedActivity,
                                                         Manifest.permission.BLUETOOTH_CONNECT
-                                                    ) != PackageManager.PERMISSION_GRANTED
-                                                ) {
+                                                        ) != PackageManager.PERMISSION_GRANTED) {
                                                     if (Build.VERSION.SDK_INT == Build.VERSION_CODES.Q) {
-                                                        ActivityCompat.requestPermissions(
-                                                            this@VisualiMedActivity,
+                                                        ActivityCompat.requestPermissions(this@VisualiMedActivity,
                                                             arrayOf(
                                                                 Manifest.permission.ACCESS_FINE_LOCATION,
                                                                 Manifest.permission.ACCESS_BACKGROUND_LOCATION
-                                                            ),
-                                                            1
-                                                        )
+                                                            ), 1)
                                                     }
                                                 }
-                                                gatt.setCharacteristicNotification(x, true)
-                                                gatt.readCharacteristic(x)
+                                                gatt.close()
+                                                this.cancel()
                                             }
-                                        }, 2000, 1000)
-                                    if(!actividad){
-                                        fixedRateTimer1.cancel()
-                                    }
+                                            println("tamos ready")
+                                            if (ActivityCompat.checkSelfPermission(
+                                                    this@VisualiMedActivity,
+                                                        Manifest.permission.BLUETOOTH_CONNECT
+                                                    ) != PackageManager.PERMISSION_GRANTED) {
+                                                if (Build.VERSION.SDK_INT == Build.VERSION_CODES.Q) {
+                                                    ActivityCompat.requestPermissions(
+                                                        this@VisualiMedActivity,
+                                                        arrayOf(
+                                                            Manifest.permission.ACCESS_FINE_LOCATION,
+                                                            Manifest.permission.ACCESS_BACKGROUND_LOCATION
+                                                        ), 1
+                                                        )
+                                                }
+                                            }
+                                            //gatt.setCharacteristicNotification(x, true)
+                                            gatt.readCharacteristic(x)
+                                        }
+                                    }, 2000, 1000)
                                 }
                                 if (gatt.device?.name == "WristMonitor" || gatt.device?.name == "Type2") {
                                     val myExecutor2 = Executors.newSingleThreadExecutor()
