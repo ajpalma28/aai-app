@@ -112,6 +112,8 @@ class BuscaDispositivosActivity : AppCompatActivity() {
 
         btnConectarTodo = variables!!.btnConectaAll
 
+        btnConectarTodo?.isEnabled=false
+
         if (bAdapter == null) {
             Toast.makeText(this, "Este dispositivo no soporta Bluetooth", Toast.LENGTH_SHORT).show()
             lanzaNotificacion(
@@ -411,6 +413,9 @@ class BuscaDispositivosActivity : AppCompatActivity() {
         }
         if(list.isEmpty()){
             Toast.makeText(this, "No se han encontrado dispositivos", Toast.LENGTH_SHORT).show()
+            btnConectarTodo?.isEnabled=false
+        }else{
+            btnConectarTodo?.isEnabled=true
         }
         var compara = true
         for(l in list){
@@ -612,7 +617,12 @@ class BuscaDispositivosActivity : AppCompatActivity() {
         tablaDispositivos!!.textAlignment = TableLayout.TEXT_ALIGNMENT_CENTER
         tablaDispositivos!!.gravity = Gravity.CENTER_HORIZONTAL
         if(estanConectados){
-            btnConectarTodo?.text = "Desconectar todo"
+            if(btnConectarTodo?.isEnabled == true){
+                btnConectarTodo?.text = "Desconectar todo"
+            }else{
+                btnConectarTodo?.text="Conectar todo"
+            }
+
         }else{
             btnConectarTodo?.text="Conectar todo"
         }

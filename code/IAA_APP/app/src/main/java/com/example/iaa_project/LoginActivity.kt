@@ -49,6 +49,7 @@ class LoginActivity : AppCompatActivity() {
 
     fun consultaUsuario(id: String, pw: String){
         try {
+            compruebaLogin(id, pw)
             println("Entro en el try")
             Class.forName("com.mysql.jdbc.Driver")
             //Configuracion de la conexión
@@ -120,17 +121,21 @@ class LoginActivity : AppCompatActivity() {
         } catch (e1: InvalidIDException) {
             Handler(Looper.getMainLooper()).post {
                 val txtMostrar = Toast.makeText(this, errorID1, Toast.LENGTH_LONG)
-                txtMostrar.setGravity(Gravity.CENTER_VERTICAL, 0, 0)
                 txtMostrar.show()
             }
             println(e1)
         } catch (e2: InvalidPWException) {
             Handler(Looper.getMainLooper()).post {
                 val txtMostrar = Toast.makeText(this, errorPW3, Toast.LENGTH_LONG)
-                txtMostrar.setGravity(Gravity.CENTER_VERTICAL, 0, 0)
                 txtMostrar.show()
             }
             println(e2)
+        } catch (e5: InvalidFormException){
+            Handler(Looper.getMainLooper()).post {
+                val txtMostrar = Toast.makeText(this, errorFormulario1, Toast.LENGTH_LONG)
+                txtMostrar.show()
+            }
+            println(e5)
         } catch (e: Exception) {
             println(e.toString())
             Handler(Looper.getMainLooper()).post {
@@ -138,9 +143,14 @@ class LoginActivity : AppCompatActivity() {
                 val mensajeError =
                     "No se ha podido iniciar sesión, ha ocurrido un error con la base de datos."
                 val txtMostrar = Toast.makeText(this, mensajeError, Toast.LENGTH_LONG)
-                txtMostrar.setGravity(Gravity.CENTER_VERTICAL, 0, 0)
                 txtMostrar.show()
             }
+        }
+    }
+
+    private fun compruebaLogin(id: String, pw: String){
+        if(id.isEmpty() || pw.isEmpty()){
+            throw InvalidFormException(errorFormulario1)
         }
     }
 

@@ -17,9 +17,9 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.example.iaa_project.databinding.ActivityGuardadoSesionBinding
 import com.example.iaa_project.databinding.ActivityResumenMedicionesBinding
+import com.example.iaa_project.exceptions.*
+import com.example.iaa_project.exceptions.InvalidFormException
 import com.example.iaa_project.exceptions.InvalidIDException
-import com.example.iaa_project.exceptions.errorID1
-import com.example.iaa_project.exceptions.errorID2
 import java.sql.DriverManager
 import java.time.LocalDate
 import java.util.concurrent.Executors
@@ -70,7 +70,7 @@ class GuardadoSesionActivity : AppCompatActivity() {
         val btnGuardadoSesion = variables!!.btnGuardaResumenDef
         val btnCancelar = variables!!.btnCancelarGuardado
 
-        var etOrganizacion = variables!!.etIdOrganizacion
+        val etOrganizacion = variables!!.etIdOrganizacion
 
         btnGuardadoSesion.setOnClickListener {
             var idOrg = etOrganizacion.text.toString()
@@ -166,6 +166,7 @@ class GuardadoSesionActivity : AppCompatActivity() {
         try {
             println("Entro en el try")
             Class.forName("com.mysql.jdbc.Driver")
+            campoVacio(organizacion)
             lanzaErrorId(organizacion)
             val idSesion = FuncionesAuxiliares().generaIdSesion(fecha, usuario, organizacion)
             //Configuracion de la conexión
@@ -214,6 +215,12 @@ class GuardadoSesionActivity : AppCompatActivity() {
                 val txtMostrar = Toast.makeText(this, errorID2, Toast.LENGTH_LONG)
                 txtMostrar.show()
             }
+        } catch (e5: InvalidFormException){
+            Handler(Looper.getMainLooper()).post {
+                val txtMostrar = Toast.makeText(this, errorFormulario1, Toast.LENGTH_LONG)
+                txtMostrar.show()
+            }
+            println(e5)
         } catch (e: Exception) {
             println(e.toString())
             Handler(Looper.getMainLooper()).post {
@@ -261,6 +268,12 @@ class GuardadoSesionActivity : AppCompatActivity() {
     private fun lanzaErrorId(id: String){
         if(!FuncionesAuxiliares().compruebaIdOrg(id)){
             throw InvalidIDException(errorID2)
+        }
+    }
+
+    private fun campoVacio(id: String){
+        if(id.isEmpty()){
+            throw InvalidFormException(errorFormulario1)
         }
     }
 

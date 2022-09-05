@@ -61,13 +61,16 @@ class RegistrarUsuarioActivity : AppCompatActivity() {
         val fecha = variables!!.editUsuNac.text.toString()
         val correo = variables!!.editCorreoUsu.text.toString()
 
-        val id = FuncionesAuxiliares().generaIdPersona(nombre,apellidos, dni, fecha)
-        val fechaDef = FuncionesAuxiliares().formateaFecha(fecha)
+        var id = ""
+        var fechaDef = ""
 
         try {
             println("Entro en el try")
+            compruebaRegistro(dni, apellidos, nombre, fecha, correo)
+            fechaDef = FuncionesAuxiliares().formateaFecha(fecha)
             compruebaFormatoFecha(fechaDef)
             compruebaDNINIE(dni)
+            id = FuncionesAuxiliares().generaIdPersona(nombre,apellidos, dni, fecha)
             Class.forName("com.mysql.jdbc.Driver")
             //Configuracion de la conexión
             //Configuracion de la conexión
@@ -133,6 +136,12 @@ class RegistrarUsuarioActivity : AppCompatActivity() {
                 txtMostrar.show()
             }
             println(e4)
+        } catch (e5: InvalidFormException){
+            Handler(Looper.getMainLooper()).post {
+                val txtMostrar = Toast.makeText(this, errorFormulario1, Toast.LENGTH_LONG)
+                txtMostrar.show()
+            }
+            println(e5)
         } catch (e: Exception) {
             println(e.toString())
             Handler(Looper.getMainLooper()).post {
@@ -201,6 +210,12 @@ class RegistrarUsuarioActivity : AppCompatActivity() {
         if(!FuncionesAuxiliares().letraCorrectaDNINIF(dni)){
             errorProvocadoDNI = errorDNI3
             throw InvalidDNIException(errorDNI3)
+        }
+    }
+
+    private fun compruebaRegistro(dni: String, apellidos: String, nombre: String, fecha: String, correo: String){
+        if(dni.isEmpty() || apellidos.isEmpty() || nombre.isEmpty() || fecha.isEmpty() || correo.isEmpty()){
+            throw InvalidFormException(errorFormulario1)
         }
     }
 

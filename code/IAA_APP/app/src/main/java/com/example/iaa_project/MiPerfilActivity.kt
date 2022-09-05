@@ -21,10 +21,9 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.widget.NestedScrollView
 import com.example.iaa_project.databinding.ActivityMiPerfilBinding
+import com.example.iaa_project.exceptions.*
 import com.example.iaa_project.exceptions.InvalidFechaException
-import com.example.iaa_project.exceptions.errorFecha1
-import com.example.iaa_project.exceptions.errorFecha2
-import com.example.iaa_project.exceptions.errorFecha3
+import com.example.iaa_project.exceptions.InvalidFormException
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import java.sql.DriverManager
@@ -378,6 +377,7 @@ class MiPerfilActivity : AppCompatActivity() {
     private fun actualizaInvestigadorTotal(id: String, nom: String, ape: String, fn: String) {
         try {
             println("Entro en el try")
+            compruebaActTodos(ape, nom, fn)
             Class.forName("com.mysql.jdbc.Driver")
             //Configuracion de la conexión
             println("Query que vamos a ejecutar: UPDATE b1l1rb6fzqnrv8549nvi.investigador SET nombre='$nom', apellidos='$ape', fnacimiento='$fn' WHERE idinvestigador='$id';")
@@ -428,6 +428,12 @@ class MiPerfilActivity : AppCompatActivity() {
                 )
                 cancelaTodo(nombUsuDef, apellUsuDef, fechaUsuDef)
             }
+        } catch (e5: InvalidFormException){
+            Handler(Looper.getMainLooper()).post {
+                val txtMostrar = Toast.makeText(this, errorFormulario1, Toast.LENGTH_LONG)
+                txtMostrar.show()
+            }
+            println(e5)
         } catch (e: Exception) {
             println(e.toString())
             Handler(Looper.getMainLooper()).post {
@@ -450,6 +456,7 @@ class MiPerfilActivity : AppCompatActivity() {
     private fun actualizaCampoInvestigador(id: String, campo: String, valor: String) {
         try {
             println("Entro en el try")
+            compruebaCampoInd(valor)
             if (campo == "fnacimiento") {
                 compruebaFormatoFecha(valor)
             }
@@ -505,6 +512,12 @@ class MiPerfilActivity : AppCompatActivity() {
                 cancelaTodo(nombUsuDef, apellUsuDef, fechaUsuDef)
             }
 
+        } catch (e5: InvalidFormException){
+            Handler(Looper.getMainLooper()).post {
+                val txtMostrar = Toast.makeText(this, errorFormulario1, Toast.LENGTH_LONG)
+                txtMostrar.show()
+            }
+            println(e5)
         } catch (e: Exception) {
             println(e.toString())
             Handler(Looper.getMainLooper()).post {
@@ -1009,6 +1022,18 @@ class MiPerfilActivity : AppCompatActivity() {
         intent.putExtra("notifUsuDef", notifUsuDef)
         intent.putParcelableArrayListExtra("conectados",conectados)
         startActivity(intent)
+    }
+
+    private fun compruebaCampoInd(valor: String){
+        if(valor.isEmpty()){
+            throw InvalidFormException(errorFormulario1)
+        }
+    }
+
+    private fun compruebaActTodos(ape: String, nom: String, fn: String){
+        if(ape.isEmpty() || nom.isEmpty() || fn.isEmpty()){
+            throw InvalidFormException(errorFormulario1)
+        }
     }
 
 }

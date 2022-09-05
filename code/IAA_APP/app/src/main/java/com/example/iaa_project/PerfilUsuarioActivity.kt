@@ -446,6 +446,7 @@ class PerfilUsuarioActivity : AppCompatActivity() {
     private fun actualizaUsuarioTotal(id: String, nom: String, ape: String, fn: String) {
         try {
             println("Entro en el try")
+            compruebaActTotal(ape,nom,fn)
             Class.forName("com.mysql.jdbc.Driver")
             //Configuracion de la conexión
             println("Query que vamos a ejecutar: UPDATE b1l1rb6fzqnrv8549nvi.usuario SET nombre='$nom', apellidos='$ape', fnacimiento='$fn' WHERE idusuario='$id';")
@@ -518,6 +519,7 @@ class PerfilUsuarioActivity : AppCompatActivity() {
     private fun actualizaCampoUsuario(id: String, campo: String, valor: String) {
         try {
             println("Entro en el try")
+            compruebaCampoInd(valor)
             if (campo == "fnacimiento") {
                 compruebaFormatoFecha(valor)
             }
@@ -579,6 +581,12 @@ class PerfilUsuarioActivity : AppCompatActivity() {
                 cancelaTodo(nombUsuarioPac, apellUsuarioPac, fechaUsuarioPac)
             }
 
+        } catch (e5: InvalidFormException){
+            Handler(Looper.getMainLooper()).post {
+                val txtMostrar = Toast.makeText(this, errorFormulario1, Toast.LENGTH_LONG)
+                txtMostrar.show()
+            }
+            println(e5)
         } catch (e: Exception) {
             println(e.toString())
             Handler(Looper.getMainLooper()).post {
@@ -952,6 +960,18 @@ class PerfilUsuarioActivity : AppCompatActivity() {
                     mensajeError
                 )
             }
+        }
+    }
+
+    private fun compruebaCampoInd(valor: String){
+        if(valor.isEmpty()){
+            throw InvalidFormException(errorFormulario1)
+        }
+    }
+
+    private fun compruebaActTotal(apellidos: String, nombre: String, fecha: String){
+        if(apellidos.isEmpty() || nombre.isEmpty() || fecha.isEmpty()){
+            throw InvalidFormException(errorFormulario1)
         }
     }
 

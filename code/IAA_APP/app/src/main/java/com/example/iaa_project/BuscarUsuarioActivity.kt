@@ -11,10 +11,9 @@ import android.widget.Toast
 import androidx.appcompat.widget.SwitchCompat
 import com.example.iaa_project.databinding.ActivityBuscarUsuarioBinding
 import com.example.iaa_project.databinding.ActivityPrincipalBinding
+import com.example.iaa_project.exceptions.*
+import com.example.iaa_project.exceptions.InvalidFormException
 import com.example.iaa_project.exceptions.InvalidIDException
-import com.example.iaa_project.exceptions.InvalidPWException
-import com.example.iaa_project.exceptions.errorID1
-import com.example.iaa_project.exceptions.errorPW3
 import java.sql.DriverManager
 import java.util.concurrent.Executors
 
@@ -80,6 +79,7 @@ class BuscarUsuarioActivity : AppCompatActivity() {
         try {
             contadorSesiones=0
             println("Entro en el try")
+            compruebaInput(id)
             Class.forName("com.mysql.jdbc.Driver")
             //Configuracion de la conexión
             println("Query que vamos a ejecutar: SELECT * FROM b1l1rb6fzqnrv8549nvi.usuario WHERE idusuario='$id';")
@@ -168,6 +168,12 @@ class BuscarUsuarioActivity : AppCompatActivity() {
                 txtMostrar.show()
             }
             println(e1)
+        } catch (e5: InvalidFormException){
+            Handler(Looper.getMainLooper()).post {
+                val txtMostrar = Toast.makeText(this, errorFormulario1, Toast.LENGTH_LONG)
+                txtMostrar.show()
+            }
+            println(e5)
         } catch (e: Exception) {
             println(e.toString())
             Handler(Looper.getMainLooper()).post {
@@ -177,6 +183,12 @@ class BuscarUsuarioActivity : AppCompatActivity() {
                 txtMostrar.setGravity(Gravity.CENTER_VERTICAL, 0, 0)
                 txtMostrar.show()
             }
+        }
+    }
+
+    private fun compruebaInput(id: String){
+        if(id.isEmpty()){
+            throw InvalidFormException(errorFormulario1)
         }
     }
 }

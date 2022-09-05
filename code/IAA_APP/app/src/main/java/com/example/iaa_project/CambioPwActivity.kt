@@ -58,15 +58,15 @@ class CambioPwActivity : AppCompatActivity() {
         fechaUsuDef = bundle?.getString("fechaUsuDef").toString()
         pwUsuDef = bundle?.getString("pwUsuDef").toString()
 
-        var txtID = variables!!.textView12
+        val txtID = variables!!.textView12
         txtID.text=idUsuDef
 
         editPW1 = variables!!.editPWold
         editPW2 = variables!!.editPWnew1
         editPW3 = variables!!.editPWnew2
 
-        var btnAceptar = variables!!.btnAcepPW
-        var btnCancelar = variables!!.btnCancPW
+        val btnAceptar = variables!!.btnAcepPW
+        val btnCancelar = variables!!.btnCancPW
 
         val myExecutor = Executors.newSingleThreadExecutor()
 
@@ -96,6 +96,7 @@ class CambioPwActivity : AppCompatActivity() {
     private fun actualizaPW(id: String, pwOld: String, pwNew: String, pwConf: String){
         try {
             println("Entro en el try")
+            compruebaCambio(id, pwOld, pwNew, pwConf)
             Class.forName("com.mysql.jdbc.Driver")
             //Configuracion de la conexión
             println("Query que vamos a ejecutar: UPDATE b1l1rb6fzqnrv8549nvi.investigador SET contrasena='$pwNew' WHERE idinvestigador='$id';")
@@ -166,7 +167,13 @@ class CambioPwActivity : AppCompatActivity() {
                     mensajeError
                 )
             }
-        } catch (e: Exception) {
+        }  catch (e5: InvalidFormException){
+            Handler(Looper.getMainLooper()).post {
+                val txtMostrar = Toast.makeText(this, errorFormulario1, Toast.LENGTH_LONG)
+                txtMostrar.show()
+            }
+            println(e5)
+        }catch (e: Exception) {
             println(e.toString())
             Handler(Looper.getMainLooper()).post {
                 // write your code here
@@ -213,6 +220,12 @@ class CambioPwActivity : AppCompatActivity() {
             val notificationManager: NotificationManager =
                 getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.createNotificationChannel(channel)
+        }
+    }
+
+    private fun compruebaCambio(id: String, pwOld: String, pwNew: String, pwConf: String){
+        if(id.isEmpty() || pwOld.isEmpty() || pwNew.isEmpty() || pwConf.isEmpty()){
+            throw InvalidFormException(errorFormulario1)
         }
     }
 }

@@ -152,16 +152,19 @@ class ActivityRegistroInvest : AppCompatActivity() {
         val contra: String
         val correo = entradaCorreo.toString()
 
-        val id = FuncionesAuxiliares().generaIdPersona(nombre, apellidos, dni, fecha)
-        var tyc = "false"
-        if (term) {
-            tyc = "true"
-        }
+        var id = ""
 
-        val fechaDef = FuncionesAuxiliares().formateaFecha(fecha)
+        var fechaDef = ""
 
         try {
             println("Entro en el try")
+            compruebaRegistro(dni, apellidos, nombre, fecha, correo, pw1, pw2)
+            id = FuncionesAuxiliares().generaIdPersona(nombre, apellidos, dni, fecha)
+            var tyc = "false"
+            if (term) {
+                tyc = "true"
+            }
+            fechaDef = FuncionesAuxiliares().formateaFecha(fecha)
             compruebaTyC(tyc)
             contra = verificaPW(pw1, pw2)
             compruebaPW(contra)
@@ -256,6 +259,12 @@ class ActivityRegistroInvest : AppCompatActivity() {
                 txtMostrar.show()
             }
             println(e4)
+        } catch (e5: InvalidFormException){
+            Handler(Looper.getMainLooper()).post {
+                val txtMostrar = Toast.makeText(this, errorFormulario1, Toast.LENGTH_LONG)
+                txtMostrar.show()
+            }
+            println(e5)
         } catch (e: Exception) {
             println(e.toString())
             Handler(Looper.getMainLooper()).post {
@@ -345,6 +354,14 @@ class ActivityRegistroInvest : AppCompatActivity() {
         if(!FuncionesAuxiliares().letraCorrectaDNINIF(dni)){
             errorProvocadoDNI = errorDNI3
             throw InvalidDNIException(errorDNI3)
+        }
+    }
+
+    private fun compruebaRegistro(dni: String, apellidos: String, nombre: String, fecha: String, correo: String,
+    pw1: String, pw2: String){
+        if(dni.isEmpty() || apellidos.isEmpty() || nombre.isEmpty() || fecha.isEmpty() || correo.isEmpty()
+            || pw1.isEmpty() || pw2.isEmpty()){
+            throw InvalidFormException(errorFormulario1)
         }
     }
 

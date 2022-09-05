@@ -18,7 +18,9 @@ import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.example.iaa_project.databinding.ActivityComienzoMedicionesBinding
+import com.example.iaa_project.exceptions.InvalidFormException
 import com.example.iaa_project.exceptions.InvalidIDException
+import com.example.iaa_project.exceptions.errorFormulario1
 import com.example.iaa_project.exceptions.errorID1
 import java.sql.DriverManager
 import java.util.concurrent.Executors
@@ -80,7 +82,7 @@ class ComienzoMedicionesActivity : AppCompatActivity() {
 
         btnComienza.setOnClickListener {
             if(conectados.isNotEmpty()){
-                var idUsuarioPrueba = idUsuMed!!.text.toString()
+                val idUsuarioPrueba = idUsuMed!!.text.toString()
                 if(conectados.size==1){
                     Handler(Looper.getMainLooper()).post {
                         // write your code here
@@ -157,6 +159,7 @@ class ComienzoMedicionesActivity : AppCompatActivity() {
     private fun compruebaUsuario(id: String){
         try {
             println("Entro en el try")
+            campoVacio(id)
             Class.forName("com.mysql.jdbc.Driver")
             //Configuracion de la conexión
             println("Query que vamos a ejecutar: SELECT idusuario FROM b1l1rb6fzqnrv8549nvi.usuario WHERE idusuario='$id';")
@@ -205,6 +208,12 @@ class ComienzoMedicionesActivity : AppCompatActivity() {
                 txtMostrar.show()
             }
             println(e1)
+        } catch (e5: InvalidFormException){
+            Handler(Looper.getMainLooper()).post {
+                val txtMostrar = Toast.makeText(this, errorFormulario1, Toast.LENGTH_LONG)
+                txtMostrar.show()
+            }
+            println(e5)
         } catch (e: Exception) {
             println(e.toString())
             Handler(Looper.getMainLooper()).post {
@@ -247,6 +256,12 @@ class ComienzoMedicionesActivity : AppCompatActivity() {
             val notificationManager: NotificationManager =
                 getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.createNotificationChannel(channel)
+        }
+    }
+
+    private fun campoVacio(id: String){
+        if(id.isEmpty()){
+            throw InvalidFormException(errorFormulario1)
         }
     }
 
