@@ -37,19 +37,27 @@
             app:layout_constraintStart_toEndOf="@+id/divider69"
             app:layout_constraintTop_toBottomOf="@+id/nomAcelT17" />
 
-        <TextView
-            android:id="@+id/nomNivBatT18"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="47dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="22dp"
-            android:text="Nivel de batería"
-            app:layout_constraintBottom_toTopOf="@+id/divider71"
-            app:layout_constraintStart_toEndOf="@+id/divider69"
-            app:layout_constraintTop_toBottomOf="@+id/nomNivBatT19" />
+            <TextView
+                android:id="@+id/nomNivBatT18"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="52dp"
+                android:layout_marginTop="34dp"
+                android:text="Acelerómetro"
+                app:layout_constraintStart_toEndOf="@+id/divider69"
+                app:layout_constraintTop_toBottomOf="@+id/nomNivBatT19" />
 
-        <TextView
+            <TextView
+                android:id="@+id/nomNivBatT3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="44dp"
+                android:layout_marginTop="34dp"
+                android:text="Nivel de batería"
+                app:layout_constraintStart_toEndOf="@+id/divider69"
+                app:layout_constraintTop_toBottomOf="@+id/nomNivBatT18" />
+
+            <TextView
             android:id="@+id/nombT17"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -80,7 +88,7 @@
             <View
             android:id="@+id/divider69"
             android:layout_width="3dp"
-            android:layout_height="330dp"
+            android:layout_height="385dp"
             android:background="@color/IAA_azulOsc"
             app:layout_constraintStart_toStartOf="@+id/divider70"
             app:layout_constraintTop_toTopOf="@+id/divider70" />
@@ -130,7 +138,7 @@
             app:layout_constraintTop_toBottomOf="@+id/nomGirosT17" />
 
             <Button
-                android:id="@+id/repreBattT3"
+                android:id="@+id/repreAcelT3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="60dp"
@@ -142,6 +150,20 @@
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toEndOf="@+id/nomNivBatT18"
                 app:layout_constraintTop_toBottomOf="@+id/repreGirosT3" />
+
+            <Button
+                android:id="@+id/repreBattT3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="60dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="28dp"
+                android:enabled="false"
+                android:text="-"
+                app:layout_constraintEnd_toStartOf="@+id/divider72"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toEndOf="@+id/nomNivBatT18"
+                app:layout_constraintTop_toBottomOf="@+id/repreAcelT3" />
 
             <Button
                 android:id="@+id/repreTempAmbT3"
@@ -170,7 +192,7 @@
         <View
             android:id="@+id/divider72"
             android:layout_width="3dp"
-            android:layout_height="330dp"
+            android:layout_height="385dp"
             android:background="@color/IAA_azulOsc"
             app:layout_constraintEnd_toEndOf="@+id/divider70"
             app:layout_constraintTop_toTopOf="@+id/divider70" />
@@ -200,17 +222,29 @@
             app:layout_constraintStart_toEndOf="@+id/nomAcelT16"
             app:layout_constraintTop_toBottomOf="@+id/nombT16" />
 
-        <TextView
-            android:id="@+id/nomNivBatT17"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="44dp"
-            android:layout_marginTop="33dp"
-            android:text="Nivel de batería"
-            app:layout_constraintEnd_toStartOf="@+id/repreBattT2"
-            app:layout_constraintHorizontal_bias="0.049"
-            app:layout_constraintStart_toEndOf="@+id/divider66"
-            app:layout_constraintTop_toBottomOf="@+id/nomNivBatT16" />
+            <TextView
+                android:id="@+id/nomNivBatT17"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="32dp"
+                android:text="Temperatura ambiente"
+                app:layout_constraintEnd_toStartOf="@+id/repreTempAmbT2"
+                app:layout_constraintHorizontal_bias="0.023"
+                app:layout_constraintStart_toEndOf="@+id/divider66"
+                app:layout_constraintTop_toBottomOf="@+id/nomNivBatT16" />
+
+            <TextView
+                android:id="@+id/nomTempAmbT2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="44dp"
+                android:layout_marginTop="33dp"
+                android:text="Nivel de batería"
+                app:layout_constraintEnd_toStartOf="@+id/repreBattT2"
+                app:layout_constraintHorizontal_bias="0.049"
+                app:layout_constraintStart_toEndOf="@+id/divider66"
+                app:layout_constraintTop_toBottomOf="@+id/nomNivBatT17" />
 
             <Button
                 android:id="@+id/repreGirosT2"
@@ -249,7 +283,7 @@
         <View
             android:id="@+id/divider66"
             android:layout_width="3dp"
-            android:layout_height="330dp"
+            android:layout_height="385dp"
             android:background="@color/IAA_azulOsc"
             app:layout_constraintStart_toStartOf="@+id/divider68"
             app:layout_constraintTop_toTopOf="@+id/divider68" />
@@ -280,6 +314,19 @@
             tools:ignore="MissingConstraints" />
 
             <Button
+                android:id="@+id/repreTempAmbT2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="28dp"
+                android:enabled="false"
+                android:text="-"
+                app:layout_constraintBottom_toTopOf="@+id/divider67"
+                app:layout_constraintEnd_toStartOf="@+id/divider65"
+                app:layout_constraintTop_toBottomOf="@+id/repreGirosT2"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <Button
                 android:id="@+id/repreBattT2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -288,9 +335,8 @@
                 android:layout_marginBottom="11dp"
                 android:enabled="false"
                 android:text="-"
-                app:layout_constraintBottom_toTopOf="@+id/divider67"
                 app:layout_constraintEnd_toStartOf="@+id/divider65"
-                app:layout_constraintTop_toBottomOf="@+id/repreGirosT2" />
+                app:layout_constraintTop_toBottomOf="@+id/repreTempAmbT2" />
 
         <View
             android:id="@+id/divider68"
@@ -306,7 +352,7 @@
             android:id="@+id/divider67"
             android:layout_width="331dp"
             android:layout_height="3dp"
-            android:layout_marginTop="328dp"
+            android:layout_marginTop="383dp"
             android:background="@color/IAA_azulOsc"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.506"
@@ -327,7 +373,7 @@
         <View
             android:id="@+id/divider65"
             android:layout_width="3dp"
-            android:layout_height="330dp"
+            android:layout_height="385dp"
             android:background="@color/IAA_azulOsc"
             app:layout_constraintEnd_toEndOf="@+id/divider68"
             app:layout_constraintTop_toTopOf="@+id/divider68" />

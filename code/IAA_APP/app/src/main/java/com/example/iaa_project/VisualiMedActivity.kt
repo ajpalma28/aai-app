@@ -66,12 +66,14 @@ class VisualiMedActivity : AppCompatActivity() {
     var muestraAcelT2: Button? = null
     var muestraGirosT2: Button? = null
     var muestraBattT2: Button? = null
+    var muestraTempAmbT2: Button? = null
 
     var muestraFrecCardT3: Button? = null
     var muestraFrecRespT3: Button? = null
     var muestraTempAmbT3: Button? = null
     var muestraGirosT3: Button? = null
     var muestraBattT3: Button? = null
+    var muestraAcelT3: Button? = null
 
     var actividad = true
 
@@ -124,12 +126,14 @@ class VisualiMedActivity : AppCompatActivity() {
         muestraAcelT2 = variables!!.repreAcelT2
         muestraGirosT2 = variables!!.repreGirosT2
         muestraBattT2 = variables!!.repreBattT2
+        muestraTempAmbT2 = variables!!.repreTempAmbT2
 
         muestraFrecCardT3 = variables!!.repreFreqCardT3
         muestraFrecRespT3 = variables!!.repreFreqRespT3
         muestraTempAmbT3 = variables!!.repreTempAmbT3
         muestraGirosT3 = variables!!.repreGirosT3
         muestraBattT3 = variables!!.repreBattT3
+        muestraAcelT3 = variables!!.repreAcelT3
 
         extendedFab = variables!!.extendedFab
 
@@ -517,7 +521,7 @@ class VisualiMedActivity : AppCompatActivity() {
             val bateria = data.slice(68..69)
             val tempAmbiente = data.slice(70..71)
             colocaDatoT3("ecg", ecg)
-            //colocaDatoT3("acelerometro",acelerometro)
+            colocaDatoT3("acelerometro",acelerometro)
             colocaDatoT3("giroscopio", giroscopio)
             colocaDatoT3("respiracion", respiracion)
             colocaDatoT3("bateria", bateria)
@@ -615,6 +619,16 @@ class VisualiMedActivity : AppCompatActivity() {
             "giroscopio" -> muestraGirosT2?.let { normal(it, br[0].toString()) }
             "bateria" -> muestraBattT2?.let { normal(it, "${lecturaBateria(br)} V") }
             "temperaturaCorporal" -> muestraTempCorpT2?.let { normal(it, br[0].toString()) }
+            "tempAmbiente" -> {
+                if(lecturaTempAmb(br).toDouble()>45.0){
+                    muestraTempAmbT2?.let { peligroso(it, "${lecturaTempAmb(br)} ºC") }
+                }else if(lecturaTempAmb(br).toDouble()>40.0){
+                    muestraTempAmbT2?.let { cuidado(it, "${lecturaTempAmb(br)} ºC") }
+                }else{
+                    muestraTempAmbT2?.let { normal(it, "${lecturaTempAmb(br)} ºC") }
+                }
+
+            }
         }
     }
 
@@ -623,6 +637,7 @@ class VisualiMedActivity : AppCompatActivity() {
             "ecg" -> muestraFrecCardT3?.let { normal(it, br[0].toString()) }
             "respiracion" -> muestraFrecRespT3?.let { normal(it, br[0].toString()) }
             "giroscopio" -> muestraGirosT3?.text=br[0].toString()
+            "acelerometro" -> muestraAcelT3?.let { normal(it, br[0].toString()) }
             "bateria" -> muestraBattT3?.let { normal(it, "${lecturaBateria(br)} V") }
             "tempAmbiente" -> {
                 if(lecturaTempAmb(br).toDouble()>45.0){
