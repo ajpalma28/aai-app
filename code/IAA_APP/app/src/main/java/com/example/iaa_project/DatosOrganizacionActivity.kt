@@ -21,6 +21,7 @@ class DatosOrganizacionActivity : AppCompatActivity() {
     var nombUsuDef = ""
     var fechaUsuDef = ""
     var pwUsuDef = ""
+    var correoInvest = ""
     var contadorInvestigadores = 0
     var listaAsocInvOriginal : ArrayList<String> = ArrayList()
     var listaAsocInv : ArrayList<String> = ArrayList()
@@ -45,6 +46,7 @@ class DatosOrganizacionActivity : AppCompatActivity() {
         nombUsuDef = bundle?.getString("nombUsuDef").toString()
         fechaUsuDef = bundle?.getString("fechaUsuDef").toString()
         pwUsuDef = bundle?.getString("pwUsuDef").toString()
+        correoInvest = bundle?.getString("correoInvest").toString()
         listaAsocInvOriginal = bundle?.getStringArrayList("listaAsocInv")!!
         listaAsocInv = limpiaLista(listaAsocInvOriginal)
         contadorInvestigadores = listaAsocInv.size

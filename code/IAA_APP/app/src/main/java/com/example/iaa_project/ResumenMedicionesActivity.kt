@@ -22,6 +22,7 @@ class ResumenMedicionesActivity : AppCompatActivity() {
     var conectados = ArrayList<BluetoothDevice>()
     var pacienteMed = ""
     var resumenSesion = ""
+    var correoInvest = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +39,7 @@ class ResumenMedicionesActivity : AppCompatActivity() {
         nombUsuDef = bundle?.getString("nombUsuDef").toString()
         fechaUsuDef = bundle?.getString("fechaUsuDef").toString()
         pwUsuDef = bundle?.getString("pwUsuDef").toString()
+        correoInvest = bundle?.getString("correoInvest").toString()
         if(bundle?.getParcelableArrayList<BluetoothDevice>("conectados")!!.isNotEmpty()){
             conectados.addAll(bundle.getParcelableArrayList("conectados")!!)
         }
@@ -69,6 +71,7 @@ class ResumenMedicionesActivity : AppCompatActivity() {
                     intento2.putExtra("nombUsuDef", nombUsuDef)
                     intento2.putExtra("fechaUsuDef", fechaUsuDef)
                     intento2.putExtra("pwUsuDef", pwUsuDef)
+                    intento2.putExtra("correoInvest",correoInvest)
                     intento2.putParcelableArrayListExtra("conectados",conectados)
                     intento2.putExtra("pacienteMed", pacienteMed)
                     intento2.putExtra("resumenSesion",resumenSesion)
@@ -101,6 +104,7 @@ class ResumenMedicionesActivity : AppCompatActivity() {
                     intento2.putExtra("dniUsuDef", dniUsuDef)
                     intento2.putExtra("apellUsuDef", apellUsuDef)
                     intento2.putExtra("nombUsuDef", nombUsuDef)
+                    intento2.putExtra("correoInvest",correoInvest)
                     intento2.putExtra("fechaUsuDef", fechaUsuDef)
                     intento2.putExtra("pwUsuDef", pwUsuDef)
                     intento2.putParcelableArrayListExtra("conectados",conectados)

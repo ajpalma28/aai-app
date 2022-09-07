@@ -136,12 +136,6 @@ class RegistrarUsuarioActivity : AppCompatActivity() {
                 txtMostrar.show()
             }
             println(e4)
-        } catch (e5: InvalidFormException){
-            Handler(Looper.getMainLooper()).post {
-                val txtMostrar = Toast.makeText(this, errorFormulario1, Toast.LENGTH_LONG)
-                txtMostrar.show()
-            }
-            println(e5)
         } catch (e: Exception) {
             println(e.toString())
             Handler(Looper.getMainLooper()).post {

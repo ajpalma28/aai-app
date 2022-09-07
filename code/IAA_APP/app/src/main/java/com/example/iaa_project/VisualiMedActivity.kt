@@ -2,6 +2,7 @@ package com.example.iaa_project
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.AlertDialog
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -10,10 +11,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
-import android.os.Build
-import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
+import android.os.*
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
@@ -29,6 +27,7 @@ import com.example.iaa_project.exceptions.errorType3
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
+import java.io.OutputStreamWriter
 import java.math.RoundingMode
 import java.sql.Time
 import java.text.DecimalFormat
@@ -47,6 +46,7 @@ class VisualiMedActivity : AppCompatActivity() {
     var nombUsuDef = ""
     var fechaUsuDef = ""
     var pwUsuDef = ""
+    var correoInvest = ""
     var conectados = ArrayList<BluetoothDevice>()
     var pacienteMed = ""
     var idUsuMed: EditText? = null
@@ -84,6 +84,10 @@ class VisualiMedActivity : AppCompatActivity() {
     var resumen = "Esto es un texto de prueba.\n\nMuchas gracias."
     var horaCom = ""
 
+    val listaT1 = ArrayList<String>()
+    val listaT2 = ArrayList<String>()
+    val listaT3 = ArrayList<String>()
+
     private companion object {
         private const val CHANNEL_ID = "channel01"
         private const val TIPO1 = "LegMonitor"
@@ -110,6 +114,7 @@ class VisualiMedActivity : AppCompatActivity() {
         apellUsuDef = bundle?.getString("apellUsuDef").toString()
         nombUsuDef = bundle?.getString("nombUsuDef").toString()
         fechaUsuDef = bundle?.getString("fechaUsuDef").toString()
+        correoInvest = bundle?.getString("correoInvest").toString()
         pwUsuDef = bundle?.getString("pwUsuDef").toString()
         if (bundle?.getParcelableArrayList<BluetoothDevice>("conectados")!!.isNotEmpty()) {
             conectados.addAll(bundle.getParcelableArrayList("conectados")!!)
@@ -201,6 +206,7 @@ class VisualiMedActivity : AppCompatActivity() {
                     intento2.putExtra("nombUsuDef", nombUsuDef)
                     intento2.putExtra("fechaUsuDef", fechaUsuDef)
                     intento2.putExtra("pwUsuDef", pwUsuDef)
+                    intento2.putExtra("correoInvest",correoInvest)
                     intento2.putParcelableArrayListExtra("conectados", conectados)
                     intento2.putExtra("pacienteMed", pacienteMed)
                     intento2.putExtra("resumenSesion", resumenSesion)
@@ -208,6 +214,33 @@ class VisualiMedActivity : AppCompatActivity() {
                     bluetoothGatt?.disconnect()
                     bluetoothGatt?.close()
                     bAdapter?.disable()
+                    try{
+                        // TODO: CORREGIR CON ¿¿FILEOUTPUTSTREAM??
+                        // TODO: Esto de todas formas funciona y guarda en la memoria "privada"
+                        val baseArchivo1 = "$pacienteMed"
+                        val baseArchivo2 = "_$idUsuDef"
+                        val extendT1 = "_Tipo1"
+                        val extendT2 = "_Tipo2"
+                        val extendT3 = "_Tipo3"
+                        val baseArchivo = "$baseArchivo1$baseArchivo2"
+                        val base = Environment.getExternalStorageDirectory().toString()
+                        val archivo1 = OutputStreamWriter(openFileOutput("$baseArchivo$extendT1.txt", Activity.MODE_PRIVATE))
+                        archivo1.write(escribeLista(listaT1))
+                        archivo1.flush()
+                        archivo1.close()
+                        val archivo2 = OutputStreamWriter(openFileOutput("$baseArchivo$extendT2.txt", Activity.MODE_PRIVATE))
+                        archivo2.write(escribeLista(listaT2))
+                        archivo2.flush()
+                        archivo2.close()
+                        //val archivo3 = OutputStreamWriter(openFileOutput("$base/results/$pacienteMed/$baseArchivo$extendT3.txt", Activity.MODE_PRIVATE))
+                        val archivo3 = OutputStreamWriter(openFileOutput("$baseArchivo$extendT3.txt", Activity.MODE_PRIVATE))
+                        archivo3.write(escribeLista(listaT3))
+                        archivo3.flush()
+                        archivo3.close()
+                        println("Todo guardado correctamente")
+                    } catch (error: Exception){
+                        println("ERRORRRRRRRRR")
+                    }
                     startActivity(intento2)
                 }
             }
@@ -341,7 +374,7 @@ class VisualiMedActivity : AppCompatActivity() {
                                             }
                                             gatt.readCharacteristic(x)
                                         }
-                                    }, 1500, 1000)
+                                    }, 1500, 77)
                                 }
                                 if (gatt.device?.name == "WristMonitor" || gatt.device?.name == "Type2") {
                                     val fixedRateTimer2 = Timer()
@@ -378,7 +411,7 @@ class VisualiMedActivity : AppCompatActivity() {
                                             }
                                             gatt.readCharacteristic(x)
                                         }
-                                    }, 3000, 1000)
+                                    }, 3000, 77)
                                 }
                                 if (gatt.device?.name == "ChestMonitor" || gatt.device?.name == "Type3") {
                                     val fixedRateTimer3 = Timer()
@@ -415,7 +448,7 @@ class VisualiMedActivity : AppCompatActivity() {
                                             }
                                             gatt.readCharacteristic(x)
                                         }
-                                    }, 0, 1000)
+                                    }, 0, 77)
 
                                 }
                             }
@@ -526,6 +559,7 @@ class VisualiMedActivity : AppCompatActivity() {
             colocaDatoT3("respiracion", respiracion)
             colocaDatoT3("bateria", bateria)
             colocaDatoT3("tempAmbiente", tempAmbiente)
+            listaT3.add(traduceArray(data))
         }
     }
 
@@ -545,6 +579,7 @@ class VisualiMedActivity : AppCompatActivity() {
             colocaDatoT2("bateria", bateria)
             colocaDatoT2("tempAmbiente", tempAmbiente)
             colocaDatoT2("temperaturaCorporal", temperaturaCorporal)
+            listaT2.add(traduceArray(data))
         }
     }
 
@@ -560,6 +595,7 @@ class VisualiMedActivity : AppCompatActivity() {
             colocaDatoT1("giroscopio", giroscopio)
             colocaDatoT1("bateria", bateria)
             colocaDatoT1("tempAmbiente", tempAmbiente)
+            listaT1.add(traduceArray(data))
         }
     }
 
@@ -652,5 +688,22 @@ class VisualiMedActivity : AppCompatActivity() {
         }
     }
 
+    private fun traduceArray(br: ByteArray): String{
+        var res = ""
+        for(dato in br){
+            res = "$res$dato,"
+        }
+        val tamano = res.lastIndex
+        val aux = res.substring(0,tamano)
+        return "$aux"
+    }
+
+    private fun escribeLista(l: List<String>): String{
+        var res = ""
+        for(ba in l){
+            res += "$ba\n"
+        }
+        return res
+    }
 
 }

@@ -39,6 +39,7 @@ class GuardadoSesionActivity : AppCompatActivity() {
     var pacienteMed = ""
     var resumenSesion = ""
     var organizacion = ""
+    var correoInvest = ""
 
     private companion object {
         private const val CHANNEL_ID = "channel01"
@@ -59,6 +60,7 @@ class GuardadoSesionActivity : AppCompatActivity() {
         nombUsuDef = bundle?.getString("nombUsuDef").toString()
         fechaUsuDef = bundle?.getString("fechaUsuDef").toString()
         pwUsuDef = bundle?.getString("pwUsuDef").toString()
+        correoInvest = bundle?.getString("correoInvest").toString()
         if(bundle?.getParcelableArrayList<BluetoothDevice>("conectados")!!.isNotEmpty()){
             conectados.addAll(bundle.getParcelableArrayList("conectados")!!)
         }
@@ -204,6 +206,7 @@ class GuardadoSesionActivity : AppCompatActivity() {
                 intento2.putExtra("nombUsuDef", nombUsuDef)
                 intento2.putExtra("fechaUsuDef", fechaUsuDef)
                 intento2.putExtra("pwUsuDef", pwUsuDef)
+                intento2.putExtra("correoInvest",correoInvest)
                 intento2.putParcelableArrayListExtra("conectados",conectados)
                 startActivity(intento2)
                 println("Se ha guardado la sesión $idSesion con éxito.")

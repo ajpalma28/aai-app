@@ -32,6 +32,7 @@ class CambioPwActivity : AppCompatActivity() {
     var apellUsuDef = ""
     var nombUsuDef = ""
     var fechaUsuDef = ""
+    var correoInvest = ""
     var pwUsuDef = ""
     var editPW1 : EditText? = null
     var editPW2 : EditText? = null
@@ -57,6 +58,7 @@ class CambioPwActivity : AppCompatActivity() {
         nombUsuDef = bundle?.getString("nombUsuDef").toString()
         fechaUsuDef = bundle?.getString("fechaUsuDef").toString()
         pwUsuDef = bundle?.getString("pwUsuDef").toString()
+        correoInvest = bundle?.getString("correoInvest").toString()
 
         val txtID = variables!!.textView12
         txtID.text=idUsuDef
@@ -149,6 +151,7 @@ class CambioPwActivity : AppCompatActivity() {
                 intento2.putExtra("nombUsuDef", nombUsuDef)
                 intento2.putExtra("fechaUsuDef", fechaUsuDef)
                 intento2.putExtra("pwUsuDef", pwUsuDef)
+                intento2.putExtra("correoInvest", correoInvest)
                 startActivity(intento2)
                 println("Se ha actualizado la contraseña de $id con éxito.")
             }

@@ -23,6 +23,7 @@ class DatosSesionActivity : AppCompatActivity() {
     var nombUsuDef = ""
     var fechaUsuDef = ""
     var pwUsuDef = ""
+    var correoInvest = ""
     var contadorSesiones = 0
     var listaSesionID: ArrayList<String> = ArrayList()
     var listaSesionOrg: ArrayList<String> = ArrayList()
@@ -56,6 +57,7 @@ class DatosSesionActivity : AppCompatActivity() {
         apellUsuDef = bundle?.getString("apellUsuDef").toString()
         nombUsuDef = bundle?.getString("nombUsuDef").toString()
         fechaUsuDef = bundle?.getString("fechaUsuDef").toString()
+        correoInvest = bundle?.getString("correoInvest").toString()
         pwUsuDef = bundle?.getString("pwUsuDef").toString()
         listaSesionID.addAll(bundle?.getStringArrayList("listaSesionID")!!)
         listaSesionOrg.addAll(bundle.getStringArrayList("listaSesionOrg")!!)

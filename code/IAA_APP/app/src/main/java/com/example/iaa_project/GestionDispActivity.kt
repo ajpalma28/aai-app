@@ -21,6 +21,7 @@ class GestionDispActivity : AppCompatActivity() {
     var nombUsuDef = ""
     var fechaUsuDef = ""
     var pwUsuDef = ""
+    var correoInvest = ""
     var conectados = ArrayList<BluetoothDevice>()
 
     private companion object{
@@ -42,6 +43,7 @@ class GestionDispActivity : AppCompatActivity() {
         apellUsuDef = bundle?.getString("apellUsuDef").toString()
         nombUsuDef = bundle?.getString("nombUsuDef").toString()
         fechaUsuDef = bundle?.getString("fechaUsuDef").toString()
+        correoInvest = bundle?.getString("correoInvest").toString()
         pwUsuDef = bundle?.getString("pwUsuDef").toString()
         if(bundle?.getParcelableArrayList<BluetoothDevice>("conectados")!!.isNotEmpty()){
             conectados.addAll(bundle.getParcelableArrayList("conectados")!!)
@@ -67,6 +69,7 @@ class GestionDispActivity : AppCompatActivity() {
             intent.putExtra("nombUsuDef", nombUsuDef)
             intent.putExtra("fechaUsuDef", fechaUsuDef)
             intent.putExtra("pwUsuDef", pwUsuDef)
+            intent.putExtra("correoInvest", correoInvest)
             intent.putExtra("notifUsuDef", notifUsuDef)
             intent.putParcelableArrayListExtra("conectados",conectados)
             startActivity(intent)
@@ -80,6 +83,7 @@ class GestionDispActivity : AppCompatActivity() {
             intent.putExtra("nombUsuDef", nombUsuDef)
             intent.putExtra("fechaUsuDef", fechaUsuDef)
             intent.putExtra("pwUsuDef", pwUsuDef)
+            intent.putExtra("correoInvest", correoInvest)
             intent.putExtra("notifUsuDef", notifUsuDef)
             intent.putParcelableArrayListExtra("conectados",conectados)
             startActivity(intent)
@@ -107,6 +111,7 @@ class GestionDispActivity : AppCompatActivity() {
             intent.putExtra("nombUsuDef", nombUsuDef)
             intent.putExtra("fechaUsuDef", fechaUsuDef)
             intent.putExtra("pwUsuDef", pwUsuDef)
+            intent.putExtra("correoInvest", correoInvest)
             intent.putExtra("notifUsuDef", notifUsuDef)
             intent.putParcelableArrayListExtra("conectados",conectados)
             startActivity(intent)

@@ -36,6 +36,7 @@ class ComienzoMedicionesActivity : AppCompatActivity() {
     var nombUsuDef = ""
     var fechaUsuDef = ""
     var pwUsuDef = ""
+    var correoInvest = ""
     var conectados = ArrayList<BluetoothDevice>()
     var pacienteMed = ""
     var idUsuMed : EditText? = null
@@ -62,6 +63,7 @@ class ComienzoMedicionesActivity : AppCompatActivity() {
         apellUsuDef = bundle?.getString("apellUsuDef").toString()
         nombUsuDef = bundle?.getString("nombUsuDef").toString()
         fechaUsuDef = bundle?.getString("fechaUsuDef").toString()
+        correoInvest = bundle?.getString("correoInvest").toString()
         pwUsuDef = bundle?.getString("pwUsuDef").toString()
         if(bundle?.getParcelableArrayList<BluetoothDevice>("conectados")!!.isNotEmpty()){
             conectados.addAll(bundle.getParcelableArrayList("conectados")!!)
@@ -198,6 +200,7 @@ class ComienzoMedicionesActivity : AppCompatActivity() {
             intento2.putExtra("nombUsuDef", nombUsuDef)
             intento2.putExtra("fechaUsuDef", fechaUsuDef)
             intento2.putExtra("pwUsuDef", pwUsuDef)
+            intento2.putExtra("correoInvest", correoInvest)
             intento2.putParcelableArrayListExtra("conectados",conectados)
             intento2.putExtra("pacienteMed", pacienteMed)
             startActivity(intento2)
