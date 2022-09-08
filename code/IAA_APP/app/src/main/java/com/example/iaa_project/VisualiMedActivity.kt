@@ -614,12 +614,13 @@ class VisualiMedActivity : AppCompatActivity() {
         /*val aux0 = lista[0] * 100
         val aux1 = aux0.toInt() / 100
         return aux1.toFloat()*/
+        val res = (lista[0]+lista[1]/2)
         val df = DecimalFormat("#.###")
         df.roundingMode = RoundingMode.UP
-        return df.format(lista[0]).replace(',','.')
+        return df.format(res).replace(',','.')
     }
 
-    fun lecturaTempAmb(br: List<Byte>): String {
+    private fun lecturaTempAmb(br: List<Byte>): String {
         val lista = ArrayList<Float>()
         for(j in 0..1){
             lista.add((br[j]/26+25).toFloat())
@@ -630,11 +631,19 @@ class VisualiMedActivity : AppCompatActivity() {
         return df.format(res).replace(',','.')
     }
 
-    fun colocaDatoT1(campo: String, br: List<Byte>) {
+    private fun colocaDatoT1(campo: String, br: List<Byte>) {
         when (campo) {
             "acelerometro" -> muestraAcelT1?.let { normal(it, br[0].toString()) }
-            "giroscopio" -> muestraGirosT1?.text = br[0].toString()
-            "bateria" -> muestraBattT1?.let { normal(it, "${lecturaBateria(br)} V") }
+            "giroscopio" -> muestraGirosT1?.let { normal(it, br[0].toString()) }
+            "bateria" -> {
+                if(lecturaBateria(br).toDouble()<1.2){
+                    muestraBattT1?.let { peligroso(it, "${lecturaBateria(br)} V") }
+                }else if(lecturaTempAmb(br).toDouble()<2.0){
+                    muestraBattT1?.let { cuidado(it, "${lecturaBateria(br)} V") }
+                }else{
+                    muestraBattT1?.let { normal(it, "${lecturaBateria(br)} V") }
+                }
+            }
             "tempAmbiente" -> {
                 if(lecturaTempAmb(br).toDouble()>45.0){
                     muestraTempAmbT1?.let { peligroso(it, "${lecturaTempAmb(br)} ºC") }
@@ -648,12 +657,20 @@ class VisualiMedActivity : AppCompatActivity() {
         }
     }
 
-    fun colocaDatoT2(campo: String, br: List<Byte>) {
+    private fun colocaDatoT2(campo: String, br: List<Byte>) {
         when (campo) {
             "electroDermica" -> muestraElectDermT2?.let { normal(it, br[0].toString()) }
             "acelerometro" -> muestraAcelT2?.let { normal(it, br[0].toString()) }
             "giroscopio" -> muestraGirosT2?.let { normal(it, br[0].toString()) }
-            "bateria" -> muestraBattT2?.let { normal(it, "${lecturaBateria(br)} V") }
+            "bateria" -> {
+                if(lecturaBateria(br).toDouble()<1.2){
+                    muestraBattT2?.let { peligroso(it, "${lecturaBateria(br)} V") }
+                }else if(lecturaTempAmb(br).toDouble()<2.0){
+                    muestraBattT2?.let { cuidado(it, "${lecturaBateria(br)} V") }
+                }else{
+                    muestraBattT2?.let { normal(it, "${lecturaBateria(br)} V") }
+                }
+            }
             "temperaturaCorporal" -> muestraTempCorpT2?.let { normal(it, br[0].toString()) }
             "tempAmbiente" -> {
                 if(lecturaTempAmb(br).toDouble()>45.0){
@@ -668,13 +685,21 @@ class VisualiMedActivity : AppCompatActivity() {
         }
     }
 
-    fun colocaDatoT3(campo: String, br: List<Byte>) {
+    private fun colocaDatoT3(campo: String, br: List<Byte>) {
         when (campo) {
             "ecg" -> muestraFrecCardT3?.let { normal(it, br[0].toString()) }
             "respiracion" -> muestraFrecRespT3?.let { normal(it, br[0].toString()) }
-            "giroscopio" -> muestraGirosT3?.text=br[0].toString()
+            "giroscopio" -> muestraGirosT3?.let { normal(it, br[0].toString()) }
             "acelerometro" -> muestraAcelT3?.let { normal(it, br[0].toString()) }
-            "bateria" -> muestraBattT3?.let { normal(it, "${lecturaBateria(br)} V") }
+            "bateria" -> {
+                if(lecturaBateria(br).toDouble()<1.2){
+                    muestraBattT3?.let { peligroso(it, "${lecturaBateria(br)} V") }
+                }else if(lecturaTempAmb(br).toDouble()<2.0){
+                    muestraBattT3?.let { cuidado(it, "${lecturaBateria(br)} V") }
+                }else{
+                    muestraBattT3?.let { normal(it, "${lecturaBateria(br)} V") }
+                }
+            }
             "tempAmbiente" -> {
                 if(lecturaTempAmb(br).toDouble()>45.0){
                     muestraTempAmbT3?.let { peligroso(it, "${lecturaTempAmb(br)} ºC") }
