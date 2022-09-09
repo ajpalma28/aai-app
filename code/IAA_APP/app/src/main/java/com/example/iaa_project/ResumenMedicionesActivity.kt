@@ -122,4 +122,9 @@ class ResumenMedicionesActivity : AppCompatActivity() {
         }
 
     }
+
+    override fun onBackPressed() {
+        moveTaskToBack(true)
+    }
+
 }

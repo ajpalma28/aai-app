@@ -36,6 +36,7 @@
         <activity
             android:name=".GuardadoSesionActivity"
             android:exported="false"
+            android:noHistory="true"
             android:label="@string/title_activity_guardado_sesion" />
         <activity
             android:name=".ResumenMedicionesActivity"
@@ -76,6 +77,7 @@
         <activity
             android:name=".VisualiMedActivity"
             android:exported="false"
+            android:noHistory="true"
             android:label="@string/title_activity_visuali_med"/>
         <activity
             android:name=".MiPerfilActivity"

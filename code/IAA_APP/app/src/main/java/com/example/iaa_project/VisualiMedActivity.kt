@@ -27,14 +27,19 @@ import com.example.iaa_project.exceptions.errorType3
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
+import java.io.File
+import java.io.FileOutputStream
 import java.io.OutputStreamWriter
 import java.math.RoundingMode
 import java.sql.Time
 import java.text.DecimalFormat
 import java.time.Instant
+import java.time.LocalDate
+import java.time.LocalTime
 import java.util.*
 import java.util.concurrent.Executors
 import kotlin.random.Random
+
 
 class VisualiMedActivity : AppCompatActivity() {
 
@@ -215,28 +220,32 @@ class VisualiMedActivity : AppCompatActivity() {
                     bluetoothGatt?.close()
                     bAdapter?.disable()
                     try{
-                        // TODO: CORREGIR CON ¿¿FILEOUTPUTSTREAM??
-                        // TODO: Esto de todas formas funciona y guarda en la memoria "privada"
-                        val baseArchivo1 = "$pacienteMed"
+                        val fecha = LocalDate.now()
+                        val prinFecha = transformaFecha(fecha)
+                        val baseArchivo1 = "$prinFecha$pacienteMed"
                         val baseArchivo2 = "_$idUsuDef"
                         val extendT1 = "_Tipo1"
                         val extendT2 = "_Tipo2"
                         val extendT3 = "_Tipo3"
                         val baseArchivo = "$baseArchivo1$baseArchivo2"
-                        val base = Environment.getExternalStorageDirectory().toString()
-                        val archivo1 = OutputStreamWriter(openFileOutput("$baseArchivo$extendT1.txt", Activity.MODE_PRIVATE))
-                        archivo1.write(escribeLista(listaT1))
-                        archivo1.flush()
-                        archivo1.close()
-                        val archivo2 = OutputStreamWriter(openFileOutput("$baseArchivo$extendT2.txt", Activity.MODE_PRIVATE))
-                        archivo2.write(escribeLista(listaT2))
-                        archivo2.flush()
-                        archivo2.close()
-                        //val archivo3 = OutputStreamWriter(openFileOutput("$base/results/$pacienteMed/$baseArchivo$extendT3.txt", Activity.MODE_PRIVATE))
-                        val archivo3 = OutputStreamWriter(openFileOutput("$baseArchivo$extendT3.txt", Activity.MODE_PRIVATE))
-                        archivo3.write(escribeLista(listaT3))
-                        archivo3.flush()
-                        archivo3.close()
+                        val folder =
+                            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)
+
+                        val file1 = File(folder.absolutePath, "$baseArchivo$extendT1.txt")
+                        val escribe1 = OutputStreamWriter(FileOutputStream(file1))
+                        escribe1.write(escribeLista(listaT1))
+                        escribe1.flush()
+                        escribe1.close()
+                        val file2 = File(folder.absolutePath, "$baseArchivo$extendT2.txt")
+                        val escribe2 = OutputStreamWriter(FileOutputStream(file2))
+                        escribe2.write(escribeLista(listaT2))
+                        escribe2.flush()
+                        escribe2.close()
+                        val file3 = File(folder.absolutePath, "$baseArchivo$extendT3.txt")
+                        val escribe3 = OutputStreamWriter(FileOutputStream(file3))
+                        escribe3.write(escribeLista(listaT3))
+                        escribe3.flush()
+                        escribe3.close()
                         println("Todo guardado correctamente")
                     } catch (error: Exception){
                         println("ERRORRRRRRRRR")
@@ -713,14 +722,13 @@ class VisualiMedActivity : AppCompatActivity() {
         }
     }
 
-    private fun traduceArray(br: ByteArray): String{
+    private fun traduceArray(br: ByteArray): String {
         var res = ""
-        for(dato in br){
+        for (dato in br) {
             res = "$res$dato,"
         }
         val tamano = res.lastIndex
-        val aux = res.substring(0,tamano)
-        return "$aux"
+        return res.substring(0, tamano)
     }
 
     private fun escribeLista(l: List<String>): String{
@@ -729,6 +737,26 @@ class VisualiMedActivity : AppCompatActivity() {
             res += "$ba\n"
         }
         return res
+    }
+
+    private fun transformaFecha(fecha: LocalDate): String{
+        var aux1 = ""
+        var aux2 = ""
+        if(fecha.monthValue<10){
+            aux1 = "0${fecha.monthValue}"
+        }else{
+            aux1 = fecha.monthValue.toString()
+        }
+        if(fecha.dayOfMonth<10){
+            aux2 = "0${fecha.dayOfMonth}"
+        }else{
+            aux2 = fecha.dayOfMonth.toString()
+        }
+        return "${fecha.year}$aux1${aux2}_"
+    }
+
+    override fun onBackPressed() {
+        moveTaskToBack(true)
     }
 
 }
