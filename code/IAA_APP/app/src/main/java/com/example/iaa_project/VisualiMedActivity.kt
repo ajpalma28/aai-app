@@ -725,7 +725,7 @@ class VisualiMedActivity : AppCompatActivity() {
     private fun traduceArray(br: ByteArray): String {
         var res = ""
         for (dato in br) {
-            res = "$res$dato,"
+            res = "$res${dato.toUInt()},"
         }
         val tamano = res.lastIndex
         return res.substring(0, tamano)
@@ -734,7 +734,7 @@ class VisualiMedActivity : AppCompatActivity() {
     private fun escribeLista(l: List<String>): String{
         var res = ""
         for(ba in l){
-            res += "$ba\n"
+            res += "$ba\n\r"
         }
         return res
     }
