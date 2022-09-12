@@ -172,17 +172,7 @@ class ActivityRegistroInvest : AppCompatActivity() {
             compruebaDNINIE(dni)
             Class.forName("com.mysql.jdbc.Driver")
             //Configuracion de la conexión
-            //Configuracion de la conexión
-            println("Query que vamos a ejecutar: INSERT INTO `db-tfg`.`investigador` (`idinvestigador`, `dni`, `apellidos`, `nombre`, `fnacimiento`, `contrasena`, `notificaciones`, `terminoscondiciones`) VALUES ('$id', '$dni', '$apellidos', '$nombre', '$fechaDef', '$contra', 'true', '$tyc');")
 
-            /*val connection = DriverManager.getConnection(
-                "jdbc:mysql://tpfrgiw79q39.eu-west-3.psdb.cloud:3306/iaadb?sslMode=VERIFY_IDENTITY",
-                "wq2es46v0vv7",
-                "pscale_pw_u-YgidCTseLQ0tzJ8c6HThAEjIfcdwZNL6wqk_lImpE"
-            )*/
-            //"jdbc:mysql://tpfrgiw79q39.eu-west-3.psdb.cloud:3306/iaadb?sslMode=VERIFY_IDENTITY&ssl-ca=/system/etc/security/cacerts.bks"
-
-            //TODO Probar esta configuración con el servicio de PlanetScale
             val connection = DriverManager.getConnection(
                 "jdbc:mysql://b1l1rb6fzqnrv8549nvi-mysql.services.clever-cloud.com",
                 "umk5rnkivqyw4r0m",
